@@ -4,12 +4,15 @@ function App() {
   return (
     <div>
       <Button as={'a'} href={'/link'} variant={'primary'}>
-        Hello!
+        Hello! Serega
+       </Button>
+        <Button as={'a'} href={'/link'} variant={'primary'}>
+        Buy
       </Button>
-      <Button as={'a'} href={'/link'} variant={'primary'}>
-        Buy!
+        <Button as={'a'} href={'/link'} variant={'primary'}>
+        Buy
       </Button>
-      <Button variant={'primary'}>Hello!!</Button>
+      <Button variant={'primary'}>Hello</Button>
     </div>
   )
 }
