@@ -2,6 +2,7 @@ import type { Preview } from '@storybook/react'
 import '../src/styles/index.scss'
 import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/700.css'
+
 const preview: Preview = {
   parameters: {
     actions: { argTypesRegex: '^on[A-Z].*' },
