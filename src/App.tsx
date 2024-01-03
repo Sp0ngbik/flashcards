@@ -4,7 +4,7 @@ function App() {
   return (
     <div>
       <Button as={'a'} href={'/link'} variant={'primary'}>
-        Hello
+        Hello!
       </Button>
       <Button variant={'primary'}>Hello</Button>
     </div>
