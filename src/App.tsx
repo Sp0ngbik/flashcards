@@ -6,10 +6,7 @@ function App() {
       <Button as={'a'} href={'/link'} variant={'primary'}>
         Hello!
       </Button>
-        <Button as={'a'} href={'/link'} variant={'primary'}>
-        Buy
-      </Button>
-        <Button as={'a'} href={'/link'} variant={'primary'}>
+      <Button as={'a'} href={'/link'} variant={'primary'}>
         Buy
       </Button>
       <Button variant={'primary'}>Hello</Button>
