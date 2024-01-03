@@ -7,7 +7,7 @@ function App() {
         Hello!
       </Button>
       <Button as={'a'} href={'/link'} variant={'primary'}>
-        Buy!
+        Buy memo
       </Button>
       <Button variant={'primary'}>Hello</Button>
     </div>
