@@ -4,8 +4,8 @@ function App() {
   return (
     <div>
       <Button as={'a'} href={'/link'} variant={'primary'}>
-        Hello!
-      </Button>
+        Hello! Serega
+       </Button>
         <Button as={'a'} href={'/link'} variant={'primary'}>
         Buy
       </Button>
