@@ -6,9 +6,6 @@ function App() {
       <Button as={'a'} href={'/link'} variant={'primary'}>
         Hello!
       </Button>
-      <Button as={'a'} href={'/link'} variant={'primary'}>
-        Good nigt!
-      </Button>
       <Button variant={'primary'}>Hello</Button>
     </div>
   )
