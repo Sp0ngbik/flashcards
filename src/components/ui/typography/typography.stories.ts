@@ -39,7 +39,7 @@ export const Large: Story = {
 }
 export const H1: Story = {
   args: {
-    children: 'Carosserie Test Zürich\n' + 'Stauffacherstrasse 31\n' + '8004 Zürich, ZH, CH',
+    children: 'Carosserie Test Zürich\n' + 'Stauffacherstrasse 3\n' + '8004 Zürich, ZH, CH',
     variant: 'h1',
   },
 }
