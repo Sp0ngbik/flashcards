@@ -1,0 +1,102 @@
+.textField_container {
+  position: relative;
+  width: 100%;
+
+  & .textField_label {
+    color: var(--color-dark-100);
+  }
+
+  & .textField_label_disabled {
+    color: var(--color-dark-300);
+  }
+
+  & .textField {
+    padding: 6px 0 6px 12px;
+
+    color: var(--color-dark-100);
+
+    background-color: inherit;
+    border: 1px solid var(--color-dark-300);
+    border-radius: 2px;
+    outline: none;
+
+    &::placeholder {
+      font-size: var(--font-size-m);
+      font-weight: var(--font-weight-regular);
+    }
+
+    &:hover {
+      background-color: var(--color-dark-300);
+    }
+
+    &:focus {
+      color: var(--color-light-100);
+      border: 2px solid var(--color-info-700);
+    }
+
+    &:active {
+      border: 1px solid var(--color-light-100);
+
+      &::placeholder {
+        color: var(--color-light-100);
+      }
+    }
+
+    &:disabled {
+      &::placeholder {
+        color: var(--color-dark-100);
+      }
+
+      &:active::placeholder {
+        color: var(--color-light-100);
+      }
+    }
+  }
+
+  & .textField_error {
+    border: 1px solid var(--color-danger-300);
+
+    &::placeholder {
+      color: var(--color-danger-300);
+    }
+  }
+
+  & .search {
+    position: relative;
+
+    & input {
+      padding-right: 10px;
+      padding-left: 41px;
+
+      &::-webkit-search-cancel-button {
+        filter: brightness(0) invert(1);
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+
+    & .searchIcon {
+      position: absolute;
+      top: 6px;
+      left: 12px;
+
+      width: 20px;
+
+      fill: var(--color-dark-100);
+    }
+
+    &:active {
+      & .searchIcon {
+        fill: var(--color-light-100);
+      }
+    }
+
+    &:disabled {
+      & .searchIcon {
+        fill: var(--color-dark-300);
+      }
+    }
+  }
+}
