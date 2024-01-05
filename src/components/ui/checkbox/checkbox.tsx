@@ -39,23 +39,3 @@ export const Checkbox = (props: CheckboxProps) => {
     </div>
   )
 }
-
-// import s from '@/components/ui/checkbox/checkbox.module.scss'
-//
-// export type CheckboxProps = {
-//   className?: string
-//   text?: string
-//   variant?: 'checkbox' | 'withLabel'
-// }
-//
-// export const Checkbox = (props: CheckboxProps) => {
-//   const { className, text, variant = 'checkbox', ...rest } = props
-//
-//   return (
-//     <label>
-//       <input className={`${s.checkbox} ${s[variant]} ${className}`} type={'checkbox'} {...rest} />
-//       <span></span>
-//       {variant === 'withLabel' && <p>Im checkbox label</p>}
-//     </label>
-//   )
-// }
