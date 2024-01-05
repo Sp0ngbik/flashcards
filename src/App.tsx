@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui/button/button'
-import Checkbox from '@/components/ui/checkbox/checkbox'
 
 function App() {
   return (
@@ -7,8 +6,10 @@ function App() {
       <Button as={'a'} href={'/link'} variant={'primary'}>
         Hello!
       </Button>
+      <Button as={'a'} href={'/link'} variant={'primary'}>
+        Buy!
+      </Button>
       <Button variant={'primary'}>Hello</Button>
-      <Checkbox></Checkbox>
     </div>
   )
 }
