@@ -7,6 +7,9 @@ function App() {
       <Button as={'a'} href={'/link'} variant={'primary'}>
         Hello!
       </Button>
+      <Button as={'a'} href={'/link'} variant={'primary'}>
+        Buy!
+      </Button>
       <Button variant={'primary'}>Hello</Button>
       <TextField placeholder={'Input'} />
     </div>
