@@ -1,80 +1,78 @@
-.CheckboxRoot {
-  background-color: white;
-  width: 25px;
-  height: 25px;
-  border-radius: 4px;
+.Container {
   display: flex;
   align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 10px var(--black-a7);
+  column-gap: 10px;
 }
-//.CheckboxRoot:hover {
-//  background-color: var(--violet-3);
-//}
-//.CheckboxRoot:focus {
-//  box-shadow: 0 0 0 2px black;
-//}
+
+.CheckboxRoot {
+  all: unset;
+  position: relative;
+  background-color: transparent;
+  color: white;
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  border: 2px solid var(--color-light-900);
+  cursor: pointer;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  &[data-state = 'checked'] {
+    border: 2px solid var(--color-light-100);
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    transition: .2s ease-in-out;
+  }
+
+  &:hover:after {
+    background-color: var(--color-dark-500);
+  }
+
+  &:active:after {
+    background-color: var(--color-dark-100);
+  }
+
+  &:focus-visible:after {
+    background-color: var(--color-dark-100);
+  }
+
+  &:disabled {
+    color: var(--color-dark-100);
+    pointer-events: none;
+    border: 2px solid var(--color-dark-100);
+
+  }
+
+  &[data-state = 'checked']:disabled {
+    background-color: var(--color-light-700);
+
+  }
+}
+
+.Typography {
+  cursor: pointer;
+}
+
+.Disabled {
+  pointer-events: none;
+  color: var(--color-dark-100);
+}
 
 .CheckboxIndicator {
-  color: var(--color-dark-900);
+  //color: var(--color-dark-900);
+  height: 15px;
+  width: 15px;
 }
-
-.Label {
-  color: white;
-  padding-left: 15px;
-  font-size: 15px;
-  line-height: 1;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//label input {
-//  display: none;/* <--скрываем дефолтный чекбокс */
-//}
-//label span {/* <-- стилизируем новый */
-//  height: 18px;
-//  width: 18px;
-//  border: 1px solid var(--color-light-900);
-//  display: inline-block;
-//  position: relative;
-//  background-color: var(--color-dark-900);
-//  padding:3px;
-//}
-//
-//[type=checkbox]:checked + span:before {/* <-- ставим иконку, когда чекбокс включен  */
-//  content: '\2714';
-//  position: absolute;
-//  width: 16px;
-//  height: 16px;
-//  top: 0;
-//  left: 0;
-//  font-size: 22px;
-//  color: var(--color-dark-900);
-//  background-color: var(--color-light-100);
-//  border-radius: 2px;
-//  border: none;
-//}
