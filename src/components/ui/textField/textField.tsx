@@ -1,3 +1,6 @@
+import { RefObject, useRef } from 'react'
+
+import { EyeOutline } from '@/assets'
 import { SearchOutline } from '@/assets/icons/search-outline'
 import { Typography } from '@/components/ui/typography'
 
@@ -7,13 +10,29 @@ export type TextFieldProps = {
   className?: string
   disabled?: boolean
   error?: boolean
-  placeholder: string
   variant?: 'password' | 'search' | 'text'
 }
 
 const TextField = (props: TextFieldProps) => {
-  const { className, disabled = false, error = false, placeholder, variant = 'search' } = props
+  const { className, disabled = false, error = false, variant = 'password' } = props
+  const textFieldRef: RefObject<HTMLInputElement> = useRef(null)
   const searchVariant = variant === 'search'
+  const passwordVariant = variant === 'password'
+  const placeholderValidator = () => {
+    if (searchVariant) {
+      return 'Input search'
+    } else if (error) {
+      return 'Error'
+    } else {
+      return 'Input'
+    }
+  }
+
+  const togglePasswordVisibility = () => {
+    if (textFieldRef.current) {
+      textFieldRef.current.type = textFieldRef.current.type === 'password' ? 'text' : 'password'
+    }
+  }
 
   return (
     <div className={s.textField_container}>
@@ -22,7 +41,7 @@ const TextField = (props: TextFieldProps) => {
           className={`${s.textField_label} ${disabled && s.textField_label_disabled}`}
           variant={'body2'}
         >
-          {placeholder}
+          Input
         </Typography>
       )}
       <div className={s[variant]}>
@@ -30,10 +49,23 @@ const TextField = (props: TextFieldProps) => {
           className={`${s.textField}  ${error && s.textField_error}  ${className}`}
           disabled={disabled}
           name={'textField'}
-          placeholder={error ? 'Error' : placeholder}
+          placeholder={placeholderValidator()}
+          ref={textFieldRef}
           type={variant}
         />
-        <div>{searchVariant && <SearchOutline className={s.searchIcon} />}</div>
+        <div>
+          {passwordVariant && (
+            <EyeOutline
+              className={`${s.passwordEyeIcon} ${disabled && s.passwordEyeIcon_disabled}`}
+              onClick={togglePasswordVisibility}
+            />
+          )}
+        </div>
+        <div>
+          {searchVariant && (
+            <SearchOutline className={`${s.searchIcon} ${disabled && s.searchIcon_disabled}`} />
+          )}
+        </div>
       </div>
       {error && <Typography variant={'error'}>Error!</Typography>}
     </div>

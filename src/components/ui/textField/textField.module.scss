@@ -11,9 +11,8 @@
   }
 
   & .textField {
+    min-width: 284px;
     padding: 6px 0 6px 12px;
-
-    color: var(--color-dark-100);
 
     background-color: inherit;
     border: 1px solid var(--color-dark-300);
@@ -23,6 +22,7 @@
     &::placeholder {
       font-size: var(--font-size-m);
       font-weight: var(--font-weight-regular);
+      color: var(--color-dark-100);
     }
 
     &:hover {
@@ -43,8 +43,10 @@
     }
 
     &:disabled {
+      border: 1px solid var(--color-dark-300);
+
       &::placeholder {
-        color: var(--color-dark-100);
+        color: var(--color-dark-300);
       }
 
       &:active::placeholder {
@@ -87,16 +89,36 @@
       fill: var(--color-dark-100);
     }
 
+    & .searchIcon_disabled {
+      fill: var(--color-dark-300);
+    }
+
     &:active {
       & .searchIcon {
         fill: var(--color-light-100);
       }
     }
+  }
 
-    &:disabled {
-      & .searchIcon {
-        fill: var(--color-dark-300);
+  & .password {
+    position: relative;
+
+    & .passwordEyeIcon {
+      position: absolute;
+      top: 4px;
+      left: 258px;
+
+      width: 20px;
+
+      fill: var(--color-light-100);
+
+      &:hover {
+        cursor: pointer;
       }
+    }
+
+    & .passwordEyeIcon_disabled {
+      fill: var(--color-dark-300);
     }
   }
 }
