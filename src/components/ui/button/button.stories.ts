@@ -15,7 +15,7 @@ const meta = {
 } satisfies Meta<typeof Button>
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof Button>
 
 export const Primary: Story = {
   args: {

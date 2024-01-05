@@ -18,12 +18,12 @@
 .primary {
   background-color: var(--color-accent-500);
 
-  &:active {
-    background-color: var(--color-accent-700);
-  }
-
   &:hover {
     background-color: var(--color-accent-300);
+  }
+
+  &:active {
+    background-color: var(--color-accent-700);
   }
 
   &:disabled {
@@ -35,12 +35,12 @@
 .secondary {
   background-color: var(--color-dark-300);
 
-  &:active {
-    background-color: var(--color-dark-500);
-  }
-
   &:hover {
     background-color: var(--color-dark-100);
+  }
+
+  &:active {
+    background-color: var(--color-dark-500);
   }
 
   &:disabled {
@@ -55,12 +55,12 @@
   background-color: transparent;
   border: 1px solid var(--color-accent-500);
 
-  &:active {
-    background-color: var(--color-accent-900); // fix
-  }
-
   &:hover {
     background-color: var(--color-dark-500); // fix
+  }
+
+  &:active {
+    background-color: var(--color-accent-900); // fix
   }
 
   &:disabled {
@@ -74,12 +74,12 @@
   background-color: transparent;
   border: none;
 
-  &:active {
-    color: var(--color-accent-700);
-  }
-
   &:hover {
     color: var(--color-accent-300);
+  }
+
+  &:active {
+    color: var(--color-accent-700);
   }
 
   &:focus-visible {
