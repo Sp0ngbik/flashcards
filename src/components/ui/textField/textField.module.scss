@@ -27,30 +27,37 @@
 
     &:hover {
       background-color: var(--color-dark-300);
-    }
-
-    &:focus {
-      color: var(--color-light-100);
-      border: 2px solid var(--color-info-700);
+      border: 1px solid var(--color-dark-100);
     }
 
     &:active {
-      border: 1px solid var(--color-light-100);
+      color: var(--color-light-100);
+      outline: 2px solid var(--color-info-700);
 
-      &::placeholder {
+      ::placeholder {
         color: var(--color-light-100);
       }
     }
 
     &:disabled {
+      background-color: inherit;
       border: 1px solid var(--color-dark-300);
 
       &::placeholder {
         color: var(--color-dark-300);
       }
+    }
 
-      &:active::placeholder {
+    &:focus-visible {
+      border: 1px solid var(--color-light-100);
+
+      &::placeholder {
         color: var(--color-light-100);
+      }
+
+      &:hover {
+        background-color: inherit;
+        border: 1px solid var(--color-light-100);
       }
     }
   }
@@ -71,6 +78,7 @@
       padding-left: 41px;
 
       &::-webkit-search-cancel-button {
+        visibility: visible;
         filter: brightness(0) invert(1);
 
         &:hover {
@@ -80,6 +88,8 @@
     }
 
     & .searchIcon {
+      pointer-events: none;
+
       position: absolute;
       top: 6px;
       left: 12px;
@@ -89,14 +99,18 @@
       fill: var(--color-dark-100);
     }
 
+    &:focus-within {
+      & .searchIcon {
+        fill: var(--color-light-100);
+      }
+    }
+
     & .searchIcon_disabled {
       fill: var(--color-dark-300);
     }
 
-    &:active {
-      & .searchIcon {
-        fill: var(--color-light-100);
-      }
+    & .searchIcon_error {
+      fill: var(--color-danger-500);
     }
   }
 
@@ -120,5 +134,9 @@
     & .passwordEyeIcon_disabled {
       fill: var(--color-dark-300);
     }
+  }
+
+  & .errorMessage {
+    line-height: var(--line-height-m);
   }
 }
