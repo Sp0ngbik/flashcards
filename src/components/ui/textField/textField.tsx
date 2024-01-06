@@ -1,4 +1,4 @@
-import { RefObject, useRef } from 'react'
+import { useState } from 'react'
 
 import { EyeOutline } from '@/assets'
 import { SearchOutline } from '@/assets/icons/search-outline'
@@ -14,10 +14,13 @@ export type TextFieldProps = {
 }
 
 const TextField = (props: TextFieldProps) => {
-  const { className, disabled = false, error = false, variant = 'password' } = props
-  const textFieldRef: RefObject<HTMLInputElement> = useRef(null)
+  const { className, disabled = false, error = false, variant = 'text' } = props
+  const [passwordVisibility, setPasswordVisibility] = useState(false)
   const searchVariant = variant === 'search'
   const passwordVariant = variant === 'password'
+  const changePasswordVision = () => {
+    setPasswordVisibility(!passwordVisibility)
+  }
   const placeholderValidator = () => {
     if (searchVariant) {
       return 'Input search'
@@ -25,12 +28,6 @@ const TextField = (props: TextFieldProps) => {
       return 'Error'
     } else {
       return 'Input'
-    }
-  }
-
-  const togglePasswordVisibility = () => {
-    if (textFieldRef.current) {
-      textFieldRef.current.type = textFieldRef.current.type === 'password' ? 'text' : 'password'
     }
   }
 
@@ -50,24 +47,31 @@ const TextField = (props: TextFieldProps) => {
           disabled={disabled}
           name={'textField'}
           placeholder={placeholderValidator()}
-          ref={textFieldRef}
-          type={variant}
+          type={passwordVisibility ? 'text' : variant}
         />
         <div>
           {passwordVariant && (
             <EyeOutline
               className={`${s.passwordEyeIcon} ${disabled && s.passwordEyeIcon_disabled}`}
-              onClick={togglePasswordVisibility}
+              onClick={changePasswordVision}
             />
           )}
         </div>
         <div>
           {searchVariant && (
-            <SearchOutline className={`${s.searchIcon} ${disabled && s.searchIcon_disabled}`} />
+            <SearchOutline
+              className={`${s.searchIcon} ${error && s.searchIcon_error} ${
+                disabled && s.searchIcon_disabled
+              }`}
+            />
           )}
         </div>
       </div>
-      {error && <Typography variant={'error'}>Error!</Typography>}
+      {error && (
+        <Typography className={s.errorMessage} variant={'error'}>
+          Error!
+        </Typography>
+      )}
     </div>
   )
 }

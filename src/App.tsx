@@ -4,14 +4,10 @@ import TextField from '@/components/ui/textField/textField'
 function App() {
   return (
     <div>
-      <Button as={'a'} href={'/link'} variant={'primary'}>
-        Hello!
-      </Button>
-      <Button as={'a'} href={'/link'} variant={'primary'}>
-        Buy!
-      </Button>
       <Button variant={'primary'}>Hello</Button>
-      <TextField placeholder={'Input'} />
+      <TextField />
+      <TextField variant={'search'} />
+      <TextField variant={'password'} />
     </div>
   )
 }
