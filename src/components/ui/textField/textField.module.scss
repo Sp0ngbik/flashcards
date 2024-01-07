@@ -30,15 +30,6 @@
       border: 1px solid var(--color-dark-100);
     }
 
-    &:active {
-      color: var(--color-light-100);
-      outline: 2px solid var(--color-info-700);
-
-      ::placeholder {
-        color: var(--color-light-100);
-      }
-    }
-
     &:disabled {
       background-color: inherit;
       border: 1px solid var(--color-dark-300);
@@ -48,10 +39,19 @@
       }
     }
 
-    &:focus-visible {
+    &:active {
       border: 1px solid var(--color-light-100);
 
       &::placeholder {
+        color: var(--color-light-100);
+      }
+    }
+
+    &:focus-visible {
+      color: var(--color-light-100);
+      outline: 2px solid var(--color-info-700);
+
+      ::placeholder {
         color: var(--color-light-100);
       }
 
@@ -101,7 +101,12 @@
 
     &:focus-within {
       & .searchIcon {
+        pointer-events: visible;
         fill: var(--color-light-100);
+
+        &:hover {
+          cursor: pointer;
+        }
       }
     }
 
