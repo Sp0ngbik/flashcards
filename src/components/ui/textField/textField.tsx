@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { EyeOutline } from '@/assets'
+import { EyeOffOutline } from '@/assets/icons/eye-off-outline'
 import { SearchOutline } from '@/assets/icons/search-outline'
 import { Typography } from '@/components/ui/typography'
 
@@ -50,7 +51,12 @@ const TextField = (props: TextFieldProps) => {
           type={passwordVisibility ? 'text' : variant}
         />
         <div>
-          {passwordVariant && (
+          {passwordVariant && passwordVisibility ? (
+            <EyeOffOutline
+              className={`${s.passwordEyeIcon} ${disabled && s.passwordEyeIcon_disabled}`}
+              onClick={changePasswordVision}
+            />
+          ) : (
             <EyeOutline
               className={`${s.passwordEyeIcon} ${disabled && s.passwordEyeIcon_disabled}`}
               onClick={changePasswordVision}
