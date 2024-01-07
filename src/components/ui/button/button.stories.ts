@@ -4,6 +4,14 @@ import { Button } from '@/components/ui/button/button'
 
 const meta = {
   argTypes: {
+    fullWidth: {
+      control: { type: 'radio' },
+      options: [true, false],
+    },
+    icon: {
+      control: { type: 'radio' },
+      options: [true, false],
+    },
     variant: {
       control: { type: 'radio' },
       options: ['primary', 'secondary', 'tertiary', 'link'],
@@ -25,6 +33,15 @@ export const Primary: Story = {
   },
 }
 
+export const PrimaryWithIcon: Story = {
+  args: {
+    children: 'Primary Button With Icon',
+    disabled: false,
+    icon: true,
+    variant: 'primary',
+  },
+}
+
 export const Secondary: Story = {
   args: {
     children: 'Secondary Button',
@@ -32,6 +49,16 @@ export const Secondary: Story = {
     variant: 'secondary',
   },
 }
+
+export const SecondaryWithIcon: Story = {
+  args: {
+    children: 'Secondary Button With Icon',
+    disabled: false,
+    icon: true,
+    variant: 'secondary',
+  },
+}
+
 export const Tertiary: Story = {
   args: {
     children: 'Tertiary Button',

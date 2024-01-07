@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { ComponentPropsWithoutRef, ElementType, useState } from 'react'
 
 import { EyeOutline } from '@/assets'
 import { EyeOffOutline } from '@/assets/icons/eye-off-outline'
@@ -7,15 +7,15 @@ import { Typography } from '@/components/ui/typography'
 
 import s from './textField.module.scss'
 
-export type TextFieldProps = {
+export type TextFieldProps<T extends ElementType = 'input'> = {
   className?: string
   disabled?: boolean
   error?: boolean
   variant?: 'password' | 'search' | 'text'
-}
+} & ComponentPropsWithoutRef<T>
 
 const TextField = (props: TextFieldProps) => {
-  const { className, disabled = false, error = false, variant = 'text' } = props
+  const { className, disabled = false, error = false, variant = 'text', ...rest } = props
   const [passwordVisibility, setPasswordVisibility] = useState(false)
   const searchVariant = variant === 'search'
   const passwordVariant = variant === 'password'
@@ -49,18 +49,23 @@ const TextField = (props: TextFieldProps) => {
           name={'textField'}
           placeholder={placeholderValidator()}
           type={passwordVisibility ? 'text' : variant}
+          {...rest}
         />
         <div>
-          {passwordVariant && passwordVisibility ? (
-            <EyeOffOutline
-              className={`${s.passwordEyeIcon} ${disabled && s.passwordEyeIcon_disabled}`}
-              onClick={changePasswordVision}
-            />
-          ) : (
-            <EyeOutline
-              className={`${s.passwordEyeIcon} ${disabled && s.passwordEyeIcon_disabled}`}
-              onClick={changePasswordVision}
-            />
+          {passwordVariant && (
+            <div>
+              {passwordVisibility ? (
+                <EyeOffOutline
+                  className={`${s.passwordEyeIcon} ${disabled && s.passwordEyeIcon_disabled}`}
+                  onClick={changePasswordVision}
+                />
+              ) : (
+                <EyeOutline
+                  className={`${s.passwordEyeIcon} ${disabled && s.passwordEyeIcon_disabled}`}
+                  onClick={changePasswordVision}
+                />
+              )}
+            </div>
           )}
         </div>
         <div>

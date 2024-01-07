@@ -1,3 +1,7 @@
+.buttonWrapper {
+  position: relative;
+}
+
 .button {
   all: unset;
 
@@ -93,4 +97,15 @@
 
 .fullWidth {
   width: 100%;
+}
+
+.logout {
+  position: absolute;
+  top: 5px;
+  left: 20px;
+  fill: var(--color-light-100);
+}
+
+.wihIcon {
+  padding-left: 54px;
 }
