@@ -1,0 +1,32 @@
+.headerWrapper {
+  display: flex;
+  place-content: center space-around;
+  place-items: center center;
+
+  padding: 12px 0;
+
+  background-color: var(--color-dark-700);
+
+  & .headerRightSection {
+    display: flex;
+    justify-content: center;
+    width: 300px;
+  }
+}
+
+.userBlock {
+  display: flex;
+  align-items: center;
+
+  & img {
+    width: 36px;
+    height: 36px;
+    margin-left: 14px;
+    border-radius: 50%;
+  }
+
+  & span {
+    text-decoration: underline dashed var(--color-light-100) 2px;
+    text-underline-offset: 3px;
+  }
+}

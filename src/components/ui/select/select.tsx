@@ -1,8 +1,7 @@
 import { useState } from 'react'
 
-import { ArrowDown } from '@/assets/icons/arrow-down-outline'
-import { ArrowUp } from '@/assets/icons/arrow-up'
-import { SelectItem } from '@/components/ui/select/selectItem/selectItem'
+import { ArrowDown, ArrowUp } from '@/assets'
+import { SelectItem } from '@/components/ui/select/selectItem'
 import * as SelectRadix from '@radix-ui/react-select'
 
 import s from './select.module.scss'

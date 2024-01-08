@@ -100,9 +100,12 @@
 }
 
 .logout {
+  pointer-events: none;
+
   position: absolute;
   top: 5px;
   left: 20px;
+
   fill: var(--color-light-100);
 }
 
