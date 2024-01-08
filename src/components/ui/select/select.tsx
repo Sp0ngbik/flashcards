@@ -42,7 +42,7 @@ export const Select = ({
             <SelectRadix.Viewport className={s.selectViewport}>
               <SelectRadix.Group className={s.selectGroup}>
                 {options.map((el, index) => (
-                  <SelectItem key={index} value={el} />
+                  <SelectItem className={s.selectItem} key={index} value={el} />
                 ))}
               </SelectRadix.Group>
             </SelectRadix.Viewport>
