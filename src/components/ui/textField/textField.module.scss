@@ -1,0 +1,146 @@
+.textField_container {
+  position: relative;
+  width: 100%;
+
+  & .textField_label {
+    color: var(--color-dark-100);
+  }
+
+  & .textField_label_disabled {
+    color: var(--color-dark-300);
+  }
+
+  & .textField {
+    min-width: 284px;
+    padding: 6px 0 6px 12px;
+
+    background-color: inherit;
+    border: 1px solid var(--color-dark-300);
+    border-radius: 2px;
+    outline: none;
+
+    &::placeholder {
+      font-size: var(--font-size-m);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-dark-100);
+    }
+
+    &:hover {
+      background-color: var(--color-dark-300);
+      border: 1px solid var(--color-dark-100);
+    }
+
+    &:disabled {
+      background-color: inherit;
+      border: 1px solid var(--color-dark-300);
+
+      &::placeholder {
+        color: var(--color-dark-300);
+      }
+    }
+
+    &:active {
+      border: 1px solid var(--color-light-100);
+
+      &::placeholder {
+        color: var(--color-light-100);
+      }
+    }
+
+    &:focus-visible {
+      color: var(--color-light-100);
+      outline: 2px solid var(--color-info-700);
+
+      ::placeholder {
+        color: var(--color-light-100);
+      }
+
+      &:hover {
+        background-color: inherit;
+      }
+    }
+  }
+
+  & .textField_error {
+    border: 1px solid var(--color-danger-300);
+
+    &::placeholder {
+      color: var(--color-danger-300);
+    }
+  }
+
+  & .search {
+    position: relative;
+
+    & input {
+      padding-right: 10px;
+      padding-left: 41px;
+
+      &::-webkit-search-cancel-button {
+        visibility: visible;
+        filter: brightness(0) invert(1);
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+
+    & .searchIcon {
+      pointer-events: none;
+
+      position: absolute;
+      top: 6px;
+      left: 12px;
+
+      width: 20px;
+
+      fill: var(--color-dark-100);
+    }
+
+    &:focus-within {
+      & .searchIcon {
+        pointer-events: visible;
+        fill: var(--color-light-100);
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+
+    & .searchIcon_disabled {
+      fill: var(--color-dark-300);
+    }
+
+    & .searchIcon_error {
+      fill: var(--color-danger-500);
+    }
+  }
+
+  & .password {
+    position: relative;
+
+    & .passwordEyeIcon {
+      position: absolute;
+      top: 4px;
+      left: 258px;
+
+      width: 20px;
+
+      fill: var(--color-light-100);
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    & .passwordEyeIcon_disabled {
+      fill: var(--color-dark-300);
+    }
+  }
+
+  & .errorMessage {
+    line-height: var(--line-height-m);
+  }
+}

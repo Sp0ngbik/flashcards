@@ -4,6 +4,14 @@ import { Button } from '@/components/ui/button/button'
 
 const meta = {
   argTypes: {
+    fullWidth: {
+      control: { type: 'radio' },
+      options: [true, false],
+    },
+    icon: {
+      control: { type: 'radio' },
+      options: [true, false],
+    },
     variant: {
       control: { type: 'radio' },
       options: ['primary', 'secondary', 'tertiary', 'link'],
@@ -15,12 +23,21 @@ const meta = {
 } satisfies Meta<typeof Button>
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof Button>
 
 export const Primary: Story = {
   args: {
     children: 'Primary Button',
     disabled: false,
+    variant: 'primary',
+  },
+}
+
+export const PrimaryWithIcon: Story = {
+  args: {
+    children: 'Primary Button With Icon',
+    disabled: false,
+    icon: true,
     variant: 'primary',
   },
 }
@@ -32,6 +49,16 @@ export const Secondary: Story = {
     variant: 'secondary',
   },
 }
+
+export const SecondaryWithIcon: Story = {
+  args: {
+    children: 'Secondary Button With Icon',
+    disabled: false,
+    icon: true,
+    variant: 'secondary',
+  },
+}
+
 export const Tertiary: Story = {
   args: {
     children: 'Tertiary Button',
