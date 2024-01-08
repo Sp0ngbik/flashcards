@@ -17,8 +17,8 @@ export const Checkbox = (props: CheckboxProps) => {
   return (
     <div className={`${s.Container} ${className}`} {...rest}>
       <CheckboxRadix.Root
+        checked={checked}
         className={s.CheckboxRoot}
-        defaultChecked={checked}
         disabled={disabled}
         id={'c1'}
       >
