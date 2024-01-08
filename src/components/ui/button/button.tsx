@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ElementType } from 'react'
 
-import { LogOut } from '@/assets/icons/log-out'
+import { LogOut } from '@/assets'
 
 import s from './button.module.scss'
 

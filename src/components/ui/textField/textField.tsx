@@ -1,8 +1,6 @@
 import { ComponentPropsWithoutRef, ElementType, useState } from 'react'
 
-import { EyeOutline } from '@/assets'
-import { EyeOffOutline } from '@/assets/icons/eye-off-outline'
-import { SearchOutline } from '@/assets/icons/search-outline'
+import { EyeOffOutline, EyeOutline, SearchOutline } from '@/assets'
 import { Typography } from '@/components/ui/typography'
 
 import s from './textField.module.scss'

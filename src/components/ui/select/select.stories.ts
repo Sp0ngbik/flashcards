@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Select } from '@/components/ui/select/select'
+import { Select } from '@/components/ui/select'
 
 const meta = {
   argTypes: {
