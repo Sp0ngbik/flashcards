@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { ComponentPropsWithoutRef, useState } from 'react'
 
 import { ArrowDown, ArrowUp } from '@/assets'
 import { SelectItem } from '@/components/ui/select/selectItem'
+import { Typography } from '@/components/ui/typography'
 import * as SelectRadix from '@radix-ui/react-select'
 
 import s from './select.module.scss'
@@ -11,7 +12,7 @@ type Props = {
   disabled?: boolean
   label?: string
   options: string[]
-}
+} & ComponentPropsWithoutRef<typeof SelectRadix.Root>
 
 export const Select = ({
   disabled = false,
@@ -23,7 +24,12 @@ export const Select = ({
 
   return (
     <div className={s.selectWrapper}>
-      <div className={`${s.selectLabel} ${disabled && s.selectLabelDisabled}`}>{label}</div>
+      <Typography
+        className={`${s.selectLabel} ${disabled && s.selectLabelDisabled}`}
+        variant={'body2'}
+      >
+        {label}
+      </Typography>
       <SelectRadix.Root disabled={disabled} onOpenChange={open => setState(open)} {...props}>
         <SelectRadix.Trigger className={s.selectTrigger}>
           <SelectRadix.Value placeholder={options[0]} />

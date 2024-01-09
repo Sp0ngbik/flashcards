@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ElementType, useState } from 'react'
+import React, { ComponentPropsWithoutRef, ElementType, useState } from 'react'
 
 import { EyeOffOutline, EyeOutline, SearchOutline } from '@/assets'
 import { Typography } from '@/components/ui/typography'
@@ -12,7 +12,7 @@ export type TextFieldProps<T extends ElementType = 'input'> = {
   variant?: 'password' | 'search' | 'text'
 } & ComponentPropsWithoutRef<T>
 
-const TextField = (props: TextFieldProps) => {
+const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>((props, forwardRef) => {
   const { className, disabled = false, error = false, variant = 'text', ...rest } = props
   const [passwordVisibility, setPasswordVisibility] = useState(false)
   const searchVariant = variant === 'search'
@@ -46,6 +46,7 @@ const TextField = (props: TextFieldProps) => {
           disabled={disabled}
           name={'textField'}
           placeholder={placeholderValidator()}
+          ref={forwardRef}
           type={passwordVisibility ? 'text' : variant}
           {...rest}
         />
@@ -83,6 +84,6 @@ const TextField = (props: TextFieldProps) => {
       )}
     </div>
   )
-}
+})
 
 export default TextField
