@@ -1,4 +1,4 @@
-import userDefaultPhoto from '@/assets/image/userDefaultPhoto.png'
+import userDefaultPhoto from '@/assets/image/defaultAvatar.png'
 import { Button } from '@/components/ui/button'
 import { EditCardComponent } from '@/components/ui/dropDownMenu/variant/editCardComponent'
 import { EditProfileComponent } from '@/components/ui/dropDownMenu/variant/editProfileComponent'
