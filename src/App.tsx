@@ -7,7 +7,7 @@ function App() {
     <div>
       <Header isLoggedIn />
       <Button variant={'primary'}>Hello</Button>
-      <RadioGroupDemo />
+      <RadioGroupDemo options={['1', '2', '3', '1']} />
     </div>
   )
 }
