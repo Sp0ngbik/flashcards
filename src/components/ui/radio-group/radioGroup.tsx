@@ -1,5 +1,6 @@
-import { ComponentPropsWithoutRef } from 'react'
+import { ComponentPropsWithoutRef, forwardRef } from 'react'
 
+import { Typography } from '@/components/ui/typography'
 import * as RadioGroup from '@radix-ui/react-radio-group'
 
 import s from './radioGroup.module.scss'
@@ -11,50 +12,28 @@ type Props = {
   options: string[]
 } & ComponentPropsWithoutRef<typeof RadioGroup.Root>
 
-export const RadioGroupDemo = ({ options = [], ...props }: Props) => {
+export const RadioGroupDemo = forwardRef<HTMLButtonElement, Props>((props, forwardRef) => {
+  const { options } = props
+
   return (
     <form>
       <RadioGroup.Root className={s.radioGroupRoot} {...props} defaultValue={options[0]}>
-        {options.map((el, index) => (
-          <div className={s.radioButtonBlock} key={'asdasd' + index}>
-            {options[0]}
+        {props.options.map((el, index) => (
+          <div className={s.radioButtonBlock} key={index}>
             <RadioGroup.Item
               className={s.radioGroupItem}
-              id={index.toString()}
-              value={index.toString()}
+              id={'r' + index}
+              ref={forwardRef}
+              value={el}
             >
               <RadioGroup.Indicator className={s.radioGroupIndicator} />
             </RadioGroup.Item>
-            <label className={s.label} htmlFor={index.toString()}>
+            <Typography className={s.label} htmlFor={'r' + index} variant={'body2'}>
               {el}
-            </label>
+            </Typography>
           </div>
         ))}
-        {/*<div className={s.radioButtonBlock}>*/}
-        {/*  <RadioGroup.Item className={s.radioGroupItem} id={'r1'} value={'default'}>*/}
-        {/*    <RadioGroup.Indicator className={s.radioGroupIndicator} />*/}
-        {/*  </RadioGroup.Item>*/}
-        {/*  <label className={s.label} htmlFor={'r1'}>*/}
-        {/*    Default*/}
-        {/*  </label>*/}
-        {/*</div>*/}
-        {/*<div className={s.radioButtonBlock}>*/}
-        {/*  <RadioGroup.Item className={s.radioGroupItem} id={'r2'} value={'comfortable'}>*/}
-        {/*    <RadioGroup.Indicator className={s.radioGroupIndicator} />*/}
-        {/*  </RadioGroup.Item>*/}
-        {/*  <label className={s.label} htmlFor={'r2'}>*/}
-        {/*    Comfortable*/}
-        {/*  </label>*/}
-        {/*</div>*/}
-        {/*<div className={s.radioButtonBlock}>*/}
-        {/*  <RadioGroup.Item className={s.radioGroupItem} id={'r3'} value={'compact'}>*/}
-        {/*    <RadioGroup.Indicator className={s.radioGroupIndicator} />*/}
-        {/*  </RadioGroup.Item>*/}
-        {/*  <label className={s.label} htmlFor={'r3'}>*/}
-        {/*    Compact*/}
-        {/*  </label>*/}
-        {/*</div>*/}
       </RadioGroup.Root>
     </form>
   )
-}
+})
