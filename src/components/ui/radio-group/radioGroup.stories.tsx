@@ -1,5 +1,8 @@
-import { RadioGroupDemo } from '@/components/ui/radio-group/radioGroup'
+import { useRef } from 'react'
+
 import { Meta, StoryObj } from '@storybook/react'
+
+import { RadioGroup } from './radioGroup'
 
 const meta = {
   argTypes: {
@@ -8,9 +11,9 @@ const meta = {
       options: [true, false],
     },
   },
-  component: RadioGroupDemo,
+  component: RadioGroup,
   title: 'Components/RadioGroup',
-} satisfies Meta<typeof RadioGroupDemo>
+} satisfies Meta<typeof RadioGroup>
 
 type Story = StoryObj<typeof meta>
 
