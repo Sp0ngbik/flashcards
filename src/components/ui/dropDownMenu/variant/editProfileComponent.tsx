@@ -5,7 +5,7 @@ import * as DropdownMenuRadix from '@radix-ui/react-dropdown-menu'
 
 import s from '@/components/ui/dropDownMenu/dropDownMenu.module.scss'
 
-type PropsType = {
+export type PropsType = {
   userAvatar: string
   userEmail: string
   userName: string

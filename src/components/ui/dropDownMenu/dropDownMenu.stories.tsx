@@ -3,7 +3,20 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { DropdownMenu } from '@/components/ui/dropDownMenu/dropDownMenu'
 
 const meta = {
-  argTypes: {},
+  argTypes: {
+    defaultOpen: {
+      control: { type: 'button' },
+      options: [true, false],
+    },
+    disabled: {
+      control: { type: 'button' },
+      options: [true, false],
+    },
+    flag: {
+      control: { type: 'button' },
+      options: ['editCard', 'editProfile'],
+    },
+  },
   component: DropdownMenu,
   tags: ['autodocs'],
   title: 'Components/DropdownMenu',

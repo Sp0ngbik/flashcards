@@ -1,0 +1,83 @@
+.TabsRoot {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  box-shadow: 0 2px 10px var(--black-a4);
+}
+
+.TabsList {
+  flex-shrink: 0;
+  display: flex;
+  border-bottom: 1px solid var(--mauve-6);
+
+  &:focus-visible {
+    background-color: #0a6638;
+  }
+}
+
+.TabsTrigger {
+  font-family: inherit;
+  background-color: transparent;
+  padding: 6px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-light-100);
+  border: 1px solid var(--color-dark-500);
+  border-right: none;
+  border-radius: 2px 0 0 2px;
+  cursor: pointer;
+
+  &:not(:first-child) {
+    border: 1px solid var(--color-dark-500);
+    border-radius: 0;
+  }
+
+  &:last-child {
+    border-radius: 0 2px 2px 0;
+  }
+
+
+  &:hover {
+    background-color: var(--color-dark-500);
+    border: 1px solid var(--color-dark-100);
+
+    .TabsTitle{
+      color: var(--color-light-900);
+      cursor: pointer;
+    }
+
+    & + :nth-child(2) {
+      border-left: none;
+    }
+  }
+
+  &.TabsTrigger[data-state='active'] {
+    background-color: var(--color-accent-500);
+    border-color: var(--color-accent-500);
+  }
+
+  &:focus-visible {
+
+    &.TabsTrigger[data-state='active'] {
+      background-color: var(--color-dark-700);
+      outline: 2px solid var(--color-info-900);
+      border: transparent;
+    }
+
+    & + :nth-child(2) {
+      border-left: none;
+    }
+  }
+
+  &:disabled {
+    pointer-events: none;
+    background-color: var(--color-dark-700);
+    border: 1px solid var(--color-dark-300);
+
+    .TabsTitle{
+      color: var(--color-dark-300);
+    }
+  }
+}
+
