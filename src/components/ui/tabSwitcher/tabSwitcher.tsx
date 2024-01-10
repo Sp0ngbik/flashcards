@@ -6,11 +6,12 @@ import s from './tabSwitcher.module.scss'
 type TabType = {
   className?: string
   disabled?: boolean
+  onValueChange?: (value: string) => void
   title?: string
   value?: string
 }
 
-export type TabsProps = {
+type TabsProps = {
   tabs: TabType[]
 }
 
