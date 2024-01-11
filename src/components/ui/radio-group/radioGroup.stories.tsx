@@ -1,5 +1,3 @@
-import { useRef } from 'react'
-
 import { Meta, StoryObj } from '@storybook/react'
 
 import { RadioGroup } from './radioGroup'
