@@ -9,11 +9,21 @@ export type TextFieldProps<T extends ElementType = 'input'> = {
   className?: string
   disabled?: boolean
   error?: boolean
+  errorMessage?: string
+  label?: string
   variant?: 'password' | 'search' | 'text'
 } & ComponentPropsWithoutRef<T>
 
 const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>((props, forwardRef) => {
-  const { className, disabled = false, error = false, variant = 'text', ...rest } = props
+  const {
+    className,
+    disabled = false,
+    error = false,
+    errorMessage = 'Error!',
+    label = 'Input',
+    variant = 'text',
+    ...rest
+  } = props
   const [passwordVisibility, setPasswordVisibility] = useState(false)
   const searchVariant = variant === 'search'
   const passwordVariant = variant === 'password'
@@ -22,9 +32,9 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>((props, for
   }
   const placeholderValidator = () => {
     if (searchVariant) {
-      return 'Input search'
+      return errorMessage || 'Input search'
     } else if (error) {
-      return 'Error'
+      return errorMessage || 'Error'
     } else {
       return 'Input'
     }
@@ -37,7 +47,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>((props, for
           className={`${s.textField_label} ${disabled && s.textField_label_disabled}`}
           variant={'body2'}
         >
-          Input
+          {label}
         </Typography>
       )}
       <div className={s[variant]}>
@@ -79,7 +89,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>((props, for
       </div>
       {error && (
         <Typography className={s.errorMessage} variant={'error'}>
-          Error!
+          {errorMessage}
         </Typography>
       )}
     </div>
