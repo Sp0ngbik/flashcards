@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, useState } from 'react'
+import { ComponentPropsWithoutRef, forwardRef, useState } from 'react'
 
 import { ArrowDown, ArrowUp } from '@/assets'
 import { SelectItem } from '@/components/ui/select/selectItem'
@@ -16,57 +16,65 @@ type Props = {
   options: string[]
 } & ComponentPropsWithoutRef<typeof SelectRadix.Root>
 
-export const Select = ({
-  className,
-  classNameItem,
-  disabled = false,
-  label,
-  options = [],
-  ...props
-}: Props) => {
-  const [state, setState] = useState(false)
+export const Select = forwardRef<HTMLButtonElement, Props>(
+  ({ className, classNameItem, disabled = false, label, options = [], ...props }, ref) => {
+    const [state, setState] = useState(false)
+    // const refSelect = useRef<HTMLButtonElement>(null)
+    //
+    // useImperativeHandle(
+    //   ref,
+    //   (): any => {
+    //     return {
+    //       value() {
+    //         refSelect.current?.children[0].textContent
+    //       },
+    //     }
+    //   },
+    //   []
+    // )
 
-  return (
-    <div className={s.selectWrapper}>
-      <Typography
-        className={`${s.selectLabel} ${disabled && s.selectLabelDisabled}`}
-        variant={'body2'}
-      >
-        {label}
-      </Typography>
-      <SelectRadix.Root
-        defaultValue={options[0]}
-        disabled={disabled}
-        onOpenChange={open => setState(open)}
-        {...props}
-      >
-        <SelectRadix.Trigger className={`${s.selectTrigger} ${className}`}>
-          <SelectRadix.Value placeholder={options[0]} />
-          <SelectRadix.Icon asChild>
-            {state ? <ArrowUp className={s.arrow} /> : <ArrowDown className={s.arrow} />}
-          </SelectRadix.Icon>
-        </SelectRadix.Trigger>
-        <SelectRadix.Portal>
-          <SelectRadix.Content
-            align={'start'}
-            className={s.selectContent}
-            position={'popper'}
-            side={'bottom'}
-          >
-            <SelectRadix.Viewport>
-              <SelectRadix.Group className={s.selectGroup}>
-                {options.map((el, index) => (
-                  <SelectItem
-                    className={`${s.selectItem} ${classNameItem}`}
-                    key={index}
-                    value={el}
-                  />
-                ))}
-              </SelectRadix.Group>
-            </SelectRadix.Viewport>
-          </SelectRadix.Content>
-        </SelectRadix.Portal>
-      </SelectRadix.Root>
-    </div>
-  )
-}
+    return (
+      <div className={s.selectWrapper}>
+        <Typography
+          className={`${s.selectLabel} ${disabled && s.selectLabelDisabled}`}
+          variant={'body2'}
+        >
+          {label}
+        </Typography>
+        <SelectRadix.Root
+          defaultValue={options[0]}
+          disabled={disabled}
+          onOpenChange={open => setState(open)}
+          {...props}
+        >
+          <SelectRadix.Trigger className={`${s.selectTrigger} ${className}`} ref={ref}>
+            <SelectRadix.Value placeholder={options[0]} />
+            <SelectRadix.Icon asChild>
+              {state ? <ArrowUp className={s.arrow} /> : <ArrowDown className={s.arrow} />}
+            </SelectRadix.Icon>
+          </SelectRadix.Trigger>
+          <SelectRadix.Portal>
+            <SelectRadix.Content
+              align={'start'}
+              className={s.selectContent}
+              position={'popper'}
+              side={'bottom'}
+            >
+              <SelectRadix.Viewport>
+                <SelectRadix.Group className={s.selectGroup}>
+                  {options.map((el, index) => (
+                    <SelectItem
+                      className={`${s.selectItem} ${classNameItem}`}
+                      key={index}
+                      value={el}
+                    />
+                  ))}
+                </SelectRadix.Group>
+              </SelectRadix.Viewport>
+            </SelectRadix.Content>
+          </SelectRadix.Portal>
+        </SelectRadix.Root>
+      </div>
+    )
+  }
+)

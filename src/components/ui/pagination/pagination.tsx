@@ -16,6 +16,8 @@ type Props = {
 
 const Pagination = (props: Props) => {
   const [currentPage, setCurrentPage] = useState(6)
+  // const ref: RefObject<HTMLButtonElement> = useRef(null)
+  ////+ disable arrows
   const { pageSize, totalElements } = props
   const totalCount = Math.ceil(totalElements / pageSize)
   const startIndex = 1
@@ -179,6 +181,7 @@ const Pagination = (props: Props) => {
           className={s.paginationSelect}
           classNameItem={s.paginationSelectItem}
           options={['10', '20', '30', '100']}
+          // ref={ref}
         />
         на странице
       </Typography>
