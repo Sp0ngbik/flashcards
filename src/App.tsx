@@ -1,16 +1,11 @@
-import { Button } from '@/components/ui/button/button'
-import { Header } from '@/components/ui/header'
-import { RadioGroup } from '@/components/ui/radio-group'
-
-import { Pagination } from './components/ui/pagination'
+import Pagination from '@/components/ui/pagination/pagination'
+import { Select } from '@/components/ui/select'
 
 function App() {
   return (
     <div>
-      <Header isLoggedIn />
-      <Button variant={'primary'}>Hello</Button>
-      <RadioGroup options={['sad', 'dsa', 'ss', 'dd1']} />
-      <Pagination />
+      <Pagination pageSize={25} siblings={2} totalElements={350} />
+      <Select options={['10223', '20', '30']} />
     </div>
   )
 }
