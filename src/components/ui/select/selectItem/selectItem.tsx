@@ -7,10 +7,10 @@ type ItemProps = {
   value: string
 }
 export const SelectItem = React.forwardRef<ElementRef<typeof SelectRadix.Item>, ItemProps>(
-  ({ value, ...props }, forwardedRef) => {
+  ({ value, ...props }, ref) => {
     return (
-      <SelectRadix.Item {...props} ref={forwardedRef} value={value}>
-        <SelectRadix.ItemText>{value}</SelectRadix.ItemText>
+      <SelectRadix.Item {...props} value={value}>
+        <SelectRadix.ItemText ref={ref}>{value}</SelectRadix.ItemText>
       </SelectRadix.Item>
     )
   }
