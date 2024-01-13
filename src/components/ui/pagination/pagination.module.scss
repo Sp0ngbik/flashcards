@@ -1,20 +1,20 @@
-.paginationWrapper {
+.pagination_container {
   display: flex;
   align-items: center;
-  width: 100%;
-  max-width: 535px;
+  color: var(--color-light-100);
 
-  & > button {
-    width: 24px;
+  .pagination_item {
+    display: flex;
+    place-content: center;
+    place-items: center;
+
+    min-width: 24px;
     height: 24px;
     margin: 0 12px;
 
-    font-size: var(--font-size-xs);
-    color: var(--color-light-100);
+    font-size: 14px;
     text-align: center;
 
-    background-color: inherit;
-    border: none;
     border-radius: 2px;
 
     &:hover {
@@ -26,6 +26,8 @@
 }
 
 .dots {
+  min-width: 24px;
+  height: 24px;
   margin: 0 12px;
   fill: var(--color-light-100);
 }
@@ -38,6 +40,16 @@
   &:hover {
     cursor: pointer;
   }
+}
+
+.selected {
+  color: var(--color-dark-900);
+  background-color: var(--color-light-100);
+}
+
+.disabled {
+  pointer-events: none;
+  fill: var(--color-dark-100);
 }
 
 .selectWrapper {
