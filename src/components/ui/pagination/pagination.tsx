@@ -8,184 +8,69 @@ import { Typography } from '@/components/ui/typography'
 
 import s from './pagination.module.scss'
 
+import { DOTS, usePagination } from './hooks/usePagination'
 type Props = {
+  className?: string
   pageSize: number
-  siblings: number
-  totalElements: number
+  selectOptions: string[]
+  siblingCount?: number
+  totalCount: number
 }
 
 const Pagination = (props: Props) => {
-  const [currentPage, setCurrentPage] = useState(6)
-  // const ref: RefObject<HTMLButtonElement> = useRef(null)
-  ////+ disable arrows
-  const { pageSize, totalElements } = props
-  const totalCount = Math.ceil(totalElements / pageSize)
-  const startIndex = 1
-  const endIndex = totalCount
+  const { className, pageSize, selectOptions, siblingCount, totalCount } = props
+  const [currentPage, setCurrentPage] = useState(1)
+  const paginationRange = usePagination({ currentPage, pageSize, siblingCount, totalCount })
 
-  const onBackward = () => {
-    setCurrentPage(currentPage - 1)
+  if (currentPage === 0 || (paginationRange && paginationRange.length < 2)) {
+    return null
   }
-
-  const onForward = () => {
+  const onNext = () => {
     setCurrentPage(currentPage + 1)
   }
-  const rangeHandler = (el: number) => {
-    if (el <= 5) {
-      return (
-        <>
-          <ArrowBackward className={s.arrow} onClick={onBackward} />
-          <button
-            onClick={() => {
-              setCurrentPage(startIndex)
-            }}
-          >
-            {startIndex}
-          </button>
-          <button
-            onClick={() => {
-              setCurrentPage(2)
-            }}
-          >
-            {2}
-          </button>
-          <button
-            onClick={() => {
-              setCurrentPage(3)
-            }}
-          >
-            {3}
-          </button>
-          <button
-            onClick={() => {
-              setCurrentPage(4)
-            }}
-          >
-            {4}
-          </button>
-          <button
-            onClick={() => {
-              setCurrentPage(5)
-            }}
-          >
-            {5}
-          </button>
-          <Dots className={s.dots} />
-          <button
-            onClick={() => {
-              setCurrentPage(endIndex)
-            }}
-          >
-            {endIndex}
-          </button>
-          <ArrowForward className={s.arrow} onClick={onForward} />
-        </>
-      )
-    } else if (el + 5 >= endIndex) {
-      return (
-        <>
-          <ArrowBackward className={s.arrow} onClick={onBackward} />
-          <button
-            onClick={() => {
-              setCurrentPage(startIndex)
-            }}
-          >
-            {startIndex}
-          </button>
-          <Dots className={s.dots} />
-          <button
-            onClick={() => {
-              setCurrentPage(endIndex - 4)
-            }}
-          >
-            {endIndex - 4}
-          </button>
-          <button
-            onClick={() => {
-              setCurrentPage(endIndex - 3)
-            }}
-          >
-            {endIndex - 3}
-          </button>
-          <button
-            onClick={() => {
-              setCurrentPage(endIndex - 2)
-            }}
-          >
-            {endIndex - 2}
-          </button>
-          <button
-            onClick={() => {
-              setCurrentPage(endIndex - 1)
-            }}
-          >
-            {endIndex - 1}
-          </button>
-          <button>{endIndex}</button>
-          <ArrowForward className={s.arrow} onClick={onForward} />
-        </>
-      )
-    } else {
-      return (
-        <>
-          <ArrowBackward className={s.arrow} onClick={onBackward} />
-          <button
-            onClick={() => {
-              setCurrentPage(startIndex)
-            }}
-          >
-            {startIndex}
-          </button>
-          <Dots className={s.dots} />
-          <button
-            onClick={() => {
-              setCurrentPage(el - 1)
-            }}
-          >
-            {el - 1}
-          </button>
-          <button
-            onClick={() => {
-              setCurrentPage(el)
-            }}
-          >
-            {el}
-          </button>
-          <button
-            onClick={() => {
-              setCurrentPage(el + 1)
-            }}
-          >
-            {el + 1}
-          </button>
-          <Dots className={s.dots} />
-          <button
-            onClick={() => {
-              setCurrentPage(endIndex)
-            }}
-          >
-            {endIndex}
-          </button>
-          <ArrowForward className={s.arrow} onClick={onForward} />
-        </>
-      )
-    }
+
+  const onPrevious = () => {
+    setCurrentPage(currentPage - 1)
   }
+  const lastPage = paginationRange?.[paginationRange.length - 1]
+  const firstPage = 1
 
   return (
-    <div className={s.paginationWrapper}>
-      <>{rangeHandler(currentPage)}</>
-      <Typography className={s.selectWrapper} variant={'body2'}>
+    <ul className={`${s.pagination_container} ${className}`}>
+      <ArrowBackward
+        className={`${s.arrow} ${currentPage === firstPage && s.disabled} `}
+        onClick={onPrevious}
+      />
+
+      {paginationRange?.map((pageNumber, index) => {
+        if (pageNumber === DOTS) {
+          return <Dots className={s.dots} key={index} />
+        }
+
+        return (
+          <li
+            className={`${s.pagination_item} ${pageNumber === currentPage && s.selected}`}
+            key={index}
+            onClick={() => setCurrentPage(Number(pageNumber))}
+          >
+            {pageNumber}
+          </li>
+        )
+      })}
+      <ArrowForward
+        className={`${s.arrow} ${currentPage === lastPage && s.disabled}`}
+        onClick={onNext}
+      />
+      <Typography as={'div'} className={s.selectWrapper} variant={'body2'}>
         Показать
         <Select
           className={s.paginationSelect}
           classNameItem={s.paginationSelectItem}
-          options={['10', '20', '30', '100']}
-          // ref={ref}
+          options={selectOptions}
         />
         на странице
       </Typography>
-    </div>
+    </ul>
   )
 }
 

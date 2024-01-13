@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, forwardRef, useState } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef, useState } from 'react'
 
 import { ArrowDown, ArrowUp } from '@/assets'
 import { SelectItem } from '@/components/ui/select/selectItem'
@@ -16,22 +16,9 @@ type Props = {
   options: string[]
 } & ComponentPropsWithoutRef<typeof SelectRadix.Root>
 
-export const Select = forwardRef<HTMLButtonElement, Props>(
-  ({ className, classNameItem, disabled = false, label, options = [], ...props }, ref) => {
+export const Select = forwardRef<ElementRef<typeof SelectRadix.Root>, Props>(
+  ({ className, classNameItem, disabled = false, label, options = [], ...props }, refSelect) => {
     const [state, setState] = useState(false)
-    // const refSelect = useRef<HTMLButtonElement>(null)
-    //
-    // useImperativeHandle(
-    //   ref,
-    //   (): any => {
-    //     return {
-    //       value() {
-    //         refSelect.current?.children[0].textContent
-    //       },
-    //     }
-    //   },
-    //   []
-    // )
 
     return (
       <div className={s.selectWrapper}>
@@ -47,7 +34,7 @@ export const Select = forwardRef<HTMLButtonElement, Props>(
           onOpenChange={open => setState(open)}
           {...props}
         >
-          <SelectRadix.Trigger className={`${s.selectTrigger} ${className}`} ref={ref}>
+          <SelectRadix.Trigger className={`${s.selectTrigger} ${className}`}>
             <SelectRadix.Value placeholder={options[0]} />
             <SelectRadix.Icon asChild>
               {state ? <ArrowUp className={s.arrow} /> : <ArrowDown className={s.arrow} />}
