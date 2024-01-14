@@ -5,7 +5,7 @@ import s from './typography.module.scss'
 export type TypographyProps<T extends ElementType = 'div'> = {
   as?: T
   className?: string
-  variant:
+  variant?:
     | 'body1'
     | 'body2'
     | 'caption'

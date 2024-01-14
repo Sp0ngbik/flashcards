@@ -36,6 +36,7 @@ button {
   border-radius: 2px;
 
   & .arrow {
+    transform-origin: center;
     fill: var(--color-light-100);
   }
 
@@ -60,16 +61,27 @@ button {
     }
   }
 
+  &[data-state='closed'] .arrow {
+    transition: all 0.3s ease-in-out;
+  }
+
   &[data-state='open'] {
+    position: relative;
     border-color: var(--color-light-100);
     border-bottom: none;
     border-radius: 2px 2px 0 0;
+
+    & .arrow {
+      transform: rotate(90deg);
+      transition: all 0.3s ease-in-out;
+    }
   }
 }
 
 .selectContent {
   overflow: hidden;
 
+  box-sizing: border-box;
   width: var(--radix-select-trigger-width);
 
   background-color: inherit;
@@ -98,4 +110,21 @@ button {
 
 .selectItem {
   padding: 6px 27px 6px 11px;
+}
+
+.paginationSelect {
+  width: 50px;
+  height: 24px;
+  padding: 0 2px 0 6px;
+
+  font-size: 14px;
+
+  background-color: var(--color-dark-700);
+}
+
+.paginationSelectItem {
+  & .selectItem {
+    padding: 0 6px;
+    font-size: 14px;
+  }
 }

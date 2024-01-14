@@ -1,9 +1,8 @@
-import { RefObject, useRef, useState } from 'react'
+import { useState } from 'react'
 
-import { ArrowBackward } from '@/assets/icons/arrow-back'
-import { ArrowForward } from '@/assets/icons/arrow-forward'
-import { Dots } from '@/assets/icons/dots'
+import { ArrowBackward, Dots } from '@/assets'
 import { Select } from '@/components/ui/select'
+import { SelectItem } from '@/components/ui/select/selectItem'
 import { Typography } from '@/components/ui/typography'
 
 import s from './pagination.module.scss'
@@ -12,18 +11,17 @@ import { DOTS, usePagination } from './hooks/usePagination'
 
 type Props = {
   className?: string
-  pageSize: number
-  selectOptions: string[]
   siblingCount?: number
   totalCount: number
 }
 
-const Pagination = (props: Props) => {
-  const { className, selectOptions, siblingCount, totalCount } = props
-  const ref: RefObject<HTMLButtonElement> = useRef(null)
-
+export const Pagination = (props: Props) => {
+  const { className, siblingCount, totalCount } = props
+  const [pageSize, setPageSize] = useState(10)
+  const onChangeValue = (value: string) => {
+    setPageSize(Number(value))
+  }
   const [currentPage, setCurrentPage] = useState(1)
-  const pageSize = Number(ref.current?.textContent || selectOptions[0])
   const paginationRange = usePagination({ currentPage, pageSize, siblingCount, totalCount })
 
   if (currentPage === 0 || (paginationRange && paginationRange.length < 2)) {
@@ -61,22 +59,21 @@ const Pagination = (props: Props) => {
           </li>
         )
       })}
-      <ArrowForward
-        className={`${s.arrow} ${currentPage === lastPage && s.disabled}`}
+      <ArrowBackward
+        className={`${s.arrow} ${s.rotateArrow} ${currentPage === lastPage && s.disabled}`}
         onClick={onNext}
       />
       <Typography as={'div'} className={s.selectWrapper} variant={'body2'}>
         Показать
-        <Select
-          className={s.paginationSelect}
-          classNameItem={s.paginationSelectItem}
-          options={selectOptions}
-          ref={ref}
-        />
+        <Select defaultValue={'10'} onValueChange={onChangeValue} variant={'pagination'}>
+          <SelectItem value={'10'}>10</SelectItem>
+          <SelectItem value={'20'}>20</SelectItem>
+          <SelectItem value={'30'}>30</SelectItem>
+          <SelectItem value={'50'}>50</SelectItem>
+          <SelectItem value={'100'}>100</SelectItem>
+        </Select>
         на странице
       </Typography>
     </ul>
   )
 }
-
-export default Pagination

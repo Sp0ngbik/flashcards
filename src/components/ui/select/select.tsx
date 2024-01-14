@@ -1,7 +1,6 @@
-import { ComponentPropsWithoutRef, useState } from 'react'
+import { ComponentPropsWithoutRef } from 'react'
 
-import { ArrowDown, ArrowUp } from '@/assets'
-import { SelectItem } from '@/components/ui/select/selectItem'
+import { ArrowDown } from '@/assets'
 import { Typography } from '@/components/ui/typography'
 import * as SelectRadix from '@radix-ui/react-select'
 
@@ -9,23 +8,19 @@ import s from './select.module.scss'
 
 type Props = {
   className?: string
-  classNameItem?: string //убрать
-  defaultOpen?: boolean
-  disabled?: boolean
   label?: string
-  options: string[]
+  placeholder?: string
+  variant?: 'pagination' | 'primary'
 } & ComponentPropsWithoutRef<typeof SelectRadix.Root>
-///убрать лишние пропсы
 export const Select = ({
+  children,
   className,
-  classNameItem,
   disabled = false,
   label,
-  options = [],
+  placeholder,
+  variant = 'primary',
   ...props
 }: Props) => {
-  const [state, setState] = useState(false)
-
   return (
     <div className={s.selectWrapper}>
       <Typography
@@ -34,16 +29,15 @@ export const Select = ({
       >
         {label}
       </Typography>
-      <SelectRadix.Root
-        defaultValue={options[0]}
-        disabled={disabled}
-        onOpenChange={open => setState(open)}
-        {...props}
-      >
-        <SelectRadix.Trigger className={`${s.selectTrigger} ${className}`}>
-          <SelectRadix.Value placeholder={options[0]} />
+      <SelectRadix.Root disabled={disabled} {...props}>
+        <SelectRadix.Trigger
+          className={`${s.selectTrigger} ${
+            variant === 'pagination' && s.paginationSelect
+          } ${className}`}
+        >
+          <SelectRadix.Value placeholder={placeholder} />
           <SelectRadix.Icon asChild>
-            {state ? <ArrowUp className={s.arrow} /> : <ArrowDown className={s.arrow} />}
+            <ArrowDown className={s.arrow} />
           </SelectRadix.Icon>
         </SelectRadix.Trigger>
         <SelectRadix.Portal>
@@ -54,14 +48,10 @@ export const Select = ({
             side={'bottom'}
           >
             <SelectRadix.Viewport>
-              <SelectRadix.Group className={s.selectGroup}>
-                {options.map((el, index) => (
-                  <SelectItem
-                    className={`${s.selectItem} ${classNameItem}`}
-                    key={index}
-                    value={el}
-                  />
-                ))}
+              <SelectRadix.Group
+                className={`${s.selectGroup} ${variant === 'pagination' && s.paginationSelectItem}`}
+              >
+                {children}
               </SelectRadix.Group>
             </SelectRadix.Viewport>
           </SelectRadix.Content>

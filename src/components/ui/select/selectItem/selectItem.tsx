@@ -1,21 +1,21 @@
-import React, { ElementRef } from 'react'
+import React, { ComponentPropsWithoutRef, ElementRef } from 'react'
 
 import * as SelectRadix from '@radix-ui/react-select'
 
-type ItemProps = {
-  className?: string
-  value: string
-}
+import s from '../select.module.scss'
+
+type ItemProps = ComponentPropsWithoutRef<typeof SelectRadix.Item>
 export const SelectItem = React.forwardRef<ElementRef<typeof SelectRadix.Item>, ItemProps>(
-  ({ value, ...props }, ref) => {
+  ({ children, value, ...props }, ref) => {
     return (
-      <SelectRadix.Item {...props} value={value}>
-        <SelectRadix.ItemText ref={ref}>{value}</SelectRadix.ItemText>
+      <SelectRadix.Item
+        {...props}
+        className={`${s.selectItem} 
+        `}
+        value={value}
+      >
+        <SelectRadix.ItemText ref={ref}>{children}</SelectRadix.ItemText>
       </SelectRadix.Item>
     )
   }
 )
-//label value
-///сделать как через  <select>
-// <options>s</options
-// </select>
