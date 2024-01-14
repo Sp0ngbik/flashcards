@@ -6,7 +6,6 @@ import s from './button.module.scss'
 
 export type ButtonProps<T extends ElementType = 'button'> = {
   as?: T
-  className?: string
   fullWidth?: boolean
   icon?: boolean
   variant?: 'link' | 'primary' | 'secondary' | 'tertiary'
@@ -28,7 +27,7 @@ export const Button = <T extends ElementType = 'button'>(
     <div className={s.buttonWrapper}>
       {icon && <LogOut className={s.logout} />}
       <Component
-        className={`${s.button} ${s[variant]} ${fullWidth && s.fullWidth} 
+        className={`${s.button} ${s[variant]} ${fullWidth && s.fullWidth}
         ${icon && s.wihIcon} ${className}`}
         {...rest}
       />

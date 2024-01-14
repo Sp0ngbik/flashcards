@@ -15,3 +15,7 @@ export const SelectItem = React.forwardRef<ElementRef<typeof SelectRadix.Item>, 
     )
   }
 )
+//label value
+///сделать как через  <select>
+// <options>s</options
+// </select>

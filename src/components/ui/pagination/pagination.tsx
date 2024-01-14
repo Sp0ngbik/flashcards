@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { RefObject, useRef, useState } from 'react'
 
 import { ArrowBackward } from '@/assets/icons/arrow-back'
 import { ArrowForward } from '@/assets/icons/arrow-forward'
@@ -9,6 +9,7 @@ import { Typography } from '@/components/ui/typography'
 import s from './pagination.module.scss'
 
 import { DOTS, usePagination } from './hooks/usePagination'
+
 type Props = {
   className?: string
   pageSize: number
@@ -18,8 +19,11 @@ type Props = {
 }
 
 const Pagination = (props: Props) => {
-  const { className, pageSize, selectOptions, siblingCount, totalCount } = props
+  const { className, selectOptions, siblingCount, totalCount } = props
+  const ref: RefObject<HTMLButtonElement> = useRef(null)
+
   const [currentPage, setCurrentPage] = useState(1)
+  const pageSize = Number(ref.current?.textContent || selectOptions[0])
   const paginationRange = usePagination({ currentPage, pageSize, siblingCount, totalCount })
 
   if (currentPage === 0 || (paginationRange && paginationRange.length < 2)) {
@@ -67,6 +71,7 @@ const Pagination = (props: Props) => {
           className={s.paginationSelect}
           classNameItem={s.paginationSelectItem}
           options={selectOptions}
+          ref={ref}
         />
         на странице
       </Typography>
