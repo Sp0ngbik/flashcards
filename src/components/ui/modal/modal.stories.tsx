@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Modal } from '@/components/ui/modal/modal'
 import { Select } from '@/components/ui/select'
+import { SelectItem } from '@/components/ui/select/selectItem'
 import TextField from '@/components/ui/textField/textField'
 import { Typography } from '@/components/ui/typography'
 import { Meta, StoryObj } from '@storybook/react'
@@ -81,7 +82,11 @@ export const ModalWithContentWithChildrens: Story = {
   args: {
     children: (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '100%' }}>
-        <Select options={['Vlad', 'Vadim', 'Serega']} value={'Select'} />
+        <Select value={'Select'}>
+          <SelectItem value={'vlad'}>Vlad</SelectItem>
+          <SelectItem value={'vadim'}>Vadim</SelectItem>
+          <SelectItem value={'serega'}>Serega</SelectItem>
+        </Select>
         <TextField></TextField>
         <Checkbox checked={false} text={'Check me'} />
         <Checkbox checked />
@@ -104,7 +109,11 @@ export const ModalWithFullContent: Story = {
   args: {
     children: (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '100%' }}>
-        <Select options={['Vlad', 'Vadim', 'Serega']} value={'Select'} />
+        <Select value={'Select'}>
+          <SelectItem value={'vlad'}>Vlad</SelectItem>
+          <SelectItem value={'vadim'}>Vadim</SelectItem>
+          <SelectItem value={'serega'}>Serega</SelectItem>
+        </Select>
         <TextField />
         <Checkbox checked={false} text={'Check me'} />
         <Checkbox checked />

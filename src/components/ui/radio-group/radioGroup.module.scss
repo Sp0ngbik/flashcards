@@ -3,10 +3,6 @@ button {
 }
 
 .radioGroupRoot {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-
   & .label {
     padding-left: 12px;
     font-size: 15px;
@@ -23,9 +19,10 @@ button {
   }
 }
 
-.radioButtonBlock {
+.radioItemBlock {
   display: flex;
   align-items: center;
+  margin: 16px 0;
 
   & .radioGroupItem {
     width: 16px;
@@ -62,12 +59,6 @@ button {
       &:focus {
         box-shadow: none;
       }
-    }
-  }
-
-  &:active {
-    & .radioGroupItem {
-      box-shadow: 0 0 0 6px var(--color-accent-900);
     }
   }
 }

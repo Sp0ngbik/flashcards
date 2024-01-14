@@ -24,7 +24,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const SelectPrimary: Story = {
-  args: { defaultValue: '1' },
+  args: {},
   render: () => {
     return (
       <Select defaultValue={'1'}>
