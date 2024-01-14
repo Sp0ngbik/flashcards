@@ -6,9 +6,7 @@ import { Typography } from '@/components/ui/typography'
 import s from './textField.module.scss'
 
 export type TextFieldProps<T extends ElementType = 'input'> = {
-  className?: string
   disabled?: boolean
-  error?: boolean
   errorMessage?: string
   label?: string
   variant?: 'password' | 'search' | 'text'
@@ -18,8 +16,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>((props, for
   const {
     className,
     disabled = false,
-    error = false,
-    errorMessage = 'Error!',
+    errorMessage = '',
     label = 'Input',
     variant = 'text',
     ...rest
@@ -29,15 +26,6 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>((props, for
   const passwordVariant = variant === 'password'
   const changePasswordVision = () => {
     setPasswordVisibility(!passwordVisibility)
-  }
-  const placeholderValidator = () => {
-    if (searchVariant) {
-      return errorMessage || 'Input search'
-    } else if (error) {
-      return errorMessage || 'Error'
-    } else {
-      return 'Input'
-    }
   }
 
   return (
@@ -52,10 +40,10 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>((props, for
       )}
       <div className={s[variant]}>
         <input
-          className={`${s.textField}  ${error && s.textField_error}  ${className}`}
+          className={`${s.textField}  ${errorMessage && s.textField_error}  ${className}`}
           disabled={disabled}
           name={'textField'}
-          placeholder={placeholderValidator()}
+          // placeholder={placeholderValidator()}
           ref={forwardRef}
           type={passwordVisibility ? 'text' : variant}
           {...rest}
@@ -80,14 +68,14 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>((props, for
         <div>
           {searchVariant && (
             <SearchOutline
-              className={`${s.searchIcon} ${error && s.searchIcon_error} ${
+              className={`${s.searchIcon} ${errorMessage && s.searchIcon_error} ${
                 disabled && s.searchIcon_disabled
               }`}
             />
           )}
         </div>
       </div>
-      {error && (
+      {errorMessage && (
         <Typography className={s.errorMessage} variant={'error'}>
           {errorMessage}
         </Typography>

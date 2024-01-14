@@ -8,10 +8,6 @@ const meta = {
       control: { type: 'radio' },
       options: [true, false],
     },
-    error: {
-      control: { type: 'radio' },
-      options: [true, false],
-    },
 
     variant: {
       control: { type: 'radio' },
@@ -35,9 +31,9 @@ export const PrimaryInput: Story = {
 }
 export const PrimaryError: Story = {
   args: {
-    error: true,
     errorMessage: 'Primary Error',
     label: 'Primary Error',
+    placeholder: 'Primary input',
     variant: 'text',
   },
 }
@@ -58,7 +54,6 @@ export const PasswordInput: Story = {
 }
 export const PasswordError: Story = {
   args: {
-    error: true,
     errorMessage: 'Wrong password',
     label: 'Password Error',
     placeholder: 'Password Error',
@@ -82,7 +77,7 @@ export const SearchInput: Story = {
 }
 export const SearchError: Story = {
   args: {
-    error: true,
+    errorMessage: 'Search error',
     label: 'Search Error',
     placeholder: 'Search Error',
     variant: 'search',

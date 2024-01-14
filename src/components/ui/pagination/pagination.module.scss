@@ -33,6 +33,7 @@
 }
 
 .arrow {
+  transform-origin: center;
   width: 15px;
   height: 24px;
   fill: var(--color-light-100);
@@ -40,6 +41,11 @@
   &:hover {
     cursor: pointer;
   }
+}
+
+.rotateArrow {
+  transform-origin: center;
+  transform: rotate(90deg);
 }
 
 .selected {
@@ -61,20 +67,4 @@
 
   font-size: 14px;
   white-space: nowrap;
-}
-
-.paginationSelect {
-  width: 50px;
-  height: 24px;
-  padding: 0 2px 0 6px;
-
-  font-size: 14px;
-
-  background-color: var(--color-dark-700);
-}
-
-.paginationSelectItem {
-  padding: 0 6px;
-  font-size: 14px;
-  background-color: var(--color-dark-700);
 }
