@@ -2,7 +2,7 @@ import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
 import s from './table.module.scss'
 
-export const Table = forwardRef<HTMLTableElement, ComponentPropsWithoutRef<'table'>>(
+export const Table = forwardRef<ElementRef<'table'>, ComponentPropsWithoutRef<'table'>>(
   (props, ref) => {
     const { className, ...rest } = props
 

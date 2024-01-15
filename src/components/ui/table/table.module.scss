@@ -26,10 +26,10 @@
   &:last-child {
     text-align: right;
   }
+}
 
-  span {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+.tableDataContent {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
