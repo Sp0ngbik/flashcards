@@ -4,20 +4,16 @@ import * as RadioGroupRadix from '@radix-ui/react-radio-group'
 
 import s from './radioGroup.module.scss'
 
-type Props = {
-  className?: string
-} & ComponentPropsWithoutRef<typeof RadioGroupRadix.Root>
+export type RadioGroupProps = ComponentPropsWithoutRef<typeof RadioGroupRadix.Root>
 
-export const RadioGroup = forwardRef<ElementRef<typeof RadioGroupRadix.Root>, Props>(
+export const RadioGroup = forwardRef<ElementRef<typeof RadioGroupRadix.Root>, RadioGroupProps>(
   (props, ref) => {
     return (
-      <form className={s.formGroup}>
-        <RadioGroupRadix.Root className={s.radioGroupRoot} {...props}>
-          <div className={s.radioButtonBlock} ref={ref}>
-            {props.children}
-          </div>
-        </RadioGroupRadix.Root>
-      </form>
+      <RadioGroupRadix.Root className={s.radioGroupRoot} {...props}>
+        <div className={`${s.radioButtonBlock} ${s.formGroup}`} ref={ref}>
+          {props.children}
+        </div>
+      </RadioGroupRadix.Root>
     )
   }
 )

@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '-':
+    specifier: ^0.0.1
+    version: 0.0.1
   '@fontsource/roboto':
     specifier: ^5.0.8
     version: 5.0.8
@@ -132,6 +135,10 @@ devDependencies:
     version: 5.0.10(@types/node@20.10.6)(sass@1.69.7)
 
 packages:
+
+  /-@0.0.1:
+    resolution: {integrity: sha512-3HfneK3DGAm05fpyj20sT3apkNcvPpCuccOThOPdzz8sY7GgQGe0l93XH9bt+YzibcTIgUAIMoyVJI740RtgyQ==}
+    dev: false
 
   /@aashutoshrathi/word-wrap@1.2.6:
     resolution: {integrity: sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==}
