@@ -3,9 +3,9 @@ export type FormValuesSignUp = z.infer<typeof signUpSchema>
 
 export const signUpSchema = z
   .object({
-    confirmPassword: z.string().min(4),
+    confirmPassword: z.string().min(3),
     email: z.string().email(),
-    password: z.string().min(4),
+    password: z.string().min(3),
   })
   .superRefine(({ confirmPassword, password }, ctx) => {
     if (confirmPassword !== password) {
