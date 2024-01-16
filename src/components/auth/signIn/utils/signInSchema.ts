@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export type FormValues = z.infer<typeof signInSchema>
+export type FormValuesSignIn = z.infer<typeof signInSchema>
 
 export const signInSchema = z.object({
   email: z.string().email(),
