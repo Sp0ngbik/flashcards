@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { Typography } from '@/components/ui/typography'
 import * as Slider from '@radix-ui/react-slider'
 
@@ -7,17 +9,17 @@ export type DoubleSliderProps = {
   max?: number
   min?: number
   minStepsBetweenThumbs?: number
-  onChange?: (value: number[]) => void
   step?: number
   value?: number[]
 }
 export const DoubleSlider = (props: DoubleSliderProps) => {
-  const { defaultValue, max, min, minStepsBetweenThumbs, onChange, step, value } = props
+  const { defaultValue, max, min, minStepsBetweenThumbs, step, value } = props
+  const [currentValue, setCurrentValue] = useState(defaultValue)
 
   return (
     <div className={s.container}>
       <Typography as={'span'} className={s.value} variant={'body1'}>
-        {defaultValue[0]}
+        {currentValue[0]}
       </Typography>
       <Slider.Root
         className={s.slider}
@@ -25,7 +27,7 @@ export const DoubleSlider = (props: DoubleSliderProps) => {
         max={max}
         min={min}
         minStepsBetweenThumbs={minStepsBetweenThumbs}
-        onValueChange={onChange}
+        onValueChange={setCurrentValue}
         step={step}
         value={value}
       >
@@ -36,8 +38,8 @@ export const DoubleSlider = (props: DoubleSliderProps) => {
         <Slider.Thumb aria-label={'Volume'} className={s.sliderThumb} />
       </Slider.Root>
       <Typography as={'span'} className={s.value} variant={'body1'}>
-        {defaultValue[1]}
-      </Typography>{' '}
+        {currentValue[1]}
+      </Typography>
     </div>
   )
 }

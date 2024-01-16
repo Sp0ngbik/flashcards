@@ -14,8 +14,8 @@ type Story = StoryObj<typeof meta>
 
 export const SliderOwn: Story = {
   args: {
-    defaultValue: [1, 3],
-    max: 10,
+    defaultValue: [1, 39],
+    max: 61,
     min: 1,
     minStepsBetweenThumbs: 1,
   },
