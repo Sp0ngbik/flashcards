@@ -2,8 +2,10 @@ import { useForm } from 'react-hook-form'
 
 import { LoginForm } from '@/components/auth/login-form/login-form'
 import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
 import { RadioGroupControlled } from '@/components/ui/controlled/radioGroupControlled'
 import { RadioItem } from '@/components/ui/radio-group/radioItem'
+import TextField from '@/components/ui/textField/textField'
 
 import { Pagination } from './components/ui/pagination'
 
@@ -29,6 +31,10 @@ function App() {
           <Button>S</Button>
         </form>
       </div>
+      <Card>
+        <TextField />
+        <TextField />
+      </Card>
     </div>
   )
 }
