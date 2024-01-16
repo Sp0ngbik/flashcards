@@ -11,7 +11,7 @@
   }
 
   & .textField {
-    min-width: 284px;
+    width: 100%;
     padding: 6px 0 6px 12px;
 
     background-color: inherit;
@@ -124,7 +124,7 @@
     & .passwordEyeIcon {
       position: absolute;
       top: 4px;
-      left: 258px;
+      right: 12px;
 
       width: 20px;
 
