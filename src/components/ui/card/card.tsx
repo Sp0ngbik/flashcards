@@ -7,5 +7,9 @@ type Props = {
 }
 
 export const Card = ({ children }: Props) => {
-  return <div className={s.card}>{children}</div>
+  return (
+    <div className={s.card}>
+      <div className={s.cardItems}>{children}</div>
+    </div>
+  )
 }
