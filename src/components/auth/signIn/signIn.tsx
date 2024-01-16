@@ -46,12 +46,23 @@ export const SignIn = () => {
           placeholder={'Password'}
           variant={'password'}
         />
-        <CheckboxControlled control={control} name={'rememberMe'} text={'Remember me'} />
-        <Typography variant={'body2'}>Forgot Password?</Typography>
+        <CheckboxControlled
+          className={s.rememberMe}
+          control={control}
+          name={'rememberMe'}
+          text={'Remember me'}
+        />
+        <Typography className={s.forgotPassword} variant={'body2'}>
+          Forgot Password?
+        </Typography>
         <Button fullWidth>Sign In</Button>
-        <Typography variant={'body2'}>Don&apos;t have an account?</Typography>
-        <Button variant={'link'}>Sign Up</Button>
       </form>
+      <Typography className={s.formQuestion} variant={'body2'}>
+        Don&apos;t have an account?
+      </Typography>
+      <Button className={s.submitButton} variant={'link'}>
+        Sign Up
+      </Button>
     </Card>
   )
 }
