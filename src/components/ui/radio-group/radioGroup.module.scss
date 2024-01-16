@@ -34,10 +34,12 @@ button {
 
     &:hover {
       cursor: pointer;
+      background-color: var(--color-dark-500);
       box-shadow: 0 0 0 6px var(--color-dark-500);
     }
 
     &:focus {
+      background-color: var(--color-dark-700);
       box-shadow: 0 0 0 6px var(--color-dark-700);
     }
 

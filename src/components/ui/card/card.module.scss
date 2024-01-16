@@ -13,4 +13,8 @@
   padding: 33px 36px 25px;
 
   background-color: var(--color-dark-700);
+
+  & .cardItems {
+    width: 100%;
+  }
 }
