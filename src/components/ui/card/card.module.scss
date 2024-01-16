@@ -1,5 +1,11 @@
-.card{
-  width: 420px;
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  max-width: 420px;
   height: 552px;
-  background-color: var(--color-dark-500);
+  padding: 33px 36px 25px;
+
+  background-color: var(--color-dark-700);
 }
