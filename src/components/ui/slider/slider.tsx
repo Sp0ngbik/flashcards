@@ -7,6 +7,7 @@ import s from './slider.module.scss'
 export type DoubleSliderProps = ComponentPropsWithoutRef<typeof Slider.Root>
 export const DoubleSlider = (props: DoubleSliderProps) => {
   const { defaultValue = [1, 15], ...rest } = props
+
   const [currentValue, setCurrentValue] = useState(defaultValue)
 
   return (
