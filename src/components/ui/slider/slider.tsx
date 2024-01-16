@@ -14,7 +14,6 @@ export type DoubleSliderProps = {
 }
 export const DoubleSlider = (props: DoubleSliderProps) => {
   const { defaultValue, max, min, minStepsBetweenThumbs, step, value } = props
-
   const [currentValue, setCurrentValue] = useState(defaultValue)
 
   return (
@@ -40,7 +39,7 @@ export const DoubleSlider = (props: DoubleSliderProps) => {
       </Slider.Root>
       <Typography as={'span'} className={s.value} variant={'body1'}>
         {currentValue[1]}
-      </Typography>{' '}
+      </Typography>
     </div>
   )
 }
