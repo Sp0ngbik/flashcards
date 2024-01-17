@@ -6,7 +6,6 @@ import { Typography } from '@/components/ui/typography'
 import s from './textField.module.scss'
 
 export type TextFieldProps<T extends ElementType = 'input'> = {
-  disabled?: boolean
   errorMessage?: string
   label?: string
   variant?: 'password' | 'search' | 'text'
@@ -29,7 +28,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>((props, for
   }
 
   return (
-    <div className={s.textField_container}>
+    <div className={`${s.textField_container} ${className}`}>
       {!searchVariant && (
         <Typography
           className={`${s.textField_label} ${disabled && s.textField_label_disabled}`}
@@ -40,10 +39,9 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>((props, for
       )}
       <div className={s[variant]}>
         <input
-          className={`${s.textField}  ${errorMessage && s.textField_error}  ${className}`}
+          className={`${s.textField}  ${errorMessage && s.textField_error}  `}
           disabled={disabled}
-          name={'textField'}
-          // placeholder={placeholderValidator()}
+          name={'textFieldControlled'}
           ref={forwardRef}
           type={passwordVisibility ? 'text' : variant}
           {...rest}

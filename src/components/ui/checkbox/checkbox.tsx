@@ -1,3 +1,5 @@
+import { forwardRef } from 'react'
+
 import { Check } from '@/assets'
 import { Typography } from '@/components/ui/typography'
 import * as CheckboxRadix from '@radix-ui/react-checkbox'
@@ -8,11 +10,12 @@ export type CheckboxProps = {
   checked?: boolean
   className?: string
   disabled?: boolean
+  onValueChange?: (value: boolean) => void
   text?: string
 }
 
-export const Checkbox = (props: CheckboxProps) => {
-  const { checked = true, className, disabled = false, text, ...rest } = props
+export const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>((props, ref) => {
+  const { checked = true, className, disabled = false, onValueChange, text, ...rest } = props
 
   return (
     <div className={`${s.Container} ${className}`} {...rest}>
@@ -21,8 +24,9 @@ export const Checkbox = (props: CheckboxProps) => {
         className={s.CheckboxRoot}
         disabled={disabled}
         id={'c1'}
+        onCheckedChange={onValueChange}
       >
-        <CheckboxRadix.Indicator className={s.CheckboxIndicator}>
+        <CheckboxRadix.Indicator className={s.CheckboxIndicator} ref={ref}>
           <Check />
         </CheckboxRadix.Indicator>
       </CheckboxRadix.Root>
@@ -38,4 +42,4 @@ export const Checkbox = (props: CheckboxProps) => {
       )}
     </div>
   )
-}
+})
