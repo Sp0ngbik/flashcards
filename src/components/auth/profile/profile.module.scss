@@ -1,0 +1,83 @@
+.profileLabel {
+  text-align: center;
+}
+
+.profileBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 27px;
+  margin-bottom: 16px;
+}
+
+.profileWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profileImg {
+  width: 96px;
+  height: 96px;
+  margin-bottom: 6px;
+}
+
+.photoWrapper {
+  position: relative;
+  z-index: 1;
+}
+
+.userEmail {
+  color: var(--color-dark-100);
+  margin-bottom: 13px;
+}
+
+.logoutBtn {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.logoutIcon {
+  fill: white;
+  height: 16px;
+  width: 16px;
+}
+
+.profileName {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profileEditNameBtn {
+  &:hover {
+    cursor: pointer;
+    background-color: var(--color-dark-100);
+    border-radius: 4px;
+
+  }
+}
+
+.profileEditImgBtn {
+  position: absolute;
+  bottom: 15px;
+  right: -5px;
+  padding: 4px 4px 0 4px;
+  border-radius: 4px;
+  background-color: var(--color-dark-300);
+  z-index: 2;
+
+  &:hover {
+    cursor: pointer;
+    background-color: var(--color-dark-100);
+  }
+}
+
+.form {
+  width: 100%;
+}
+
+.editNameField {
+  margin-bottom: 36px;
+}

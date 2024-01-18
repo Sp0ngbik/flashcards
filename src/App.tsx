@@ -1,4 +1,5 @@
-import { DoubleSlider } from '@/components/ui/slider'
+import { Profile } from '@/components/auth/profile'
+
 
 import { Pagination } from './components/ui/pagination'
 
@@ -6,7 +7,7 @@ function App() {
   return (
     <div>
       <Pagination totalCount={250} />
-      <DoubleSlider defaultValue={[10, 20]} />
+      <Profile />
     </div>
   )
 }
