@@ -1,7 +1,11 @@
 import { ComponentPropsWithoutRef, FC } from 'react'
 
+import { ArrowDown } from '@/assets'
 import { TableHead, TableHeadCell, TableRow } from '@/components/ui/table'
 import { Column, Sort } from '@/components/ui/table/table.stories'
+import { Typography } from '@/components/ui/typography'
+
+import s from './../table.module.scss'
 
 export const TableHeader: FC<
   Omit<
@@ -37,8 +41,14 @@ export const TableHeader: FC<
       <TableRow>
         {columns.map(({ key, sortable = true, title }) => (
           <TableHeadCell key={key} onClick={handleSort(key, sortable)}>
-            {title}
-            {sort && sort.key === key && <span>{sort.direction === 'asc' ? '▲' : '▼'}</span>}
+            <Typography className={s.tableHeadTitle} variant={'subtitle2'}>
+              {title}{' '}
+              {sort && sort.key === key && (
+                <ArrowDown
+                  className={`${s.arrow} ${sort.direction === 'asc' ? s.arrow : s.arrowUp}`}
+                />
+              )}
+            </Typography>
           </TableHeadCell>
         ))}
       </TableRow>
