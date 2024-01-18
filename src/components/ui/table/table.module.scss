@@ -16,8 +16,16 @@
 }
 
 .tableHeadCell {
+  position: relative;
   padding: 6px 24px;
   text-align: left;
+
+  & .tableHeadTitle {
+    cursor: pointer;
+    box-sizing: border-box;
+    width: fit-content;
+    user-select: none;
+  }
 }
 
 .tableDataCell {
@@ -32,4 +40,17 @@
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.arrow {
+  position: absolute;
+  transform-origin: center;
+  fill: var(--color-light-100);
+  margin-left: 5px;
+  top: 10px;
+}
+
+.arrowUp {
+  transform: rotate(90deg);
+  transition: all 0.3s ease-in-out;
 }

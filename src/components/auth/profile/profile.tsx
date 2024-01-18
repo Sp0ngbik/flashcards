@@ -1,9 +1,9 @@
-import { FC, useState } from 'react'
+import { ChangeEvent, FC, RefObject, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { LogOut } from '@/assets'
 import { Edit } from '@/assets/icons/edit'
-import { FormProfile, profileSchema } from '@/components/auth/profile/utils'
+import { FormFile, FormProfile, fileSchema, profileSchema } from '@/components/auth/profile/utils'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { TextFieldControlled } from '@/components/ui/controlled'
@@ -15,8 +15,8 @@ import s from './profile.module.scss'
 import defaultImage from '../../../assets/image/defaultAvatar.png'
 
 type ProfileProps = {
-  email: string
-  nickname: string
+  email?: string
+  nickname?: string
 }
 
 export const Profile: FC<ProfileProps> = ({
@@ -24,7 +24,8 @@ export const Profile: FC<ProfileProps> = ({
   nickname = 'profile_nickname',
 }) => {
   const [editMode, setEditMode] = useState<boolean>(false)
-  const [addPhoto, setAddPhoto] = useState<boolean>(false)
+  const [photo, setPhoto] = useState<string>(defaultImage)
+  const [fileError, setFileError] = useState<null | string>(null)
 
   const {
     control,
@@ -40,6 +41,18 @@ export const Profile: FC<ProfileProps> = ({
     onEditOffHandler()
   }
 
+  const {
+    formState: { errors: fileErrors },
+    handleSubmit: handleSubmitFileForm,
+  } = useForm<FormFile>({
+    resolver: zodResolver(fileSchema),
+  })
+
+  const onSubmitFileForm = (data: FormFile) => {
+    console.log(data)
+    onEditOffHandler()
+  }
+
   const onEditOnHandler = () => {
     setEditMode(true)
   }
@@ -48,8 +61,27 @@ export const Profile: FC<ProfileProps> = ({
     setEditMode(false)
   }
 
-  const onAddPhotoOnHandler = () => {
-    setAddPhoto(true)
+  const fileInputRef: RefObject<HTMLInputElement> = useRef(null)
+
+  const openFileInput = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click()
+    }
+  }
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0]
+
+    if (selectedFile) {
+      const imageUrl = URL.createObjectURL(selectedFile)
+
+      setPhoto(imageUrl)
+      console.log('Selected File:', selectedFile)
+    }
+
+    const fileError = String(fileErrors.image?.message || null)
+
+    setFileError(fileError)
   }
 
   return (
@@ -59,23 +91,23 @@ export const Profile: FC<ProfileProps> = ({
       </Typography>
       <div className={s.profileBlock}>
         <div className={s.photoWrapper}>
-          {addPhoto ? (
-            <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
-              <img alt={'user image'} className={s.profileImg} src={defaultImage} />
-              <input className={s.editNameField} type={'file'}></input>
+          {fileError && <p className={s.errorText}>{fileError}</p>}
+          <form className={s.form} onSubmit={handleSubmitFileForm(onSubmitFileForm)}>
+            <input
+              id={'imgupload'}
+              name={'avatar'}
+              onChange={handleFileChange}
+              ref={fileInputRef}
+              style={{ display: 'none' }}
+              type={'file'}
+            />
 
-              <Button fullWidth>Save Changes</Button>
-            </form>
-          ) : (
-            <div>
-              <img alt={'user image'} className={s.profileImg} src={defaultImage} />
-              {!addPhoto && (
-                <span className={s.profileEditImgBtn} onClick={onAddPhotoOnHandler}>
-                  <Edit />
-                </span>
-              )}
-            </div>
-          )}
+            <img alt={'user image'} className={s.profileImg} src={photo} />
+
+            <button className={s.profileEditImgBtn} onClick={openFileInput}>
+              <Edit />
+            </button>
+          </form>
         </div>
 
         {editMode ? (

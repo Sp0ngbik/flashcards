@@ -7,6 +7,7 @@ import { Edit } from '@/assets/icons/edit'
 import userAvatar from '@/assets/image/defaultAvatar.png'
 import { Table, TableBody, TableDataCell, TableRow } from '@/components/ui/table/table'
 import { TableHeader } from '@/components/ui/table/tableHeader/tableHeader'
+import { useHandleSort } from '@/components/ui/table/utils/useHandleSort'
 import { PlayIcon } from '@radix-ui/react-icons'
 
 import s from './table.module.scss'
@@ -23,7 +24,7 @@ type Story = StoryObj<typeof meta>
 export const TableStory: Story = {
   args: {},
   render: args => {
-    const options: Option[] = [
+    const options = [
       {
         cardsCount: 10,
         createdBy: 'John Doe',
@@ -86,46 +87,15 @@ export const TableStory: Story = {
       },
     ]
 
-    const [sort, setSort] = useState<Sort>(null)
-
-    const sortHandler = () => {
-      const sortedData = [...options]
-
-      if (!sort?.key) {
-        return sortedData
-      }
-
-      sortedData.sort((a, b) => {
-        const valueA = a[sort?.key]
-        const valueB = b[sort?.key]
-
-        if (sort?.direction === 'asc') {
-          if (valueA === undefined || valueB === undefined) {
-            return 0
-          }
-
-          return typeof valueB === 'string'
-            ? String(valueA).localeCompare(valueB)
-            : Number(valueA) - valueB
-        }
-
-        if (valueA === undefined || valueB === undefined) {
-          return 0
-        }
-
-        return typeof valueA === 'string'
-          ? String(valueB).localeCompare(valueA)
-          : Number(valueB) - valueA
-      })
-
-      return sortedData
-    }
+    // const { setSort, sort, sortedData } = useHandleSort(options)
+    const sortHandler = useHandleSort(options)
+    const { setSort, sort, sortedData } = sortHandler
 
     return (
       <Table {...args}>
         <TableHeader columns={columns} onClick={sortHandler} onSort={setSort} sort={sort} />
         <TableBody>
-          {sortHandler().map(t => {
+          {sortedData?.map(t => {
             return (
               <TableRow key={t.title}>
                 <TableDataCell>
@@ -162,13 +132,4 @@ export type Column = {
   key: string
   sortable?: boolean
   title: string
-}
-
-type Option = {
-  [key: string]: number | string | undefined
-  cardsCount: number
-  createdBy: string
-  image?: string
-  title: string
-  updated: string
 }

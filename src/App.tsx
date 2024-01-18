@@ -6,9 +6,9 @@ import { Pagination } from './components/ui/pagination'
 function App() {
   return (
     <div>
-      <Pagination totalCount={250} />
-      <Profile email={'asd'} nickname={'asd'} />
-      <CreateNewPassword />
+      {/*<Pagination totalCount={250} />*/}
+      <Profile />
+      {/*<CreateNewPassword />*/}
     </div>
   )
 }
