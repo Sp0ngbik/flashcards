@@ -6,7 +6,7 @@ import { Pagination } from './components/ui/pagination'
 function App() {
   return (
     <div>
-      {/*<Pagination totalCount={250} />*/}
+      <Pagination totalCount={250} />
       <Profile />
       {/*<CreateNewPassword />*/}
     </div>
