@@ -63,7 +63,7 @@ export const Pagination = (props: Props) => {
         className={`${s.arrow} ${s.rotateArrow} ${currentPage === lastPage && s.disabled}`}
         onClick={onNext}
       />
-      <Typography as={'div'} className={s.selectWrapper} variant={'body2'}>
+      <Typography className={s.selectWrapper} variant={'body2'}>
         Показать
         <Select defaultValue={'10'} onValueChange={onChangeValue} variant={'pagination'}>
           <SelectItem value={'10'}>10</SelectItem>
