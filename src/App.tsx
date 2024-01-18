@@ -6,7 +6,7 @@ function App() {
   return (
     <div>
       <Pagination totalCount={250} />
-      <Profile />
+      <Profile email={'asd'} nickname={'asd'} />
     </div>
   )
 }
