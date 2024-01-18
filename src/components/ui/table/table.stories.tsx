@@ -1,16 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { useState } from 'react'
-
+import { Play } from '@/assets'
 import { Delete } from '@/assets/icons/delete'
 import { Edit } from '@/assets/icons/edit'
 import userAvatar from '@/assets/image/defaultAvatar.png'
-import { Table, TableBody, TableDataCell, TableRow } from '@/components/ui/table/table'
+import { Table, TableBody, TableDataCell, TableRow } from '@/components/ui/table/tableConstuctor'
 import { TableHeader } from '@/components/ui/table/tableHeader/tableHeader'
 import { useHandleSort } from '@/components/ui/table/utils/useHandleSort'
-import { PlayIcon } from '@radix-ui/react-icons'
 
-import s from './table.module.scss'
+import s from './tableConstuctor/table.module.scss'
 
 const meta = {
   component: Table,
@@ -64,38 +62,13 @@ export const TableStory: Story = {
       },
     ]
 
-    const columns: Array<Column> = [
-      {
-        key: 'title',
-        title: 'Name',
-      },
-      {
-        key: 'cardsCount',
-        title: 'Cards',
-      },
-      {
-        key: 'updated',
-        title: 'Last Updated',
-      },
-      {
-        key: 'createdBy',
-        title: 'Created by',
-      },
-      {
-        key: 'icons',
-        title: '',
-      },
-    ]
-
-    // const { setSort, sort, sortedData } = useHandleSort(options)
-    const sortHandler = useHandleSort(options)
-    const { setSort, sort, sortedData } = sortHandler
+    const { columns, setSort, sort, sortHandler } = useHandleSort(options)
 
     return (
       <Table {...args}>
         <TableHeader columns={columns} onClick={sortHandler} onSort={setSort} sort={sort} />
         <TableBody>
-          {sortedData?.map(t => {
+          {sortHandler().map(t => {
             return (
               <TableRow key={t.title}>
                 <TableDataCell>
@@ -110,7 +83,7 @@ export const TableStory: Story = {
                 <TableDataCell>{t.updated}</TableDataCell>
                 <TableDataCell>{t.createdBy}</TableDataCell>
                 <TableDataCell>
-                  <PlayIcon />
+                  <Play />
                   <Edit />
                   <Delete />
                 </TableDataCell>

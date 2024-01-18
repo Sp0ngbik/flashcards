@@ -1,11 +1,11 @@
 import { ComponentPropsWithoutRef, FC } from 'react'
 
 import { ArrowDown } from '@/assets'
-import { TableHead, TableHeadCell, TableRow } from '@/components/ui/table'
 import { Column, Sort } from '@/components/ui/table/table.stories'
+import { TableHead, TableHeadCell, TableRow } from '@/components/ui/table/tableConstuctor'
 import { Typography } from '@/components/ui/typography'
 
-import s from './../table.module.scss'
+import s from '../tableConstuctor/table.module.scss'
 
 export const TableHeader: FC<
   Omit<
