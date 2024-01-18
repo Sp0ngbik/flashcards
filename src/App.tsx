@@ -1,4 +1,4 @@
-import { ForgotPassword } from '@/components/auth/forgotPassword'
+import { DoubleSlider } from '@/components/ui/slider'
 
 import { Pagination } from './components/ui/pagination'
 
@@ -6,7 +6,7 @@ function App() {
   return (
     <div>
       <Pagination totalCount={250} />
-      <ForgotPassword />
+      <DoubleSlider defaultValue={[10, 20]} />
     </div>
   )
 }
