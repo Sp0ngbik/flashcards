@@ -1,6 +1,5 @@
 import { Profile } from '@/components/auth/profile'
 
-
 import { Pagination } from './components/ui/pagination'
 
 function App() {
