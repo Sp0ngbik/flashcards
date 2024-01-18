@@ -76,6 +76,10 @@
   border: 1px solid var(--color-dark-300);
   border-radius: 3px;
 
+  &::-webkit-inner-spin-button {
+    appearance: none;
+  }
+
   &::placeholder {
     color: var(--color-light-100);
   }

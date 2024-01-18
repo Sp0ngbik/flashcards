@@ -1,14 +1,12 @@
-import { SignUp } from '@/components/auth/signUp'
 import { DoubleSlider } from '@/components/ui/slider'
 
-import { SignIn } from './components/auth/signIn'
+import { Pagination } from './components/ui/pagination'
 
 function App() {
   return (
     <div>
-      <DoubleSlider defaultValue={[10, 15]} max={15} min={10} />
-      <SignUp />
-      <SignIn />
+      <Pagination totalCount={250} />
+      <DoubleSlider defaultValue={[10, 20]} />
     </div>
   )
 }
