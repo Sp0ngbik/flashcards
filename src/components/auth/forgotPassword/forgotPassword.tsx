@@ -8,7 +8,7 @@ import { TextFieldControlled } from '@/components/ui/controlled'
 import { Typography } from '@/components/ui/typography'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import s from './forgotPassword.module.css'
+import s from './forgotPassword.module.scss'
 
 export const ForgotPassword = () => {
   const {
