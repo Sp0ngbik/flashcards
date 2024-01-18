@@ -9,6 +9,7 @@ import { Card } from '@/components/ui/card'
 import { TextFieldControlled } from '@/components/ui/controlled'
 import { Typography } from '@/components/ui/typography'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { ZodError } from 'zod'
 
 import s from './profile.module.scss'
 
@@ -41,10 +42,7 @@ export const Profile: FC<ProfileProps> = ({
     onEditOffHandler()
   }
 
-  const {
-    formState: { errors: fileErrors },
-    handleSubmit: handleSubmitFileForm,
-  } = useForm<FormFile>({
+  const { handleSubmit: handleSubmitFileForm } = useForm<FormFile>({
     resolver: zodResolver(fileSchema),
   })
 
@@ -78,10 +76,16 @@ export const Profile: FC<ProfileProps> = ({
       setPhoto(imageUrl)
       console.log('Selected File:', selectedFile)
     }
-
-    const fileError = String(fileErrors.image?.message || null)
-
-    setFileError(fileError)
+    try {
+      fileSchema.parse(selectedFile)
+      setFileError(null)
+    } catch (error: unknown) {
+      if (error instanceof ZodError) {
+        setFileError(error.errors?.[0]?.message || 'File validation error')
+      } else {
+        console.error('Unexpected error type:', error)
+      }
+    }
   }
 
   return (
@@ -91,7 +95,6 @@ export const Profile: FC<ProfileProps> = ({
       </Typography>
       <div className={s.profileBlock}>
         <div className={s.photoWrapper}>
-          {fileError && <p className={s.errorText}>{fileError}</p>}
           <form className={s.form} onSubmit={handleSubmitFileForm(onSubmitFileForm)}>
             <input
               id={'imgupload'}
@@ -102,7 +105,11 @@ export const Profile: FC<ProfileProps> = ({
               type={'file'}
             />
 
-            <img alt={'user image'} className={s.profileImg} src={photo} />
+            {fileError ? (
+              <p className={s.errorText}>{fileError}</p>
+            ) : (
+              <img alt={'user image'} className={s.profileImg} src={photo} />
+            )}
 
             <button className={s.profileEditImgBtn} onClick={openFileInput}>
               <Edit />
