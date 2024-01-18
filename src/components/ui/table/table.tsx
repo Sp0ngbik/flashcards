@@ -1,51 +1,82 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
+import { Delete, Edit, Play } from '@/assets'
+import defaultAvatar from '@/assets/image/defaultAvatar.png'
+import { TableHeader } from '@/components/ui/table/tableHeader/tableHeader'
+import { useHandleSort } from '@/components/ui/table/utils/useHandleSort'
 
-import s from './table.module.scss'
+import s from '@/components/ui/table/tableConstuctor/table.module.scss'
 
-export const Table = forwardRef<ElementRef<'table'>, ComponentPropsWithoutRef<'table'>>(
-  (props, ref) => {
-    const { className, ...rest } = props
+import { Table, TableBody, TableDataCell, TableRow } from './tableConstuctor'
 
-    return <table {...rest} className={`${className} ${s.root}`} ref={ref} />
-  }
-)
+export const TableStory = () => {
+  const options = [
+    {
+      cardsCount: 10,
+      createdBy: 'John Doe',
+      title: 'A',
+      updated: '2023-07-07',
+    },
+    {
+      cardsCount: 5,
+      createdBy: 'Jane Smith',
+      title: 'B',
+      updated: '2023-07-06',
+    },
+    {
+      cardsCount: 8,
+      createdBy: 'Alice Johnson',
+      title: 'C',
+      updated: '2023-07-05',
+    },
+    {
+      cardsCount: 3,
+      createdBy: 'Bob Anderson',
+      title: 'D',
+      updated: '2023-07-07',
+    },
+    {
+      cardsCount: 12,
+      createdBy: 'Emma Davis',
+      title: 'E',
+      updated: '2023-07-04',
+    },
+    {
+      cardsCount: 1,
+      createdBy: '01',
+      image: defaultAvatar,
+      title: 'Books',
+      updated: '2023-01-31T12:45:00.000Z',
+    },
+  ]
 
-export const TableHead = forwardRef<ElementRef<'thead'>, ComponentPropsWithoutRef<'thead'>>(
-  (props, ref) => {
-    const { className, ...rest } = props
+  const { columns, setSort, sort, sortHandler } = useHandleSort(options)
 
-    return <thead className={`${s.tableHead} ${className}`} ref={ref} {...rest} />
-  }
-)
-
-export const TableRow = forwardRef<ElementRef<'tr'>, ComponentPropsWithoutRef<'tr'>>(
-  (props, ref) => {
-    const { className, ...rest } = props
-
-    return <tr className={`${className}, ${s.tableRow}`} {...rest} ref={ref} />
-  }
-)
-
-export const TableHeadCell = forwardRef<ElementRef<'th'>, ComponentPropsWithoutRef<'th'>>(
-  (props, ref) => {
-    const { className, ...rest } = props
-
-    return <th ref={ref} {...rest} className={`${className}, ${s.tableHeadCell}`} />
-  }
-)
-
-export const TableBody = forwardRef<ElementRef<'tbody'>, ComponentPropsWithoutRef<'tbody'>>(
-  (props, ref) => {
-    const { className, ...rest } = props
-
-    return <tbody ref={ref} {...rest} className={`${className}, ${s.tableBody}`} />
-  }
-)
-
-export const TableDataCell = forwardRef<ElementRef<'td'>, ComponentPropsWithoutRef<'td'>>(
-  (props, ref) => {
-    const { className, ...rest } = props
-
-    return <td ref={ref} {...rest} className={`${className}, ${s.tableDataCell}`} />
-  }
-)
+  return (
+    <Table>
+      <TableHeader columns={columns} onClick={sortHandler} onSort={setSort} sort={sort} />
+      <TableBody>
+        {sortHandler().map(t => {
+          return (
+            <TableRow key={t.title}>
+              <TableDataCell>
+                <span className={s.tableDataContent}>
+                  {t.image && (
+                    <img alt={'image'} src={t.image} style={{ height: '50px', width: '150px' }} />
+                  )}
+                  {t.title}
+                </span>
+              </TableDataCell>
+              <TableDataCell>{t.cardsCount}</TableDataCell>
+              <TableDataCell>{t.updated}</TableDataCell>
+              <TableDataCell>{t.createdBy}</TableDataCell>
+              <TableDataCell>
+                <Play />
+                <Edit />
+                <Delete />
+              </TableDataCell>
+            </TableRow>
+          )
+        })}
+      </TableBody>
+    </Table>
+  )
+}
