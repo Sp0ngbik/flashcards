@@ -24,6 +24,7 @@ export const Select = ({
   return (
     <div className={s.selectWrapper}>
       <Typography
+        as={'label'}
         className={`${s.selectLabel} ${disabled && s.selectLabelDisabled}`}
         variant={'body2'}
       >

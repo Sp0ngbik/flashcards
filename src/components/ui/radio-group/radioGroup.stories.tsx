@@ -18,8 +18,8 @@ type Story = StoryObj<typeof meta>
 
 export default meta
 
-export const RadioPrimary: Story = ({ disabled, ...args }: { disabled: boolean }) => (
-  <RadioGroup disabled={disabled} {...args}>
+export const RadioPrimary: Story = (args: { disabled: boolean }) => (
+  <RadioGroup {...args}>
     <RadioItem value={'1'}>1</RadioItem>
     <RadioItem value={'2'}>2</RadioItem>
     <RadioItem value={'3'}>3</RadioItem>
