@@ -14,15 +14,21 @@ type Story = StoryObj<typeof meta>
 export const CreateNewPasswordAuth: Story = {
   args: {},
 }
-export const DelayedStory: Story = {
+
+export const CreatePasswordStory: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
 
-    const exampleElement = canvas.getByPlaceholderText('Password')
+    const passwordElement = canvas.getByPlaceholderText('Password')
 
     // The delay option sets the amount of milliseconds between characters being typed
-    await userEvent.type(exampleElement, 'random string', {
+    await userEvent.type(passwordElement, 'randomstring', {
       delay: 100,
+    })
+    const buttonElement = canvas.getByText('Create New Password')
+
+    await userEvent.click(buttonElement, {
+      delay: 200,
     })
   },
 }
