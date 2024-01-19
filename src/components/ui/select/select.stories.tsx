@@ -28,7 +28,7 @@ export const SelectPrimary: Story = {
   render: () => {
     return (
       <Select defaultValue={'1'}>
-        <SelectItem value={'1'}>1</SelectItem>
+        <SelectItem value={'1'}> 1</SelectItem>
         <SelectItem value={'2'}>2</SelectItem>
       </Select>
     )
@@ -51,7 +51,7 @@ export const SelectWithValues: Story = {
 export const SelectActive: Story = {
   args: {},
   render: () => (
-    <Select defaultOpen defaultValue={'1'}>
+    <Select defaultValue={'1'} open>
       <SelectItem value={'1'}>1</SelectItem>
       <SelectItem value={'2'}>2</SelectItem>
       <SelectItem value={'3'}>3</SelectItem>
