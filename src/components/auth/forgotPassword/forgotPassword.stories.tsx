@@ -33,3 +33,20 @@ export const ForgotPasswordInteractive: Story = {
     })
   },
 }
+export const ForgotPasswordWithErrorInteractive: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    const emailElement = canvas.getByPlaceholderText('Email')
+
+    // The delay option sets the amount of milliseconds between characters being typed
+    await userEvent.type(emailElement, 'randomstring', {
+      delay: 100,
+    })
+    const buttonElement = canvas.getByText('Send Instructions')
+
+    await userEvent.click(buttonElement, {
+      delay: 200,
+    })
+  },
+}

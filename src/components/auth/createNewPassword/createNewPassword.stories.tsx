@@ -32,3 +32,20 @@ export const CreatePasswordStory: Story = {
     })
   },
 }
+export const CreatePasswordWirhErrorStory: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    const passwordElement = canvas.getByPlaceholderText('Password')
+
+    // The delay option sets the amount of milliseconds between characters being typed
+    await userEvent.type(passwordElement, 'ra', {
+      delay: 100,
+    })
+    const buttonElement = canvas.getByText('Create New Password')
+
+    await userEvent.click(buttonElement, {
+      delay: 200,
+    })
+  },
+}
