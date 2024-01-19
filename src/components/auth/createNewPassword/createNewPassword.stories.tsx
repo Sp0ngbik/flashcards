@@ -32,7 +32,7 @@ export const CreatePasswordStory: Story = {
     })
   },
 }
-export const CreatePasswordWirhErrorStory: Story = {
+export const CreatePasswordWithErrorStory: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
 
