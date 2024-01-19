@@ -116,18 +116,11 @@
 
   width: 35px;
   height: 35px;
-  margin-left: 200px;
+  margin-left: 14px;
 
   font-family: inherit;
-  color: var(--violet-11);
 
-  background-color: var(--color-dark-500);
   border-radius: 100%;
-  box-shadow: 0 2px 10px var(--black-a7);
-
-  &:hover {
-    background-color: var(--violet-3);
-  }
 
   &:focus {
     box-shadow: 0 0 0 2px black;
