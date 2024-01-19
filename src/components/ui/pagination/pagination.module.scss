@@ -4,6 +4,8 @@
   color: var(--color-light-100);
 
   .pagination_item {
+    user-select: none;
+
     display: flex;
     place-content: center;
     place-items: center;
