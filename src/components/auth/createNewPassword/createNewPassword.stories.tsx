@@ -33,6 +33,7 @@ export const CreatePassword: Story = {
   },
 }
 export const CreatePasswordWithError: Story = {
+
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
 
