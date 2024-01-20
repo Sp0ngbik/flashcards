@@ -5,7 +5,7 @@ import { userEvent, within } from '@storybook/test'
 const meta = {
   component: CreateNewPassword,
   tags: ['autodocs'],
-  title: 'Components/Auth',
+  title: 'Components/Auth/CreateNewPassword',
 } satisfies Meta<typeof CreateNewPassword>
 
 export default meta
@@ -15,7 +15,7 @@ export const CreateNewPasswordAuth: Story = {
   args: {},
 }
 
-export const CreatePasswordStory: Story = {
+export const CreatePassword: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
 
@@ -32,7 +32,8 @@ export const CreatePasswordStory: Story = {
     })
   },
 }
-export const CreatePasswordWithErrorStory: Story = {
+export const CreatePasswordWithError: Story = {
+
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
 

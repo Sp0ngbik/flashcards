@@ -3,7 +3,7 @@ import { Meta, Story } from '@storybook/react'
 
 export default {
   component: Profile,
-  title: 'Components/Profile',
+  title: 'Components/Auth/Profile',
 } as Meta
 
 const Template: Story<ProfileProps> = args => <Profile {...args} />

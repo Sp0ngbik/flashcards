@@ -7,7 +7,7 @@ import { ForgotPassword } from './'
 const meta = {
   component: ForgotPassword,
   tags: ['autodocs'],
-  title: 'Components/Auth',
+  title: 'Components/Auth/ForgotPassword',
 } satisfies Meta<typeof ForgotPassword>
 
 export default meta
