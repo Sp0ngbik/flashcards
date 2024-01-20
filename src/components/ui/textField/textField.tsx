@@ -2,6 +2,7 @@ import React, { ComponentPropsWithoutRef, ElementType, useState } from 'react'
 
 import { EyeOffOutline, EyeOutline, SearchOutline } from '@/assets'
 import { Typography } from '@/components/ui/typography'
+import { clsx } from 'clsx'
 
 import s from './textField.module.scss'
 
@@ -26,20 +27,27 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>((props, for
   const changePasswordVision = () => {
     setPasswordVisibility(!passwordVisibility)
   }
+  const classNames = {
+    inputField: clsx(s.textField, errorMessage && s.textField_error),
+    passwordVisibility: clsx(s.passwordEyeIcon, disabled && s.passwordEyeIcon_disabled),
+    searchIcon: clsx(
+      s.searchIcon,
+      errorMessage && s.searchIcon_error,
+      disabled && s.searchIcon_disabled
+    ),
+    textFieldLabel: clsx(s.textField_label, disabled && s.textField_label_disabled),
+  }
 
   return (
     <div className={`${s.textField_container} ${className}`}>
       {!searchVariant && (
-        <Typography
-          className={`${s.textField_label} ${disabled && s.textField_label_disabled}`}
-          variant={'body2'}
-        >
+        <Typography className={classNames.textFieldLabel} variant={'body2'}>
           {label}
         </Typography>
       )}
       <div className={s[variant]}>
         <input
-          className={`${s.textField}  ${errorMessage && s.textField_error}  `}
+          className={classNames.inputField}
           disabled={disabled}
           name={'textFieldControlled'}
           ref={forwardRef}
@@ -51,27 +59,19 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>((props, for
             <div>
               {passwordVisibility ? (
                 <EyeOffOutline
-                  className={`${s.passwordEyeIcon} ${disabled && s.passwordEyeIcon_disabled}`}
+                  className={classNames.passwordVisibility}
                   onClick={changePasswordVision}
                 />
               ) : (
                 <EyeOutline
-                  className={`${s.passwordEyeIcon} ${disabled && s.passwordEyeIcon_disabled}`}
+                  className={classNames.passwordVisibility}
                   onClick={changePasswordVision}
                 />
               )}
             </div>
           )}
         </div>
-        <div>
-          {searchVariant && (
-            <SearchOutline
-              className={`${s.searchIcon} ${errorMessage && s.searchIcon_error} ${
-                disabled && s.searchIcon_disabled
-              }`}
-            />
-          )}
-        </div>
+        <div>{searchVariant && <SearchOutline className={classNames.searchIcon} />}</div>
       </div>
       {errorMessage && (
         <Typography className={s.errorMessage} variant={'error'}>

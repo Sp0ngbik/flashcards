@@ -1,6 +1,7 @@
 import { ComponentPropsWithoutRef, ElementType } from 'react'
 
 import { LogOut } from '@/assets'
+import { clsx } from 'clsx'
 
 import s from './button.module.scss'
 
@@ -22,15 +23,20 @@ export const Button = <T extends ElementType = 'button'>(
     variant = 'primary',
     ...rest
   } = props
+  const classNames = {
+    buttonStyles: clsx(
+      s.button,
+      s[variant],
+      fullWidth && s.fullWidth,
+      icon && s.withIcon,
+      className
+    ),
+  }
 
   return (
     <div className={s.buttonWrapper}>
       {icon && <LogOut className={s.logout} />}
-      <Component
-        className={`${s.button} ${s[variant]} ${fullWidth && s.fullWidth}
-        ${icon && s.wihIcon} ${className}`}
-        {...rest}
-      />
+      <Component className={classNames.buttonStyles} {...rest} />
     </div>
   )
 }
