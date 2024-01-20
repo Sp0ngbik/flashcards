@@ -123,7 +123,7 @@
   border-radius: 100%;
 
   &:focus {
-    box-shadow: 0 0 0 2px black;
+    outline: 2px solid var(--color-info-700);
   }
 }
 

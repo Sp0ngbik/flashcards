@@ -3,6 +3,7 @@ import { ComponentPropsWithoutRef } from 'react'
 import { ArrowDown } from '@/assets'
 import { Typography } from '@/components/ui/typography'
 import * as SelectRadix from '@radix-ui/react-select'
+import { clsx } from 'clsx'
 
 import s from './select.module.scss'
 
@@ -21,21 +22,19 @@ export const Select = ({
   variant = 'primary',
   ...props
 }: Props) => {
+  const classNames = {
+    selectGroup: clsx(s.selectGroup, variant === 'pagination' && s.paginationSelectItem),
+    selectLabel: clsx(s.selectLabel, disabled && s.selectLabelDisabled),
+    selectTrigger: clsx(s.selectTrigger, variant === 'pagination' && s.paginationSelect, className),
+  }
+
   return (
     <div className={s.selectWrapper}>
-      <Typography
-        as={'label'}
-        className={`${s.selectLabel} ${disabled && s.selectLabelDisabled}`}
-        variant={'body2'}
-      >
+      <Typography as={'label'} className={classNames.selectLabel} variant={'body2'}>
         {label}
       </Typography>
       <SelectRadix.Root disabled={disabled} {...props}>
-        <SelectRadix.Trigger
-          className={`${s.selectTrigger} ${
-            variant === 'pagination' && s.paginationSelect
-          } ${className}`}
-        >
+        <SelectRadix.Trigger className={classNames.selectTrigger}>
           <SelectRadix.Value placeholder={placeholder} />
           <SelectRadix.Icon asChild>
             <ArrowDown className={s.arrow} />
@@ -49,11 +48,7 @@ export const Select = ({
             side={'bottom'}
           >
             <SelectRadix.Viewport>
-              <SelectRadix.Group
-                className={`${s.selectGroup} ${variant === 'pagination' && s.paginationSelectItem}`}
-              >
-                {children}
-              </SelectRadix.Group>
+              <SelectRadix.Group className={classNames.selectGroup}>{children}</SelectRadix.Group>
             </SelectRadix.Viewport>
           </SelectRadix.Content>
         </SelectRadix.Portal>

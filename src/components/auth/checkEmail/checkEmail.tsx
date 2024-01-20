@@ -7,6 +7,7 @@ import s from './checkEmail.module.scss'
 type Props = {
   email: string
 }
+
 const CheckEmail = ({ email }: Props) => {
   return (
     <Card>
