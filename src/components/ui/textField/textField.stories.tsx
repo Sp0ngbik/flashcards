@@ -65,7 +65,7 @@ export const PasswordDisabled: Story = {
     disabled: true,
     label: 'Password Disabled',
     placeholder: 'Password Disabled',
-    variant: 'text',
+    variant: 'password',
   },
 }
 export const SearchInput: Story = {

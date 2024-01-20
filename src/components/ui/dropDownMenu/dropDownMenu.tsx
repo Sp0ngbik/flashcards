@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import { EditCardComponent } from '@/components/ui/dropDownMenu/variant/editCardComponent'
 import { EditProfileComponent } from '@/components/ui/dropDownMenu/variant/editProfileComponent'
 import * as DropdownMenuRadix from '@radix-ui/react-dropdown-menu'
+import { clsx } from 'clsx'
 
 import s from './dropDownMenu.module.scss'
 
@@ -23,6 +24,9 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
     userName = 'Ivan',
     ...rest
   } = props
+  const classNames = {
+    dropDownContent: clsx(s.DropdownMenuContent, flag === 'editProfile' && s.fullWidth),
+  }
 
   return (
     <DropdownMenuRadix.Root defaultOpen>
@@ -31,7 +35,7 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
           {flag === 'editProfile' ? (
             <img alt={'userPhoto'} className={s.UserAvatar} src={userDefaultPhoto} />
           ) : (
-            <Button variant={'link'} />
+            <Button className={s.buttonDrop} variant={'link'} />
           )}
         </button>
       </DropdownMenuRadix.Trigger>
@@ -39,7 +43,7 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
       <DropdownMenuRadix.Portal>
         <DropdownMenuRadix.Content
           align={'end'}
-          className={`${s.DropdownMenuContent} + ${flag === 'editProfile' ? `${s.fullWidth}` : ''}`}
+          className={classNames.dropDownContent}
           sideOffset={5}
           {...rest}
         >

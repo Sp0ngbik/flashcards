@@ -1,11 +1,12 @@
 import { ComponentPropsWithoutRef, FC } from 'react'
 
 import { ArrowDown } from '@/assets'
-import { TableHead, TableHeadCell, TableRow } from '@/components/ui/table'
 import { Column, Sort } from '@/components/ui/table/table.stories'
+import { TableHead, TableHeadCell, TableRow } from '@/components/ui/table/tableConstuctor'
 import { Typography } from '@/components/ui/typography'
+import { clsx } from 'clsx'
 
-import s from './../table.module.scss'
+import s from '../tableConstuctor/table.module.scss'
 
 export const TableHeader: FC<
   Omit<
@@ -35,6 +36,9 @@ export const TableHeader: FC<
       key,
     })
   }
+  const classNames = {
+    arrow: clsx(s.arrow, sort?.direction === 'asc' && s.arrowUp),
+  }
 
   return (
     <TableHead {...rest}>
@@ -42,12 +46,7 @@ export const TableHeader: FC<
         {columns.map(({ key, sortable = true, title }) => (
           <TableHeadCell key={key} onClick={handleSort(key, sortable)}>
             <Typography className={s.tableHeadTitle} variant={'subtitle2'}>
-              {title}{' '}
-              {sort && sort.key === key && (
-                <ArrowDown
-                  className={`${s.arrow} ${sort.direction === 'asc' ? s.arrow : s.arrowUp}`}
-                />
-              )}
+              {title} {sort && sort.key === key && <ArrowDown className={classNames.arrow} />}
             </Typography>
           </TableHeadCell>
         ))}

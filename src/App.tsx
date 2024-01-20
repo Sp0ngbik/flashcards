@@ -1,15 +1,18 @@
-import CreateNewPassword from '@/components/auth/createNewPassword/createNewPassword'
-import { Profile } from '@/components/auth/profile'
+import { Provider } from 'react-redux'
 
-import { Pagination } from './components/ui/pagination'
+import { Router } from '@/router'
+import { store } from '@/services/store'
 
 function App() {
   return (
-    <div>
-      <Pagination totalCount={250} />
-      <Profile />
-      {/*<CreateNewPassword />*/}
-    </div>
+    <Provider store={store}>
+      <Router />
+    </Provider>
+    // <div>
+    //   <Pagination totalCount={250} />
+    //   <Profile />
+    //   <DoubleSlider defaultValue={[10, 15]} max={100} min={10} />
+    // </div>
   )
 }
 

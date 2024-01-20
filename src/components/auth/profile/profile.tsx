@@ -9,21 +9,24 @@ import { Card } from '@/components/ui/card'
 import { TextFieldControlled } from '@/components/ui/controlled'
 import { Typography } from '@/components/ui/typography'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { ZodError } from 'zod'
 
 import s from './profile.module.scss'
 
 import defaultImage from '../../../assets/image/defaultAvatar.png'
 
-type ProfileProps = {
+export type ProfileProps = {
+  edit?: boolean
   email?: string
   nickname?: string
 }
 
 export const Profile: FC<ProfileProps> = ({
+  edit = false,
   email = 'useremail@mail.com',
   nickname = 'profile_nickname',
 }) => {
-  const [editMode, setEditMode] = useState<boolean>(false)
+  const [editMode, setEditMode] = useState<boolean>(edit)
   const [photo, setPhoto] = useState<string>(defaultImage)
   const [fileError, setFileError] = useState<null | string>(null)
 
@@ -41,10 +44,7 @@ export const Profile: FC<ProfileProps> = ({
     onEditOffHandler()
   }
 
-  const {
-    formState: { errors: fileErrors },
-    handleSubmit: handleSubmitFileForm,
-  } = useForm<FormFile>({
+  const { handleSubmit: handleSubmitFileForm } = useForm<FormFile>({
     resolver: zodResolver(fileSchema),
   })
 
@@ -78,10 +78,16 @@ export const Profile: FC<ProfileProps> = ({
       setPhoto(imageUrl)
       console.log('Selected File:', selectedFile)
     }
-
-    const fileError = String(fileErrors.image?.message || null)
-
-    setFileError(fileError)
+    try {
+      fileSchema.parse(selectedFile)
+      setFileError(null)
+    } catch (error: unknown) {
+      if (error instanceof ZodError) {
+        setFileError(error.errors?.[0]?.message || 'File validation error')
+      } else {
+        console.error('Unexpected error type:', error)
+      }
+    }
   }
 
   return (
@@ -91,7 +97,6 @@ export const Profile: FC<ProfileProps> = ({
       </Typography>
       <div className={s.profileBlock}>
         <div className={s.photoWrapper}>
-          {fileError && <p className={s.errorText}>{fileError}</p>}
           <form className={s.form} onSubmit={handleSubmitFileForm(onSubmitFileForm)}>
             <input
               id={'imgupload'}
@@ -102,7 +107,11 @@ export const Profile: FC<ProfileProps> = ({
               type={'file'}
             />
 
-            <img alt={'user image'} className={s.profileImg} src={photo} />
+            {fileError ? (
+              <p className={s.errorText}>{fileError}</p>
+            ) : (
+              <img alt={'user image'} className={s.profileImg} src={photo} />
+            )}
 
             <button className={s.profileEditImgBtn} onClick={openFileInput}>
               <Edit />
@@ -125,7 +134,7 @@ export const Profile: FC<ProfileProps> = ({
         ) : (
           <div className={s.profileWrapper}>
             <Typography className={s.profileName} variant={'h2'}>
-              Username
+              {nickname}
               <span className={s.profileEditNameBtn} onClick={onEditOnHandler}>
                 <Edit />
               </span>

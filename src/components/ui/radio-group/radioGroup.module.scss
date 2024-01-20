@@ -8,6 +8,10 @@ button {
     font-size: 15px;
     line-height: 1;
     color: white;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   &[data-disabled] {
@@ -56,6 +60,7 @@ button {
       }
 
       &:active {
+        background-color: inherit;
         box-shadow: none;
       }
 

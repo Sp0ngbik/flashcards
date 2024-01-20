@@ -1,9 +1,8 @@
 import { Logo } from '@/assets'
 import { Button } from '@/components/ui/button'
+import { DropdownMenu } from '@/components/ui/dropDownMenu'
 
 import s from './header.module.scss'
-
-import defaultImage from '../../../assets/image/defaultAvatar.png'
 
 type Props = {
   isLoggedIn: boolean
@@ -17,7 +16,7 @@ export const Header = ({ isLoggedIn }: Props) => {
         {isLoggedIn ? (
           <div className={s.userBlock}>
             <span>Username</span>
-            <img alt={'user avatar not found'} src={defaultImage} />
+            <DropdownMenu />
           </div>
         ) : (
           <Button>Sign In</Button>

@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { Select } from '@/components/ui/select'
-import { SelectItem } from '@/components/ui/select/selectItem'
+import { SelectTextItem } from '@/components/ui/select/selectItem'
 
 const meta = {
   argTypes: {
+    defaultValue: { control: { type: 'text' } },
     disabled: {
       control: { type: 'radio' },
       options: [true, false],
     },
-
     variant: {
       control: { type: 'radio' },
       options: ['primary', 'pagination'],
@@ -27,9 +27,9 @@ export const SelectPrimary: Story = {
   args: {},
   render: () => {
     return (
-      <Select defaultValue={'1'}>
-        <SelectItem value={'1'}>1</SelectItem>
-        <SelectItem value={'2'}>2</SelectItem>
+      <Select defaultValue={'1'} label={'Select Primary'}>
+        <SelectTextItem value={'1'}> 1</SelectTextItem>
+        <SelectTextItem value={'2'}>2</SelectTextItem>
       </Select>
     )
   },
@@ -39,11 +39,11 @@ export const SelectWithValues: Story = {
   args: {},
   render: () => (
     <Select defaultValue={'1'}>
-      <SelectItem value={'1'}>1</SelectItem>
-      <SelectItem value={'2'}>2</SelectItem>
-      <SelectItem value={'3'}>3</SelectItem>
-      <SelectItem value={'4'}>4</SelectItem>
-      <SelectItem value={'5'}>5</SelectItem>
+      <SelectTextItem value={'1'}>1</SelectTextItem>
+      <SelectTextItem value={'2'}>2</SelectTextItem>
+      <SelectTextItem value={'3'}>3</SelectTextItem>
+      <SelectTextItem value={'4'}>4</SelectTextItem>
+      <SelectTextItem value={'5'}>5</SelectTextItem>
     </Select>
   ),
 }
@@ -51,12 +51,12 @@ export const SelectWithValues: Story = {
 export const SelectActive: Story = {
   args: {},
   render: () => (
-    <Select defaultOpen defaultValue={'1'}>
-      <SelectItem value={'1'}>1</SelectItem>
-      <SelectItem value={'2'}>2</SelectItem>
-      <SelectItem value={'3'}>3</SelectItem>
-      <SelectItem value={'4'}>4</SelectItem>
-      <SelectItem value={'5'}>5</SelectItem>
+    <Select defaultValue={'1'} open>
+      <SelectTextItem value={'1'}>1</SelectTextItem>
+      <SelectTextItem value={'2'}>2</SelectTextItem>
+      <SelectTextItem value={'3'}>3</SelectTextItem>
+      <SelectTextItem value={'4'}>4</SelectTextItem>
+      <SelectTextItem value={'5'}>5</SelectTextItem>
     </Select>
   ),
 }
@@ -65,11 +65,11 @@ export const SelectDisabled: Story = {
   args: {},
   render: () => (
     <Select defaultValue={'1'} disabled>
-      <SelectItem value={'1'}>1</SelectItem>
-      <SelectItem value={'2'}>2</SelectItem>
-      <SelectItem value={'3'}>3</SelectItem>
-      <SelectItem value={'4'}>4</SelectItem>
-      <SelectItem value={'5'}>5</SelectItem>
+      <SelectTextItem value={'1'}>1</SelectTextItem>
+      <SelectTextItem value={'2'}>2</SelectTextItem>
+      <SelectTextItem value={'3'}>3</SelectTextItem>
+      <SelectTextItem value={'4'}>4</SelectTextItem>
+      <SelectTextItem value={'5'}>5</SelectTextItem>
     </Select>
   ),
 }
@@ -78,11 +78,11 @@ export const SelectPagination: Story = {
   args: {},
   render: () => (
     <Select defaultValue={'1'} variant={'pagination'}>
-      <SelectItem value={'1'}>1</SelectItem>
-      <SelectItem value={'2'}>2</SelectItem>
-      <SelectItem value={'3'}>3</SelectItem>
-      <SelectItem value={'4'}>4</SelectItem>
-      <SelectItem value={'5'}>5</SelectItem>
+      <SelectTextItem value={'1'}>1</SelectTextItem>
+      <SelectTextItem value={'2'}>2</SelectTextItem>
+      <SelectTextItem value={'3'}>3</SelectTextItem>
+      <SelectTextItem value={'4'}>4</SelectTextItem>
+      <SelectTextItem value={'5'}>5</SelectTextItem>
     </Select>
   ),
 }
@@ -91,11 +91,11 @@ export const SelectPaginationActive: Story = {
   args: {},
   render: () => (
     <Select defaultOpen defaultValue={'1'} variant={'pagination'}>
-      <SelectItem value={'1'}>1</SelectItem>
-      <SelectItem value={'2'}>2</SelectItem>
-      <SelectItem value={'3'}>3</SelectItem>
-      <SelectItem value={'4'}>4</SelectItem>
-      <SelectItem value={'5'}>5</SelectItem>
+      <SelectTextItem value={'1'}>1</SelectTextItem>
+      <SelectTextItem value={'2'}>2</SelectTextItem>
+      <SelectTextItem value={'3'}>3</SelectTextItem>
+      <SelectTextItem value={'4'}>4</SelectTextItem>
+      <SelectTextItem value={'5'}>5</SelectTextItem>
     </Select>
   ),
 }
@@ -104,11 +104,11 @@ export const SelectPaginationDisabled: Story = {
   args: {},
   render: () => (
     <Select defaultValue={'1'} disabled variant={'pagination'}>
-      <SelectItem value={'1'}>1</SelectItem>
-      <SelectItem value={'2'}>2</SelectItem>
-      <SelectItem value={'3'}>3</SelectItem>
-      <SelectItem value={'4'}>4</SelectItem>
-      <SelectItem value={'5'}>5</SelectItem>
+      <SelectTextItem value={'1'}>1</SelectTextItem>
+      <SelectTextItem value={'2'}>2</SelectTextItem>
+      <SelectTextItem value={'3'}>3</SelectTextItem>
+      <SelectTextItem value={'4'}>4</SelectTextItem>
+      <SelectTextItem value={'5'}>5</SelectTextItem>
     </Select>
   ),
 }
