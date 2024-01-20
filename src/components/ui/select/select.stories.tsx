@@ -27,7 +27,7 @@ export const SelectPrimary: Story = {
   args: {},
   render: () => {
     return (
-      <Select defaultValue={'1'}>
+      <Select defaultValue={'1'} label={'Select Primary'}>
         <SelectTextItem value={'1'}> 1</SelectTextItem>
         <SelectTextItem value={'2'}>2</SelectTextItem>
       </Select>
