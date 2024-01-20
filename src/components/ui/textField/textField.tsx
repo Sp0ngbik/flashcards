@@ -1,4 +1,4 @@
-import React, { ComponentPropsWithoutRef, ElementType, useState } from 'react'
+import React, { ComponentPropsWithoutRef, ElementType, useId, useState } from 'react'
 
 import { EyeOffOutline, EyeOutline, SearchOutline } from '@/assets'
 import { Typography } from '@/components/ui/typography'
@@ -17,6 +17,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>((props, for
     className,
     disabled = false,
     errorMessage = '',
+    id,
     label = 'Input',
     variant = 'text',
     ...rest
@@ -37,11 +38,17 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>((props, for
     ),
     textFieldLabel: clsx(s.textField_label, disabled && s.textField_label_disabled),
   }
+  const generatedId = useId()
 
   return (
     <div className={`${s.textField_container} ${className}`}>
       {!searchVariant && (
-        <Typography className={classNames.textFieldLabel} variant={'body2'}>
+        <Typography
+          as={'label'}
+          className={classNames.textFieldLabel}
+          htmlFor={id ?? generatedId}
+          variant={'body2'}
+        >
           {label}
         </Typography>
       )}
@@ -49,6 +56,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>((props, for
         <input
           className={classNames.inputField}
           disabled={disabled}
+          id={id ?? generatedId}
           name={'textFieldControlled'}
           ref={forwardRef}
           type={passwordVisibility ? 'text' : variant}
