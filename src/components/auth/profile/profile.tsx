@@ -72,23 +72,26 @@ export const Profile: FC<ProfileProps> = ({
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0]
+    let err = null
 
     try {
       fileSchema.parse(selectedFile)
       setFileError(null)
     } catch (error: unknown) {
+      err = error
       if (error instanceof ZodError) {
         setFileError(error.errors?.[0]?.message || 'File validation error')
       } else {
         console.error('Unexpected error type:', error)
       }
     }
+
     if (selectedFile) {
       const imageUrl = URL.createObjectURL(selectedFile)
 
-      // if (fileError) {
-      setPhoto(imageUrl)
-      // }
+      if (!err) {
+        setPhoto(imageUrl)
+      }
     }
   }
 

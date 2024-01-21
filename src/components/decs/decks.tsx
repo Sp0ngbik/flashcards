@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react'
 
+import { Profile } from '@/components/auth/profile'
 import { Button } from '@/components/ui/button'
+import { DoubleSlider } from '@/components/ui/slider'
 import { Sort } from '@/components/ui/table/table.stories'
 import { Table, TableBody, TableDataCell, TableRow } from '@/components/ui/table/tableConstuctor'
 import { TableHeader } from '@/components/ui/table/tableHeader/tableHeader'
@@ -65,17 +67,20 @@ const Decks = () => {
         padding: '24px 137px',
       }}
     >
+      <Profile />
+      <DoubleSlider />
+
       <TextField label={'Search'} onValueChange={setSearch} value={search} variant={'search'} />
+      <Button
+        disabled={isDeckBeingCreated}
+        onClick={() => {
+          createDeck({ name: 'deck check' })
+        }}
+      >
+        Create Deck
+      </Button>
       <Table>
         <TableHeader columns={columns} onSort={setOrderBy} sort={orderBy} />
-        <Button
-          disabled={isDeckBeingCreated}
-          onClick={() => {
-            createDeck({ name: 'deck check' })
-          }}
-        >
-          Create Deck
-        </Button>
         <TableBody>
           {data?.items?.map(deck => {
             return (
@@ -84,15 +89,16 @@ const Decks = () => {
                 <TableDataCell>{deck.cardsCount}</TableDataCell>
                 <TableDataCell>{new Date(deck.updated).toLocaleDateString('ru-RU')}</TableDataCell>
                 <TableDataCell>{deck.author.name}</TableDataCell>
-                <TableDataCell></TableDataCell>
-                <button
-                  disabled={isDecBeingDeleted}
-                  onClick={() => {
-                    deleteDeck({ id: deck.id })
-                  }}
-                >
-                  sd
-                </button>
+                <TableDataCell>
+                  <button
+                    disabled={isDecBeingDeleted}
+                    onClick={() => {
+                      deleteDeck({ id: deck.id })
+                    }}
+                  >
+                    sd
+                  </button>
+                </TableDataCell>
               </TableRow>
             )
           })}

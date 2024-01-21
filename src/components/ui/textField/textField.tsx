@@ -9,7 +9,7 @@ import s from './textField.module.scss'
 export type TextFieldProps<T extends ElementType = 'input'> = {
   errorMessage?: string
   label?: string
-  onValueChange: (value: string) => void
+  onValueChange?: (value: string) => void
   variant?: 'password' | 'search' | 'text'
 } & ComponentPropsWithoutRef<T>
 
@@ -26,7 +26,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>((props, for
   } = props
   const [passwordVisibility, setPasswordVisibility] = useState(false)
   const onChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
-    onValueChange(e.currentTarget.value)
+    onValueChange && onValueChange(e.currentTarget.value)
   }
   const searchVariant = variant === 'search'
   const passwordVariant = variant === 'password'
