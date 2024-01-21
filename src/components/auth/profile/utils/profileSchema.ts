@@ -9,7 +9,7 @@ export const profileSchema = z.object({
 export type FormFile = z.infer<typeof fileSchema>
 
 const MAX_FILE_SIZE = 5000000
-// const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp']
+const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp']
 
 export const fileSchema = z
   .instanceof(File)
@@ -18,6 +18,6 @@ export const fileSchema = z
     `Max image size is 1MB. The file will not be uploaded.`
   )
   .refine(
-    file => ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'].includes(file.type),
+    file => ACCEPTED_IMAGE_TYPES.includes(file.type),
     'Only .jpg, .jpeg, .png and .webp formats are supported. The file will not be uploaded.'
   )
