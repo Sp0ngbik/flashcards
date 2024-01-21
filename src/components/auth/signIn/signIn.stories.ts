@@ -51,7 +51,7 @@ export const SignInError: Story = {
 
     const password = canvas.getByLabelText('Password')
 
-    await userEvent.type(password, '123', {
+    await userEvent.type(password, '12', {
       delay: 100,
     })
     const checkBoxElement = canvas.getByLabelText('Remember me')
