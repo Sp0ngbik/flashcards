@@ -1,18 +1,13 @@
-import { Profile } from '@/components/auth/profile'
+import { Provider } from 'react-redux'
 
-import { Button } from './components/ui/button'
-import { Pagination } from './components/ui/pagination'
+import { Router } from '@/router'
+import { store } from '@/services/store'
 
 function App() {
   return (
-    <div>
-      <Pagination totalCount={250} />
-      <Profile />
-      <Button as={'a'} variant={'link'}>
-        hi
-      </Button>
-      {/*<CreateNewPassword />*/}
-    </div>
+    <Provider store={store}>
+      <Router />
+    </Provider>
   )
 }
 

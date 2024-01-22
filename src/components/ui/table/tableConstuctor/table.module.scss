@@ -26,13 +26,25 @@
     width: fit-content;
     user-select: none;
   }
+
+  &:first-child {
+    min-width: 200px;
+  }
 }
 
 .tableDataCell {
   padding: 6px 24px;
 
+
   &:last-child {
     text-align: right;
+  }
+
+  &:not(:last-child) {
+    max-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 

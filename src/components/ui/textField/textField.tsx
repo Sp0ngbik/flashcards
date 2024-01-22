@@ -1,4 +1,4 @@
-import React, { ComponentPropsWithoutRef, ElementType, useState } from 'react'
+import React, { ChangeEvent, ComponentPropsWithoutRef, ElementType, useId, useState } from 'react'
 
 import { EyeOffOutline, EyeOutline, SearchOutline } from '@/assets'
 import { Typography } from '@/components/ui/typography'
@@ -9,6 +9,7 @@ import s from './textField.module.scss'
 export type TextFieldProps<T extends ElementType = 'input'> = {
   errorMessage?: string
   label?: string
+  onValueChange?: (value: string) => void
   variant?: 'password' | 'search' | 'text'
 } & ComponentPropsWithoutRef<T>
 
@@ -17,11 +18,16 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>((props, for
     className,
     disabled = false,
     errorMessage = '',
+    id,
     label = 'Input',
+    onValueChange,
     variant = 'text',
     ...rest
   } = props
   const [passwordVisibility, setPasswordVisibility] = useState(false)
+  const onChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
+    onValueChange && onValueChange(e.currentTarget.value)
+  }
   const searchVariant = variant === 'search'
   const passwordVariant = variant === 'password'
   const changePasswordVision = () => {
@@ -37,11 +43,17 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>((props, for
     ),
     textFieldLabel: clsx(s.textField_label, disabled && s.textField_label_disabled),
   }
+  const generatedId = useId()
 
   return (
     <div className={`${s.textField_container} ${className}`}>
       {!searchVariant && (
-        <Typography className={classNames.textFieldLabel} variant={'body2'}>
+        <Typography
+          as={'label'}
+          className={classNames.textFieldLabel}
+          htmlFor={id ?? generatedId}
+          variant={'body2'}
+        >
           {label}
         </Typography>
       )}
@@ -49,7 +61,9 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>((props, for
         <input
           className={classNames.inputField}
           disabled={disabled}
+          id={id ?? generatedId}
           name={'textFieldControlled'}
+          onChange={onChangeValue}
           ref={forwardRef}
           type={passwordVisibility ? 'text' : variant}
           {...rest}

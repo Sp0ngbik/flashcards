@@ -35,7 +35,7 @@ export const ForgotPassword = () => {
           errorMessage={errors.email?.message}
           label={'Email'}
           name={'email'}
-          placeholder={'Email'}
+          placeholder={'example@gmail.com'}
         />
         <Typography as={'p'} className={s.enterEmail} variant={'body2'}>
           Enter your email address and we will send you further instructions

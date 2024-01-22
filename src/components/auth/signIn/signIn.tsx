@@ -35,7 +35,7 @@ export const SignIn = () => {
           errorMessage={errors.email?.message}
           label={'Email'}
           name={'email'}
-          placeholder={'Email'}
+          placeholder={'example@gmail.com'}
         />
         <TextFieldControlled
           className={s.passwordField}
@@ -43,7 +43,7 @@ export const SignIn = () => {
           errorMessage={errors.password?.message}
           label={'Password'}
           name={'password'}
-          placeholder={'Password'}
+          placeholder={'Your password'}
           variant={'password'}
         />
         <CheckboxControlled
@@ -55,7 +55,9 @@ export const SignIn = () => {
         <Typography className={s.forgotPassword} variant={'body2'}>
           Forgot Password?
         </Typography>
-        <Button fullWidth>Sign In</Button>
+        <Button aria-label={'Sign In'} fullWidth>
+          Sign In
+        </Button>
       </form>
       <Typography className={s.formQuestion} variant={'body2'}>
         Don&apos;t have an account?

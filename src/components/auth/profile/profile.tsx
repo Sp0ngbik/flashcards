@@ -1,12 +1,12 @@
 import { ChangeEvent, FC, RefObject, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { LogOut } from '@/assets'
 import { Edit } from '@/assets/icons/edit'
-import { FormFile, FormProfile, fileSchema, profileSchema } from '@/components/auth/profile/utils'
-import { Button } from '@/components/ui/button'
+import { ProfileEditBody } from '@/components/auth/profile/profileEditBody'
+import { FormProfile } from '@/components/auth/profile/useEditProfile'
+import { FormFile, fileSchema } from '@/components/auth/profile/utils'
 import { Card } from '@/components/ui/card'
-import { TextFieldControlled } from '@/components/ui/controlled'
+import { Notification } from '@/components/ui/notification/notification'
 import { Typography } from '@/components/ui/typography'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ZodError } from 'zod'
@@ -18,26 +18,13 @@ import defaultImage from '../../../assets/image/defaultAvatar.png'
 export type ProfileProps = {
   edit?: boolean
   email?: string
-  nickname?: string
+  nickname: string
 }
 
-export const Profile: FC<ProfileProps> = ({
-  edit = false,
-  email = 'useremail@mail.com',
-  nickname = 'profile_nickname',
-}) => {
+export const Profile: FC<ProfileProps> = ({ edit = false, email, nickname }) => {
   const [editMode, setEditMode] = useState<boolean>(edit)
   const [photo, setPhoto] = useState<string>(defaultImage)
   const [fileError, setFileError] = useState<null | string>(null)
-
-  const {
-    control,
-    formState: { errors },
-    handleSubmit,
-  } = useForm<FormProfile>({
-    defaultValues: { nickname: nickname },
-    resolver: zodResolver(profileSchema),
-  })
 
   const onSubmit = (data: FormProfile) => {
     console.log(data)
@@ -71,111 +58,63 @@ export const Profile: FC<ProfileProps> = ({
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0]
+    let err = null
 
-    if (selectedFile) {
-      const imageUrl = URL.createObjectURL(selectedFile)
-
-      setPhoto(imageUrl)
-      console.log('Selected File:', selectedFile)
-    }
     try {
       fileSchema.parse(selectedFile)
       setFileError(null)
     } catch (error: unknown) {
+      err = error
       if (error instanceof ZodError) {
         setFileError(error.errors?.[0]?.message || 'File validation error')
       } else {
         console.error('Unexpected error type:', error)
       }
     }
+
+    if (selectedFile) {
+      const imageUrl = URL.createObjectURL(selectedFile)
+
+      if (!err) {
+        setPhoto(imageUrl)
+      }
+    }
   }
 
   return (
-    <Card>
-      <Typography className={s.profileLabel} variant={'h1'}>
-        Personal Information
-      </Typography>
-      <div className={s.profileBlock}>
-        <div className={s.photoWrapper}>
-          <form className={s.form} onSubmit={handleSubmitFileForm(onSubmitFileForm)}>
-            <input
-              id={'imgupload'}
-              name={'avatar'}
-              onChange={handleFileChange}
-              ref={fileInputRef}
-              style={{ display: 'none' }}
-              type={'file'}
-            />
-
-            {fileError ? (
-              <p className={s.errorText}>{fileError}</p>
-            ) : (
+    <>
+      {fileError && <Notification message={fileError} />}
+      <Card>
+        <Typography className={s.profileLabel} variant={'h1'}>
+          Personal Information
+        </Typography>
+        <div className={s.profileBlock}>
+          <div className={s.photoWrapper}>
+            <form className={s.form} onSubmit={handleSubmitFileForm(onSubmitFileForm)}>
+              <input
+                id={'imgupload'}
+                name={'avatar'}
+                onChange={handleFileChange}
+                ref={fileInputRef}
+                style={{ display: 'none' }}
+                type={'file'}
+              />
               <img alt={'user image'} className={s.profileImg} src={photo} />
-            )}
+              <button className={s.profileEditImgBtn} onClick={openFileInput}>
+                <Edit />
+              </button>
+            </form>
+          </div>
 
-            <button className={s.profileEditImgBtn} onClick={openFileInput}>
-              <Edit />
-            </button>
-          </form>
+          <ProfileEditBody
+            editMode={editMode}
+            email={email}
+            nickname={nickname}
+            onEditOnHandler={onEditOnHandler}
+            onSubmit={onSubmit}
+          />
         </div>
-        <Bar
-          {...{
-            control,
-            editMode,
-            email,
-            errors,
-            handleSubmit,
-            nickname,
-            onEditOnHandler,
-            onSubmit,
-          }}
-        />
-      </div>
-    </Card>
-  )
-}
-
-const Bar = ({
-  control,
-  editMode,
-  email,
-  errors,
-  handleSubmit,
-  nickname,
-  onEditOnHandler,
-  onSubmit,
-}: any) => {
-  if (editMode) {
-    return (
-      <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
-        <TextFieldControlled
-          className={s.editNameField}
-          control={control}
-          errorMessage={errors.nickname?.message}
-          label={'Nickname'}
-          name={'nickname'}
-          placeholder={'nickname'}
-        />
-        <Button fullWidth>Save Changes</Button>
-      </form>
-    )
-  }
-
-  return (
-    <div className={s.profileWrapper}>
-      <Typography className={s.profileName} variant={'h2'}>
-        {nickname}
-        <button className={s.profileEditNameBtn} onClick={onEditOnHandler}>
-          <Edit />
-        </button>
-      </Typography>
-      <Typography className={s.userEmail} variant={'body2'}>
-        {email}
-      </Typography>
-      <Button className={s.logoutBtn} variant={'secondary'}>
-        <LogOut className={s.logoutIcon} />
-        Logout
-      </Button>
-    </div>
+      </Card>
+    </>
   )
 }

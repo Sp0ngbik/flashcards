@@ -1,22 +1,22 @@
-import { ComponentPropsWithoutRef, useState } from 'react'
+import { ComponentPropsWithoutRef } from 'react'
 
 import * as Slider from '@radix-ui/react-slider'
 
 import s from './slider.module.scss'
 
-export type DoubleSliderProps = ComponentPropsWithoutRef<typeof Slider.Root>
+export type DoubleSliderProps = {
+  changeSliderValue: (value: number[]) => void
+} & ComponentPropsWithoutRef<typeof Slider.Root>
 
 export const DoubleSlider = (props: DoubleSliderProps) => {
-  const { defaultValue = [1, 15], ...rest } = props
-
-  const [currentValue, setCurrentValue] = useState(defaultValue)
+  const { changeSliderValue, defaultValue = [0, 5], ...rest } = props
 
   const onValueChange = (data: number[]) => {
-    setCurrentValue(data)
+    changeSliderValue(data)
   }
 
   const onChangeInput = (value: number, side: 'left' | 'right') => {
-    const temp = [...currentValue]
+    const temp = [...defaultValue]
     const clampedValue = Math.min(value, 100)
 
     if (side === 'left') {
@@ -24,23 +24,32 @@ export const DoubleSlider = (props: DoubleSliderProps) => {
     } else {
       temp[1] = clampedValue
     }
-    setCurrentValue(temp)
+    changeSliderValue(temp)
+  }
+
+  const onBlurValidate = () => {
+    const temp = [...defaultValue]
+
+    if (temp[0] > temp[1]) {
+      changeSliderValue([temp[1], temp[0]])
+    }
   }
 
   return (
     <div className={s.container}>
       <input
         className={s.value}
+        onBlur={onBlurValidate}
         onChange={e => onChangeInput(+e.currentTarget.value, 'left')}
         type={'number'}
-        value={currentValue[0]}
+        value={defaultValue[0]}
       />
 
       <Slider.Root
         className={s.slider}
-        defaultValue={currentValue}
+        defaultValue={defaultValue}
         onValueChange={onValueChange}
-        value={currentValue}
+        value={defaultValue}
         {...rest}
       >
         <Slider.Track className={s.sliderTrack}>
@@ -54,7 +63,7 @@ export const DoubleSlider = (props: DoubleSliderProps) => {
         className={s.value}
         onChange={e => onChangeInput(+e.currentTarget.value, 'right')}
         type={'number'}
-        value={currentValue[1]}
+        value={defaultValue[1]}
       />
     </div>
   )
