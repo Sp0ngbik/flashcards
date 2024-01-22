@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 
 import { Delete, Edit, Play } from '@/assets'
+import { Profile } from '@/components/auth/profile'
 import { Button } from '@/components/ui/button'
 import { DoubleSlider } from '@/components/ui/slider'
 import { Sort } from '@/components/ui/table/table.stories'
@@ -73,6 +74,7 @@ const Decks = () => {
         padding: '24px 137px',
       }}
     >
+      <Profile />
       <Button icon={<Delete />}>Hello</Button>
       <TextField label={'Search'} onValueChange={setSearch} value={search} variant={'search'} />
       <DoubleSlider changeSliderValue={setCurrentValue} defaultValue={currentValue} max={65} />
