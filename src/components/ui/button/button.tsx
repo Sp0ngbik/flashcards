@@ -1,6 +1,5 @@
-import { ComponentPropsWithoutRef, ElementType } from 'react'
+import { ComponentPropsWithoutRef, ElementType, ReactNode } from 'react'
 
-import { LogOut } from '@/assets'
 import { clsx } from 'clsx'
 
 import s from './button.module.scss'
@@ -8,7 +7,7 @@ import s from './button.module.scss'
 export type ButtonProps<T extends ElementType = 'button'> = {
   as?: T
   fullWidth?: boolean
-  icon?: boolean
+  icon?: ReactNode
   variant?: 'link' | 'primary' | 'secondary' | 'tertiary'
 } & ComponentPropsWithoutRef<T>
 
@@ -35,7 +34,7 @@ export const Button = <T extends ElementType = 'button'>(
 
   return (
     <div className={s.buttonWrapper}>
-      {icon && <LogOut className={s.logout} />}
+      <div className={s.iconWrapper}>{icon ?? icon}</div>
       <Component className={classNames.buttonStyles} {...rest} />
     </div>
   )

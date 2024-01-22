@@ -73,6 +73,7 @@ const Decks = () => {
         padding: '24px 137px',
       }}
     >
+      <Button icon={<Delete />}>Hello</Button>
       <TextField label={'Search'} onValueChange={setSearch} value={search} variant={'search'} />
       <DoubleSlider changeSliderValue={setCurrentValue} defaultValue={currentValue} max={65} />
       <Button
