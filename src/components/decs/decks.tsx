@@ -34,6 +34,7 @@ const columns = [
 const Decks = () => {
   const [search, setSearch] = useState('')
   const [orderBy, setOrderBy] = useState<Sort | null>(null)
+  const [currentValue, setCurrentValue] = useState<number[]>([0, 50])
 
   const sortedString = useMemo(() => {
     if (!orderBy) {
@@ -73,7 +74,7 @@ const Decks = () => {
       }}
     >
       <TextField label={'Search'} onValueChange={setSearch} value={search} variant={'search'} />
-      <DoubleSlider />
+      <DoubleSlider changeSliderValue={setCurrentValue} defaultValue={currentValue} max={65} />
       <Button
         disabled={isDeckBeingCreated}
         onClick={() => {
