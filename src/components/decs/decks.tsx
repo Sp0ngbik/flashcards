@@ -98,16 +98,7 @@ const Decks = () => {
   }
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '24px',
-        margin: '0 auto',
-        maxWidth: 1280,
-        padding: '24px 137px',
-      }}
-    >
+    <div className={s.deckWrapper}>
       <Button icon={<Delete />}>Hello</Button>
       <TextField label={'Search'} onValueChange={onChangeName} value={nameBy} variant={'search'} />
       <DoubleSlider changeSliderValue={setCurrentValue} defaultValue={currentValue} max={65} />
