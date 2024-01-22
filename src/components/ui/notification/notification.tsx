@@ -4,13 +4,19 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 type Props = {
-  message: string
+  message: null | string
+  resetError: (value: null | string) => void
 }
 
-export const Notification = ({ message }: Props) => {
+export const Notification = ({ message, resetError }: Props) => {
   useEffect(() => {
-    toast.error(message)
-  }, [message])
+    message && toast.error(message)
+    toast.onChange(({ status }) => {
+      if (status === 'added') {
+        resetError(null)
+      }
+    })
+  }, [message, resetError])
 
   return (
     <div>

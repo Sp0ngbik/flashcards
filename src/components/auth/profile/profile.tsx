@@ -97,7 +97,7 @@ export const Profile: FC<ProfileProps> = ({
 
   return (
     <>
-      {fileError && <Notification message={fileError} />}
+      <Notification message={fileError} resetError={setFileError} />
       <Card>
         <Typography className={s.profileLabel} variant={'h1'}>
           Personal Information

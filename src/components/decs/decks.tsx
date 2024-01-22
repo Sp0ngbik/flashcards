@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 
 import { Delete, Edit, Play } from '@/assets'
+import { Profile } from '@/components/auth/profile'
 import { Button } from '@/components/ui/button'
 import { DoubleSlider } from '@/components/ui/slider'
 import { Sort } from '@/components/ui/table/table.stories'
