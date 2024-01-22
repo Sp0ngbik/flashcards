@@ -118,37 +118,64 @@ export const Profile: FC<ProfileProps> = ({
             </button>
           </form>
         </div>
-
-        {editMode ? (
-          <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
-            <TextFieldControlled
-              className={s.editNameField}
-              control={control}
-              errorMessage={errors.nickname?.message}
-              label={'Nickname'}
-              name={'nickname'}
-              placeholder={'nickname'}
-            />
-            <Button fullWidth>Save Changes</Button>
-          </form>
-        ) : (
-          <div className={s.profileWrapper}>
-            <Typography className={s.profileName} variant={'h2'}>
-              {nickname}
-              <span className={s.profileEditNameBtn} onClick={onEditOnHandler}>
-                <Edit />
-              </span>
-            </Typography>
-            <Typography className={s.userEmail} variant={'body2'}>
-              {email}
-            </Typography>
-            <Button className={s.logoutBtn} variant={'secondary'}>
-              <LogOut className={s.logoutIcon} />
-              Logout
-            </Button>
-          </div>
-        )}
+        <Bar
+          {...{
+            control,
+            editMode,
+            email,
+            errors,
+            handleSubmit,
+            nickname,
+            onEditOnHandler,
+            onSubmit,
+          }}
+        />
       </div>
     </Card>
+  )
+}
+
+const Bar = ({
+  control,
+  editMode,
+  email,
+  errors,
+  handleSubmit,
+  nickname,
+  onEditOnHandler,
+  onSubmit,
+}: any) => {
+  if (editMode) {
+    return (
+      <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
+        <TextFieldControlled
+          className={s.editNameField}
+          control={control}
+          errorMessage={errors.nickname?.message}
+          label={'Nickname'}
+          name={'nickname'}
+          placeholder={'nickname'}
+        />
+        <Button fullWidth>Save Changes</Button>
+      </form>
+    )
+  }
+
+  return (
+    <div className={s.profileWrapper}>
+      <Typography className={s.profileName} variant={'h2'}>
+        {nickname}
+        <button className={s.profileEditNameBtn} onClick={onEditOnHandler}>
+          <Edit />
+        </button>
+      </Typography>
+      <Typography className={s.userEmail} variant={'body2'}>
+        {email}
+      </Typography>
+      <Button className={s.logoutBtn} variant={'secondary'}>
+        <LogOut className={s.logoutIcon} />
+        Logout
+      </Button>
+    </div>
   )
 }
