@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 
-import { Profile } from '@/components/auth/profile'
+import { Delete, Edit, Play } from '@/assets'
 import { Button } from '@/components/ui/button'
 import { DoubleSlider } from '@/components/ui/slider'
 import { Sort } from '@/components/ui/table/table.stories'
@@ -12,7 +12,9 @@ import {
   useDeleteDeckMutation,
   useGetDecksQuery,
 } from '@/services/decks/decks.service.'
+import { clsx } from 'clsx'
 
+import s from './decks.module.scss'
 const columns = [
   { key: 'name', sortable: true, title: 'Name' },
   {
@@ -32,6 +34,7 @@ const columns = [
 const Decks = () => {
   const [search, setSearch] = useState('')
   const [orderBy, setOrderBy] = useState<Sort | null>(null)
+  const [currentValue, setCurrentValue] = useState<number[]>([0, 50])
 
   const sortedString = useMemo(() => {
     if (!orderBy) {
@@ -47,13 +50,16 @@ const Decks = () => {
   })
 
   const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
-  const [deleteDeck, { isLoading: isDecBeingDeleted }] = useDeleteDeckMutation()
+  const [deleteDeck, { isLoading: isDeckBeingDeleted }] = useDeleteDeckMutation()
 
   if (isLoading) {
     return <div>Loading</div>
   }
   if (error) {
     return <div>{JSON.stringify(error)}</div>
+  }
+  const classNames = {
+    icon: clsx(s.icon, isDeckBeingDeleted && s.disableIcon),
   }
 
   return (
@@ -67,10 +73,8 @@ const Decks = () => {
         padding: '24px 137px',
       }}
     >
-      <Profile />
-      <DoubleSlider />
-
       <TextField label={'Search'} onValueChange={setSearch} value={search} variant={'search'} />
+      <DoubleSlider changeSliderValue={setCurrentValue} defaultValue={currentValue} max={65} />
       <Button
         disabled={isDeckBeingCreated}
         onClick={() => {
@@ -90,14 +94,14 @@ const Decks = () => {
                 <TableDataCell>{new Date(deck.updated).toLocaleDateString('ru-RU')}</TableDataCell>
                 <TableDataCell>{deck.author.name}</TableDataCell>
                 <TableDataCell>
-                  <button
-                    disabled={isDecBeingDeleted}
+                  <Play className={s.icon} />
+                  <Edit className={s.icon} />
+                  <Delete
+                    className={classNames.icon}
                     onClick={() => {
                       deleteDeck({ id: deck.id })
                     }}
-                  >
-                    sd
-                  </button>
+                  />
                 </TableDataCell>
               </TableRow>
             )
