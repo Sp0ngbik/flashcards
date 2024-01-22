@@ -1,11 +1,5 @@
 import { z } from 'zod'
 
-export type FormProfile = z.infer<typeof profileSchema>
-
-export const profileSchema = z.object({
-  nickname: z.string().min(3).max(30),
-})
-
 export type FormFile = z.infer<typeof fileSchema>
 
 const MAX_FILE_SIZE = 1000000

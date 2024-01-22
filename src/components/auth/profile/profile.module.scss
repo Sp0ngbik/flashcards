@@ -53,11 +53,19 @@
 }
 
 .profileEditNameBtn {
+  background-color: transparent;
+  border: none;
+  padding: 4px 4px 0 4px;
+  border-radius: 4px;
+
   &:hover {
     cursor: pointer;
     background-color: var(--color-dark-100);
     border-radius: 4px;
+  }
 
+  &:focus-visible {
+    outline: 2px solid var(--color-info-500);
   }
 }
 
@@ -74,6 +82,10 @@
   &:hover {
     cursor: pointer;
     background-color: var(--color-dark-100);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-info-500);
   }
 }
 

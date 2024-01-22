@@ -6,7 +6,6 @@ import { Edit } from '@/assets/icons/edit'
 import userAvatar from '@/assets/image/defaultAvatar.png'
 import { Table, TableBody, TableDataCell, TableRow } from '@/components/ui/table/tableConstuctor'
 import { TableHeader } from '@/components/ui/table/tableHeader/tableHeader'
-import { useHandleSort } from '@/components/ui/table/utils/useHandleSort'
 
 import s from './tableConstuctor/table.module.scss'
 
@@ -22,6 +21,29 @@ type Story = StoryObj<typeof meta>
 export const TableStory: Story = {
   args: {},
   render: args => {
+    const columns: Array<Column> = [
+      {
+        key: 'title',
+        title: 'Name',
+      },
+      {
+        key: 'cardsCount',
+        title: 'Cards',
+      },
+      {
+        key: 'updated',
+        title: 'Last Updated',
+      },
+      {
+        key: 'createdBy',
+        title: 'Created by',
+      },
+      {
+        key: 'icons',
+        title: '',
+      },
+    ]
+
     const options = [
       {
         cardsCount: 10,
@@ -62,13 +84,11 @@ export const TableStory: Story = {
       },
     ]
 
-    const { columns, setSort, sort, sortHandler } = useHandleSort(options)
-
     return (
       <Table {...args}>
-        <TableHeader columns={columns} onClick={sortHandler} onSort={setSort} sort={sort} />
+        <TableHeader columns={columns} />
         <TableBody>
-          {sortHandler().map(t => {
+          {options.map(t => {
             return (
               <TableRow key={t.title}>
                 <TableDataCell>
