@@ -19,7 +19,7 @@ export const CreatePassword: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
 
-    const passwordElement = canvas.getByPlaceholderText('Password')
+    const passwordElement = canvas.getByPlaceholderText('Your password')
 
     // The delay option sets the amount of milliseconds between characters being typed
     await userEvent.type(passwordElement, 'randomstring', {
@@ -33,11 +33,10 @@ export const CreatePassword: Story = {
   },
 }
 export const CreatePasswordWithError: Story = {
-
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
 
-    const passwordElement = canvas.getByPlaceholderText('Password')
+    const passwordElement = canvas.getByPlaceholderText('Your password')
 
     // The delay option sets the amount of milliseconds between characters being typed
     await userEvent.type(passwordElement, 'ra', {
