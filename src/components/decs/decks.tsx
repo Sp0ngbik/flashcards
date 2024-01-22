@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 import { Delete, Edit, Play } from '@/assets'
-import { Profile } from '@/components/auth/profile'
+import { useDebounce } from '@/components/decs/hooks/useDebounce'
 import { Button } from '@/components/ui/button'
 import { DoubleSlider } from '@/components/ui/slider'
 import { Sort } from '@/components/ui/table/table.stories'
@@ -16,6 +17,7 @@ import {
 import { clsx } from 'clsx'
 
 import s from './decks.module.scss'
+
 const columns = [
   { key: 'name', sortable: true, title: 'Name' },
   {
@@ -33,10 +35,42 @@ const columns = [
 ]
 
 const Decks = () => {
-  const [search, setSearch] = useState('')
-  const [orderBy, setOrderBy] = useState<Sort | null>(null)
+  const [search, setSearch] = useSearchParams('')
+  const [name, setName] = useSearchParams('')
+
+  const setDefaultSearchParams = () => {
+    if (!search.get('orderBy')) {
+      const defaultValue = ''
+
+      search.set('orderBy', JSON.stringify(defaultValue))
+      setSearch(search)
+    }
+
+    if (!search.get('name')) {
+      const defaultValue = ''
+
+      name.set('name', JSON.stringify(defaultValue))
+      setName(name)
+    }
+  }
+
+  setDefaultSearchParams()
+
   const [currentValue, setCurrentValue] = useState<number[]>([0, 50])
 
+  const orderBy = JSON.parse(search.get('orderBy') as string)
+  const nameBy = JSON.parse(search.get('name') as string)
+  const debounceName = useDebounce(nameBy, 2000)
+
+  const setSortedBy = (value: Sort) => {
+    search.set('orderBy', JSON.stringify(value))
+    setSearch(search)
+  }
+
+  const onChangeName = (value: string) => {
+    name.set('name', JSON.stringify(value))
+    setName(name)
+  }
   const sortedString = useMemo(() => {
     if (!orderBy) {
       return null
@@ -46,7 +80,7 @@ const Decks = () => {
   }, [orderBy])
 
   const { data, error, isLoading } = useGetDecksQuery({
-    name: search,
+    name: debounceName,
     orderBy: sortedString,
   })
 
@@ -75,7 +109,7 @@ const Decks = () => {
       }}
     >
       <Button icon={<Delete />}>Hello</Button>
-      <TextField label={'Search'} onValueChange={setSearch} value={search} variant={'search'} />
+      <TextField label={'Search'} onValueChange={onChangeName} value={nameBy} variant={'search'} />
       <DoubleSlider changeSliderValue={setCurrentValue} defaultValue={currentValue} max={65} />
       <Button
         disabled={isDeckBeingCreated}
@@ -86,7 +120,7 @@ const Decks = () => {
         Create Deck
       </Button>
       <Table>
-        <TableHeader columns={columns} onSort={setOrderBy} sort={orderBy} />
+        <TableHeader columns={columns} onSort={setSortedBy} sort={orderBy} />
         <TableBody>
           {data?.items?.map(deck => {
             return (
