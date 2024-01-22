@@ -41,12 +41,13 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>((props, for
       errorMessage && s.searchIcon_error,
       disabled && s.searchIcon_disabled
     ),
+    textFieldContainer: clsx(s.textField_container, className),
     textFieldLabel: clsx(s.textField_label, disabled && s.textField_label_disabled),
   }
   const generatedId = useId()
 
   return (
-    <div className={`${s.textField_container} ${className}`}>
+    <div className={classNames.textFieldContainer}>
       {!searchVariant && (
         <Typography
           as={'label'}

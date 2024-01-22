@@ -1,3 +1,8 @@
+.deckHead {
+  display: flex;
+  justify-content: space-between;
+}
+
 .icon {
   cursor: pointer;
   margin-right: 10px;
@@ -10,9 +15,23 @@
 .deckWrapper {
   display: flex;
   flex-direction: column;
-  gap: 24px;
 
   max-width: 1280px;
   margin: 0 auto;
   padding: 24px 137px;
+}
+
+.deckFilter {
+  display: flex;
+  place-content: center space-between;
+  place-items: flex-end center;
+  margin: 7px 0 36px;
+}
+
+.sliderLabel {
+  margin-bottom: 5px;
+}
+
+.paginationBlock {
+  margin-top: 24px;
 }
