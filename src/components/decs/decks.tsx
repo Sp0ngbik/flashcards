@@ -35,8 +35,7 @@ const columns = [
 ]
 
 const Decks = () => {
-  const [search, setSearch] = useSearchParams('')
-  const [name, setName] = useSearchParams('')
+  const [search, setSearch] = useSearchParams({ name: '', orderBy: '' })
 
   const setDefaultSearchParams = () => {
     if (!search.get('orderBy')) {
@@ -49,8 +48,8 @@ const Decks = () => {
     if (!search.get('name')) {
       const defaultValue = ''
 
-      name.set('name', JSON.stringify(defaultValue))
-      setName(name)
+      search.set('name', JSON.stringify(defaultValue))
+      setSearch(search)
     }
   }
 
@@ -68,8 +67,8 @@ const Decks = () => {
   }
 
   const onChangeName = (value: string) => {
-    name.set('name', JSON.stringify(value))
-    setName(name)
+    search.set('name', JSON.stringify(value))
+    setSearch(search)
   }
   const sortedString = useMemo(() => {
     if (!orderBy) {
