@@ -6,3 +6,13 @@
 .disableIcon {
   fill: var(--color-dark-100);
 }
+
+.deckWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px 137px;
+}
