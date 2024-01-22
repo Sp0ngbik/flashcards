@@ -9,7 +9,7 @@ export type DoubleSliderProps = ComponentPropsWithoutRef<typeof Slider.Root>
 export const DoubleSlider = (props: DoubleSliderProps) => {
   const { defaultValue = [1, 15], ...rest } = props
 
-  const [currentValue, setCurrentValue] = useState(defaultValue)
+  // const [currentValue, setCurrentValue] = useState(defaultValue)
 
   const onValueChange = (data: number[]) => {
     setCurrentValue(data)
@@ -27,10 +27,19 @@ export const DoubleSlider = (props: DoubleSliderProps) => {
     setCurrentValue(temp)
   }
 
+  const onBlurValidate = () => {
+    const temp = [...currentValue]
+
+    if (temp[0] > temp[1]) {
+      setCurrentValue([temp[1], temp[0]])
+    }
+  }
+
   return (
     <div className={s.container}>
       <input
         className={s.value}
+        onBlur={onBlurValidate}
         onChange={e => onChangeInput(+e.currentTarget.value, 'left')}
         type={'number'}
         value={currentValue[0]}
