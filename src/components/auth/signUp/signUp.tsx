@@ -33,7 +33,7 @@ export const SignUp = () => {
           errorMessage={errors.email?.message}
           label={'Email'}
           name={'email'}
-          placeholder={'Email'}
+          placeholder={'example@gmail.com'}
         />
         <TextFieldControlled
           className={s.passwordField}
@@ -41,7 +41,7 @@ export const SignUp = () => {
           errorMessage={errors.password?.message}
           label={'Password'}
           name={'password'}
-          placeholder={'Password'}
+          placeholder={'Your password'}
           variant={'password'}
         />
         <TextFieldControlled
@@ -50,7 +50,7 @@ export const SignUp = () => {
           errorMessage={errors.confirmPassword?.message}
           label={'Confirm Password'}
           name={'confirmPassword'}
-          placeholder={'Confirm password'}
+          placeholder={'Confirm your password'}
           variant={'password'}
         />
         <Button aria-label={'Sign Up'} fullWidth>

@@ -1,4 +1,4 @@
-import React, { ComponentPropsWithoutRef, ElementType, useId, useState } from 'react'
+import React, { ChangeEvent, ComponentPropsWithoutRef, ElementType, useId, useState } from 'react'
 
 import { EyeOffOutline, EyeOutline, SearchOutline } from '@/assets'
 import { Typography } from '@/components/ui/typography'
@@ -9,6 +9,7 @@ import s from './textField.module.scss'
 export type TextFieldProps<T extends ElementType = 'input'> = {
   errorMessage?: string
   label?: string
+  onValueChange?: (value: string) => void
   variant?: 'password' | 'search' | 'text'
 } & ComponentPropsWithoutRef<T>
 
@@ -19,10 +20,14 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>((props, for
     errorMessage = '',
     id,
     label = 'Input',
+    onValueChange,
     variant = 'text',
     ...rest
   } = props
   const [passwordVisibility, setPasswordVisibility] = useState(false)
+  const onChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
+    onValueChange && onValueChange(e.currentTarget.value)
+  }
   const searchVariant = variant === 'search'
   const passwordVariant = variant === 'password'
   const changePasswordVision = () => {
@@ -58,6 +63,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>((props, for
           disabled={disabled}
           id={id ?? generatedId}
           name={'textFieldControlled'}
+          onChange={onChangeValue}
           ref={forwardRef}
           type={passwordVisibility ? 'text' : variant}
           {...rest}

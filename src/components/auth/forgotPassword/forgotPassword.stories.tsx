@@ -20,7 +20,7 @@ export const ForgotPasswordInteractive: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
 
-    const emailElement = canvas.getByPlaceholderText('Email')
+    const emailElement = canvas.getByPlaceholderText('example@gmail.com')
 
     // The delay option sets the amount of milliseconds between characters being typed
     await userEvent.type(emailElement, 'randomstring@mail.ru', {
@@ -37,7 +37,7 @@ export const ForgotPasswordWithErrorInteractive: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
 
-    const emailElement = canvas.getByPlaceholderText('Email')
+    const emailElement = canvas.getByPlaceholderText('example@gmail.com')
 
     // The delay option sets the amount of milliseconds between characters being typed
     await userEvent.type(emailElement, 'randomstring', {

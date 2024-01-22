@@ -6,14 +6,9 @@ export const baseApi = createApi({
     credentials: 'include',
     prepareHeaders: headers => headers.append('x-auth-skip', 'true'),
   }),
-  endpoints(build) {
-    return {
-      getDecks: build.query<any, void>({
-        query: () => 'v1/decks',
-      }),
-    }
+  endpoints() {
+    return {}
   },
   reducerPath: 'baseApi',
+  tagTypes: ['Decks'],
 })
-
-export const { useGetDecksQuery } = baseApi
