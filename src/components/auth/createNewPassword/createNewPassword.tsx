@@ -39,7 +39,7 @@ const CreateNewPassword = () => {
           id={'Password'}
           label={'Password'}
           name={'password'}
-          placeholder={'Password'}
+          placeholder={'Your password'}
           variant={'password'}
         />
         <Typography as={'p'} className={s.createPassword} variant={'body2'}>

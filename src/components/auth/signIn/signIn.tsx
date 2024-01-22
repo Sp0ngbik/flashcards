@@ -35,7 +35,7 @@ export const SignIn = () => {
           errorMessage={errors.email?.message}
           label={'Email'}
           name={'email'}
-          placeholder={'Email'}
+          placeholder={'example@gmail.com'}
         />
         <TextFieldControlled
           className={s.passwordField}
@@ -43,7 +43,7 @@ export const SignIn = () => {
           errorMessage={errors.password?.message}
           label={'Password'}
           name={'password'}
-          placeholder={'Password'}
+          placeholder={'Your password'}
           variant={'password'}
         />
         <CheckboxControlled
