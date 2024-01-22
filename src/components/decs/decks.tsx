@@ -4,11 +4,14 @@ import { useSearchParams } from 'react-router-dom'
 import { Delete, Edit, Play } from '@/assets'
 import { useDebounce } from '@/components/decs/hooks/useDebounce'
 import { Button } from '@/components/ui/button'
+import { Pagination } from '@/components/ui/pagination'
 import { DoubleSlider } from '@/components/ui/slider'
+import { TabSwitcher, TabType } from '@/components/ui/tabSwitcher'
 import { Sort } from '@/components/ui/table/table.stories'
 import { Table, TableBody, TableDataCell, TableRow } from '@/components/ui/table/tableConstuctor'
 import { TableHeader } from '@/components/ui/table/tableHeader/tableHeader'
 import TextField from '@/components/ui/textField/textField'
+import { Typography } from '@/components/ui/typography'
 import {
   useCreateDeckMutation,
   useDeleteDeckMutation,
@@ -69,6 +72,11 @@ const Decks = () => {
     search.set('name', JSON.stringify(value))
     setSearch(search)
   }
+
+  const onCreateDeck = () => {
+    createDeck({ name: 'deck check' })
+  }
+
   const sortedString = useMemo(() => {
     if (!orderBy) {
       return null
@@ -94,20 +102,41 @@ const Decks = () => {
   const classNames = {
     icon: clsx(s.icon, isDeckBeingDeleted && s.disableIcon),
   }
+  const tabs: TabType[] = [
+    { title: 'My Cards', value: 'My cards' },
+    { title: 'All Cards', value: 'All Cards' },
+  ]
+
+  console.log(data)
 
   return (
     <div className={s.deckWrapper}>
-      <Button icon={<Delete />}>Hello</Button>
-      <TextField label={'Search'} onValueChange={onChangeName} value={nameBy} variant={'search'} />
-      <DoubleSlider changeSliderValue={setCurrentValue} defaultValue={currentValue} max={65} />
-      <Button
-        disabled={isDeckBeingCreated}
-        onClick={() => {
-          createDeck({ name: 'deck check' })
-        }}
-      >
-        Create Deck
-      </Button>
+      <div className={s.deckHead}>
+        <Typography variant={'h1'}>Decks List</Typography>
+        <Button disabled={isDeckBeingCreated} onClick={onCreateDeck}>
+          Add New Deck
+        </Button>
+      </div>
+      <div className={s.deckFilter}>
+        <div>
+          <TextField
+            label={'Search'}
+            onValueChange={onChangeName}
+            value={nameBy}
+            variant={'search'}
+          />
+        </div>
+        <TabSwitcher label={'Show decks cards'} tabs={tabs} />
+        <div>
+          <Typography className={s.sliderLabel} variant={'body2'}>
+            Number of cards
+          </Typography>
+          <DoubleSlider changeSliderValue={setCurrentValue} defaultValue={currentValue} max={65} />
+        </div>
+        <Button icon={<Delete />} variant={'secondary'}>
+          Clear Filter
+        </Button>
+      </div>
       <Table>
         <TableHeader columns={columns} onSort={setSortedBy} sort={orderBy} />
         <TableBody>
@@ -133,6 +162,7 @@ const Decks = () => {
           })}
         </TableBody>
       </Table>
+      <Pagination className={s.paginationBlock} totalCount={data?.pagination.totalItems ?? 10} />
     </div>
   )
 }

@@ -45,7 +45,7 @@ export const Pagination = (props: Props) => {
   }
 
   return (
-    <ul className={classNames.paginationContainer}>
+    <div className={classNames.paginationContainer}>
       <ArrowBackward className={classNames.arrowBackward} onClick={onPrevious} />
 
       {paginationRange?.map((pageNumber, index) => {
@@ -66,15 +66,15 @@ export const Pagination = (props: Props) => {
       <ArrowBackward className={classNames.arrowForward} onClick={onNext} />
       <Typography className={s.selectWrapper} variant={'body2'}>
         Показать
-        <Select defaultValue={'10'} onValueChange={onChangeValue} variant={'pagination'}>
-          <SelectTextItem value={'10'}>10</SelectTextItem>
-          <SelectTextItem value={'20'}>20</SelectTextItem>
-          <SelectTextItem value={'30'}>30</SelectTextItem>
-          <SelectTextItem value={'50'}>50</SelectTextItem>
-          <SelectTextItem value={'100'}>100</SelectTextItem>
+        <Select defaultValue={'2'} onValueChange={onChangeValue} variant={'pagination'}>
+          <SelectTextItem value={'2'}>2</SelectTextItem>
+          <SelectTextItem value={'5'}>5</SelectTextItem>
+          <SelectTextItem value={'8'}>8</SelectTextItem>
+          <SelectTextItem value={'12'}>12</SelectTextItem>
+          <SelectTextItem value={'15'}>15</SelectTextItem>
         </Select>
         на странице
       </Typography>
-    </ul>
+    </div>
   )
 }
