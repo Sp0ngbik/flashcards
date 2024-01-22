@@ -6,6 +6,13 @@ import { ForgotPassword } from './'
 
 const meta = {
   component: ForgotPassword,
+  decorators: [
+    Story => (
+      <div style={{ height: '400px' }}>
+        <Story />
+      </div>
+    ),
+  ],
   tags: ['autodocs'],
   title: 'Components/Auth/ForgotPassword',
 } satisfies Meta<typeof ForgotPassword>
