@@ -1,8 +1,16 @@
 .cardWrapper {
   display: flex;
   flex-direction: column;
-
+  gap: 30px;
   max-width: 1280px;
   margin: 0 auto;
   padding: 24px 137px;
+}
+.cardsHeader{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.backToDeck{
+  color: var(--color-light-100);
 }
