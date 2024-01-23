@@ -1,4 +1,9 @@
-import { AuthArgsType, SignUpArgsType, SignUpResponseType } from '@/services/auth/auth.types'
+import {
+  AuthArgsType,
+  MeResponse,
+  SignUpArgsType,
+  SignUpResponseType,
+} from '@/services/auth/auth.types'
 import { baseApi } from '@/services/baseApi'
 
 export const AuthService = baseApi.injectEndpoints({
@@ -9,6 +14,12 @@ export const AuthService = baseApi.injectEndpoints({
           body: args ?? undefined,
           method: 'POST',
           url: '/v1/auth/login',
+        }),
+      }),
+      me: build.query<MeResponse, undefined>({
+        query: args => ({
+          params: args,
+          url: 'v1/auth/me',
         }),
       }),
       signUp: build.mutation<SignUpResponseType, SignUpArgsType>({
@@ -22,4 +33,4 @@ export const AuthService = baseApi.injectEndpoints({
   },
 })
 
-export const { useLoginMutation, useSignUpMutation } = AuthService
+export const { useLoginMutation, useMeQuery, useSignUpMutation } = AuthService

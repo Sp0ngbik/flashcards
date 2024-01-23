@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { Delete, Edit, Play } from '@/assets'
@@ -12,6 +12,7 @@ import { Table, TableBody, TableDataCell, TableRow } from '@/components/ui/table
 import { TableHeader } from '@/components/ui/table/tableHeader/tableHeader'
 import TextField from '@/components/ui/textField/textField'
 import { Typography } from '@/components/ui/typography'
+import { useMeQuery } from '@/services/auth/auth.sevice'
 import {
   useCreateDeckMutation,
   useDeleteDeckMutation,
@@ -38,6 +39,16 @@ const columns = [
 ]
 
 const Decks = () => {
+  const { data: me, error: meError, isLoading: meIsLoading } = useMeQuery()
+
+  useEffect(() => {
+    console.log(me)
+  }, [me])
+
+  const onTabValueChange = (value: string) => {
+    console.log(value)
+  }
+
   const [search, setSearch] = useSearchParams({
     name: '',
     orderBy: '',
@@ -121,7 +132,11 @@ const Decks = () => {
     return `${orderBy.key}-${orderBy.direction}`
   }, [orderBy])
 
-  const { data, error, isLoading } = useGetDecksQuery({
+  const {
+    data,
+    error: deckError,
+    isLoading: deckIsLoading,
+  } = useGetDecksQuery({
     currentPage: debounceCurrentPage,
     itemsPerPage: itemsPerPage,
     maxCardsCount: debounceMaxCards,
@@ -130,11 +145,11 @@ const Decks = () => {
     orderBy: sortedString,
   })
 
-  if (isLoading) {
+  if (deckIsLoading) {
     return <div>Loading</div>
   }
-  if (error) {
-    return <div>{JSON.stringify(error)}</div>
+  if (deckError) {
+    return <div>{JSON.stringify(deckError)}</div>
   }
   const classNames = {
     icon: clsx(s.icon, isDeckBeingDeleted && s.disableIcon),
@@ -157,11 +172,12 @@ const Decks = () => {
           <TextField
             label={'Search'}
             onValueChange={onChangeName}
+            placeholder={'Input search'}
             value={nameBy}
             variant={'search'}
           />
         </div>
-        <TabSwitcher label={'Show decks cards'} tabs={tabs} />
+        <TabSwitcher label={'Show decks cards'} onValueChange={onTabValueChange} tabs={tabs} />
         <div>
           <Typography className={s.sliderLabel} variant={'body2'}>
             Number of cards
