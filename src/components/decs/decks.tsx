@@ -48,7 +48,7 @@ const Decks = () => {
     minCardsCount: '',
   })
 
-  const [currentPageParam, setCurrentPageParam] = useSearchParams({
+  const [paginationParam, setPaginationParam] = useSearchParams({
     currentPage: '1',
     itemsPerPage: '8',
   })
@@ -63,22 +63,22 @@ const Decks = () => {
   setDefaultSearchParams(search, 'orderBy')
   setDefaultSearchParams(search, 'name')
   setDefaultSearchParams(amountOfCards, 'minCardsCount')
-  setDefaultSearchParams(currentPageParam, 'currentPage')
-  setDefaultSearchParams(currentPageParam, 'itemsPerPage')
+  setDefaultSearchParams(paginationParam, 'currentPage')
+  setDefaultSearchParams(paginationParam, 'itemsPerPage')
 
   const setItemsPerPage = (value: number) => {
-    currentPageParam.set('itemsPerPage', JSON.stringify(value))
-    setCurrentPageParam(currentPageParam)
+    paginationParam.set('itemsPerPage', JSON.stringify(value))
+    setPaginationParam(paginationParam)
   }
 
   const defaultPaginationValue = 10
-  const itemsPerPage = Number(JSON.parse(currentPageParam.get('itemsPerPage') as string))
+  const itemsPerPage = Number(JSON.parse(paginationParam.get('itemsPerPage') as string))
 
   const onChangeCurrentPage = (value: number) => {
-    currentPageParam.set('currentPage', JSON.stringify(value))
-    setCurrentPageParam(currentPageParam)
+    paginationParam.set('currentPage', JSON.stringify(value))
+    setPaginationParam(paginationParam)
   }
-  const currentPage = Number(JSON.parse(currentPageParam.get('currentPage') as string))
+  const currentPage = Number(JSON.parse(paginationParam.get('currentPage') as string))
   const debounceCurrentPage = useDebounce(currentPage, 1000)
 
   const onChangeSliderValues = (value: number[]) => {
