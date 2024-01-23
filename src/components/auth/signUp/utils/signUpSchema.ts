@@ -6,6 +6,7 @@ export const signUpSchema = z
     confirmPassword: z.string().min(4),
     email: z.string().email(),
     password: z.string().min(4),
+    sendConfirmationEmail: z.boolean(),
   })
   .superRefine(({ confirmPassword, password }, ctx) => {
     if (confirmPassword !== password) {
@@ -15,4 +16,11 @@ export const signUpSchema = z
         path: ['confirmPassword'],
       })
     }
+  })
+  .transform(data => {
+    if (data.confirmPassword === data.password) {
+      data.sendConfirmationEmail = true
+    }
+
+    return data
   })
