@@ -11,18 +11,16 @@ type Props = {
 export const Header = ({ isLoggedIn }: Props) => {
   return (
     <div className={s.headerWrapper}>
-      <div className={s.contentWrapper}>
-        <Logo />
-        <div className={s.headerRightSection}>
-          {isLoggedIn ? (
-            <div className={s.userBlock}>
-              <span>Username</span>
-              <DropdownMenu />
-            </div>
-          ) : (
-            <Button>Sign In</Button>
-          )}
-        </div>
+      <Logo />
+      <div className={s.headerRightSection}>
+        {isLoggedIn ? (
+          <div className={s.userBlock}>
+            <span>Username</span>
+            <DropdownMenu />
+          </div>
+        ) : (
+          <Button>Sign In</Button>
+        )}
       </div>
     </div>
   )
