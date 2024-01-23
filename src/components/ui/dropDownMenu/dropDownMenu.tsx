@@ -29,7 +29,7 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
   }
 
   return (
-    <DropdownMenuRadix.Root defaultOpen>
+    <DropdownMenuRadix.Root defaultOpen={defaultOpen}>
       <DropdownMenuRadix.Trigger asChild>
         <button aria-label={'Customise options'} className={s.IconButton}>
           {flag === 'editProfile' ? (

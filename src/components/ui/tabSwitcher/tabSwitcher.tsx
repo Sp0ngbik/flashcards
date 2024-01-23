@@ -23,7 +23,7 @@ export const TabSwitcher = (props: TabsProps) => {
     <div>
       <TabsRadix.Root
         className={s.TabsRoot}
-        defaultValue={tabs[0]?.value ? '1' : '2'}
+        defaultValue={tabs[0].value}
         onValueChange={onValueChange}
       >
         <Typography className={s.tabsLabel} variant={'body2'}>
@@ -36,7 +36,7 @@ export const TabSwitcher = (props: TabsProps) => {
                 className={s.TabsTrigger}
                 disabled={tab.disabled}
                 key={index}
-                value={`${index + 1}`}
+                value={`${tab.value}`}
               >
                 <Typography className={s.TabsTitle} variant={'body1'}>
                   {tab.title}

@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useLayoutEffect, useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { Delete, Edit, Play } from '@/assets'
@@ -155,9 +155,19 @@ const Decks = () => {
     icon: clsx(s.icon, isDeckBeingDeleted && s.disableIcon),
   }
   const tabs: TabType[] = [
-    { title: 'My Cards', value: 'My cards' },
-    { title: 'All Cards', value: 'All Cards' },
+    { title: 'My Cards', value: 'userCards' },
+    { title: 'All Cards', value: 'allCards' },
   ]
+
+  type TabFields = (typeof tabs)[number]
+
+  type TabValue = TabFields['value']
+
+  const checkiCheck = (asd: TabValue) => {
+    if (asd === '') {
+      console.log('s')
+    }
+  }
 
   return (
     <div className={s.deckWrapper}>
