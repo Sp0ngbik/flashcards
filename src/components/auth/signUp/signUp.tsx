@@ -1,10 +1,16 @@
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { Navigate, useNavigate } from 'react-router-dom'
 
 import { FormValuesSignUp, signUpSchema } from '@/components/auth/signUp/utils'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { TextFieldControlled } from '@/components/ui/controlled'
 import { Typography } from '@/components/ui/typography'
+import { useSignUpMutation } from '@/services/auth/auth.sevice'
+import { ServerError } from '@/services/auth/auth.types'
+import { setAuthenticated } from '@/services/auth/authSlice'
+import { useAppDispatch, useAppSelector } from '@/services/store'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import s from './signUp.module.scss'
@@ -14,12 +20,41 @@ export const SignUp = () => {
     control,
     formState: { errors },
     handleSubmit,
+    setError,
   } = useForm<FormValuesSignUp>({
-    defaultValues: { confirmPassword: '', email: '', password: '' },
+    defaultValues: { confirmPassword: '', email: '', password: '', sendConfirmationEmail: false },
     resolver: zodResolver(signUpSchema),
   })
-  const onSubmit = (data: any) => {
-    console.log(data)
+
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+
+  const [signUp, { error, isLoading }] = useSignUpMutation<ServerError>()
+  const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated)
+
+  useEffect(() => {
+    if (error) {
+      setError('email', { message: error.data.errorMessages[0], type: 'custom' })
+    }
+  }, [error, setError])
+
+  if (isAuthenticated) {
+    return <Navigate to={'/'} />
+  }
+
+  if (isLoading) {
+    return <div>Loading</div>
+  }
+
+  const onSubmit = async (data: FormValuesSignUp) => {
+    const { confirmPassword, ...rest } = data
+
+    await signUp(rest).unwrap()
+    dispatch(setAuthenticated(true))
+  }
+
+  const handleSignInClick = () => {
+    navigate('/sign-in')
   }
 
   return (
@@ -60,7 +95,7 @@ export const SignUp = () => {
       <Typography className={s.formQuestion} variant={'body2'}>
         Already have an account?
       </Typography>
-      <Button className={s.submitButton} variant={'link'}>
+      <Button className={s.submitButton} onClick={handleSignInClick} variant={'link'}>
         Sign In
       </Button>
     </Card>
