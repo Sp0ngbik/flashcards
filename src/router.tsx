@@ -9,6 +9,7 @@ import {
 import { SignIn } from '@/components/auth/signIn'
 import { SignUp } from '@/components/auth/signUp'
 import { useAppSelector } from '@/services/store'
+import Cards from '@/components/cards/cards'
 
 import Decks from './components/decs/decks'
 
@@ -23,7 +24,13 @@ const publicRoutes: RouteObject[] = [
   { element: <SignIn />, path: '/sign-in' },
 ]
 
-const privateRoutes: RouteObject[] = [{ element: <Decks />, path: '/' }]
+const privateRoutes: RouteObject[] = [
+  { element: <Decks />, path: '/' },
+  {
+    element: <Cards />,
+    path: '/cards/:id?',
+  },
+]
 const router = createBrowserRouter([
   {
     children: privateRoutes,
