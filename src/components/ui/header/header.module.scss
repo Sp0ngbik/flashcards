@@ -1,17 +1,19 @@
 .headerWrapper {
   display: flex;
-  place-content: center space-around;
-  place-items: center center;
-
-  padding: 12px 0;
-
-  background-color: var(--color-dark-700);
+  flex-direction: row;
+  margin: 0 auto;
+  justify-content: space-between;
+  max-width: 1280px;
+  padding: 12px 50px 12px 137px;
 
   & .headerRightSection {
     display: flex;
     justify-content: center;
     width: 300px;
   }
+}
+.headerBackGround{
+  background-color: var(--color-dark-700);
 }
 
 .userBlock {
