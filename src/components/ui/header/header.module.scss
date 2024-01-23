@@ -1,11 +1,17 @@
 .headerWrapper {
   display: flex;
-  place-content: center space-around;
+  place-content: center space-between;
   place-items: center center;
 
   padding: 12px 0;
 
   background-color: var(--color-dark-700);
+
+  & .contentWrapper {
+    display: flex;
+    place-content: center center;
+    width: 1280px;
+  }
 
   & .headerRightSection {
     display: flex;
