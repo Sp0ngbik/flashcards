@@ -3,6 +3,13 @@ import { Meta, Story } from '@storybook/react'
 
 export default {
   component: Profile,
+  decorators: [
+    Story => (
+      <div style={{ height: '340px' }}>
+        <Story />
+      </div>
+    ),
+  ],
   title: 'Components/Auth/Profile',
 } as Meta
 

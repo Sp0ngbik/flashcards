@@ -1,2 +1,2 @@
 export * from './profile'
-export { ProfileEditBody } from './profileEditBody'
+export { ProfileEditBody } from '@/components/auth/profile/profileEditBody'

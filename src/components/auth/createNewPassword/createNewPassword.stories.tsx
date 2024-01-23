@@ -4,6 +4,13 @@ import { userEvent, within } from '@storybook/test'
 
 const meta = {
   component: CreateNewPassword,
+  decorators: [
+    Story => (
+      <div style={{ height: '340px' }}>
+        <Story />
+      </div>
+    ),
+  ],
   tags: ['autodocs'],
   title: 'Components/Auth/CreateNewPassword',
 } satisfies Meta<typeof CreateNewPassword>

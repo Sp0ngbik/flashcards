@@ -1,14 +1,17 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { Delete, Edit, Play } from '@/assets'
 import { useDebounce } from '@/components/decs/hooks/useDebounce'
 import { Button } from '@/components/ui/button'
+import { Pagination } from '@/components/ui/pagination'
 import { DoubleSlider } from '@/components/ui/slider'
+import { TabSwitcher, TabType } from '@/components/ui/tabSwitcher'
 import { Sort } from '@/components/ui/table/table.stories'
 import { Table, TableBody, TableDataCell, TableRow } from '@/components/ui/table/tableConstuctor'
 import { TableHeader } from '@/components/ui/table/tableHeader/tableHeader'
 import TextField from '@/components/ui/textField/textField'
+import { Typography } from '@/components/ui/typography'
 import {
   useCreateDeckMutation,
   useDeleteDeckMutation,
@@ -35,28 +38,63 @@ const columns = [
 ]
 
 const Decks = () => {
-  const [search, setSearch] = useSearchParams({ name: '', orderBy: '' })
+  const [search, setSearch] = useSearchParams({
+    name: '',
+    orderBy: '',
+  })
 
-  const setDefaultSearchParams = () => {
-    if (!search.get('orderBy')) {
-      const defaultValue = ''
+  const [amountOfCards, setAmountOfCards] = useSearchParams({
+    maxCardsCount: '15',
+    minCardsCount: '',
+  })
 
-      search.set('orderBy', JSON.stringify(defaultValue))
-      setSearch(search)
-    }
+  const [paginationParam, setPaginationParam] = useSearchParams({
+    currentPage: '1',
+    itemsPerPage: '8',
+  })
 
-    if (!search.get('name')) {
-      const defaultValue = ''
-
-      search.set('name', JSON.stringify(defaultValue))
+  const setDefaultSearchParams = (param: URLSearchParams, defaultValue: string) => {
+    if (!param.get(defaultValue)) {
+      param.set(defaultValue, JSON.stringify(''))
       setSearch(search)
     }
   }
 
-  setDefaultSearchParams()
+  setDefaultSearchParams(search, 'orderBy')
+  setDefaultSearchParams(search, 'name')
+  setDefaultSearchParams(amountOfCards, 'minCardsCount')
+  setDefaultSearchParams(paginationParam, 'currentPage')
+  setDefaultSearchParams(paginationParam, 'itemsPerPage')
 
-  const [currentValue, setCurrentValue] = useState<number[]>([0, 50])
+  const setItemsPerPage = (value: number) => {
+    paginationParam.set('itemsPerPage', JSON.stringify(value))
+    setPaginationParam(paginationParam)
+  }
 
+  const defaultPaginationValue = 10
+  const itemsPerPage = Number(JSON.parse(paginationParam.get('itemsPerPage') as string))
+
+  const onChangeCurrentPage = (value: number) => {
+    paginationParam.set('currentPage', JSON.stringify(value))
+    setPaginationParam(paginationParam)
+  }
+  const currentPage = Number(JSON.parse(paginationParam.get('currentPage') as string))
+  const debounceCurrentPage = useDebounce(currentPage, 1000)
+
+  const onChangeSliderValues = (value: number[]) => {
+    amountOfCards.set('minCardsCount', JSON.stringify(value[0]))
+    setAmountOfCards(amountOfCards)
+    amountOfCards.set('maxCardsCount', JSON.stringify(value[1]))
+    setAmountOfCards(amountOfCards)
+  }
+  const minCards = Number(JSON.parse(amountOfCards.get('minCardsCount') as string))
+  const maxCards = Number(JSON.parse(amountOfCards.get('maxCardsCount') as string))
+
+  const debounceMinCards = useDebounce(minCards, 1000)
+  const debounceMaxCards = useDebounce(maxCards, 1000)
+
+  const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
+  const [deleteDeck, { isLoading: isDeckBeingDeleted }] = useDeleteDeckMutation()
   const orderBy = JSON.parse(search.get('orderBy') as string)
   const nameBy = JSON.parse(search.get('name') as string)
   const debounceName = useDebounce(nameBy, 2000)
@@ -70,6 +108,11 @@ const Decks = () => {
     search.set('name', JSON.stringify(value))
     setSearch(search)
   }
+
+  const onCreateDeck = () => {
+    createDeck({ name: 'deck check' })
+  }
+
   const sortedString = useMemo(() => {
     if (!orderBy) {
       return null
@@ -79,12 +122,13 @@ const Decks = () => {
   }, [orderBy])
 
   const { data, error, isLoading } = useGetDecksQuery({
+    currentPage: debounceCurrentPage,
+    itemsPerPage: itemsPerPage,
+    maxCardsCount: debounceMaxCards,
+    minCardsCount: debounceMinCards,
     name: debounceName,
     orderBy: sortedString,
   })
-
-  const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
-  const [deleteDeck, { isLoading: isDeckBeingDeleted }] = useDeleteDeckMutation()
 
   if (isLoading) {
     return <div>Loading</div>
@@ -95,20 +139,43 @@ const Decks = () => {
   const classNames = {
     icon: clsx(s.icon, isDeckBeingDeleted && s.disableIcon),
   }
+  const tabs: TabType[] = [
+    { title: 'My Cards', value: 'My cards' },
+    { title: 'All Cards', value: 'All Cards' },
+  ]
 
   return (
     <div className={s.deckWrapper}>
-      <Button icon={<Delete />}>Hello</Button>
-      <TextField label={'Search'} onValueChange={onChangeName} value={nameBy} variant={'search'} />
-      <DoubleSlider changeSliderValue={setCurrentValue} defaultValue={currentValue} max={65} />
-      <Button
-        disabled={isDeckBeingCreated}
-        onClick={() => {
-          createDeck({ name: 'deck check' })
-        }}
-      >
-        Create Deck
-      </Button>
+      <div className={s.deckHead}>
+        <Typography variant={'h1'}>Decks List</Typography>
+        <Button disabled={isDeckBeingCreated} onClick={onCreateDeck}>
+          Add New Deck
+        </Button>
+      </div>
+      <div className={s.deckFilter}>
+        <div>
+          <TextField
+            label={'Search'}
+            onValueChange={onChangeName}
+            value={nameBy}
+            variant={'search'}
+          />
+        </div>
+        <TabSwitcher label={'Show decks cards'} tabs={tabs} />
+        <div>
+          <Typography className={s.sliderLabel} variant={'body2'}>
+            Number of cards
+          </Typography>
+          <DoubleSlider
+            changeSliderValue={onChangeSliderValues}
+            defaultValue={[minCards, maxCards]}
+            max={65}
+          />
+        </div>
+        <Button icon={<Delete />} variant={'secondary'}>
+          Clear Filter
+        </Button>
+      </div>
       <Table>
         <TableHeader columns={columns} onSort={setSortedBy} sort={orderBy} />
         <TableBody>
@@ -134,6 +201,14 @@ const Decks = () => {
           })}
         </TableBody>
       </Table>
+      <Pagination
+        changeCurrentPage={onChangeCurrentPage}
+        changeItemsPerPage={setItemsPerPage}
+        className={s.paginationBlock}
+        currentPage={currentPage}
+        pageSize={itemsPerPage}
+        totalCount={data?.pagination.totalItems ?? defaultPaginationValue}
+      />
     </div>
   )
 }

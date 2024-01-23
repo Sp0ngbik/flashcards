@@ -4,6 +4,13 @@ import CheckEmail from './checkEmail'
 
 const meta = {
   component: CheckEmail,
+  decorators: [
+    Story => (
+      <div style={{ height: '340px' }}>
+        <Story />
+      </div>
+    ),
+  ],
   tags: ['autodocs'],
   title: 'Components/Auth/CheckEmail',
 } satisfies Meta<typeof CheckEmail>
