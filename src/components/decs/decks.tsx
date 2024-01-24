@@ -1,24 +1,16 @@
 import { useMemo } from 'react'
-import { useSearchParams } from 'react-router-dom'
 
 import { Delete, Edit, Play } from '@/assets'
-import { useDebounce } from '@/components/decs/hooks/useDebounce'
+import { useDeckFilter } from '@/components/decs/deckFIlter'
 import { Button } from '@/components/ui/button'
 import { Pagination } from '@/components/ui/pagination'
 import { DoubleSlider } from '@/components/ui/slider'
 import { TabSwitcher, TabType } from '@/components/ui/tabSwitcher'
-import { Sort } from '@/components/ui/table/table.stories'
 import { Table, TableBody, TableDataCell, TableRow } from '@/components/ui/table/tableConstuctor'
 import { TableHeader } from '@/components/ui/table/tableHeader/tableHeader'
 import TextField from '@/components/ui/textField/textField'
 import { Typography } from '@/components/ui/typography'
-import { useMeQuery } from '@/services/auth/auth.sevice'
-import {
-  useCreateDeckMutation,
-  useDeleteDeckMutation,
-  useGetDecksQuery,
-  useGetMinMaxCardsQuery,
-} from '@/services/decks/decks.service.'
+import { useGetDecksQuery } from '@/services/decks/decks.service.'
 import { clsx } from 'clsx'
 
 import s from './decks.module.scss'
@@ -40,85 +32,34 @@ const columns = [
 ]
 
 const Decks = () => {
-  const { data: me, isLoading: meIsLoading } = useMeQuery(undefined)
-  const { data: minMaxValues } = useGetMinMaxCardsQuery(undefined)
-  const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
-  const [deleteDeck, { isLoading: isDeckBeingDeleted }] = useDeleteDeckMutation()
+  const {
+    currentPage,
+    debounceCurrentPage,
+    debounceMaxCards,
+    debounceMinCards,
+    debounceName,
+    deleteDeck,
+    getCurrentTab,
+    isDeckBeingCreated,
+    isDeckBeingDeleted,
+    itemsPerPage,
+    maxCards,
+    me,
+    meIsLoading,
+    minCards,
+    minMaxValues,
+    onChangeCurrentPage,
+    onChangeName,
+    onChangeSliderValues,
+    onCreateDeck,
+    onTabValueChange,
+    orderBy,
+    searchBy,
+    setItemsPerPage,
+    setSortedBy,
+  } = useDeckFilter()
 
-  const [search, setSearch] = useSearchParams({
-    currentPage: '1',
-    currentTab: 'allCards',
-    itemsPerPage: '8',
-    maxCardsCount: '15',
-    minCardsCount: '0',
-    name: '',
-    orderBy: '',
-  })
   const defaultPaginationValue = 10
-
-  const setDefaultSearchParams = (param: URLSearchParams, defaultValue: string) => {
-    if (!param.get(defaultValue)) {
-      param.set(defaultValue, JSON.stringify(''))
-      setSearch(search)
-    }
-  }
-
-  setDefaultSearchParams(search, 'orderBy')
-  setDefaultSearchParams(search, 'name')
-  setDefaultSearchParams(search, 'minCardsCount')
-  setDefaultSearchParams(search, 'currentPage')
-  setDefaultSearchParams(search, 'itemsPerPage')
-  setDefaultSearchParams(search, 'currentTab')
-
-  const onTabValueChange = (value: string) => {
-    search.set('currentTab', value)
-    setSearch(search)
-  }
-
-  const getCurrentTab = search.get('currentTab')
-
-  const setItemsPerPage = (value: number) => {
-    search.set('itemsPerPage', value.toString())
-    setSearch(search)
-  }
-
-  const itemsPerPage = Number(search.get('itemsPerPage'))
-
-  const onChangeCurrentPage = (value: number) => {
-    search.set('currentPage', value.toString())
-    setSearch(search)
-  }
-  const currentPage = Number(JSON.parse(search.get('currentPage') as string))
-  const debounceCurrentPage = useDebounce(currentPage, 1000)
-
-  const onChangeSliderValues = (value: number[]) => {
-    search.set('minCardsCount', value[0].toString())
-    search.set('maxCardsCount', value[1].toString())
-    setSearch(search)
-  }
-  const minCards = Number(search.get('minCardsCount'))
-  const maxCards = Number(search.get('maxCardsCount'))
-
-  const debounceMinCards = useDebounce(minCards, 1000)
-  const debounceMaxCards = useDebounce(maxCards, 1000)
-
-  const orderBy = JSON.parse(search.get('orderBy') as string)
-  const nameBy = JSON.parse(search.get('name') as string)
-  const debounceName = useDebounce(nameBy, 2000)
-
-  const setSortedBy = (value: Sort) => {
-    search.set('orderBy', JSON.stringify(value))
-    setSearch(search)
-  }
-
-  const onChangeName = (value: string) => {
-    search.set('name', value)
-    setSearch(search)
-  }
-
-  const onCreateDeck = () => {
-    createDeck({ name: 'deck check' })
-  }
 
   const sortedString = useMemo(() => {
     if (!orderBy) {
@@ -171,7 +112,7 @@ const Decks = () => {
             label={'Search'}
             onValueChange={onChangeName}
             placeholder={'Input search'}
-            value={nameBy}
+            value={searchBy}
             variant={'search'}
           />
         </div>
