@@ -2,7 +2,7 @@ import { PaginationResponse } from '@/services/commom.types'
 
 export type DeckResponse = PaginationResponse<Deck[]>
 
-export interface Deck {
+export type Deck = {
   author: DeckAuthor
   cardsCount: number
   cover: string
@@ -13,7 +13,8 @@ export interface Deck {
   updated: string
   userId: string
 }
-export interface DeckAuthor {
+
+export type DeckAuthor = {
   id: string
   name: string
 }
@@ -35,4 +36,8 @@ export type CreateDeckArgs = {
 }
 export type DeleteDeckArgs = {
   id: string
+}
+export type MinMax = {
+  max: number
+  min: number
 }

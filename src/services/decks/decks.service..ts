@@ -5,6 +5,7 @@ import {
   DeckResponse,
   DeleteDeckArgs,
   GetDecksArgs,
+  MinMax,
 } from '@/services/decks/decks.types'
 
 export const DecksService = baseApi.injectEndpoints({
@@ -32,8 +33,20 @@ export const DecksService = baseApi.injectEndpoints({
           url: 'v2/decks',
         }),
       }),
+      getMinMaxCards: build.query<MinMax, undefined>({
+        providesTags: ['Decks'],
+        query: args => ({
+          params: args,
+          url: 'v2/decks/min-max-cards',
+        }),
+      }),
     }
   },
 })
 
-export const { useCreateDeckMutation, useDeleteDeckMutation, useGetDecksQuery } = DecksService
+export const {
+  useCreateDeckMutation,
+  useDeleteDeckMutation,
+  useGetDecksQuery,
+  useGetMinMaxCardsQuery,
+} = DecksService

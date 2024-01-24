@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { Delete, Edit, Play } from '@/assets'
@@ -17,6 +17,7 @@ import {
   useCreateDeckMutation,
   useDeleteDeckMutation,
   useGetDecksQuery,
+  useGetMinMaxCardsQuery,
 } from '@/services/decks/decks.service.'
 import { clsx } from 'clsx'
 
@@ -39,15 +40,12 @@ const columns = [
 ]
 
 const Decks = () => {
-  const { data: me, error: meError, isLoading: meIsLoading } = useMeQuery()
+  const { data: me, isLoading: meIsLoading } = useMeQuery(undefined)
+  const { data: minMaxValues } = useGetMinMaxCardsQuery(undefined)
 
-  useEffect(() => {
-    console.log(me)
-  }, [me])
-
-  const onTabValueChange = (value: string) => {
-    console.log(value)
-  }
+  const [cardsTab, setCardsTab] = useSearchParams({
+    currentTab: 'allCards',
+  })
 
   const [search, setSearch] = useSearchParams({
     name: '',
@@ -76,6 +74,14 @@ const Decks = () => {
   setDefaultSearchParams(amountOfCards, 'minCardsCount')
   setDefaultSearchParams(paginationParam, 'currentPage')
   setDefaultSearchParams(paginationParam, 'itemsPerPage')
+  setDefaultSearchParams(cardsTab, 'currentTab')
+
+  const onTabValueChange = (value: string) => {
+    cardsTab.set('currentTab', value)
+    setCardsTab(cardsTab)
+  }
+
+  const getCurrentTab = cardsTab.get('currentTab')
 
   const setItemsPerPage = (value: number) => {
     paginationParam.set('itemsPerPage', JSON.stringify(value))
@@ -137,6 +143,7 @@ const Decks = () => {
     error: deckError,
     isLoading: deckIsLoading,
   } = useGetDecksQuery({
+    authorId: getCurrentTab === 'userCards' ? me?.id : undefined,
     currentPage: debounceCurrentPage,
     itemsPerPage: itemsPerPage,
     maxCardsCount: debounceMaxCards,
@@ -145,7 +152,7 @@ const Decks = () => {
     orderBy: sortedString,
   })
 
-  if (deckIsLoading) {
+  if (deckIsLoading && meIsLoading) {
     return <div>Loading</div>
   }
   if (deckError) {
@@ -155,8 +162,8 @@ const Decks = () => {
     icon: clsx(s.icon, isDeckBeingDeleted && s.disableIcon),
   }
   const tabs: TabType[] = [
-    { title: 'My Cards', value: 'My cards' },
-    { title: 'All Cards', value: 'All Cards' },
+    { title: 'My Cards', value: 'userCards' },
+    { title: 'All Cards', value: 'allCards' },
   ]
 
   return (
@@ -177,7 +184,12 @@ const Decks = () => {
             variant={'search'}
           />
         </div>
-        <TabSwitcher label={'Show decks cards'} onValueChange={onTabValueChange} tabs={tabs} />
+        <TabSwitcher
+          defaultValue={getCurrentTab || tabs[0].value}
+          label={'Show decks cards'}
+          onValueChange={onTabValueChange}
+          tabs={tabs}
+        />
         <div>
           <Typography className={s.sliderLabel} variant={'body2'}>
             Number of cards
@@ -185,7 +197,8 @@ const Decks = () => {
           <DoubleSlider
             changeSliderValue={onChangeSliderValues}
             defaultValue={[minCards, maxCards]}
-            max={65}
+            max={minMaxValues?.max}
+            min={minMaxValues?.min}
           />
         </div>
         <Button icon={<Delete />} variant={'secondary'}>
