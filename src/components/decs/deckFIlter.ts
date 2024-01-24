@@ -23,6 +23,7 @@ export const useDeckFilter = () => {
   const { data: minMaxValues } = useGetMinMaxCardsQuery(undefined)
   const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
   const [deleteDeck, { isLoading: isDeckBeingDeleted }] = useDeleteDeckMutation()
+
   const setDefaultSearchParams = (defaultValue: string) => {
     if (!search.get(defaultValue)) {
       search.set(defaultValue, JSON.stringify(''))
@@ -55,7 +56,8 @@ export const useDeckFilter = () => {
     search.set('currentPage', value.toString())
     setSearch(search)
   }
-  const currentPage = Number(JSON.parse(search.get('currentPage') as string))
+  const currentPage = Number(search.get('currentPage'))
+
   const debounceCurrentPage = useDebounce(currentPage, 1000)
 
   const onChangeSliderValues = (value: number[]) => {
@@ -79,7 +81,7 @@ export const useDeckFilter = () => {
   }
 
   const onChangeName = (value: string) => {
-    search.set('name', value)
+    search.set('name', JSON.stringify(value))
     setSearch(search)
   }
 
