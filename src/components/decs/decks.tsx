@@ -42,25 +42,19 @@ const columns = [
 const Decks = () => {
   const { data: me, isLoading: meIsLoading } = useMeQuery(undefined)
   const { data: minMaxValues } = useGetMinMaxCardsQuery(undefined)
-
-  const [cardsTab, setCardsTab] = useSearchParams({
-    currentTab: 'allCards',
-  })
+  const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
+  const [deleteDeck, { isLoading: isDeckBeingDeleted }] = useDeleteDeckMutation()
 
   const [search, setSearch] = useSearchParams({
+    currentPage: '1',
+    currentTab: 'allCards',
+    itemsPerPage: '8',
+    maxCardsCount: '15',
+    minCardsCount: '0',
     name: '',
     orderBy: '',
   })
-
-  const [amountOfCards, setAmountOfCards] = useSearchParams({
-    maxCardsCount: '15',
-    minCardsCount: '',
-  })
-
-  const [paginationParam, setPaginationParam] = useSearchParams({
-    currentPage: '1',
-    itemsPerPage: '8',
-  })
+  const defaultPaginationValue = 10
 
   const setDefaultSearchParams = (param: URLSearchParams, defaultValue: string) => {
     if (!param.get(defaultValue)) {
@@ -71,47 +65,43 @@ const Decks = () => {
 
   setDefaultSearchParams(search, 'orderBy')
   setDefaultSearchParams(search, 'name')
-  setDefaultSearchParams(amountOfCards, 'minCardsCount')
-  setDefaultSearchParams(paginationParam, 'currentPage')
-  setDefaultSearchParams(paginationParam, 'itemsPerPage')
-  setDefaultSearchParams(cardsTab, 'currentTab')
+  setDefaultSearchParams(search, 'minCardsCount')
+  setDefaultSearchParams(search, 'currentPage')
+  setDefaultSearchParams(search, 'itemsPerPage')
+  setDefaultSearchParams(search, 'currentTab')
 
   const onTabValueChange = (value: string) => {
-    cardsTab.set('currentTab', value)
-    setCardsTab(cardsTab)
+    search.set('currentTab', value)
+    setSearch(search)
   }
 
-  const getCurrentTab = cardsTab.get('currentTab')
+  const getCurrentTab = search.get('currentTab')
 
   const setItemsPerPage = (value: number) => {
-    paginationParam.set('itemsPerPage', JSON.stringify(value))
-    setPaginationParam(paginationParam)
+    search.set('itemsPerPage', value.toString())
+    setSearch(search)
   }
 
-  const defaultPaginationValue = 10
-  const itemsPerPage = Number(JSON.parse(paginationParam.get('itemsPerPage') as string))
+  const itemsPerPage = Number(search.get('itemsPerPage'))
 
   const onChangeCurrentPage = (value: number) => {
-    paginationParam.set('currentPage', JSON.stringify(value))
-    setPaginationParam(paginationParam)
+    search.set('currentPage', value.toString())
+    setSearch(search)
   }
-  const currentPage = Number(JSON.parse(paginationParam.get('currentPage') as string))
+  const currentPage = Number(JSON.parse(search.get('currentPage') as string))
   const debounceCurrentPage = useDebounce(currentPage, 1000)
 
   const onChangeSliderValues = (value: number[]) => {
-    amountOfCards.set('minCardsCount', JSON.stringify(value[0]))
-    setAmountOfCards(amountOfCards)
-    amountOfCards.set('maxCardsCount', JSON.stringify(value[1]))
-    setAmountOfCards(amountOfCards)
+    search.set('minCardsCount', value[0].toString())
+    search.set('maxCardsCount', value[1].toString())
+    setSearch(search)
   }
-  const minCards = Number(JSON.parse(amountOfCards.get('minCardsCount') as string))
-  const maxCards = Number(JSON.parse(amountOfCards.get('maxCardsCount') as string))
+  const minCards = Number(search.get('minCardsCount'))
+  const maxCards = Number(search.get('maxCardsCount'))
 
   const debounceMinCards = useDebounce(minCards, 1000)
   const debounceMaxCards = useDebounce(maxCards, 1000)
 
-  const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
-  const [deleteDeck, { isLoading: isDeckBeingDeleted }] = useDeleteDeckMutation()
   const orderBy = JSON.parse(search.get('orderBy') as string)
   const nameBy = JSON.parse(search.get('name') as string)
   const debounceName = useDebounce(nameBy, 2000)
@@ -122,7 +112,7 @@ const Decks = () => {
   }
 
   const onChangeName = (value: string) => {
-    search.set('name', JSON.stringify(value))
+    search.set('name', value)
     setSearch(search)
   }
 
@@ -158,13 +148,14 @@ const Decks = () => {
   if (deckError) {
     return <div>{JSON.stringify(deckError)}</div>
   }
-  const classNames = {
-    icon: clsx(s.icon, isDeckBeingDeleted && s.disableIcon),
-  }
+
   const tabs: TabType[] = [
     { title: 'My Cards', value: 'userCards' },
     { title: 'All Cards', value: 'allCards' },
   ]
+  const classNames = {
+    icon: clsx(s.icon, isDeckBeingDeleted && s.disableIcon),
+  }
 
   return (
     <div className={s.deckWrapper}>
