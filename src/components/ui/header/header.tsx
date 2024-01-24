@@ -10,17 +10,19 @@ type Props = {
 
 export const Header = ({ isLoggedIn }: Props) => {
   return (
-    <div className={s.headerWrapper}>
-      <Logo />
-      <div className={s.headerRightSection}>
-        {isLoggedIn ? (
-          <div className={s.userBlock}>
-            <span>Username</span>
-            <DropdownMenu />
-          </div>
-        ) : (
-          <Button>Sign In</Button>
-        )}
+    <div className={s.headerBackGround}>
+      <div className={s.headerWrapper}>
+        <Logo />
+        <div className={s.headerRightSection}>
+          {isLoggedIn ? (
+            <div className={s.userBlock}>
+              <span>Username</span>
+              <DropdownMenu />
+            </div>
+          ) : (
+            <Button>Sign In</Button>
+          )}
+        </div>
       </div>
     </div>
   )
