@@ -1,7 +1,8 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { Delete, Edit, Play } from '@/assets'
+import { AddNewDeckModal } from '@/components/addNewDeckModal/addNewDeckModal'
 import { useDebounce } from '@/components/decs/hooks/useDebounce'
 import { Button } from '@/components/ui/button'
 import { Pagination } from '@/components/ui/pagination'
@@ -112,6 +113,7 @@ const Decks = () => {
 
   const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
   const [deleteDeck, { isLoading: isDeckBeingDeleted }] = useDeleteDeckMutation()
+  const [isOpen, setIsOpen] = useState(false)
   const orderBy = JSON.parse(search.get('orderBy') as string)
   const nameBy = JSON.parse(search.get('name') as string)
   const debounceName = useDebounce(nameBy, 2000)
@@ -127,7 +129,7 @@ const Decks = () => {
   }
 
   const onCreateDeck = () => {
-    createDeck({ name: 'deck check' })
+    setIsOpen(true)
   }
 
   const sortedString = useMemo(() => {
@@ -237,6 +239,12 @@ const Decks = () => {
         currentPage={currentPage}
         pageSize={itemsPerPage}
         totalCount={data?.pagination.totalItems ?? defaultPaginationValue}
+      />
+      <AddNewDeckModal
+        createDeck={createDeck}
+        isOpen={isOpen}
+        onOpenChange={setIsOpen}
+        title={'Add New Deck'}
       />
     </div>
   )
