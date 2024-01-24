@@ -1,3 +1,5 @@
+import { ComponentPropsWithoutRef } from 'react'
+
 import { Typography } from '@/components/ui/typography'
 import * as TabsRadix from '@radix-ui/react-tabs'
 
@@ -12,20 +14,15 @@ export type TabType = {
 
 type TabsProps = {
   label?: string
-  onValueChange?: (value: string) => void
   tabs: TabType[]
-}
+} & ComponentPropsWithoutRef<typeof TabsRadix.Root>
 
 export const TabSwitcher = (props: TabsProps) => {
-  const { label, onValueChange, tabs } = props
+  const { label, tabs } = props
 
   return (
     <div>
-      <TabsRadix.Root
-        className={s.TabsRoot}
-        defaultValue={tabs[0].value}
-        onValueChange={onValueChange}
-      >
+      <TabsRadix.Root className={s.TabsRoot} {...props}>
         <Typography className={s.tabsLabel} variant={'body2'}>
           {label}
         </Typography>
