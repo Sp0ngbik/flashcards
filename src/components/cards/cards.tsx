@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom'
+
 import { ArrowBack } from '@/assets/icons/arrow-back-outline'
 import { Button } from '@/components/ui/button'
 import { Pagination } from '@/components/ui/pagination'
@@ -16,9 +18,19 @@ const columns = [
 ]
 
 const Cards = () => {
+  const navigete = useNavigate()
+  const backToDeckHandler = () => {
+    navigete('/')
+  }
+
   return (
     <div className={s.cardWrapper}>
-      <Button className={s.backToDeck} icon={<ArrowBack />} variant={'link'}>
+      <Button
+        className={s.backToDeck}
+        icon={<ArrowBack />}
+        onClick={backToDeckHandler}
+        variant={'link'}
+      >
         Back to Decks List
       </Button>
       <div className={s.cardsHeader}>
