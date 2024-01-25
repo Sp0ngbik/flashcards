@@ -3,11 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import { useDebounce } from '@/components/hooks/useDebounce'
 import { Sort } from '@/components/ui/table/table.stories'
 import { useMeQuery } from '@/services/auth/auth.sevice'
-import {
-  useCreateDeckMutation,
-  useDeleteDeckMutation,
-  useGetMinMaxCardsQuery,
-} from '@/services/decks/decks.service.'
+import { useDeleteDeckMutation, useGetMinMaxCardsQuery } from '@/services/decks/decks.service.'
 
 export const useDeckFilter = () => {
   const [search, setSearch] = useSearchParams({
@@ -21,7 +17,6 @@ export const useDeckFilter = () => {
   })
   const { data: me, isLoading: meIsLoading } = useMeQuery(undefined)
   const { data: minMaxValues } = useGetMinMaxCardsQuery(undefined)
-  const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
   const [deleteDeck, { isLoading: isDeckBeingDeleted }] = useDeleteDeckMutation()
 
   const setDefaultSearchParams = (defaultValue: string) => {
@@ -85,10 +80,6 @@ export const useDeckFilter = () => {
     setSearch(search)
   }
 
-  const onCreateDeck = () => {
-    createDeck({ name: 'deck check' })
-  }
-
   return {
     currentPage,
     debounceCurrentPage,
@@ -97,7 +88,6 @@ export const useDeckFilter = () => {
     debounceName,
     deleteDeck,
     getCurrentTab,
-    isDeckBeingCreated,
     isDeckBeingDeleted,
     itemsPerPage,
     maxCards,
@@ -108,7 +98,6 @@ export const useDeckFilter = () => {
     onChangeCurrentPage,
     onChangeName,
     onChangeSliderValues,
-    onCreateDeck,
     onTabValueChange,
     orderBy,
     searchBy,

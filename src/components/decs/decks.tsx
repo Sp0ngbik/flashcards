@@ -1,11 +1,8 @@
-
 import { useMemo, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
 
 import { Delete, Edit, Play } from '@/assets'
 import { AddNewDeckModal } from '@/components/addNewDeckModal/addNewDeckModal'
-import { useDebounce } from '@/components/decs/hooks/useDebounce'
-
+import { useDeckFilter } from '@/components/decs/deckFIlter'
 import { Button } from '@/components/ui/button'
 import { Pagination } from '@/components/ui/pagination'
 import { DoubleSlider } from '@/components/ui/slider'
@@ -14,12 +11,7 @@ import { Table, TableBody, TableDataCell, TableRow } from '@/components/ui/table
 import { TableHeader } from '@/components/ui/table/tableHeader/tableHeader'
 import TextField from '@/components/ui/textField/textField'
 import { Typography } from '@/components/ui/typography'
-import { useMeQuery } from '@/services/auth/auth.sevice'
-import {
-  useDeleteDeckMutation,
-  useGetDecksQuery,
-  useGetMinMaxCardsQuery,
-} from '@/services/decks/decks.service.'
+import { useGetDecksQuery } from '@/services/decks/decks.service.'
 import { clsx } from 'clsx'
 
 import s from './decks.module.scss'
@@ -49,7 +41,6 @@ const Decks = () => {
     debounceName,
     deleteDeck,
     getCurrentTab,
-    isDeckBeingCreated,
     isDeckBeingDeleted,
     itemsPerPage,
     maxCards,
@@ -60,7 +51,6 @@ const Decks = () => {
     onChangeCurrentPage,
     onChangeName,
     onChangeSliderValues,
-    onCreateDeck,
     onTabValueChange,
     orderBy,
     searchBy,
@@ -69,7 +59,7 @@ const Decks = () => {
   } = useDeckFilter()
 
   const defaultPaginationValue = 10
-
+  const [isOpen, setIsOpen] = useState(false)
   const sortedString = useMemo(() => {
     if (!orderBy) {
       return null
@@ -77,7 +67,9 @@ const Decks = () => {
 
     return `${orderBy.key}-${orderBy.direction}`
   }, [orderBy])
-
+  const onCreateDeck = () => {
+    setIsOpen(true)
+  }
   const {
     data,
     error: deckError,
