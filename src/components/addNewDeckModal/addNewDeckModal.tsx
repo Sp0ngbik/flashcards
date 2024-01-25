@@ -29,18 +29,20 @@ export const AddNewDeckModal = ({ isOpen, onOpenChange, title }: AddNewDeckModal
     formState: { errors },
     handleSubmit,
   } = useForm<FormValuesAddDeck>({
-    defaultValues: { file: undefined, name: '', private: false },
+    defaultValues: { file: undefined, isPrivate: false, name: '' },
     resolver: zodResolver(addDeckSchema),
   })
 
   const [fileError, setFileError] = useState<null | string>(null)
   const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
+  const [photo, setPhoto] = useState<string>('')
 
   const closeHandler = () => {
     onOpenChange(false)
   }
 
   const onSubmit = async (data: FormValuesAddDeck) => {
+    console.log(errors)
     console.log(data)
     await createDeck(data).unwrap()
     onOpenChange(false)
@@ -74,7 +76,7 @@ export const AddNewDeckModal = ({ isOpen, onOpenChange, title }: AddNewDeckModal
       const imageUrl = URL.createObjectURL(selectedFile)
 
       if (!err) {
-        console.log(imageUrl)
+        setPhoto(imageUrl)
       }
     }
   }
@@ -83,16 +85,16 @@ export const AddNewDeckModal = ({ isOpen, onOpenChange, title }: AddNewDeckModal
     <>
       <Notification message={fileError} resetError={setFileError} />
       <Modal onOpenChange={onOpenChange} open={isOpen} title={title}>
-        <form className={s.form} id={'hook-form'} onSubmit={handleSubmit(onSubmit)}>
+        <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
           <TextFieldControlled
             control={control}
             errorMessage={errors.name?.message}
             label={'Name Pack'}
             name={'name'}
           ></TextFieldControlled>
+          <div>{photo && <img alt={'user image'} className={s.deckImage} src={photo} />}</div>
           <input
-            id={'imgupload'}
-            name={'avatar'}
+            name={'file'}
             onChange={handleFileChange}
             ref={fileInputRef}
             style={{ display: 'none' }}
@@ -106,14 +108,9 @@ export const AddNewDeckModal = ({ isOpen, onOpenChange, title }: AddNewDeckModal
           >
             {<ImageIcon />}Upload Image
           </Button>
-          <CheckboxControlled control={control} name={'private'} text={'Private pack'} />
+          <CheckboxControlled control={control} name={'isPrivate'} text={'Private pack'} />
           <div className={s.btnArea}>
-            <Button
-              disabled={isDeckBeingCreated}
-              form={'hook-form'}
-              type={'submit'}
-              variant={'primary'}
-            >
+            <Button disabled={isDeckBeingCreated} variant={'primary'}>
               Add New Deck
             </Button>
             <Button onClick={closeHandler} type={'reset'} variant={'secondary'}>
