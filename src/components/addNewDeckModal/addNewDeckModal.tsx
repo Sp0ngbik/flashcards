@@ -25,6 +25,8 @@ type AddNewDeckModalProps = {
 }
 
 export const AddNewDeckModal = ({ isOpen, onOpenChange, title }: AddNewDeckModalProps) => {
+  const fileInputRef: RefObject<HTMLInputElement> = useRef(null)
+
   const {
     control,
     formState: { errors },
@@ -36,18 +38,33 @@ export const AddNewDeckModal = ({ isOpen, onOpenChange, title }: AddNewDeckModal
 
   const [fileError, setFileError] = useState<null | string>(null)
   const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
+  const [photo, setPhoto] = useState<string>('')
 
   const closeHandler = () => {
     onOpenChange(false)
   }
 
   const onSubmit = async (data: FormValuesAddDeck) => {
-    console.log(data)
-    await createDeck(data).unwrap()
-    onOpenChange(false)
-  }
+    const formData = new FormData()
 
-  const fileInputRef: RefObject<HTMLInputElement> = useRef(null)
+    formData.append('name', data.name)
+    formData.append('isPrivate', String(data.isPrivate))
+    formData.append('cover', data.filePath)
+
+    for (const entry of formData.entries()) {
+      const [name, value] = entry
+
+      console.log(`${name}: ${value}`)
+    }
+
+    try {
+      await createDeck(formData).unwrap()
+      onOpenChange(false)
+    } catch (error) {
+      console.error('Error creating deck:', error)
+      // Обрабатываем ошибку
+    }
+  }
 
   const openFileInput = () => {
     if (fileInputRef.current) {
@@ -55,30 +72,30 @@ export const AddNewDeckModal = ({ isOpen, onOpenChange, title }: AddNewDeckModal
     }
   }
 
-  // const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const selectedFile = e.target.files?.[0]
-  //   let err = null
-  //
-  //   try {
-  //     fileSchema.parse(selectedFile)
-  //     setFileError(null)
-  //   } catch (error: unknown) {
-  //     err = error
-  //     if (error instanceof ZodError) {
-  //       setFileError(error.errors?.[0]?.message || 'File validation error')
-  //     } else {
-  //       console.error('Unexpected error type:', error)
-  //     }
-  //   }
-  //
-  //   if (selectedFile) {
-  //     const imageUrl = URL.createObjectURL(selectedFile)
-  //
-  //     if (!err) {
-  //       console.log(imageUrl)
-  //     }
-  //   }
-  // }
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0]
+    let err = null
+
+    try {
+      fileSchema.parse(selectedFile)
+      setFileError(null)
+    } catch (error: unknown) {
+      err = error
+      if (error instanceof ZodError) {
+        setFileError(error.errors?.[0]?.message || 'File validation error')
+      } else {
+        console.error('Unexpected error type:', error)
+      }
+    }
+
+    if (selectedFile) {
+      const imageUrl = URL.createObjectURL(selectedFile)
+
+      if (!err) {
+        setPhoto(imageUrl)
+      }
+    }
+  }
 
   return (
     <>
@@ -92,18 +109,14 @@ export const AddNewDeckModal = ({ isOpen, onOpenChange, title }: AddNewDeckModal
             name={'name'}
           />
           <ImageUploaderControlled control={control} name={'filePath'} />
-          {/*<input*/}
-          {/*  id={'imgupload'}*/}
-          {/*  name={'filePath'}*/}
-          {/*  onChange={handleFileChange}*/}
-          {/*  ref={fileInputRef}*/}
-          {/*  style={{ display: 'none' }}*/}
-          {/*  type={'file'}*/}
-          {/*/>*/}
+          <div>{photo && <img alt={'upload cover'} className={s.deckImage} src={photo} />}</div>
           <Button
             className={s.uploadImageBtn}
             fullWidth
-            onClick={openFileInput}
+            onClick={e => {
+              e.preventDefault()
+              openFileInput()
+            }}
             variant={'secondary'}
           >
             {<ImageIcon />}Upload Image
