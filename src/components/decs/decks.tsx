@@ -142,7 +142,12 @@ const Decks = () => {
           {data?.items?.map(deck => {
             return (
               <TableRow key={deck.id}>
-                <TableDataCell>{deck.name}</TableDataCell>
+                <TableDataCell>
+                  <span className={s.tableDataContent}>
+                    {deck.cover && <img alt={'image'} className={s.tableImage} src={deck.cover} />}
+                    {deck.name}
+                  </span>
+                </TableDataCell>
                 <TableDataCell>{deck.cardsCount}</TableDataCell>
                 <TableDataCell>{new Date(deck.updated).toLocaleDateString('ru-RU')}</TableDataCell>
                 <TableDataCell>{deck.author.name}</TableDataCell>
