@@ -8,6 +8,7 @@ import {
 import { fileSchema } from '@/components/auth/profile/utils'
 import { Button } from '@/components/ui/button'
 import { CheckboxControlled, TextFieldControlled } from '@/components/ui/controlled'
+import { ImageUploaderControlled } from '@/components/ui/controlled/imageUploaderControlled/imageUploaderControlled'
 import { Modal } from '@/components/ui/modal'
 import { Notification } from '@/components/ui/notification/notification'
 import { useCreateDeckMutation } from '@/services/decks/decks.service.'
@@ -29,7 +30,7 @@ export const AddNewDeckModal = ({ isOpen, onOpenChange, title }: AddNewDeckModal
     formState: { errors },
     handleSubmit,
   } = useForm<FormValuesAddDeck>({
-    defaultValues: { file: undefined, name: '', private: false },
+    defaultValues: { filePath: '', isPrivate: false, name: '' },
     resolver: zodResolver(addDeckSchema),
   })
 
@@ -54,30 +55,30 @@ export const AddNewDeckModal = ({ isOpen, onOpenChange, title }: AddNewDeckModal
     }
   }
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files?.[0]
-    let err = null
-
-    try {
-      fileSchema.parse(selectedFile)
-      setFileError(null)
-    } catch (error: unknown) {
-      err = error
-      if (error instanceof ZodError) {
-        setFileError(error.errors?.[0]?.message || 'File validation error')
-      } else {
-        console.error('Unexpected error type:', error)
-      }
-    }
-
-    if (selectedFile) {
-      const imageUrl = URL.createObjectURL(selectedFile)
-
-      if (!err) {
-        console.log(imageUrl)
-      }
-    }
-  }
+  // const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+  //   const selectedFile = e.target.files?.[0]
+  //   let err = null
+  //
+  //   try {
+  //     fileSchema.parse(selectedFile)
+  //     setFileError(null)
+  //   } catch (error: unknown) {
+  //     err = error
+  //     if (error instanceof ZodError) {
+  //       setFileError(error.errors?.[0]?.message || 'File validation error')
+  //     } else {
+  //       console.error('Unexpected error type:', error)
+  //     }
+  //   }
+  //
+  //   if (selectedFile) {
+  //     const imageUrl = URL.createObjectURL(selectedFile)
+  //
+  //     if (!err) {
+  //       console.log(imageUrl)
+  //     }
+  //   }
+  // }
 
   return (
     <>
@@ -89,15 +90,16 @@ export const AddNewDeckModal = ({ isOpen, onOpenChange, title }: AddNewDeckModal
             errorMessage={errors.name?.message}
             label={'Name Pack'}
             name={'name'}
-          ></TextFieldControlled>
-          <input
-            id={'imgupload'}
-            name={'avatar'}
-            onChange={handleFileChange}
-            ref={fileInputRef}
-            style={{ display: 'none' }}
-            type={'file'}
           />
+          <ImageUploaderControlled control={control} name={'filePath'} />
+          {/*<input*/}
+          {/*  id={'imgupload'}*/}
+          {/*  name={'filePath'}*/}
+          {/*  onChange={handleFileChange}*/}
+          {/*  ref={fileInputRef}*/}
+          {/*  style={{ display: 'none' }}*/}
+          {/*  type={'file'}*/}
+          {/*/>*/}
           <Button
             className={s.uploadImageBtn}
             fullWidth
@@ -106,7 +108,7 @@ export const AddNewDeckModal = ({ isOpen, onOpenChange, title }: AddNewDeckModal
           >
             {<ImageIcon />}Upload Image
           </Button>
-          <CheckboxControlled control={control} name={'private'} text={'Private pack'} />
+          <CheckboxControlled control={control} name={'isPrivate'} text={'Private pack'} />
           <div className={s.btnArea}>
             <Button
               disabled={isDeckBeingCreated}
