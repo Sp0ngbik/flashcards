@@ -8,7 +8,6 @@ import {
 import { fileSchema } from '@/components/auth/profile/utils'
 import { Button } from '@/components/ui/button'
 import { CheckboxControlled, TextFieldControlled } from '@/components/ui/controlled'
-import { ImageUploaderControlled } from '@/components/ui/controlled/imageUploaderControlled/imageUploaderControlled'
 import { Modal } from '@/components/ui/modal'
 import { Notification } from '@/components/ui/notification/notification'
 import { useCreateDeckMutation } from '@/services/decks/decks.service.'
@@ -32,37 +31,32 @@ export const AddNewDeckModal = ({ isOpen, onOpenChange, title }: AddNewDeckModal
     formState: { errors },
     handleSubmit,
   } = useForm<FormValuesAddDeck>({
-    defaultValues: { filePath: '', isPrivate: false, name: '' },
+    defaultValues: { isPrivate: false, name: '' },
     resolver: zodResolver(addDeckSchema),
   })
 
   const [fileError, setFileError] = useState<null | string>(null)
   const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
-  const [photo, setPhoto] = useState<string>('')
-
+  const [photo, setPhoto] = useState<File | null>(null)
   const closeHandler = () => {
     onOpenChange(false)
   }
 
   const onSubmit = async (data: FormValuesAddDeck) => {
-    const formData = new FormData()
-
-    formData.append('name', data.name)
-    formData.append('isPrivate', String(data.isPrivate))
-    formData.append('cover', data.filePath)
-
-    for (const entry of formData.entries()) {
-      const [name, value] = entry
-
-      console.log(`${name}: ${value}`)
-    }
-
     try {
+      const formData = new FormData()
+
+      if (photo) {
+        formData.append('cover', photo)
+      }
+      formData.append('name', data.name)
+      formData.append('isPrivate', String(data.isPrivate))
+
       await createDeck(formData).unwrap()
+      setPhoto(null)
       onOpenChange(false)
     } catch (error) {
       console.error('Error creating deck:', error)
-      // Обрабатываем ошибку
     }
   }
 
@@ -88,14 +82,11 @@ export const AddNewDeckModal = ({ isOpen, onOpenChange, title }: AddNewDeckModal
       }
     }
 
-    if (selectedFile) {
-      const imageUrl = URL.createObjectURL(selectedFile)
-
-      if (!err) {
-        setPhoto(imageUrl)
-      }
+    if (!err) {
+      selectedFile && setPhoto(selectedFile)
     }
   }
+  const uploadedImage = photo ? URL.createObjectURL(photo) : ''
 
   return (
     <>
@@ -108,8 +99,15 @@ export const AddNewDeckModal = ({ isOpen, onOpenChange, title }: AddNewDeckModal
             label={'Name Pack'}
             name={'name'}
           />
-          <ImageUploaderControlled control={control} name={'filePath'} />
-          <div>{photo && <img alt={'upload cover'} className={s.deckImage} src={photo} />}</div>
+          <div>
+            {photo && <img alt={'upload cover'} className={s.deckImage} src={uploadedImage} />}
+            <input
+              className={s.fileInput}
+              onChange={handleFileChange}
+              ref={fileInputRef}
+              type={'file'}
+            />
+          </div>
           <Button
             className={s.uploadImageBtn}
             fullWidth
