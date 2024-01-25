@@ -19,7 +19,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>((props, for
     disabled = false,
     errorMessage = '',
     id,
-    label = 'Input',
+    label,
     onValueChange,
     variant = 'text',
     ...rest

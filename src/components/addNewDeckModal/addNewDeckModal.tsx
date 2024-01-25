@@ -8,6 +8,7 @@ import {
 import { fileSchema } from '@/components/auth/profile/utils'
 import { Button } from '@/components/ui/button'
 import { CheckboxControlled, TextFieldControlled } from '@/components/ui/controlled'
+import { ImageUploaderControlled } from '@/components/ui/controlled/imageUploaderControlled/imageUploaderControlled'
 import { Modal } from '@/components/ui/modal'
 import { Notification } from '@/components/ui/notification/notification'
 import { useCreateDeckMutation } from '@/services/decks/decks.service.'
@@ -29,20 +30,18 @@ export const AddNewDeckModal = ({ isOpen, onOpenChange, title }: AddNewDeckModal
     formState: { errors },
     handleSubmit,
   } = useForm<FormValuesAddDeck>({
-    defaultValues: { file: undefined, isPrivate: false, name: '' },
+    defaultValues: { filePath: '', isPrivate: false, name: '' },
     resolver: zodResolver(addDeckSchema),
   })
 
   const [fileError, setFileError] = useState<null | string>(null)
   const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
-  const [photo, setPhoto] = useState<string>('')
 
   const closeHandler = () => {
     onOpenChange(false)
   }
 
   const onSubmit = async (data: FormValuesAddDeck) => {
-    console.log(errors)
     console.log(data)
     await createDeck(data).unwrap()
     onOpenChange(false)
@@ -56,50 +55,51 @@ export const AddNewDeckModal = ({ isOpen, onOpenChange, title }: AddNewDeckModal
     }
   }
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files?.[0]
-    let err = null
-
-    try {
-      fileSchema.parse(selectedFile)
-      setFileError(null)
-    } catch (error: unknown) {
-      err = error
-      if (error instanceof ZodError) {
-        setFileError(error.errors?.[0]?.message || 'File validation error')
-      } else {
-        console.error('Unexpected error type:', error)
-      }
-    }
-
-    if (selectedFile) {
-      const imageUrl = URL.createObjectURL(selectedFile)
-
-      if (!err) {
-        setPhoto(imageUrl)
-      }
-    }
-  }
+  // const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+  //   const selectedFile = e.target.files?.[0]
+  //   let err = null
+  //
+  //   try {
+  //     fileSchema.parse(selectedFile)
+  //     setFileError(null)
+  //   } catch (error: unknown) {
+  //     err = error
+  //     if (error instanceof ZodError) {
+  //       setFileError(error.errors?.[0]?.message || 'File validation error')
+  //     } else {
+  //       console.error('Unexpected error type:', error)
+  //     }
+  //   }
+  //
+  //   if (selectedFile) {
+  //     const imageUrl = URL.createObjectURL(selectedFile)
+  //
+  //     if (!err) {
+  //       console.log(imageUrl)
+  //     }
+  //   }
+  // }
 
   return (
     <>
       <Notification message={fileError} resetError={setFileError} />
       <Modal onOpenChange={onOpenChange} open={isOpen} title={title}>
-        <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
+        <form className={s.form} id={'hook-form'} onSubmit={handleSubmit(onSubmit)}>
           <TextFieldControlled
             control={control}
             errorMessage={errors.name?.message}
             label={'Name Pack'}
             name={'name'}
-          ></TextFieldControlled>
-          <div>{photo && <img alt={'user image'} className={s.deckImage} src={photo} />}</div>
-          <input
-            name={'file'}
-            onChange={handleFileChange}
-            ref={fileInputRef}
-            style={{ display: 'none' }}
-            type={'file'}
           />
+          <ImageUploaderControlled control={control} name={'filePath'} />
+          {/*<input*/}
+          {/*  id={'imgupload'}*/}
+          {/*  name={'filePath'}*/}
+          {/*  onChange={handleFileChange}*/}
+          {/*  ref={fileInputRef}*/}
+          {/*  style={{ display: 'none' }}*/}
+          {/*  type={'file'}*/}
+          {/*/>*/}
           <Button
             className={s.uploadImageBtn}
             fullWidth
@@ -110,7 +110,12 @@ export const AddNewDeckModal = ({ isOpen, onOpenChange, title }: AddNewDeckModal
           </Button>
           <CheckboxControlled control={control} name={'isPrivate'} text={'Private pack'} />
           <div className={s.btnArea}>
-            <Button disabled={isDeckBeingCreated} variant={'primary'}>
+            <Button
+              disabled={isDeckBeingCreated}
+              form={'hook-form'}
+              type={'submit'}
+              variant={'primary'}
+            >
               Add New Deck
             </Button>
             <Button onClick={closeHandler} type={'reset'} variant={'secondary'}>
