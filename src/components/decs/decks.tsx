@@ -15,7 +15,6 @@ import TextField from '@/components/ui/textField/textField'
 import { Typography } from '@/components/ui/typography'
 import { useMeQuery } from '@/services/auth/auth.sevice'
 import {
-  useCreateDeckMutation,
   useDeleteDeckMutation,
   useGetDecksQuery,
   useGetMinMaxCardsQuery,
@@ -111,7 +110,6 @@ const Decks = () => {
   const debounceMinCards = useDebounce(minCards, 1000)
   const debounceMaxCards = useDebounce(maxCards, 1000)
 
-  const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
   const [deleteDeck, { isLoading: isDeckBeingDeleted }] = useDeleteDeckMutation()
   const [isOpen, setIsOpen] = useState(false)
   const orderBy = JSON.parse(search.get('orderBy') as string)
@@ -172,9 +170,7 @@ const Decks = () => {
     <div className={s.deckWrapper}>
       <div className={s.deckHead}>
         <Typography variant={'h1'}>Decks List</Typography>
-        <Button disabled={isDeckBeingCreated} onClick={onCreateDeck}>
-          Add New Deck
-        </Button>
+        <Button onClick={onCreateDeck}>Add New Deck</Button>
       </div>
       <div className={s.deckFilter}>
         <div>
@@ -240,12 +236,7 @@ const Decks = () => {
         pageSize={itemsPerPage}
         totalCount={data?.pagination.totalItems ?? defaultPaginationValue}
       />
-      <AddNewDeckModal
-        createDeck={createDeck}
-        isOpen={isOpen}
-        onOpenChange={setIsOpen}
-        title={'Add New Deck'}
-      />
+      <AddNewDeckModal isOpen={isOpen} onOpenChange={setIsOpen} title={'Add New Deck'} />
     </div>
   )
 }

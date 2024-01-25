@@ -68,4 +68,11 @@
   display: flex;
   top: 18px;
   right: 24px;
+  opacity: .5;
+  transition: opacity ease-in-out .1s;
+
+
+  &:hover {
+    opacity: 1;
+  }
 }

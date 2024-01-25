@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button'
 import { CheckboxControlled, TextFieldControlled } from '@/components/ui/controlled'
 import { Modal } from '@/components/ui/modal'
 import { Notification } from '@/components/ui/notification/notification'
+import { useCreateDeckMutation } from '@/services/decks/decks.service.'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ImageIcon } from '@radix-ui/react-icons'
 import { ZodError } from 'zod'
@@ -17,18 +18,12 @@ import { ZodError } from 'zod'
 import s from './addNewDeckModal.module.scss'
 
 type AddNewDeckModalProps = {
-  createDeck: (data: FormValuesAddDeck) => void
   isOpen: boolean
   onOpenChange: (open: boolean) => void
   title: string
 }
 
-export const AddNewDeckModal = ({
-  createDeck,
-  isOpen,
-  onOpenChange,
-  title,
-}: AddNewDeckModalProps) => {
+export const AddNewDeckModal = ({ isOpen, onOpenChange, title }: AddNewDeckModalProps) => {
   const {
     control,
     formState: { errors },
@@ -39,14 +34,15 @@ export const AddNewDeckModal = ({
   })
 
   const [fileError, setFileError] = useState<null | string>(null)
+  const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
 
   const closeHandler = () => {
     onOpenChange(false)
   }
 
-  const onSubmit = (data: FormValuesAddDeck) => {
+  const onSubmit = async (data: FormValuesAddDeck) => {
     console.log(data)
-    createDeck(data)
+    await createDeck(data).unwrap()
     onOpenChange(false)
   }
 
@@ -112,8 +108,13 @@ export const AddNewDeckModal = ({
           </Button>
           <CheckboxControlled control={control} name={'private'} text={'Private pack'} />
           <div className={s.btnArea}>
-            <Button form={'hook-form'} type={'submit'} variant={'primary'}>
-              Add New Pack
+            <Button
+              disabled={isDeckBeingCreated}
+              form={'hook-form'}
+              type={'submit'}
+              variant={'primary'}
+            >
+              Add New Deck
             </Button>
             <Button onClick={closeHandler} type={'reset'} variant={'secondary'}>
               Cancel
