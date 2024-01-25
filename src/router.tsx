@@ -9,6 +9,7 @@ import {
 import { SignIn } from '@/components/auth/signIn'
 import { SignUp } from '@/components/auth/signUp'
 import Cards from '@/components/cards/cards'
+import PageNotFound from '@/services/pageNotFound/pageNotFound'
 import { useAppSelector } from '@/services/store'
 
 import Decks from './components/decs/decks'
@@ -27,6 +28,10 @@ const publicRoutes: RouteObject[] = [
     path: '/cards/:id?',
   },
   { element: <Decks />, path: '/' },
+  {
+    element: <PageNotFound />,
+    path: '/*',
+  },
 ]
 
 const privateRoutes: RouteObject[] = [

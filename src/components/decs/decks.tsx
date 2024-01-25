@@ -1,14 +1,15 @@
+
 import { useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { Delete, Edit, Play } from '@/assets'
 import { AddNewDeckModal } from '@/components/addNewDeckModal/addNewDeckModal'
 import { useDebounce } from '@/components/decs/hooks/useDebounce'
+
 import { Button } from '@/components/ui/button'
 import { Pagination } from '@/components/ui/pagination'
 import { DoubleSlider } from '@/components/ui/slider'
 import { TabSwitcher, TabType } from '@/components/ui/tabSwitcher'
-import { Sort } from '@/components/ui/table/table.stories'
 import { Table, TableBody, TableDataCell, TableRow } from '@/components/ui/table/tableConstuctor'
 import { TableHeader } from '@/components/ui/table/tableHeader/tableHeader'
 import TextField from '@/components/ui/textField/textField'
@@ -40,95 +41,34 @@ const columns = [
 ]
 
 const Decks = () => {
-  const { data: me, isLoading: meIsLoading } = useMeQuery(undefined)
-  const { data: minMaxValues } = useGetMinMaxCardsQuery(undefined)
-
-  const [cardsTab, setCardsTab] = useSearchParams({
-    currentTab: 'allCards',
-  })
-
-  const [search, setSearch] = useSearchParams({
-    name: '',
-    orderBy: '',
-  })
-
-  const [amountOfCards, setAmountOfCards] = useSearchParams({
-    maxCardsCount: '15',
-    minCardsCount: '',
-  })
-
-  const [paginationParam, setPaginationParam] = useSearchParams({
-    currentPage: '1',
-    itemsPerPage: '8',
-  })
-
-  const setDefaultSearchParams = (param: URLSearchParams, defaultValue: string) => {
-    if (!param.get(defaultValue)) {
-      param.set(defaultValue, JSON.stringify(''))
-      setSearch(search)
-    }
-  }
-
-  setDefaultSearchParams(search, 'orderBy')
-  setDefaultSearchParams(search, 'name')
-  setDefaultSearchParams(amountOfCards, 'minCardsCount')
-  setDefaultSearchParams(paginationParam, 'currentPage')
-  setDefaultSearchParams(paginationParam, 'itemsPerPage')
-  setDefaultSearchParams(cardsTab, 'currentTab')
-
-  const onTabValueChange = (value: string) => {
-    cardsTab.set('currentTab', value)
-    setCardsTab(cardsTab)
-  }
-
-  const getCurrentTab = cardsTab.get('currentTab')
-
-  const setItemsPerPage = (value: number) => {
-    paginationParam.set('itemsPerPage', JSON.stringify(value))
-    setPaginationParam(paginationParam)
-  }
+  const {
+    currentPage,
+    debounceCurrentPage,
+    debounceMaxCards,
+    debounceMinCards,
+    debounceName,
+    deleteDeck,
+    getCurrentTab,
+    isDeckBeingCreated,
+    isDeckBeingDeleted,
+    itemsPerPage,
+    maxCards,
+    me,
+    meIsLoading,
+    minCards,
+    minMaxValues,
+    onChangeCurrentPage,
+    onChangeName,
+    onChangeSliderValues,
+    onCreateDeck,
+    onTabValueChange,
+    orderBy,
+    searchBy,
+    setItemsPerPage,
+    setSortedBy,
+  } = useDeckFilter()
 
   const defaultPaginationValue = 10
-  const itemsPerPage = Number(JSON.parse(paginationParam.get('itemsPerPage') as string))
-
-  const onChangeCurrentPage = (value: number) => {
-    paginationParam.set('currentPage', JSON.stringify(value))
-    setPaginationParam(paginationParam)
-  }
-  const currentPage = Number(JSON.parse(paginationParam.get('currentPage') as string))
-  const debounceCurrentPage = useDebounce(currentPage, 1000)
-
-  const onChangeSliderValues = (value: number[]) => {
-    amountOfCards.set('minCardsCount', JSON.stringify(value[0]))
-    setAmountOfCards(amountOfCards)
-    amountOfCards.set('maxCardsCount', JSON.stringify(value[1]))
-    setAmountOfCards(amountOfCards)
-  }
-  const minCards = Number(JSON.parse(amountOfCards.get('minCardsCount') as string))
-  const maxCards = Number(JSON.parse(amountOfCards.get('maxCardsCount') as string))
-
-  const debounceMinCards = useDebounce(minCards, 1000)
-  const debounceMaxCards = useDebounce(maxCards, 1000)
-
-  const [deleteDeck, { isLoading: isDeckBeingDeleted }] = useDeleteDeckMutation()
-  const [isOpen, setIsOpen] = useState(false)
-  const orderBy = JSON.parse(search.get('orderBy') as string)
-  const nameBy = JSON.parse(search.get('name') as string)
-  const debounceName = useDebounce(nameBy, 2000)
-
-  const setSortedBy = (value: Sort) => {
-    search.set('orderBy', JSON.stringify(value))
-    setSearch(search)
-  }
-
-  const onChangeName = (value: string) => {
-    search.set('name', JSON.stringify(value))
-    setSearch(search)
-  }
-
-  const onCreateDeck = () => {
-    setIsOpen(true)
-  }
 
   const sortedString = useMemo(() => {
     if (!orderBy) {
@@ -158,13 +98,14 @@ const Decks = () => {
   if (deckError) {
     return <div>{JSON.stringify(deckError)}</div>
   }
-  const classNames = {
-    icon: clsx(s.icon, isDeckBeingDeleted && s.disableIcon),
-  }
+
   const tabs: TabType[] = [
     { title: 'My Cards', value: 'userCards' },
     { title: 'All Cards', value: 'allCards' },
   ]
+  const classNames = {
+    icon: clsx(s.icon, isDeckBeingDeleted && s.disableIcon),
+  }
 
   return (
     <div className={s.deckWrapper}>
@@ -178,7 +119,7 @@ const Decks = () => {
             label={'Search'}
             onValueChange={onChangeName}
             placeholder={'Input search'}
-            value={nameBy}
+            value={searchBy}
             variant={'search'}
           />
         </div>
