@@ -1,7 +1,11 @@
-import { useMemo } from 'react'
+
+import { useMemo, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 import { Delete, Edit, Play } from '@/assets'
-import { useDeckFilter } from '@/components/decs/deckFIlter'
+import { AddNewDeckModal } from '@/components/addNewDeckModal/addNewDeckModal'
+import { useDebounce } from '@/components/decs/hooks/useDebounce'
+
 import { Button } from '@/components/ui/button'
 import { Pagination } from '@/components/ui/pagination'
 import { DoubleSlider } from '@/components/ui/slider'
@@ -10,7 +14,12 @@ import { Table, TableBody, TableDataCell, TableRow } from '@/components/ui/table
 import { TableHeader } from '@/components/ui/table/tableHeader/tableHeader'
 import TextField from '@/components/ui/textField/textField'
 import { Typography } from '@/components/ui/typography'
-import { useGetDecksQuery } from '@/services/decks/decks.service.'
+import { useMeQuery } from '@/services/auth/auth.sevice'
+import {
+  useDeleteDeckMutation,
+  useGetDecksQuery,
+  useGetMinMaxCardsQuery,
+} from '@/services/decks/decks.service.'
 import { clsx } from 'clsx'
 
 import s from './decks.module.scss'
@@ -102,9 +111,7 @@ const Decks = () => {
     <div className={s.deckWrapper}>
       <div className={s.deckHead}>
         <Typography variant={'h1'}>Decks List</Typography>
-        <Button disabled={isDeckBeingCreated} onClick={onCreateDeck}>
-          Add New Deck
-        </Button>
+        <Button onClick={onCreateDeck}>Add New Deck</Button>
       </div>
       <div className={s.deckFilter}>
         <div>
@@ -170,6 +177,7 @@ const Decks = () => {
         pageSize={itemsPerPage}
         totalCount={data?.pagination.totalItems ?? defaultPaginationValue}
       />
+      <AddNewDeckModal isOpen={isOpen} onOpenChange={setIsOpen} title={'Add New Deck'} />
     </div>
   )
 }
