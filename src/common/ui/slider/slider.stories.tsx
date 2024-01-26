@@ -25,10 +25,10 @@ export const SliderOwn: Story = {
     const [sliderValue, setSliderValue] = useState(args.defaultValue)
 
     return (
-      <div>
+      <>
         <DoubleSlider {...args} changeSliderValue={setSliderValue} defaultValue={sliderValue} />
-        Value: {JSON.stringify(sliderValue)}
-      </div>
+        <span>Value: {JSON.stringify(sliderValue)}</span>
+      </>
     )
   },
 }

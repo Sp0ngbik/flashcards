@@ -88,9 +88,7 @@ export const SignUp = () => {
           placeholder={'Confirm your password'}
           variant={'password'}
         />
-        <Button aria-label={'Sign Up'} fullWidth>
-          Sign Up
-        </Button>
+        <Button fullWidth>Sign Up</Button>
       </form>
       <Typography className={s.formQuestion} variant={'body2'}>
         Already have an account?
