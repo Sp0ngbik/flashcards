@@ -9,7 +9,7 @@ export type DoubleSliderProps = {
 } & ComponentPropsWithoutRef<typeof Slider.Root>
 
 export const DoubleSlider = (props: DoubleSliderProps) => {
-  const { changeSliderValue, defaultValue = [0, 5], ...rest } = props
+  const { changeSliderValue, defaultValue = [0, 5], max, ...rest } = props
 
   const onValueChange = (data: number[]) => {
     changeSliderValue(data)
@@ -17,7 +17,7 @@ export const DoubleSlider = (props: DoubleSliderProps) => {
 
   const onChangeInput = (value: number, side: 'left' | 'right') => {
     const temp = [...defaultValue]
-    const clampedValue = Math.min(value, 100)
+    const clampedValue = Math.min(value, max ? max : defaultValue[1])
 
     if (side === 'left') {
       temp[0] = clampedValue
@@ -48,6 +48,7 @@ export const DoubleSlider = (props: DoubleSliderProps) => {
       <Slider.Root
         className={s.slider}
         defaultValue={defaultValue}
+        max={max}
         onValueChange={onValueChange}
         value={defaultValue}
         {...rest}
