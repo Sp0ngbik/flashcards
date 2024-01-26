@@ -1,0 +1,50 @@
+.deckHead {
+  display: flex;
+  justify-content: space-between;
+}
+
+.icon {
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.disableIcon {
+  fill: var(--color-dark-100);
+}
+
+.deckWrapper {
+  display: flex;
+  flex-direction: column;
+
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px 137px;
+}
+
+.deckFilter {
+  display: flex;
+  place-content: center space-between;
+  place-items: flex-end center;
+  margin: 7px 0 36px;
+}
+
+.sliderLabel {
+  margin-bottom: 5px;
+}
+
+.paginationBlock {
+  margin-top: 24px;
+}
+
+.tableImage {
+  width: 118px;
+  height: 48px;
+  margin-right: 10px;
+  object-fit: cover;
+}
+
+.tableDataContent {
+  display: flex;
+  align-items: center;
+  padding: 6px 0;
+}
