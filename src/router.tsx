@@ -6,13 +6,12 @@ import {
   createBrowserRouter,
 } from 'react-router-dom'
 
-import { SignIn } from '@/components/auth/signIn'
-import { SignUp } from '@/components/auth/signUp'
-import Cards from '@/components/cards/cards'
-import PageNotFound from '@/services/pageNotFound/pageNotFound'
+import PageNotFound from '@/layout/pageNotFound/pageNotFound'
+import { SignIn } from '@/pages/auth/signIn'
+import { SignUp } from '@/pages/auth/signUp'
+import Cards from '@/pages/cards/cards'
+import Decks from '@/pages/decs/decks'
 import { useAppSelector } from '@/services/store'
-
-import Decks from './components/decs/decks'
 
 function PrivateRoutes() {
   const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated)
