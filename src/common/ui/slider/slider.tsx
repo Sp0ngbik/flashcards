@@ -41,6 +41,7 @@ export const DoubleSlider = (props: DoubleSliderProps) => {
         className={s.value}
         onBlur={onBlurValidate}
         onChange={e => onChangeInput(+e.currentTarget.value, 'left')}
+        pattern={'[0-100]'}
         type={'number'}
         value={defaultValue[0]}
       />
@@ -63,6 +64,7 @@ export const DoubleSlider = (props: DoubleSliderProps) => {
       <input
         className={s.value}
         onChange={e => onChangeInput(+e.currentTarget.value, 'right')}
+        pattern={'[0-100]'}
         type={'number'}
         value={defaultValue[1]}
       />

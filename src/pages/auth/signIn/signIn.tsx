@@ -80,9 +80,7 @@ export const SignIn = () => {
         <Typography className={s.forgotPassword} variant={'body2'}>
           Forgot Password?
         </Typography>
-        <Button aria-label={'Sign In'} fullWidth>
-          Sign In
-        </Button>
+        <Button fullWidth>Sign In</Button>
       </form>
       <Typography className={s.formQuestion} variant={'body2'}>
         Don&apos;t have an account?

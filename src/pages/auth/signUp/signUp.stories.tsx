@@ -48,7 +48,7 @@ export const SignUpProgress: Story = {
       delay: 100,
     })
 
-    const buttonElement = canvas.getByLabelText('Sign Up')
+    const buttonElement = canvas.getByRole('button', { name: 'Sign Up' })
 
     await userEvent.click(buttonElement, {
       delay: 200,
@@ -77,7 +77,7 @@ export const SignUpError: Story = {
       delay: 100,
     })
 
-    const buttonElement = canvas.getByLabelText('Sign Up')
+    const buttonElement = canvas.getByRole('button', { name: 'Sign Up' })
 
     await userEvent.click(buttonElement, {
       delay: 200,

@@ -46,7 +46,7 @@ export const SignInProgress: Story = {
 
     await userEvent.click(checkBoxElement, { delay: 100 })
 
-    const buttonElement = canvas.getByLabelText('Sign In')
+    const buttonElement = canvas.getByRole('button', { name: 'Sign In' })
 
     await userEvent.click(buttonElement, {
       delay: 200,
@@ -72,7 +72,7 @@ export const SignInError: Story = {
 
     await userEvent.click(checkBoxElement, { delay: 100 })
 
-    const buttonElement = canvas.getByLabelText('Sign In')
+    const buttonElement = canvas.getByRole('button', { name: 'Sign In' })
 
     await userEvent.click(buttonElement, {
       delay: 200,
