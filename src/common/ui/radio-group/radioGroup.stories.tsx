@@ -1,4 +1,4 @@
-import { RadioItem } from '@/components/ui/radio-group/radioItem'
+import { RadioItem } from '@/common/ui/radio-group/radioItem'
 import { Meta, StoryObj } from '@storybook/react'
 
 import { RadioGroup } from './radioGroup'
@@ -28,19 +28,7 @@ export const RadioPrimary: Story = (args: { disabled: boolean }) => (
 )
 
 RadioPrimary.args = {
-  disabled: true,
-}
-
-export const RadioDefault: Story = {
-  args: {},
-  render: () => (
-    <RadioGroup defaultValue={'1'}>
-      <RadioItem value={'1'}>1</RadioItem>
-      <RadioItem value={'2'}>2</RadioItem>
-      <RadioItem value={'3'}>3</RadioItem>
-      <RadioItem value={'4'}>4</RadioItem>
-    </RadioGroup>
-  ),
+  disabled: false,
 }
 
 export const RadioDisabled: Story = {

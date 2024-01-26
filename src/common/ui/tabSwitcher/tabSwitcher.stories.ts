@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { TabSwitcher } from '@/components/ui/tabSwitcher/tabSwitcher'
+import { TabSwitcher } from '@/common/ui/tabSwitcher/tabSwitcher'
 
 const meta = {
   argTypes: {
@@ -30,11 +30,11 @@ type Story = StoryObj<typeof meta>
 export const TabSwitcherDemo: Story = {
   args: {
     tabs: [
-      { title: 'Active', value: '' },
-      { title: 'Hello', value: '' },
-      { title: 'Login', value: '' },
-      { title: 'Value', value: '' },
-      { title: 'Password', value: '' },
+      { title: 'Active', value: 'Active' },
+      { title: 'Hello', value: 'Hello' },
+      { title: 'Login', value: 'Login' },
+      { title: 'Value', value: 'Value' },
+      { title: 'Password', value: 'Password' },
     ],
   },
 }
@@ -42,11 +42,11 @@ export const TabSwitcherDemo: Story = {
 export const TabSwitcherDisable: Story = {
   args: {
     tabs: [
-      { disabled: true, title: 'Active', value: '' },
-      { title: 'Hello', value: '' },
-      { title: 'Login', value: '' },
-      { disabled: true, title: 'Value', value: '' },
-      { title: 'Password', value: '' },
+      { disabled: true, title: 'Active', value: 'Active' },
+      { title: 'Hello', value: 'Hello' },
+      { title: 'Login', value: 'Login' },
+      { disabled: true, title: 'Value', value: 'Value' },
+      { title: 'Password', value: 'Password' },
     ],
   },
 }

@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
+import { useState } from 'react'
+
 import { DoubleSlider } from './slider'
 
 const meta = {
@@ -18,5 +20,15 @@ export const SliderOwn: Story = {
     max: 100,
     min: 1,
     minStepsBetweenThumbs: 1,
+  },
+  render: args => {
+    const [sliderValue, setSliderValue] = useState(args.defaultValue)
+
+    return (
+      <div>
+        <DoubleSlider {...args} changeSliderValue={setSliderValue} defaultValue={sliderValue} />
+        Value: {JSON.stringify(sliderValue)}
+      </div>
+    )
   },
 }

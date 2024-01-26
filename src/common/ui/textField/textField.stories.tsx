@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import TextField from '@/components/ui/textField/textField'
+import TextField from '@/common/ui/textField/textField'
 
 const meta = {
   argTypes: {

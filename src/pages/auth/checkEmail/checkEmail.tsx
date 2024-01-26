@@ -1,7 +1,7 @@
 import { Email } from '@/assets/icons/email'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import { Typography } from '@/components/ui/typography'
+import { Button } from '@/common/ui/button'
+import { Card } from '@/common/ui/card'
+import { Typography } from '@/common/ui/typography'
 
 import s from './checkEmail.module.scss'
 type Props = {

@@ -1,8 +1,8 @@
 import { Delete, Edit, Play } from '@/assets'
-import { Column } from '@/components/ui/table/table.stories'
-import { TableHeader } from '@/components/ui/table/tableHeader/tableHeader'
+import { Column } from '@/common/ui/table/table.stories'
+import { TableHeader } from '@/common/ui/table/tableHeader/tableHeader'
 
-import s from '@/components/ui/table/tableConstuctor/table.module.scss'
+import s from './tableConstuctor/table.module.scss'
 
 import { Table, TableBody, TableDataCell, TableRow } from './tableConstuctor'
 

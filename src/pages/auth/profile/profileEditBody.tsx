@@ -1,10 +1,10 @@
 import { Edit, LogOut } from '@/assets'
-import { FormProfile, useEditProfile } from '@/components/auth/profile/useEditProfile'
-import { Button } from '@/components/ui/button'
-import { TextFieldControlled } from '@/components/ui/controlled'
-import { Typography } from '@/components/ui/typography'
+import { Button } from '@/common/ui/button'
+import { TextFieldControlled } from '@/common/ui/controlled'
+import { Typography } from '@/common/ui/typography'
+import { FormProfile, useEditProfile } from '@/pages/auth/profile/useEditProfile'
 
-import s from '@/components/auth/profile/profile.module.scss'
+import s from './profile.module.scss'
 
 type Props = {
   editMode: boolean

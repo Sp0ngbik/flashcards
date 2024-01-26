@@ -1,4 +1,4 @@
-import CreateNewPassword from '@/components/auth/createNewPassword/createNewPassword'
+import CreateNewPassword from '@/pages/auth/createNewPassword/createNewPassword'
 import { Meta, StoryObj } from '@storybook/react'
 import { userEvent, within } from '@storybook/test'
 

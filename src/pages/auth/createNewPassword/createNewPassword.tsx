@@ -1,13 +1,13 @@
 import { useForm } from 'react-hook-form'
 
+import { Button } from '@/common/ui/button'
+import { Card } from '@/common/ui/card'
+import { TextFieldControlled } from '@/common/ui/controlled'
+import { Typography } from '@/common/ui/typography'
 import {
   FormValuesCreatePassword,
   createPasswordSchema,
-} from '@/components/auth/createNewPassword/utils'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import { TextFieldControlled } from '@/components/ui/controlled'
-import { Typography } from '@/components/ui/typography'
+} from '@/pages/auth/createNewPassword/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import s from './createNewPassword.module.scss'

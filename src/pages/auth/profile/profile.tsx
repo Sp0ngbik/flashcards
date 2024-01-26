@@ -1,15 +1,15 @@
-import { ChangeEvent, FC, RefObject, useRef, useState } from 'react'
+import { FC, RefObject, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Edit } from '@/assets/icons/edit'
-import { ProfileEditBody } from '@/components/auth/profile/profileEditBody'
-import { FormProfile } from '@/components/auth/profile/useEditProfile'
-import { FormFile, fileSchema } from '@/components/auth/profile/utils'
-import { Card } from '@/components/ui/card'
-import { Notification } from '@/components/ui/notification/notification'
-import { Typography } from '@/components/ui/typography'
+import { Card } from '@/common/ui/card'
+import { FormFile, fileSchema } from '@/common/ui/imageLoader/fileSchema'
+import ImageLoader from '@/common/ui/imageLoader/imageLoader'
+import { Notification } from '@/common/ui/notification/notification'
+import { Typography } from '@/common/ui/typography'
+import { ProfileEditBody } from '@/pages/auth/profile/profileEditBody'
+import { FormProfile } from '@/pages/auth/profile/useEditProfile'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ZodError } from 'zod'
 
 import s from './profile.module.scss'
 
@@ -23,7 +23,7 @@ export type ProfileProps = {
 
 export const Profile: FC<ProfileProps> = ({ edit = false, email, nickname }) => {
   const [editMode, setEditMode] = useState<boolean>(edit)
-  const [photo, setPhoto] = useState<string>(defaultImage)
+  const [photo, setPhoto] = useState<File | null>(null)
   const [fileError, setFileError] = useState<null | string>(null)
 
   const onSubmit = (data: FormProfile) => {
@@ -55,31 +55,7 @@ export const Profile: FC<ProfileProps> = ({ edit = false, email, nickname }) => 
       fileInputRef.current.click()
     }
   }
-
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files?.[0]
-    let err = null
-
-    try {
-      fileSchema.parse(selectedFile)
-      setFileError(null)
-    } catch (error: unknown) {
-      err = error
-      if (error instanceof ZodError) {
-        setFileError(error.errors?.[0]?.message || 'File validation error')
-      } else {
-        console.error('Unexpected error type:', error)
-      }
-    }
-
-    if (selectedFile) {
-      const imageUrl = URL.createObjectURL(selectedFile)
-
-      if (!err) {
-        setPhoto(imageUrl)
-      }
-    }
-  }
+  const uploadedImage = photo ? URL.createObjectURL(photo) : defaultImage
 
   return (
     <>
@@ -91,15 +67,13 @@ export const Profile: FC<ProfileProps> = ({ edit = false, email, nickname }) => 
         <div className={s.profileBlock}>
           <div className={s.photoWrapper}>
             <form className={s.form} onSubmit={handleSubmitFileForm(onSubmitFileForm)}>
-              <input
-                id={'imgupload'}
-                name={'avatar'}
-                onChange={handleFileChange}
+              <ImageLoader
+                className={s.inputFile}
                 ref={fileInputRef}
-                style={{ display: 'none' }}
-                type={'file'}
+                setFileError={setFileError}
+                setPhoto={setPhoto}
               />
-              <img alt={'user image'} className={s.profileImg} src={photo} />
+              <img alt={'user image'} className={s.profileImg} src={uploadedImage} />
               <button className={s.profileEditImgBtn} onClick={openFileInput}>
                 <Edit />
               </button>
