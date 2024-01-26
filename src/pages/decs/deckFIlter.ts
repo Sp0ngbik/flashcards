@@ -12,58 +12,38 @@ export const useDeckFilter = () => {
   const { data: minMaxValues } = useGetMinMaxCardsQuery(undefined)
   const [deleteDeck, { isLoading: isDeckBeingDeleted }] = useDeleteDeckMutation()
 
-  // const setDefaultSearchParams = (defaultValue: string) => {
-  //   if (!search.get(defaultValue)) {
-  //     search.set(defaultValue, JSON.stringify(''))
-  //     setSearch(search)
-  //   }
-  // }
-  //
-  // setDefaultSearchParams('orderBy')
-  // setDefaultSearchParams('name')
-  // setDefaultSearchParams('minCardsCount')
-  // setDefaultSearchParams('currentPage')
-  // setDefaultSearchParams('itemsPerPage')
-  // setDefaultSearchParams('currentTab')
-
-  const changeSearchHandler = (params: string) => {
+  const changeSearchHandler = (field: string, params: string) => {
     if (!params) {
-      search.delete('search')
+      search.delete(field)
     } else {
-      search.set('search', params)
-      // params
+      search.set(field, params)
     }
     search.set('page', '1')
-    setSearch(params)
+    setSearch(search)
   }
 
   const onTabValueChange = (value: string) => {
-    search.set('currentTab', value)
-    setSearch(search)
-    // changeSearchHandler(search)
+    changeSearchHandler('currentTab', value)
   }
 
   const getCurrentTab = search.get('currentTab') || 'allCards'
 
   const setItemsPerPage = (value: number) => {
-    search.set('itemsPerPage', value.toString())
-    setSearch(search)
+    changeSearchHandler('itemsPerPage', value.toString())
   }
 
   const itemsPerPage = Number(search.get('itemsPerPage') || '10')
 
   const onChangeCurrentPage = (value: number) => {
-    search.set('currentPage', value.toString())
-    setSearch(search)
+    changeSearchHandler('currentPage', value.toString())
   }
   const currentPage = Number(search.get('currentPage') || 1)
 
   const debounceCurrentPage = useDebounce(currentPage, 1000)
 
   const onChangeSliderValues = (value: number[]) => {
-    search.set('minCardsCount', value[0].toString())
-    search.set('maxCardsCount', value[1].toString())
-    setSearch(search)
+    changeSearchHandler('minCardsCount', value[0].toString())
+    changeSearchHandler('maxCardsCount', value[1].toString())
   }
   const minCards = Number(search.get('minCardsCount') || 0)
   const maxCards = Number(search.get('maxCardsCount') || 15)
@@ -76,13 +56,13 @@ export const useDeckFilter = () => {
   const debounceName = useDebounce(searchBy, 2000)
 
   const setSortedBy = (value: Sort) => {
-    search.set('orderBy', JSON.stringify(value))
-    setSearch(search)
+    if (!value || value?.key) {
+      changeSearchHandler('orderBy', JSON.stringify(value))
+    }
   }
 
   const onChangeName = (value: string) => {
-    search.set('name', JSON.stringify(value))
-    setSearch(search)
+    changeSearchHandler('name', value)
   }
 
   return {
