@@ -20,7 +20,7 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
     defaultOpen = false,
     disabled,
     flag = 'editProfile',
-    userEmail = 'j&johnson@gmail.com',
+    userEmail = 'jjohnson@gmail.com',
     userName = 'Ivan',
     ...rest
   } = props
