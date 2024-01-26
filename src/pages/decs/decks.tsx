@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { Delete, Edit, Play } from '@/assets'
 import { Button } from '@/common/ui/button'
@@ -57,6 +58,7 @@ const Decks = () => {
     setItemsPerPage,
     setSortedBy,
   } = useDeckFilter()
+  const navigate = useNavigate()
 
   const defaultPaginationValue = 10
   const [isOpen, setIsOpen] = useState(false)
@@ -97,6 +99,10 @@ const Decks = () => {
   ]
   const classNames = {
     icon: clsx(s.icon, isDeckBeingDeleted && s.disableIcon),
+  }
+
+  const openDeckHandler = () => {
+    navigate('/cards')
   }
 
   return (
@@ -143,10 +149,10 @@ const Decks = () => {
             return (
               <TableRow key={deck.id}>
                 <TableDataCell>
-                  <span className={s.tableDataContent}>
+                  <Button className={s.tableDataContent} onClick={openDeckHandler} variant={'link'}>
                     {deck.cover && <img alt={'image'} className={s.tableImage} src={deck.cover} />}
                     {deck.name}
-                  </span>
+                  </Button>
                 </TableDataCell>
                 <TableDataCell>{deck.cardsCount}</TableDataCell>
                 <TableDataCell>{new Date(deck.updated).toLocaleDateString('ru-RU')}</TableDataCell>
