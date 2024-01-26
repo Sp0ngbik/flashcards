@@ -14,6 +14,10 @@ type ModalProps = {
 } & Omit<ComponentPropsWithoutRef<typeof DialogPrimitive.Dialog>, 'onOpenChange' | 'open'>
 
 export const Modal = ({ children, title, ...props }: ModalProps) => {
+  const onCloseHandle = () => {
+    props.onOpenChange(false)
+  }
+
   return (
     <DialogPrimitive.Root {...props}>
       <DialogPrimitive.Portal>
@@ -25,7 +29,7 @@ export const Modal = ({ children, title, ...props }: ModalProps) => {
                 <Typography variant={'h2'}>{title}</Typography>
               </DialogPrimitive.Title>
               <DialogPrimitive.Close aria-label={'Close'}>
-                <Cross1Icon className={s.closeIcon} />
+                <Cross1Icon className={s.closeIcon} onClick={onCloseHandle} />
               </DialogPrimitive.Close>
             </div>
           )}

@@ -1,6 +1,8 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { Delete, Edit, Play } from '@/assets'
+import { AddNewDeckModal } from '@/components/addNewDeckModal/addNewDeckModal'
 import { useDeckFilter } from '@/components/decs/deckFIlter'
 import { Button } from '@/components/ui/button'
 import { Pagination } from '@/components/ui/pagination'
@@ -40,7 +42,6 @@ const Decks = () => {
     debounceName,
     deleteDeck,
     getCurrentTab,
-    isDeckBeingCreated,
     isDeckBeingDeleted,
     itemsPerPage,
     maxCards,
@@ -51,16 +52,16 @@ const Decks = () => {
     onChangeCurrentPage,
     onChangeName,
     onChangeSliderValues,
-    onCreateDeck,
     onTabValueChange,
     orderBy,
     searchBy,
     setItemsPerPage,
     setSortedBy,
   } = useDeckFilter()
+  const navigate = useNavigate()
 
   const defaultPaginationValue = 10
-
+  const [isOpen, setIsOpen] = useState(false)
   const sortedString = useMemo(() => {
     if (!orderBy) {
       return null
@@ -68,7 +69,9 @@ const Decks = () => {
 
     return `${orderBy.key}-${orderBy.direction}`
   }, [orderBy])
-
+  const onCreateDeck = () => {
+    setIsOpen(true)
+  }
   const {
     data,
     error: deckError,
@@ -98,13 +101,15 @@ const Decks = () => {
     icon: clsx(s.icon, isDeckBeingDeleted && s.disableIcon),
   }
 
+  const openDeckHandler = () => {
+    navigate('/cards')
+  }
+
   return (
     <div className={s.deckWrapper}>
       <div className={s.deckHead}>
         <Typography variant={'h1'}>Decks List</Typography>
-        <Button disabled={isDeckBeingCreated} onClick={onCreateDeck}>
-          Add New Deck
-        </Button>
+        <Button onClick={onCreateDeck}>Add New Deck</Button>
       </div>
       <div className={s.deckFilter}>
         <div>
@@ -143,7 +148,12 @@ const Decks = () => {
           {data?.items?.map(deck => {
             return (
               <TableRow key={deck.id}>
-                <TableDataCell>{deck.name}</TableDataCell>
+                <TableDataCell>
+                  <Button className={s.tableDataContent} onClick={openDeckHandler} variant={'link'}>
+                    {deck.cover && <img alt={'image'} className={s.tableImage} src={deck.cover} />}
+                    {deck.name}
+                  </Button>
+                </TableDataCell>
                 <TableDataCell>{deck.cardsCount}</TableDataCell>
                 <TableDataCell>{new Date(deck.updated).toLocaleDateString('ru-RU')}</TableDataCell>
                 <TableDataCell>{deck.author.name}</TableDataCell>
@@ -170,6 +180,7 @@ const Decks = () => {
         pageSize={itemsPerPage}
         totalCount={data?.pagination.totalItems ?? defaultPaginationValue}
       />
+      <AddNewDeckModal isOpen={isOpen} onOpenChange={setIsOpen} title={'Add New Deck'} />
     </div>
   )
 }

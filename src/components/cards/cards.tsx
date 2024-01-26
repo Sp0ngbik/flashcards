@@ -18,9 +18,9 @@ const columns = [
 ]
 
 const Cards = () => {
-  const navigete = useNavigate()
+  const navigate = useNavigate()
   const backToDeckHandler = () => {
-    navigete('/')
+    navigate('/')
   }
 
   return (
