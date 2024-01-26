@@ -1,3 +1,7 @@
+import { Provider } from 'react-redux'
+import { BrowserRouter } from 'react-router-dom'
+
+import { store } from '@/services/store'
 import { Meta, StoryObj } from '@storybook/react'
 import { userEvent, within } from '@storybook/test'
 
@@ -5,6 +9,15 @@ import { SignUp } from './signUp'
 
 const meta = {
   component: SignUp,
+  decorators: [
+    Story => (
+      <BrowserRouter>
+        <Provider store={store}>
+          <Story />
+        </Provider>
+      </BrowserRouter>
+    ),
+  ],
   tags: ['autodocs'],
   title: 'Components/Auth/SignUp',
 } satisfies Meta<typeof SignUp>

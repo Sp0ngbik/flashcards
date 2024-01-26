@@ -1,10 +1,10 @@
-import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
-import { Modal } from '@/components/ui/modal/modal'
-import { Select } from '@/components/ui/select'
-import { SelectItem } from '@/components/ui/select/selectItem'
-import TextField from '@/components/ui/textField/textField'
-import { Typography } from '@/components/ui/typography'
+import { Button } from '@/common/ui/button'
+import { Checkbox } from '@/common/ui/checkbox'
+import { Modal } from '@/common/ui/modal/modal'
+import { Select } from '@/common/ui/select'
+import { SelectItem } from '@/common/ui/select/selectItem'
+import TextField from '@/common/ui/textField/textField'
+import { Typography } from '@/common/ui/typography'
 import { Meta, StoryObj } from '@storybook/react'
 
 const meta = {

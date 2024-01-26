@@ -4,8 +4,8 @@ import { Play } from '@/assets'
 import { Delete } from '@/assets/icons/delete'
 import { Edit } from '@/assets/icons/edit'
 import userAvatar from '@/assets/image/defaultAvatar.png'
-import { Table, TableBody, TableDataCell, TableRow } from '@/components/ui/table/tableConstuctor'
-import { TableHeader } from '@/components/ui/table/tableHeader/tableHeader'
+import { Table, TableBody, TableDataCell, TableRow } from '@/common/ui/table/tableConstuctor'
+import { TableHeader } from '@/common/ui/table/tableHeader/tableHeader'
 
 import s from './tableConstuctor/table.module.scss'
 

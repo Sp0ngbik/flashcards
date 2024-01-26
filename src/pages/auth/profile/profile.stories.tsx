@@ -1,5 +1,6 @@
-import { Profile, ProfileProps } from '@/components/auth/profile/profile'
 import { Meta, Story } from '@storybook/react'
+
+import { Profile, ProfileProps } from './profile'
 
 export default {
   component: Profile,

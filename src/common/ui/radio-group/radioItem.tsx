@@ -1,9 +1,9 @@
 import { ComponentPropsWithoutRef, useId } from 'react'
 
-import { Typography } from '@/components/ui/typography'
+import { Typography } from '@/common/ui/typography'
 import * as RadioGroupRadix from '@radix-ui/react-radio-group'
 
-import s from '@/components/ui/radio-group/radioGroup.module.scss'
+import s from './radioGroup.module.scss'
 
 type Props = ComponentPropsWithoutRef<typeof RadioGroupRadix.Item>
 
