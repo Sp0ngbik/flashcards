@@ -17,11 +17,8 @@ export const AuthService = baseApi.injectEndpoints({
           url: '/v1/auth/login',
         }),
       }),
-      me: build.query<MeResponse, undefined>({
-        query: args => ({
-          params: args,
-          url: 'v1/auth/me',
-        }),
+      me: build.query<MeResponse, void>({
+        query: () => 'v1/auth/me',
       }),
       signUp: build.mutation<SignUpResponseType, SignUpArgsType>({
         query: args => ({

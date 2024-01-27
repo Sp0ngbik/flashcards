@@ -13,8 +13,8 @@ import {
 export const useDeckFilter = () => {
   const [search, setSearch] = useSearchParams()
 
-  const { data: me, isLoading: meIsLoading } = useMeQuery(undefined)
-  const { data: minMaxValues } = useGetMinMaxCardsQuery(undefined)
+  const { data: me, isLoading: meIsLoading } = useMeQuery()
+  const { data: minMaxValues } = useGetMinMaxCardsQuery()
   const [deleteDeck, { isLoading: isDeckBeingDeleted }] = useDeleteDeckMutation()
 
   const changeSearchHandler = (field: string, params: string) => {

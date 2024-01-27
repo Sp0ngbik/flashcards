@@ -33,12 +33,9 @@ export const DecksService = baseApi.injectEndpoints({
           url: 'v2/decks',
         }),
       }),
-      getMinMaxCards: build.query<MinMax, undefined>({
+      getMinMaxCards: build.query<MinMax, void>({
         providesTags: ['Decks'],
-        query: args => ({
-          params: args,
-          url: 'v2/decks/min-max-cards',
-        }),
+        query: () => 'v2/decks/min-max-cards',
       }),
     }
   },
