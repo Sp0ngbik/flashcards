@@ -52,7 +52,7 @@ export const useDeckFilter = () => {
   const debounceMaxCards = useDebounce(maxCards, 1000)
 
   const orderBy = JSON.parse(search.get('orderBy') || '""')
-  const searchBy = JSON.parse(search.get('name') || '""')
+  const searchBy = search.get('name') || ''
   const debounceName = useDebounce(searchBy, 2000)
 
   const setSortedBy = (value: Sort) => {
