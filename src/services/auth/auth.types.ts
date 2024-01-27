@@ -5,7 +5,7 @@ export type AuthArgsType = {
 }
 
 export type MeResponse = {
-  avatar: string
+  avatar: null | string
   created: string
   email: string
   id: string
