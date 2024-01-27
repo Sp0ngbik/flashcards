@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { RefObject, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Delete, Edit, Play } from '@/assets'
@@ -12,7 +12,6 @@ import TextField from '@/common/ui/textField/textField'
 import { Typography } from '@/common/ui/typography'
 import { CreateNewDeck } from '@/features/deck/createNewDeck/createNewDeck'
 import { useDeckFilter } from '@/pages/decs/deckFIlter'
-import { useGetDecksQuery } from '@/services/decks/decks.service.'
 import { clsx } from 'clsx'
 
 import s from './decks.module.scss'
@@ -37,16 +36,14 @@ const Decks = () => {
   const {
     clearFilter,
     currentPage,
-    debounceCurrentPage,
-    debounceMaxCards,
-    debounceMinCards,
-    debounceName,
+    data,
+    deckError,
+    deckIsLoading,
     deleteDeck,
     getCurrentTab,
     isDeckBeingDeleted,
     itemsPerPage,
     maxCards,
-    me,
     meIsLoading,
     minCards,
     minMaxValues,
@@ -60,32 +57,12 @@ const Decks = () => {
     setSortedBy,
   } = useDeckFilter()
   const navigate = useNavigate()
-
+  const divAnchor: RefObject<HTMLDivElement> = useRef(null)
   const defaultPaginationValue = 10
   const [isOpen, setIsOpen] = useState(false)
-  const sortedString = useMemo(() => {
-    if (!orderBy) {
-      return null
-    }
-
-    return `${orderBy.key}-${orderBy.direction}`
-  }, [orderBy])
   const onCreateDeck = () => {
     setIsOpen(true)
   }
-  const {
-    data,
-    error: deckError,
-    isLoading: deckIsLoading,
-  } = useGetDecksQuery({
-    authorId: getCurrentTab === 'userCards' ? me?.id : undefined,
-    currentPage: debounceCurrentPage,
-    itemsPerPage: itemsPerPage,
-    maxCardsCount: debounceMaxCards,
-    minCardsCount: debounceMinCards,
-    name: debounceName,
-    orderBy: sortedString,
-  })
 
   if (deckIsLoading && meIsLoading) {
     return <div>Loading</div>
@@ -108,6 +85,7 @@ const Decks = () => {
 
   return (
     <div className={s.deckWrapper}>
+      <CreateNewDeck isOpen={isOpen} onOpenChange={setIsOpen} title={'Add New Deck'} />
       <div className={s.deckHead}>
         <Typography variant={'h1'}>Decks List</Typography>
         <Button onClick={onCreateDeck}>Add New Deck</Button>
@@ -181,7 +159,7 @@ const Decks = () => {
         pageSize={itemsPerPage}
         totalCount={data?.pagination.totalItems ?? defaultPaginationValue}
       />
-      <CreateNewDeck isOpen={isOpen} onOpenChange={setIsOpen} title={'Add New Deck'} />
+      <div ref={divAnchor} />
     </div>
   )
 }
