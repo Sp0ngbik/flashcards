@@ -79,8 +79,8 @@ const Decks = () => {
     icon: clsx(s.icon, isDeckBeingDeleted && s.disableIcon),
   }
 
-  const openDeckHandler = () => {
-    navigate('/cards')
+  const openDeckHandler = (id: string) => {
+    navigate(`/cards/${id}`)
   }
 
   return (
@@ -128,7 +128,11 @@ const Decks = () => {
             return (
               <TableRow key={deck.id}>
                 <TableDataCell>
-                  <Button className={s.tableDataContent} onClick={openDeckHandler} variant={'link'}>
+                  <Button
+                    className={s.tableDataContent}
+                    onClick={() => openDeckHandler(deck.id)}
+                    variant={'link'}
+                  >
                     {deck.cover && <img alt={'image'} className={s.tableImage} src={deck.cover} />}
                     {deck.name}
                   </Button>
