@@ -2,6 +2,7 @@ import { ComponentPropsWithoutRef } from 'react'
 
 import { ArrowDown } from '@/assets'
 import { Typography } from '@/common/ui/typography'
+import { ChevronUpIcon } from '@radix-ui/react-icons'
 import * as SelectRadix from '@radix-ui/react-select'
 import { clsx } from 'clsx'
 
@@ -44,6 +45,7 @@ export const Select = ({
           <SelectRadix.Content
             align={'start'}
             className={s.selectContent}
+            collisionPadding={-100}
             position={'popper'}
             side={'bottom'}
           >

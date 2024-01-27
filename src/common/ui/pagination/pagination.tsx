@@ -88,7 +88,6 @@ export const Pagination = (props: Props) => {
           <SelectTextItem value={'6'}>6</SelectTextItem>
           <SelectTextItem value={'8'}>8</SelectTextItem>
           <SelectTextItem value={'10'}>10</SelectTextItem>
-          <SelectTextItem value={'12'}>12</SelectTextItem>
         </Select>
         на странице
       </Typography>

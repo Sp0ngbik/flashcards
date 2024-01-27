@@ -65,7 +65,17 @@ export const useDeckFilter = () => {
     changeSearchHandler('name', value)
   }
 
+  const clearFilter = () => {
+    changeSearchHandler('orderBy', '')
+    changeSearchHandler('name', '')
+    changeSearchHandler('minCardsCount', '')
+    changeSearchHandler('maxCardsCount', '')
+    changeSearchHandler('itemsPerPage', '')
+    changeSearchHandler('currentTab', '')
+  }
+
   return {
+    clearFilter,
     currentPage,
     debounceCurrentPage,
     debounceMaxCards,

@@ -35,6 +35,7 @@ const columns = [
 
 const Decks = () => {
   const {
+    clearFilter,
     currentPage,
     debounceCurrentPage,
     debounceMaxCards,
@@ -138,7 +139,7 @@ const Decks = () => {
             min={minMaxValues?.min}
           />
         </div>
-        <Button icon={<Delete />} variant={'secondary'}>
+        <Button icon={<Delete />} onClick={clearFilter} variant={'secondary'}>
           Clear Filter
         </Button>
       </div>
