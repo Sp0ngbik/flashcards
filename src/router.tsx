@@ -22,11 +22,11 @@ function PrivateRoutes() {
 const publicRoutes: RouteObject[] = [
   { element: <SignUp />, path: '/login' },
   { element: <SignIn />, path: '/sign-in' },
-  {
-    element: <Cards />,
-    path: '/cards/:id?',
-  },
-  { element: <Decks />, path: '/' },
+  // {
+  //   element: <Cards />,
+  //   path: '/cards/:id?',
+  // },
+  // { element: <Decks />, path: '/' },
   {
     element: <PageNotFound />,
     path: '/*',
@@ -34,11 +34,11 @@ const publicRoutes: RouteObject[] = [
 ]
 
 const privateRoutes: RouteObject[] = [
-  // { element: <Decks />, path: '/' },
-  // {
-  //   element: <Cards />,
-  //   path: '/cards/:id?',
-  // },
+  { element: <Decks />, path: '/' },
+  {
+    element: <Cards />,
+    path: '/cards/:id?',
+  },
 ]
 const router = createBrowserRouter([
   {

@@ -1,9 +1,14 @@
+import { useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { useDebounce } from '@/common/hooks/useDebounce'
 import { Sort } from '@/common/ui/table/table.stories'
 import { useMeQuery } from '@/services/auth/auth.sevice'
-import { useDeleteDeckMutation, useGetMinMaxCardsQuery } from '@/services/decks/decks.service.'
+import {
+  useDeleteDeckMutation,
+  useGetDecksQuery,
+  useGetMinMaxCardsQuery,
+} from '@/services/decks/decks.service.'
 
 export const useDeckFilter = () => {
   const [search, setSearch] = useSearchParams()
@@ -54,7 +59,13 @@ export const useDeckFilter = () => {
   const orderBy = JSON.parse(search.get('orderBy') || '""')
   const searchBy = search.get('name') || ''
   const debounceName = useDebounce(searchBy, 2000)
+  const sortedString = useMemo(() => {
+    if (!orderBy) {
+      return null
+    }
 
+    return `${orderBy.key}-${orderBy.direction}`
+  }, [orderBy])
   const setSortedBy = (value: Sort) => {
     if (!value || value?.key) {
       changeSearchHandler('orderBy', JSON.stringify(value))
@@ -73,14 +84,30 @@ export const useDeckFilter = () => {
     changeSearchHandler('itemsPerPage', '')
     changeSearchHandler('currentTab', '')
   }
+  const {
+    data,
+    error: deckError,
+    isLoading: deckIsLoading,
+  } = useGetDecksQuery({
+    authorId: getCurrentTab === 'userCards' ? me?.id : undefined,
+    currentPage: debounceCurrentPage,
+    itemsPerPage: itemsPerPage,
+    maxCardsCount: debounceMaxCards,
+    minCardsCount: debounceMinCards,
+    name: debounceName,
+    orderBy: sortedString,
+  })
 
   return {
     clearFilter,
     currentPage,
+    data,
     debounceCurrentPage,
     debounceMaxCards,
     debounceMinCards,
     debounceName,
+    deckError,
+    deckIsLoading,
     deleteDeck,
     getCurrentTab,
     isDeckBeingDeleted,

@@ -12,7 +12,7 @@ export const AuthService = baseApi.injectEndpoints({
     return {
       login: build.mutation<{ accessToken: string }, AuthArgsType>({
         query: args => ({
-          body: args ?? undefined,
+          body: args,
           method: 'POST',
           url: '/v1/auth/login',
         }),
