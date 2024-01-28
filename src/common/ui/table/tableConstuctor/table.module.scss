@@ -39,7 +39,6 @@
 
   &:not(:last-child) {
     overflow: hidden;
-    max-width: 0;
     text-overflow: ellipsis;
     white-space: nowrap;
   }

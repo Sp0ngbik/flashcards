@@ -44,7 +44,6 @@ export const Select = ({
           <SelectRadix.Content
             align={'start'}
             className={s.selectContent}
-            collisionPadding={-100}
             position={'popper'}
             side={'bottom'}
           >
