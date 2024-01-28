@@ -14,11 +14,8 @@ import Decks from '@/pages/decs/decks'
 import { useMeQuery } from '@/services/auth/auth.sevice'
 
 function PrivateRoutes() {
-  const { isError, isLoading: meIsLoading } = useMeQuery()
+  const { isError } = useMeQuery()
 
-  if (meIsLoading) {
-    return <div>Me is loading</div>
-  }
   const isAuthenticated = !isError
 
   return isAuthenticated ? <Outlet /> : <Navigate to={'/sign-in'} />
@@ -49,11 +46,11 @@ const router = createBrowserRouter([
 ])
 
 export const Router = () => {
-  const { isLoading: meIsLoading } = useMeQuery()
-
-  if (meIsLoading) {
-    return <div>Me is loading</div>
-  }
+  // const { isLoading: meIsLoading } = useMeQuery()
+  //
+  // if (meIsLoading) {
+  //   return <div>Me is loading</div>
+  // }
 
   return <RouterProvider router={router} />
 }
