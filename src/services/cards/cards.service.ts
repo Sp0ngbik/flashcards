@@ -1,5 +1,6 @@
 import { baseApi } from '@/services/baseApi'
 import { CardsResponse, UpdateCardsArgs } from '@/services/cards/cards.types'
+import { GetCardsArgs, GetCardsResponse, MinMax } from '@/services/decks/decks.types'
 
 export const CardsService = baseApi.injectEndpoints({
   endpoints(build) {
@@ -11,12 +12,22 @@ export const CardsService = baseApi.injectEndpoints({
           url: `v1/cards/${args.id}`,
         }),
       }),
-      getСardbyId: build.query<CardsResponse, { id: string }>({
+      getCardById: build.query<CardsResponse, { id: string }>({
         providesTags: ['Cards'],
         query: args => ({
           params: args ?? undefined,
           url: `v1/cards/${args.id}`,
         }),
+      }),
+      getCards: build.query<GetCardsResponse, GetCardsArgs>({
+        providesTags: ['Decks'],
+        query: args => ({
+          url: `v1/decks/${args.id}/cards`,
+        }),
+      }),
+      getMinMaxCards: build.query<MinMax, void>({
+        providesTags: ['Decks'],
+        query: () => 'v2/decks/min-max-cards',
       }),
       updateCard: build.mutation<CardsResponse, UpdateCardsArgs>({
         invalidatesTags: ['Cards'],
@@ -29,4 +40,10 @@ export const CardsService = baseApi.injectEndpoints({
     }
   },
 })
-export const { useGetСardbyIdQuery } = CardsService
+export const {
+  useDeleteCardMutation,
+  useGetCardByIdQuery,
+  useGetCardsQuery,
+  useGetMinMaxCardsQuery,
+  useUpdateCardMutation,
+} = CardsService

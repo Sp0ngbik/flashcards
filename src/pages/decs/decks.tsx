@@ -12,6 +12,7 @@ import TextField from '@/common/ui/textField/textField'
 import { Typography } from '@/common/ui/typography'
 import { CreateNewDeck } from '@/features/deck/createNewDeck/createNewDeck'
 import { useDeckFilter } from '@/pages/decs/deckFIlter'
+import { useUserDecksQuery } from '@/services/decks/decks.service.'
 import { clsx } from 'clsx'
 
 import s from './decks.module.scss'

@@ -5,10 +5,7 @@ import {
   DeckResponse,
   DeleteDeckArgs,
   GetCardByIdResponse,
-  GetCardsArgs,
-  GetCardsResponse,
   GetDecksArgs,
-  MinMax,
 } from '@/services/decks/decks.types'
 
 export const DecksService = baseApi.injectEndpoints({
@@ -29,12 +26,7 @@ export const DecksService = baseApi.injectEndpoints({
           url: `v1/decks/${args.id}`,
         }),
       }),
-      getCards: build.query<GetCardsResponse, GetCardsArgs>({
-        providesTags: ['Decks'],
-        query: args => ({
-          url: `v1/decks/${args.id}/cards`,
-        }),
-      }),
+
       getDeckById: build.query<GetCardByIdResponse, { id?: string }>({
         providesTags: ['Decks'],
         query: args => ({
@@ -48,9 +40,12 @@ export const DecksService = baseApi.injectEndpoints({
           url: 'v2/decks',
         }),
       }),
-      getMinMaxCards: build.query<MinMax, void>({
-        providesTags: ['Decks'],
-        query: () => 'v2/decks/min-max-cards',
+
+      userDecks: build.query<Deck, { id: string }>({
+        query: args => ({
+          params: args,
+          url: `/v1/decks/${args.id}`,
+        }),
       }),
     }
   },
@@ -59,8 +54,7 @@ export const DecksService = baseApi.injectEndpoints({
 export const {
   useCreateDeckMutation,
   useDeleteDeckMutation,
-  useGetCardsQuery,
   useGetDeckByIdQuery,
   useGetDecksQuery,
-  useGetMinMaxCardsQuery,
+  useUserDecksQuery,
 } = DecksService
