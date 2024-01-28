@@ -1,26 +1,33 @@
 .cardWrapper {
   display: flex;
+  gap: 15px;
   flex-direction: column;
-  gap: 30px;
   max-width: 1280px;
   margin: 0 auto;
   padding: 24px 137px;
 }
 .cardsHeader{
+  gap: 30px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 .backToDeck{
+  margin-left: -20px;
   color: var(--color-light-100);
 }
 .tableImage {
-  width: 118px;
-  height: 48px;
+  max-width: 100px;
+  max-height: 100px;
   margin-right: 10px;
   object-fit: cover;
 }
 .emptyTypography{
   margin: 0 auto;
   color: var(--color-dark-100);
+}
+.cellWithImage{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }

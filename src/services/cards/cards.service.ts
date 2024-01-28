@@ -12,17 +12,17 @@ export const CardsService = baseApi.injectEndpoints({
           url: `v1/cards/${args.id}`,
         }),
       }),
-      getCardById: build.query<CardsResponse, { id: string }>({
+      getCardById: build.query<CardsResponse, { id?: string }>({
         providesTags: ['Cards'],
         query: args => ({
-          params: args ?? undefined,
           url: `v1/cards/${args.id}`,
         }),
       }),
       getCards: build.query<GetCardsResponse, GetCardsArgs>({
         providesTags: ['Decks'],
-        query: args => ({
-          url: `v1/decks/${args.id}/cards`,
+        query: ({ id, ...args }) => ({
+          params: args ?? undefined,
+          url: `v1/decks/${id}/cards`,
         }),
       }),
       getMinMaxCards: build.query<MinMax, void>({

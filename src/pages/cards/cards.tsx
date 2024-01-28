@@ -21,15 +21,12 @@ const columns = [
 ]
 
 export const Cards = () => {
-  const id = useParams<{ id: string }>()
+  const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const [search, setSearch] = useSearchParams()
 
-  const { data: getCardsData } = useGetCardsQuery(id)
-  const { data: getCardByIdData } = useGetDeckByIdQuery(id)
-
   const backToDeckHandler = () => {
-    navigate(-1)
+    navigate('/')
   }
   const changeSearchHandler = (field: string, params: string) => {
     if (!params) {
@@ -48,6 +45,8 @@ export const Cards = () => {
   }
   const currentPage = Number(search.get('currentPage') || 1)
   const itemsPerPage = Number(search.get('itemsPerPage') || '5')
+  const { data: getCardsData } = useGetCardsQuery({ currentPage, id, itemsPerPage })
+  const { data: getCardByIdData } = useGetDeckByIdQuery({ id })
 
   return (
     <div className={s.cardWrapper}>
@@ -75,7 +74,7 @@ export const Cards = () => {
               {getCardsData?.items?.map(card => {
                 return (
                   <TableRow key={card.id}>
-                    <TableDataCell>
+                    <TableDataCell className={s.cellWithImage}>
                       {card.questionImg && (
                         <img alt={'image'} className={s.tableImage} src={card.questionImg} />
                       )}
