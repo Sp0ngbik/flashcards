@@ -46,11 +46,11 @@ const router = createBrowserRouter([
 ])
 
 export const Router = () => {
-  // const { isLoading: meIsLoading } = useMeQuery()
-  //
-  // if (meIsLoading) {
-  //   return <div>Me is loading</div>
-  // }
+  const { isLoading: meIsLoading } = useMeQuery()
+
+  if (meIsLoading) {
+    return <div>Me is loading</div>
+  }
 
   return <RouterProvider router={router} />
 }

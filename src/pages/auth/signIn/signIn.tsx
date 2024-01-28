@@ -22,7 +22,6 @@ export const SignIn = () => {
     defaultValues: { email: '', password: '', rememberMe: false },
     resolver: zodResolver(signInSchema),
   })
-  const notify = () => toast('Wow so easy!')
   const navigate = useNavigate()
   const [login] = useLoginMutation()
 
@@ -43,7 +42,6 @@ export const SignIn = () => {
 
   return (
     <Card>
-      <button onClick={notify}>Notify!</button>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Typography className={s.signInLabel} variant={'large'}>
           Sign In
