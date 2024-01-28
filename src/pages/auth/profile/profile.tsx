@@ -5,7 +5,6 @@ import { Edit } from '@/assets/icons/edit'
 import { Card } from '@/common/ui/card'
 import { FormFile, fileSchema } from '@/common/ui/imageLoader/fileSchema'
 import ImageLoader from '@/common/ui/imageLoader/imageLoader'
-import { Notification } from '@/common/ui/notification/notification'
 import { Typography } from '@/common/ui/typography'
 import { ProfileEditBody } from '@/pages/auth/profile/profileEditBody'
 import { FormProfile } from '@/pages/auth/profile/useEditProfile'
@@ -24,7 +23,6 @@ export type ProfileProps = {
 export const Profile: FC<ProfileProps> = ({ edit = false, email, nickname }) => {
   const [editMode, setEditMode] = useState<boolean>(edit)
   const [photo, setPhoto] = useState<File | null>(null)
-  const [fileError, setFileError] = useState<null | string>(null)
 
   const onSubmit = (data: FormProfile) => {
     console.log(data)
@@ -59,7 +57,6 @@ export const Profile: FC<ProfileProps> = ({ edit = false, email, nickname }) => 
 
   return (
     <>
-      <Notification message={fileError} resetError={setFileError} />
       <Card>
         <Typography className={s.profileLabel} variant={'h1'}>
           Personal Information
@@ -67,12 +64,7 @@ export const Profile: FC<ProfileProps> = ({ edit = false, email, nickname }) => 
         <div className={s.profileBlock}>
           <div className={s.photoWrapper}>
             <form className={s.form} onSubmit={handleSubmitFileForm(onSubmitFileForm)}>
-              <ImageLoader
-                className={s.inputFile}
-                ref={fileInputRef}
-                setFileError={setFileError}
-                setPhoto={setPhoto}
-              />
+              <ImageLoader className={s.inputFile} ref={fileInputRef} setPhoto={setPhoto} />
               <img alt={'user image'} className={s.profileImg} src={uploadedImage} />
               <button className={s.profileEditImgBtn} onClick={openFileInput}>
                 <Edit />

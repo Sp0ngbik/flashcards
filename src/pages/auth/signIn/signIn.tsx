@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import { Button } from '@/common/ui/button'
 import { Card } from '@/common/ui/card'
@@ -7,8 +8,7 @@ import { CheckboxControlled, TextFieldControlled } from '@/common/ui/controlled'
 import { Typography } from '@/common/ui/typography'
 import { FormValuesSignIn, signInSchema } from '@/pages/auth/signIn/utils'
 import { useLoginMutation } from '@/services/auth/auth.sevice'
-import { setAuthenticated } from '@/services/auth/authSlice'
-import { useAppDispatch, useAppSelector } from '@/services/store'
+import { ErrorResponse } from '@/services/auth/auth.types'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import s from './signIn.module.scss'
@@ -22,34 +22,28 @@ export const SignIn = () => {
     defaultValues: { email: '', password: '', rememberMe: false },
     resolver: zodResolver(signInSchema),
   })
-
+  const notify = () => toast('Wow so easy!')
   const navigate = useNavigate()
-  const dispatch = useAppDispatch()
-  const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated)
-  const [login, { error, isLoading }] = useLoginMutation()
+  const [login] = useLoginMutation()
 
   const onSubmit = async (data: FormValuesSignIn) => {
-    await login(data).unwrap()
-    dispatch(setAuthenticated(true))
+    try {
+      await login(data).unwrap()
+      navigate('/')
+    } catch (e: unknown) {
+      const err = e as ErrorResponse
+
+      toast.error(err.data.errorMessage ?? 'Could not sign in')
+    }
   }
 
   const handleSignUpClick = () => {
     navigate('/login')
   }
 
-  if (isAuthenticated) {
-    return <Navigate to={'/'} />
-  }
-
-  if (isLoading) {
-    return <div>Loading</div>
-  }
-  if (error) {
-    return <div>{JSON.stringify(error)}</div>
-  }
-
   return (
     <Card>
+      <button onClick={notify}>Notify!</button>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Typography className={s.signInLabel} variant={'large'}>
           Sign In

@@ -5,7 +5,6 @@ import { Button } from '@/common/ui/button'
 import { CheckboxControlled, TextFieldControlled } from '@/common/ui/controlled'
 import ImageLoader from '@/common/ui/imageLoader/imageLoader'
 import { Modal } from '@/common/ui/modal'
-import { Notification } from '@/common/ui/notification/notification'
 import {
   FormValuesAddDeck,
   addDeckSchema,
@@ -34,7 +33,6 @@ export const CreateNewDeck = ({ isOpen, onOpenChange, title }: AddNewDeckModalPr
     resolver: zodResolver(addDeckSchema),
   })
 
-  const [fileError, setFileError] = useState<null | string>(null)
   const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
   const [photo, setPhoto] = useState<File | null>(null)
   const closeHandler = () => {
@@ -69,7 +67,6 @@ export const CreateNewDeck = ({ isOpen, onOpenChange, title }: AddNewDeckModalPr
 
   return (
     <>
-      <Notification message={fileError} resetError={setFileError} />
       <Modal onOpenChange={onOpenChange} open={isOpen} title={title}>
         <form className={s.form} id={'hook-form'} onSubmit={handleSubmit(onSubmit)}>
           <TextFieldControlled
@@ -80,12 +77,7 @@ export const CreateNewDeck = ({ isOpen, onOpenChange, title }: AddNewDeckModalPr
           />
           <div>
             {photo && <img alt={'upload cover'} className={s.deckImage} src={uploadedImage} />}
-            <ImageLoader
-              className={s.fileInput}
-              ref={fileInputRef}
-              setFileError={setFileError}
-              setPhoto={setPhoto}
-            />
+            <ImageLoader className={s.fileInput} ref={fileInputRef} setPhoto={setPhoto} />
           </div>
           <Button
             className={s.uploadImageBtn}

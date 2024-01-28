@@ -9,7 +9,7 @@ import { baseApi } from '@/services/baseApi'
 export const AuthService = baseApi.injectEndpoints({
   endpoints(build) {
     return {
-      login: build.mutation<{ accessToken: string }, AuthArgsType>({
+      login: build.mutation<void, AuthArgsType>({
         invalidatesTags: ['Me'],
         query: args => ({
           body: args,
