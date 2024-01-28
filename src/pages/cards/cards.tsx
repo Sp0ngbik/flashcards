@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 import { ArrowBack } from '@/assets/icons/arrow-back-outline'
 import { Button } from '@/common/ui/button'
@@ -20,9 +20,10 @@ const columns = [
   { key: 'grade', title: 'Grade' },
 ]
 
-const Cards = () => {
+export const Cards = () => {
   const id = useParams<{ id: string }>()
   const navigate = useNavigate()
+  const [search, setSearch] = useSearchParams()
 
   const { data: getCardsData } = useGetCardsQuery(id)
   const { data: getCardByIdData } = useGetDeckByIdQuery(id)
@@ -30,6 +31,23 @@ const Cards = () => {
   const backToDeckHandler = () => {
     navigate(-1)
   }
+  const changeSearchHandler = (field: string, params: string) => {
+    if (!params) {
+      search.delete(field)
+    } else {
+      search.set(field, params)
+    }
+    search.set('page', '1')
+    setSearch(search)
+  }
+  const onChangeCurrentPage = (value: number) => {
+    changeSearchHandler('currentPage', value.toString())
+  }
+  const setItemsPerPage = (value: number) => {
+    changeSearchHandler('itemsPerPage', value.toString())
+  }
+  const currentPage = Number(search.get('currentPage') || 1)
+  const itemsPerPage = Number(search.get('itemsPerPage') || '5')
 
   return (
     <div className={s.cardWrapper}>
@@ -81,11 +99,11 @@ const Cards = () => {
             </TableBody>
           </Table>
           <Pagination
-            changeCurrentPage={() => {}}
-            changeItemsPerPage={() => {}}
-            currentPage={1}
-            pageSize={4}
-            totalCount={5}
+            changeCurrentPage={onChangeCurrentPage}
+            changeItemsPerPage={setItemsPerPage}
+            currentPage={currentPage}
+            pageSize={itemsPerPage}
+            totalCount={getCardsData.pagination.totalItems}
           />
         </>
       ) : (
@@ -96,5 +114,3 @@ const Cards = () => {
     </div>
   )
 }
-
-export default Cards

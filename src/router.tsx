@@ -9,7 +9,7 @@ import {
 import PageNotFound from '@/layout/pageNotFound/pageNotFound'
 import { SignIn } from '@/pages/auth/signIn'
 import { SignUp } from '@/pages/auth/signUp'
-import Cards from '@/pages/cards/cards'
+import { Cards } from '@/pages/cards/cards'
 import Decks from '@/pages/decs/decks'
 import { useMeQuery } from '@/services/auth/auth.sevice'
 
