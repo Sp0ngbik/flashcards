@@ -27,7 +27,7 @@ const Cards = () => {
   const { data: getCardByIdData } = useGetDeckByIdQuery(id)
 
   const backToDeckHandler = () => {
-    navigate('/')
+    navigate(-1)
   }
 
   return (
