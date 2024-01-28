@@ -11,7 +11,7 @@ export const CardsService = baseApi.injectEndpoints({
           url: `v1/cards/${args.id}`,
         }),
       }),
-      getСards: build.query<CardsResponse, { id: string }>({
+      getСardbyId: build.query<CardsResponse, { id: string }>({
         providesTags: ['Cards'],
         query: args => ({
           params: args ?? undefined,
@@ -29,4 +29,4 @@ export const CardsService = baseApi.injectEndpoints({
     }
   },
 })
-export const { useGetСardsQuery } = CardsService
+export const { useGetСardbyIdQuery } = CardsService
