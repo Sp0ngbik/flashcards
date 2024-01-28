@@ -102,9 +102,7 @@ export const useDeckFilter = () => {
     clearFilter,
     currentPage,
     data,
-    debounceCurrentPage,
-    debounceMaxCards,
-    debounceMinCards,
+
     debounceName,
     deckError,
     deckIsLoading,

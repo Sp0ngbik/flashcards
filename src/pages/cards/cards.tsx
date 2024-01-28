@@ -20,12 +20,11 @@ const columns = [
 
 const Cards = () => {
   const id = useParams<{ id: string }>()
+  const navigate = useNavigate()
 
   const { data: getCardsData } = useGetCardsQuery(id)
   const { data: getCardByIdData } = useGetDeckByIdQuery(id)
 
-  console.log(getCardByIdData)
-  const navigate = useNavigate()
   const backToDeckHandler = () => {
     navigate('/')
   }
@@ -43,7 +42,7 @@ const Cards = () => {
       <div className={s.cardsHeader}>
         <div>
           <Typography variant={'h1'}>{getCardByIdData?.name}</Typography>
-          <img className={s.tableImage} src={getCardByIdData?.cover} />
+          <img alt={'tableImage nf'} className={s.tableImage} src={getCardByIdData?.cover} />
         </div>
         <Button variant={'primary'}>Learn to Pack</Button>
       </div>
@@ -53,7 +52,7 @@ const Cards = () => {
         <TableBody>
           {getCardsData?.items?.map(card => {
             return (
-              <TableRow key={card.deckId}>
+              <TableRow key={card.id}>
                 <TableDataCell>
                   {card.questionImg && (
                     <img alt={'image'} className={s.tableImage} src={card.questionImg} />

@@ -9,6 +9,7 @@
 }
 
 .disableIcon {
+  pointer-events: none;
   fill: var(--color-dark-100);
 }
 

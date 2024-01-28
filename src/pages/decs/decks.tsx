@@ -44,6 +44,7 @@ const Decks = () => {
     isDeckBeingDeleted,
     itemsPerPage,
     maxCards,
+    me,
     meIsLoading,
     minCards,
     minMaxValues,
@@ -140,15 +141,21 @@ const Decks = () => {
                 <TableDataCell>{deck.cardsCount}</TableDataCell>
                 <TableDataCell>{new Date(deck.updated).toLocaleDateString('ru-RU')}</TableDataCell>
                 <TableDataCell>{deck.author.name}</TableDataCell>
-                <TableDataCell>
-                  <Play className={s.icon} />
-                  <Edit className={s.icon} />
-                  <Delete
-                    className={classNames.icon}
-                    onClick={() => {
-                      deleteDeck({ id: deck.id })
-                    }}
-                  />
+                <TableDataCell className={s.iconRow}>
+                  {me?.id === deck.userId ? (
+                    <>
+                      <Edit className={s.icon} />
+                      <Play className={s.icon} />
+                      <Delete
+                        className={classNames.icon}
+                        onClick={() => {
+                          deleteDeck({ id: deck.id })
+                        }}
+                      />
+                    </>
+                  ) : (
+                    <Play className={s.icon} />
+                  )}
                 </TableDataCell>
               </TableRow>
             )
