@@ -31,8 +31,8 @@
 }
 
 .tableDataCell {
+  max-width: 150px;
   padding: 6px 24px;
-
 
   &:last-child {
     text-align: center;
@@ -67,6 +67,6 @@
 }
 
 .tableImage {
-  max-width: 150px;
-  max-height: 50px;
+  width: 150px;
+  height: 50px;
 }
