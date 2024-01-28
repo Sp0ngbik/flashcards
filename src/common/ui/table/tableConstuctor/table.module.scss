@@ -1,14 +1,12 @@
 .root {
   border-collapse: collapse;
-
   width: 100%;
-
   color: var(--color-light-100);
   border: 1px solid var(--color-dark-500);
 }
 
 .tableHead {
-  background-color: var(--color-dark-500);;
+  background-color: var(--color-dark-500);
 }
 
 .tableRow {
@@ -22,9 +20,9 @@
 
   & .tableHeadTitle {
     cursor: pointer;
+    user-select: none;
     box-sizing: border-box;
     width: fit-content;
-    user-select: none;
   }
 
   &:first-child {
@@ -35,14 +33,13 @@
 .tableDataCell {
   padding: 6px 24px;
 
-
   &:last-child {
-    text-align: right;
+    text-align: center;
   }
 
   &:not(:last-child) {
-    max-width: 0;
     overflow: hidden;
+    max-width: 0;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
@@ -50,16 +47,18 @@
 
 .tableDataContent {
   display: flex;
-  align-items: center;
   gap: 10px;
+  align-items: center;
 }
 
 .arrow {
   position: absolute;
-  transform-origin: center;
-  fill: var(--color-light-100);
-  margin-left: 5px;
   top: 10px;
+  transform-origin: center;
+
+  margin-left: 5px;
+
+  fill: var(--color-light-100);
 }
 
 .arrowUp {
@@ -68,6 +67,6 @@
 }
 
 .tableImage {
-  height: 50px;
   width: 150px;
+  height: 50px;
 }
