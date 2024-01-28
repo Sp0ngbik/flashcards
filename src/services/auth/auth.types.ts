@@ -32,6 +32,12 @@ export type SignUpResponseType = {
   updated: string
 }
 
+export type ErrorResponse = {
+  data: {
+    errorMessage: string
+  }
+}
+
 export type ServerError = {
   error: {
     data: {
