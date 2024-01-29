@@ -37,7 +37,8 @@ const privateRoutes: RouteObject[] = [
     path: '/cards/:id?',
   },
 ]
-const router = createBrowserRouter([
+
+export const router = createBrowserRouter([
   {
     children: privateRoutes,
     element: <PrivateRoutes />,
