@@ -74,17 +74,21 @@ export const Cards = () => {
               {getCardsData?.items?.map(card => {
                 return (
                   <TableRow key={card.id}>
-                    <TableDataCell className={s.cellWithImage}>
-                      {card.questionImg && (
-                        <img alt={'image'} className={s.tableImage} src={card.questionImg} />
-                      )}
-                      {card.question}
+                    <TableDataCell>
+                      <span className={s.tableDataContent}>
+                        {card.questionImg && (
+                          <img alt={'image'} className={s.tableImage} src={card.questionImg} />
+                        )}
+                        {card.question}
+                      </span>
                     </TableDataCell>
                     <TableDataCell>
-                      {card.answerImg && (
-                        <img alt={'image'} className={s.tableImage} src={card.answerImg} />
-                      )}
-                      {card.answer}
+                      <span className={s.tableDataContent}>
+                        {card.answerImg && (
+                          <img alt={'image'} className={s.tableImage} src={card.answerImg} />
+                        )}
+                        {card.answer}
+                      </span>
                     </TableDataCell>
                     <TableDataCell>
                       {new Date(card.created).toLocaleDateString('ru-RU')}
