@@ -28,7 +28,7 @@ export const Cards = () => {
   const [search, setSearch] = useSearchParams()
 
   const backToDeckHandler = () => {
-    navigate('/cards', { relative: 'path' })
+    navigate('/')
   }
 
   const changeSearchHandler = (field: string, params: string) => {
