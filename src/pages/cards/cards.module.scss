@@ -1,32 +1,43 @@
 .cardWrapper {
   display: flex;
-  gap: 15px;
   flex-direction: column;
+  gap: 15px;
+
   max-width: 1280px;
   margin: 0 auto;
   padding: 24px 137px;
 }
-.cardsHeader{
-  gap: 30px;
+
+.cardsHeader {
   display: flex;
   flex-direction: row;
+  gap: 30px;
   justify-content: space-between;
 }
-.backToDeck{
-  margin-left: -20px;
+
+.arrowBack {
+  margin-left: 12px;
+}
+
+.backToDeck {
+  display: flex;
+  padding-left: 22px;
   color: var(--color-light-100);
 }
+
 .tableImage {
   width: 50px;
   height: 50px;
 }
+
 .tableDataContent {
   display: flex;
   flex-direction: row;
   gap: 10px;
   align-items: center;
 }
-.emptyTypography{
+
+.emptyTypography {
   margin: 0 auto;
   color: var(--color-dark-100);
 }

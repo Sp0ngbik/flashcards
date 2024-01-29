@@ -118,7 +118,11 @@ const Decks = () => {
             min={minMaxValues?.min}
           />
         </div>
-        <Button icon={<Delete />} onClick={clearFilter} variant={'secondary'}>
+        <Button
+          icon={<Delete className={s.deleteIcon} />}
+          onClick={clearFilter}
+          variant={'secondary'}
+        >
           Clear Filter
         </Button>
       </div>
