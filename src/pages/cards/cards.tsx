@@ -52,7 +52,7 @@ export const Cards = () => {
     <div className={s.cardWrapper}>
       <Button
         className={s.backToDeck}
-        icon={<ArrowBack />}
+        icon={<ArrowBack className={s.arrowBack} />}
         onClick={backToDeckHandler}
         variant={'link'}
       >
