@@ -26,9 +26,9 @@ export const Cards = () => {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const [search, setSearch] = useSearchParams()
-
+  const backDeck = sessionStorage.getItem('lastLocation')
   const backToDeckHandler = () => {
-    navigate('/')
+    navigate(`${backDeck}`)
   }
 
   const changeSearchHandler = (field: string, params: string) => {
