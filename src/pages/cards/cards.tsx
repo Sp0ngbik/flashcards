@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 import { ArrowBack } from '@/assets/icons/arrow-back-outline'
+import { useDebounce } from '@/common/hooks/useDebounce'
 import { Button } from '@/common/ui/button'
 import { Grade } from '@/common/ui/grade/grade'
 import { Pagination } from '@/common/ui/pagination'
@@ -59,7 +60,11 @@ export const Cards = () => {
       changeSearchHandler('orderBy', JSON.stringify(value))
     }
   }
-
+  const searchBy = search.get('name') || ''
+  const debounceName = useDebounce(searchBy, 2000)
+  const onChangeName = (value: string) => {
+    changeSearchHandler('name', value)
+  }
   const currentPage = Number(search.get('currentPage') || 1)
   const itemsPerPage = Number(search.get('itemsPerPage') || '4')
   const { data: getCardsData } = useGetCardsQuery({
@@ -67,6 +72,7 @@ export const Cards = () => {
     id,
     itemsPerPage,
     orderBy: sortedString,
+    question: debounceName,
   })
   const { data: getCardByIdData } = useGetDeckByIdQuery({ id })
 
@@ -87,7 +93,13 @@ export const Cards = () => {
         </div>
         <Button variant={'primary'}>Learn to Pack</Button>
       </div>
-      <TextField label={'Search'} placeholder={'Input search'} variant={'search'} />
+      <TextField
+        label={'Search'}
+        onValueChange={onChangeName}
+        placeholder={'Input search'}
+        value={searchBy}
+        variant={'search'}
+      />
       {getCardsData?.items.length ? (
         <>
           <Table>
