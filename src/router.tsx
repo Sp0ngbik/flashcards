@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 
 import PageNotFound from '@/layout/pageNotFound/pageNotFound'
+import { Profile } from '@/pages/auth/profile'
 import { SignIn } from '@/pages/auth/signIn'
 import { SignUp } from '@/pages/auth/signUp'
 import { Cards } from '@/pages/cards/cards'
@@ -32,6 +33,7 @@ const publicRoutes: RouteObject[] = [
 
 const privateRoutes: RouteObject[] = [
   { element: <Decks />, path: '/' },
+  { element: <Profile email={'asdasd'} nickname={'asdasd'} />, path: '/profile' },
   {
     element: <Cards />,
     path: '/cards/:id?',

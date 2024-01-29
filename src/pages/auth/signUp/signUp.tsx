@@ -26,8 +26,8 @@ export const SignUp = () => {
     resolver: zodResolver(signUpSchema),
   })
 
-  const dispatch = useAppDispatch()
-  const navigate = useNavigate()
+  // const dispatch = useAppDispatch()
+  // const navigate = useNavigate()
 
   const [signUp, { error, isLoading }] = useSignUpMutation<ServerError>()
   const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated)
@@ -50,12 +50,12 @@ export const SignUp = () => {
     const { confirmPassword, ...rest } = data
 
     await signUp(rest).unwrap()
-    dispatch(setAuthenticated(true))
+    // dispatch(setAuthenticated(true))
   }
 
-  const handleSignInClick = () => {
-    navigate('/sign-in')
-  }
+  // const handleSignInClick = () => {
+  //   navigate('/sign-in')
+  // }
 
   return (
     <Card>
@@ -66,6 +66,7 @@ export const SignUp = () => {
         <TextFieldControlled
           control={control}
           errorMessage={errors.email?.message}
+          id={'email'}
           label={'Email'}
           name={'email'}
           placeholder={'example@gmail.com'}
@@ -74,6 +75,7 @@ export const SignUp = () => {
           className={s.passwordField}
           control={control}
           errorMessage={errors.password?.message}
+          id={'password'}
           label={'Password'}
           name={'password'}
           placeholder={'Your password'}
@@ -83,6 +85,7 @@ export const SignUp = () => {
           className={s.confirmPassword}
           control={control}
           errorMessage={errors.confirmPassword?.message}
+          id={'confirmPassword'}
           label={'Confirm Password'}
           name={'confirmPassword'}
           placeholder={'Confirm your password'}
@@ -93,7 +96,11 @@ export const SignUp = () => {
       <Typography className={s.formQuestion} variant={'body2'}>
         Already have an account?
       </Typography>
-      <Button className={s.submitButton} onClick={handleSignInClick} variant={'link'}>
+      <Button
+        className={s.submitButton}
+        // onClick={handleSignInClick}
+        variant={'link'}
+      >
         Sign In
       </Button>
     </Card>

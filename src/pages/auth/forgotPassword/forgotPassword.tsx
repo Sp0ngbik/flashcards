@@ -33,6 +33,7 @@ export const ForgotPassword = () => {
           className={s.emailField}
           control={control}
           errorMessage={errors.email?.message}
+          id={'email'}
           label={'Email'}
           name={'email'}
           placeholder={'example@gmail.com'}
