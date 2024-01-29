@@ -44,7 +44,7 @@ export const Cards = () => {
     changeSearchHandler('itemsPerPage', value.toString())
   }
   const currentPage = Number(search.get('currentPage') || 1)
-  const itemsPerPage = Number(search.get('itemsPerPage') || '5')
+  const itemsPerPage = Number(search.get('itemsPerPage') || '4')
   const { data: getCardsData } = useGetCardsQuery({ currentPage, id, itemsPerPage })
   const { data: getCardByIdData } = useGetDeckByIdQuery({ id })
 
@@ -106,7 +106,7 @@ export const Cards = () => {
             changeItemsPerPage={setItemsPerPage}
             currentPage={currentPage}
             pageSize={itemsPerPage}
-            totalCount={getCardsData.pagination.totalItems}
+            totalCount={getCardsData.pagination.totalItems || 4}
           />
         </>
       ) : (
