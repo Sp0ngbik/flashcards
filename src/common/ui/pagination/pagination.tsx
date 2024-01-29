@@ -33,7 +33,7 @@ export const Pagination = (props: Props) => {
   }
   const paginationRange = usePagination({ currentPage, pageSize, siblingCount, totalCount })
 
-  if (currentPage === 0 || (paginationRange && paginationRange.length < 2)) {
+  if (currentPage === 0 || (paginationRange && paginationRange.length < 1)) {
     return null
   }
   const onNext = () => {
