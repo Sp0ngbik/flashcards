@@ -1,9 +1,11 @@
+import { useMemo } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 import { ArrowBack } from '@/assets/icons/arrow-back-outline'
 import { Button } from '@/common/ui/button'
 import { Grade } from '@/common/ui/grade/grade'
 import { Pagination } from '@/common/ui/pagination'
+import { Sort } from '@/common/ui/table/table.stories'
 import { Table, TableBody, TableDataCell, TableRow } from '@/common/ui/table/tableConstuctor'
 import { TableHeader } from '@/common/ui/table/tableHeader/tableHeader'
 import TextField from '@/common/ui/textField/textField'
@@ -24,10 +26,11 @@ export const Cards = () => {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const [search, setSearch] = useSearchParams()
-
+  const backDeck = sessionStorage.getItem('lastLocation')
   const backToDeckHandler = () => {
-    navigate('/')
+    navigate(`${backDeck}`)
   }
+
   const changeSearchHandler = (field: string, params: string) => {
     if (!params) {
       search.delete(field)
@@ -43,9 +46,28 @@ export const Cards = () => {
   const setItemsPerPage = (value: number) => {
     changeSearchHandler('itemsPerPage', value.toString())
   }
+  const orderBy = JSON.parse(search.get('orderBy') || '""')
+  const sortedString = useMemo(() => {
+    if (!orderBy) {
+      return null
+    }
+
+    return `${orderBy.key}-${orderBy.direction}`
+  }, [orderBy])
+  const setSortedBy = (value: Sort) => {
+    if (!value || value?.key) {
+      changeSearchHandler('orderBy', JSON.stringify(value))
+    }
+  }
+
   const currentPage = Number(search.get('currentPage') || 1)
-  const itemsPerPage = Number(search.get('itemsPerPage') || '5')
-  const { data: getCardsData } = useGetCardsQuery({ currentPage, id, itemsPerPage })
+  const itemsPerPage = Number(search.get('itemsPerPage') || '4')
+  const { data: getCardsData } = useGetCardsQuery({
+    currentPage,
+    id,
+    itemsPerPage,
+    orderBy: sortedString,
+  })
   const { data: getCardByIdData } = useGetDeckByIdQuery({ id })
 
   return (
@@ -69,7 +91,7 @@ export const Cards = () => {
       {getCardsData?.items.length ? (
         <>
           <Table>
-            <TableHeader columns={columns} />
+            <TableHeader columns={columns} onSort={setSortedBy} sort={orderBy} />
             <TableBody>
               {getCardsData?.items?.map(card => {
                 return (
@@ -106,7 +128,7 @@ export const Cards = () => {
             changeItemsPerPage={setItemsPerPage}
             currentPage={currentPage}
             pageSize={itemsPerPage}
-            totalCount={getCardsData.pagination.totalItems}
+            totalCount={getCardsData.pagination.totalItems || 4}
           />
         </>
       ) : (

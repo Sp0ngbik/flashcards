@@ -1,5 +1,5 @@
-import { RefObject, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { RefObject, useEffect, useRef, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import { Delete, Edit, Play } from '@/assets'
 import { Button } from '@/common/ui/button'
@@ -33,6 +33,13 @@ const columns = [
 ]
 
 const Decks = () => {
+  const location = useLocation()
+
+  useEffect(() => {
+    return () => {
+      sessionStorage.setItem('lastLocation', location.pathname + location.search)
+    }
+  }, [location])
   const {
     clearFilter,
     currentPage,
