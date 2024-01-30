@@ -36,7 +36,7 @@ const CreateNewPassword = () => {
           className={s.passwordField}
           control={control}
           errorMessage={errors.password?.message}
-          id={'Password'}
+          id={'password'}
           label={'Password'}
           name={'password'}
           placeholder={'Your password'}

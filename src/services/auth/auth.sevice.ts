@@ -6,7 +6,7 @@ import {
 } from '@/services/auth/auth.types'
 import { baseApi } from '@/services/baseApi'
 
-export const AuthService = baseApi.injectEndpoints({
+export const authService = baseApi.injectEndpoints({
   endpoints(build) {
     return {
       login: build.mutation<void, AuthArgsType>({
@@ -17,10 +17,18 @@ export const AuthService = baseApi.injectEndpoints({
           url: '/v1/auth/login',
         }),
       }),
+      logout: build.mutation<void, void>({
+        invalidatesTags: ['Me'],
+        query: () => ({
+          method: 'POST',
+          url: '/v1/auth/logout',
+        }),
+      }),
       me: build.query<MeResponse, void>({
         providesTags: ['Me'],
         query: () => 'v1/auth/me',
       }),
+
       signUp: build.mutation<SignUpResponseType, SignUpArgsType>({
         invalidatesTags: ['Me'],
         query: args => ({
@@ -33,4 +41,4 @@ export const AuthService = baseApi.injectEndpoints({
   },
 })
 
-export const { useLoginMutation, useMeQuery, useSignUpMutation } = AuthService
+export const { useLoginMutation, useLogoutMutation, useMeQuery, useSignUpMutation } = authService

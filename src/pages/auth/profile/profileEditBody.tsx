@@ -34,6 +34,7 @@ export const ProfileEditBody = ({
           className={s.editNameField}
           control={control}
           errorMessage={errors.nickname?.message}
+          id={'nickname'}
           label={'Nickname'}
           name={'nickname'}
           placeholder={'nickname'}

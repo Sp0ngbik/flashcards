@@ -11,7 +11,6 @@ function App() {
   return (
     <Provider store={store}>
       <ToastContainer autoClose={2000} hideProgressBar theme={'dark'} />
-      <Header isLoggedIn={false} />
       <Router />
     </Provider>
   )

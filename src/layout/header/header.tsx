@@ -1,29 +1,39 @@
+import { Outlet } from 'react-router-dom'
+
 import { Logo } from '@/assets'
 import { Button } from '@/common/ui/button'
 import { DropdownMenu } from '@/common/ui/dropDownMenu'
+import { useLogoutMutation, useMeQuery } from '@/services/auth/auth.sevice'
 
 import s from './header.module.scss'
 
-type Props = {
-  isLoggedIn: boolean
+export type AuthContext = {
+  isAuthenticated: boolean
 }
 
-export const Header = ({ isLoggedIn }: Props) => {
+export const Header = () => {
+  const { data, isError, isLoading } = useMeQuery()
+  const [logout] = useLogoutMutation()
+  const isAuthenticated = !isError && !isLoading
+
   return (
-    <div className={s.headerBackGround}>
-      <div className={s.headerWrapper}>
-        <Logo />
-        <div className={s.headerRightSection}>
-          {isLoggedIn ? (
-            <div className={s.userBlock}>
-              <span>Username</span>
-              <DropdownMenu />
-            </div>
-          ) : (
-            <Button>Sign In</Button>
-          )}
-        </div>
-      </div>
+    <div>
+      <header className={s.headerBackGround}>
+        <main className={s.headerWrapper}>
+          <Logo />
+          <div className={s.headerRightSection}>
+            {data ? (
+              <div className={s.userBlock}>
+                <span>{data.name}</span>
+                <DropdownMenu logout={logout} userEmail={data.email} userName={data.name} />
+              </div>
+            ) : (
+              <Button>Sign In</Button>
+            )}
+          </div>
+        </main>
+      </header>
+      <Outlet context={{ isAuthenticated } satisfies AuthContext} />
     </div>
   )
 }

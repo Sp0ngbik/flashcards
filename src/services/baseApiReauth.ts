@@ -1,12 +1,14 @@
+import { router } from '@/router'
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError, fetchBaseQuery } from '@reduxjs/toolkit/query'
 import { Mutex } from 'async-mutex'
+
 const mutex = new Mutex()
 const baseQuery = fetchBaseQuery({
   baseUrl: 'https://api.flashcards.andrii.es',
   credentials: 'include',
 })
 
-export const baseQueryWithReauth: BaseQueryFn<
+export const baseQueryWithRauth: BaseQueryFn<
   FetchArgs | string,
   unknown,
   FetchBaseQueryError
@@ -26,6 +28,8 @@ export const baseQueryWithReauth: BaseQueryFn<
 
       if (refreshResult.meta?.response?.status === 204) {
         result = await baseQuery(args, api, extraOptions)
+      } else {
+        await router.navigate('/sign-in')
       }
       release()
     } else {

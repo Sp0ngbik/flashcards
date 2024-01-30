@@ -28,7 +28,7 @@ export const SignIn = () => {
   const onSubmit = async (data: FormValuesSignIn) => {
     try {
       await login(data).unwrap()
-      navigate('/')
+      // navigate('/')
     } catch (e: unknown) {
       const err = e as ErrorResponse
 
@@ -37,7 +37,7 @@ export const SignIn = () => {
   }
 
   const handleSignUpClick = () => {
-    navigate('/login')
+    navigate('/sign-up')
   }
 
   return (
@@ -50,6 +50,7 @@ export const SignIn = () => {
           className={s.emailField}
           control={control}
           errorMessage={errors.email?.message}
+          id={'email'}
           label={'Email'}
           name={'email'}
           placeholder={'example@gmail.com'}
@@ -58,6 +59,7 @@ export const SignIn = () => {
           className={s.passwordField}
           control={control}
           errorMessage={errors.password?.message}
+          id={'password'}
           label={'Password'}
           name={'password'}
           placeholder={'Your password'}
@@ -66,6 +68,7 @@ export const SignIn = () => {
         <CheckboxControlled
           className={s.rememberMe}
           control={control}
+          id={'rememberMe'}
           name={'rememberMe'}
           text={'Remember me'}
         />
