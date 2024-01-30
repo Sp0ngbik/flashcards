@@ -37,7 +37,7 @@ const CardSection = <T extends FormValuesAddCard>({
       <Typography variant={'subtitle2'}>{label}:</Typography>
       <TextFieldControlled
         control={control}
-        errorMessage={errors.question?.message}
+        errorMessage={errors[name]?.message}
         label={label + '?'}
         name={name}
         {...rest}
