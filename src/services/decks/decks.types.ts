@@ -30,11 +30,7 @@ export type GetDecksArgs = {
 }
 
 export type CreateDeckArgs = FormData
-// {
-//   cover?: File | null
-//   isPrivate?: boolean
-//   name: string
-// }
+
 export type DeleteDeckArgs = {
   id: string
 }

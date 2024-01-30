@@ -15,23 +15,15 @@ export const decksService = baseApi.injectEndpoints({
         invalidatesTags: ['Decks'],
         async onQueryStarted(_, { dispatch, getState, queryFulfilled }) {
           const res = await queryFulfilled
+
           const args = decksService.util.selectCachedArgsForQuery(getState(), 'getDecks')
 
-          console.log(args)
-
-          for (const { endpointName, originalArgs } of decksService.util.selectInvalidatedBy(
-            getState(),
-            [{ type: 'Decks' }]
-          )) {
-            if (endpointName !== 'getDecks') {
-              continue
-            }
-            dispatch(
-              decksService.util.updateQueryData(endpointName, originalArgs, draft => {
-                draft.items.unshift(res.data)
-              })
-            )
-          }
+          dispatch(
+            decksService.util.updateQueryData('getDecks', args[0], draft => {
+              draft.items.pop()
+              draft.items.unshift(res.data)
+            })
+          )
         },
         query: args => ({
           body: args ?? undefined,
