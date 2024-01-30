@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 import { ArrowBack } from '@/assets/icons/arrow-back-outline'
@@ -11,6 +11,7 @@ import { Table, TableBody, TableDataCell, TableRow } from '@/common/ui/table/tab
 import { TableHeader } from '@/common/ui/table/tableHeader/tableHeader'
 import TextField from '@/common/ui/textField/textField'
 import { Typography } from '@/common/ui/typography'
+import { CreateNewCard } from '@/features/cards/createNewCard/createNewCard'
 import { useGetCardsQuery } from '@/services/cards/cards.service'
 import { useGetDeckByIdQuery } from '@/services/decks/decks.service.'
 
@@ -27,6 +28,7 @@ export const Cards = () => {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const [search, setSearch] = useSearchParams()
+  const [isOpen, setIsOpen] = useState(false)
   const backDeck = sessionStorage.getItem('lastLocation')
   const backToDeckHandler = () => {
     navigate(`${backDeck}`)
@@ -76,8 +78,13 @@ export const Cards = () => {
   })
   const { data: getCardByIdData } = useGetDeckByIdQuery({ id })
 
+  const onAddNewCardHandler = () => {
+    setIsOpen(true)
+  }
+
   return (
     <div className={s.cardWrapper}>
+      <CreateNewCard id={id} isOpen={isOpen} onOpenChange={setIsOpen} title={'Add New Card'} />
       <Button
         className={s.backToDeck}
         icon={<ArrowBack className={s.arrowBack} />}
@@ -92,6 +99,9 @@ export const Cards = () => {
           <img alt={'tableImage nf'} className={s.tableImage} src={getCardByIdData?.cover} />
         </div>
         <Button variant={'primary'}>Learn to Pack</Button>
+        <Button onClick={onAddNewCardHandler} variant={'primary'}>
+          Add New Card
+        </Button>
       </div>
       <TextField
         label={'Search'}
