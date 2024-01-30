@@ -25,3 +25,5 @@ export type UpdateCardsBody = {
   questionImg?: string
   questionVideo?: string
 }
+
+export type CreateCard = FormData
