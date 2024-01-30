@@ -50,7 +50,7 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
           {...rest}
         >
           {flag === 'editCard' ? (
-            <EditCardComponent />
+            <EditCardComponent userAvatar={userDefaultPhoto} />
           ) : (
             <EditProfileComponent
               logout={logout}
