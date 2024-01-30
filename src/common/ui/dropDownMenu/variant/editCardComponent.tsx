@@ -6,7 +6,13 @@ import * as DropdownMenuRadix from '@radix-ui/react-dropdown-menu'
 
 import s from '../dropDownMenu.module.scss'
 
-export const EditCardComponent = () => {
+type EditCardComponentProps = {
+  delete?: () => void
+  edit?: () => void
+  learn?: () => void
+}
+
+export const EditCardComponent = ({}: EditCardComponentProps) => {
   return (
     <>
       <DropdownMenuRadix.Item className={s.DropdownMenuItem}>
