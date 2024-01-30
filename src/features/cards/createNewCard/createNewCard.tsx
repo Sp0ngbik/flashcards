@@ -2,17 +2,14 @@ import { RefObject, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Button } from '@/common/ui/button'
-import { TextFieldControlled } from '@/common/ui/controlled'
-import ImageLoader from '@/common/ui/imageLoader/imageLoader'
 import { Modal } from '@/common/ui/modal'
-import { Typography } from '@/common/ui/typography'
+import CardSection from '@/features/cards/createNewCard/cardSection/cardSection'
 import {
   FormValuesAddCard,
   addCardSchema,
 } from '@/features/cards/createNewCard/utils/addNewCardModalSchema'
 import { useCreateCardMutation } from '@/services/cards/cards.service'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ImageIcon } from '@radix-ui/react-icons'
 
 import s from './addNewCardModal.module.scss'
 
@@ -84,84 +81,28 @@ export const CreateNewCard = ({ id, isOpen, onOpenChange, title }: AddNewDeckMod
     <>
       <Modal onOpenChange={onOpenChange} open={isOpen} title={title}>
         <form className={s.form} id={'hook-form'} onSubmit={handleSubmit(onSubmit)}>
-          <Typography variant={'subtitle2'}>Question:</Typography>
-          <TextFieldControlled
+          <CardSection
             control={control}
-            errorMessage={errors.question?.message}
-            label={'Question?'}
+            errors={errors}
+            fileInputRef={fileQuestionInputRef}
+            label={'Question'}
             name={'question'}
+            openFileInput={openQuestionFileInput}
+            photo={questionPhoto}
+            setPhoto={setQuestionPhoto}
+            uploadedImage={uploadedImage}
           />
-          <div>
-            {questionPhoto && (
-              <img alt={'upload cover'} className={s.deckImage} src={uploadedImage} />
-            )}
-            <ImageLoader
-              className={s.fileInput}
-              ref={fileQuestionInputRef}
-              setPhoto={setQuestionPhoto}
-            />
-          </div>
-          <Button
-            className={s.uploadImageBtn}
-            fullWidth
-            onClick={e => {
-              e.preventDefault()
-              openQuestionFileInput()
-            }}
-            variant={'secondary'}
-          >
-            {<ImageIcon />}Change Image
-          </Button>
-          <Typography variant={'subtitle2'}>Answer:</Typography>
-          <TextFieldControlled
+          <CardSection
             control={control}
-            errorMessage={errors.answer?.message}
+            errors={errors}
+            fileInputRef={fileAnswerInputRef}
             label={'Answer'}
             name={'answer'}
+            openFileInput={openAnswerFileInput}
+            photo={answerPhoto}
+            setPhoto={setAnswerPhoto}
+            uploadedImage={uploadedAnswerImage}
           />
-          <div>
-            {answerPhoto && (
-              <img alt={'upload cover'} className={s.deckImage} src={uploadedAnswerImage} />
-            )}
-            <ImageLoader
-              className={s.fileInput}
-              ref={fileAnswerInputRef}
-              setPhoto={setAnswerPhoto}
-            />
-          </div>
-          <Button
-            className={s.uploadImageBtn}
-            fullWidth
-            onClick={e => {
-              e.preventDefault()
-              openAnswerFileInput()
-            }}
-            variant={'secondary'}
-          >
-            {<ImageIcon />}Change Image
-          </Button>
-          {/*<CardSection*/}
-          {/*  control={control}*/}
-          {/*  errors={errors}*/}
-          {/*  fileInputRef={fileQuestionInputRef}*/}
-          {/*  label={'Question'}*/}
-          {/*  name={'question'}*/}
-          {/*  openFileInput={openQuestionFileInput}*/}
-          {/*  photo={questionPhoto}*/}
-          {/*  setPhoto={setQuestionPhoto}*/}
-          {/*  uploadedImage={uploadedImage}*/}
-          {/*/>*/}
-          {/*<CardSection*/}
-          {/*  control={control}*/}
-          {/*  errors={errors}*/}
-          {/*  fileInputRef={fileAnswerInputRef}*/}
-          {/*  label={'Answer'}*/}
-          {/*  name={'answer'}*/}
-          {/*  openFileInput={openAnswerFileInput}*/}
-          {/*  photo={answerPhoto}*/}
-          {/*  setPhoto={setAnswerPhoto}*/}
-          {/*  uploadedImage={uploadedAnswerImage}*/}
-          {/*/>*/}
           <div className={s.btnArea}>
             <Button disabled={isLoading} form={'hook-form'} type={'submit'} variant={'primary'}>
               Add New Card
