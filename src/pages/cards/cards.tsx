@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
-import { Delete, Edit } from '@/assets'
+import { Delete, Dots, Edit } from '@/assets'
 import { ArrowBack } from '@/assets/icons/arrow-back-outline'
 import { useDebounce } from '@/common/hooks/useDebounce'
 import { Button } from '@/common/ui/button'
@@ -107,6 +107,7 @@ export const Cards = () => {
           <div className={s.dropDownDiv}>
             <Typography variant={'h1'}>{getCardByIdData?.name}</Typography>
             {isOwner && <DropdownMenu flag={'editCard'} logout={() => {}} />}
+            <Dots />
           </div>
           <img alt={''} className={s.tableImage} src={getCardByIdData?.cover} />
         </div>
@@ -159,7 +160,6 @@ export const Cards = () => {
                     <TableDataCell>
                       {isOwner && (
                         <>
-                          {' '}
                           <Edit className={s.icon} />
                           <Delete className={s.icon} onClick={() => deleteCard({ id: card.id })} />
                         </>

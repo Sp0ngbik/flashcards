@@ -6,7 +6,7 @@ export const cardsService = baseApi.injectEndpoints({
   endpoints(build) {
     return {
       createCard: build.mutation<CardsResponse, { data: CreateCard; id: string }>({
-        invalidatesTags: ['Cards', 'Decks'],
+        invalidatesTags: ['Cards'],
         query: args => ({
           body: args.data,
           method: 'POST',
@@ -14,7 +14,7 @@ export const cardsService = baseApi.injectEndpoints({
         }),
       }),
       deleteCard: build.mutation<void, { id: string }>({
-        invalidatesTags: ['Cards', 'Decks'],
+        invalidatesTags: ['Cards'],
         query: args => ({
           method: 'DELETE',
           url: `v1/cards/${args.id}`,
@@ -27,14 +27,14 @@ export const cardsService = baseApi.injectEndpoints({
         }),
       }),
       getCards: build.query<GetCardsResponse, GetCardsArgs>({
-        providesTags: ['Decks'],
+        providesTags: ['Cards'],
         query: ({ id, ...args }) => ({
           params: args ?? undefined,
           url: `v1/decks/${id}/cards`,
         }),
       }),
       getMinMaxCards: build.query<MinMax, void>({
-        providesTags: ['Decks'],
+        providesTags: ['Cards'],
         query: () => 'v2/decks/min-max-cards',
       }),
       updateCard: build.mutation<CardsResponse, UpdateCardsArgs>({

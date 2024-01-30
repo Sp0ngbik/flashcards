@@ -1,5 +1,5 @@
+import { DotsForDropDown } from '@/assets/icons/dotsForDropDown'
 import userDefaultPhoto from '@/assets/image/defaultAvatar.png'
-import svgDots from '@/assets/image/svgDots.svg'
 import { EditCardComponent } from '@/common/ui/dropDownMenu/variant/editCardComponent'
 import { EditProfileComponent } from '@/common/ui/dropDownMenu/variant/editProfileComponent'
 import * as DropdownMenuRadix from '@radix-ui/react-dropdown-menu'
@@ -39,7 +39,7 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
           {flag === 'editProfile' ? (
             <img alt={'userPhoto'} className={s.UserAvatar} src={userDefaultPhoto} />
           ) : (
-            <img alt={'dots'} className={s.dotsDrop} src={svgDots} />
+            <DotsForDropDown className={s.dotsDrop} />
           )}
         </button>
       </DropdownMenuRadix.Trigger>
