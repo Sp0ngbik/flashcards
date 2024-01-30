@@ -20,8 +20,8 @@ export type UpdateCardsArgs = {
 export type UpdateCardsBody = {
   answer: string
   answerImg?: string
-  answerVideo: string
+  answerVideo?: string
   question: string
   questionImg?: string
-  questionVideo: string
+  questionVideo?: string
 }
