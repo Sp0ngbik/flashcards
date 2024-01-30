@@ -1,10 +1,18 @@
 import { baseApi } from '@/services/baseApi'
-import { CardsResponse, UpdateCardsArgs } from '@/services/cards/cards.types'
+import { CardsResponse, UpdateCardsArgs, UpdateCardsBody } from '@/services/cards/cards.types'
 import { GetCardsArgs, GetCardsResponse, MinMax } from '@/services/decks/decks.types'
 
 export const cardsService = baseApi.injectEndpoints({
   endpoints(build) {
     return {
+      createCard: build.mutation<CardsResponse, { data: UpdateCardsBody; id: string }>({
+        invalidatesTags: ['Cards', 'Decks'],
+        query: args => ({
+          body: args.data,
+          method: 'POST',
+          url: `v1/decks/${args.id}/cards`,
+        }),
+      }),
       deleteCard: build.mutation<void, { id: string }>({
         invalidatesTags: ['Cards'],
         query: args => ({
@@ -33,7 +41,7 @@ export const cardsService = baseApi.injectEndpoints({
         invalidatesTags: ['Cards'],
         query: args => ({
           body: args ?? undefined,
-          method: 'PATH',
+          method: 'PATCH',
           url: `v1/cards${args.id}`,
         }),
       }),
@@ -41,6 +49,7 @@ export const cardsService = baseApi.injectEndpoints({
   },
 })
 export const {
+  useCreateCardMutation,
   useDeleteCardMutation,
   useGetCardByIdQuery,
   useGetCardsQuery,

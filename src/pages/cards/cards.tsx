@@ -1,7 +1,8 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 import { ArrowBack } from '@/assets/icons/arrow-back-outline'
+import { useDebounce } from '@/common/hooks/useDebounce'
 import { Button } from '@/common/ui/button'
 import { Grade } from '@/common/ui/grade/grade'
 import { Pagination } from '@/common/ui/pagination'
@@ -10,6 +11,7 @@ import { Table, TableBody, TableDataCell, TableRow } from '@/common/ui/table/tab
 import { TableHeader } from '@/common/ui/table/tableHeader/tableHeader'
 import TextField from '@/common/ui/textField/textField'
 import { Typography } from '@/common/ui/typography'
+import { CreateNewCard } from '@/features/cards/createNewCard/createNewCard'
 import { useGetCardsQuery } from '@/services/cards/cards.service'
 import { useGetDeckByIdQuery } from '@/services/decks/decks.service.'
 
@@ -26,6 +28,7 @@ export const Cards = () => {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const [search, setSearch] = useSearchParams()
+  const [isOpen, setIsOpen] = useState(false)
   const backDeck = sessionStorage.getItem('lastLocation')
   const backToDeckHandler = () => {
     navigate(`${backDeck}`)
@@ -59,7 +62,11 @@ export const Cards = () => {
       changeSearchHandler('orderBy', JSON.stringify(value))
     }
   }
-
+  const searchBy = search.get('name') || ''
+  const debounceName = useDebounce(searchBy, 2000)
+  const onChangeName = (value: string) => {
+    changeSearchHandler('name', value)
+  }
   const currentPage = Number(search.get('currentPage') || 1)
   const itemsPerPage = Number(search.get('itemsPerPage') || '4')
   const { data: getCardsData } = useGetCardsQuery({
@@ -67,11 +74,17 @@ export const Cards = () => {
     id,
     itemsPerPage,
     orderBy: sortedString,
+    question: debounceName,
   })
   const { data: getCardByIdData } = useGetDeckByIdQuery({ id })
 
+  const onAddNewCardHandler = () => {
+    setIsOpen(true)
+  }
+
   return (
     <div className={s.cardWrapper}>
+      <CreateNewCard id={id} isOpen={isOpen} onOpenChange={setIsOpen} title={'Add New Card'} />
       <Button
         className={s.backToDeck}
         icon={<ArrowBack className={s.arrowBack} />}
@@ -86,8 +99,17 @@ export const Cards = () => {
           <img alt={'tableImage nf'} className={s.tableImage} src={getCardByIdData?.cover} />
         </div>
         <Button variant={'primary'}>Learn to Pack</Button>
+        <Button onClick={onAddNewCardHandler} variant={'primary'}>
+          Add New Card
+        </Button>
       </div>
-      <TextField label={'Search'} placeholder={'Input search'} variant={'search'} />
+      <TextField
+        label={'Search'}
+        onValueChange={onChangeName}
+        placeholder={'Input search'}
+        value={searchBy}
+        variant={'search'}
+      />
       {getCardsData?.items.length ? (
         <>
           <Table>
