@@ -2,7 +2,7 @@ import { baseApi } from '@/services/baseApi'
 import { CardsResponse, UpdateCardsArgs } from '@/services/cards/cards.types'
 import { GetCardsArgs, GetCardsResponse, MinMax } from '@/services/decks/decks.types'
 
-export const CardsService = baseApi.injectEndpoints({
+export const cardsService = baseApi.injectEndpoints({
   endpoints(build) {
     return {
       deleteCard: build.mutation<void, { id: string }>({
@@ -46,4 +46,4 @@ export const {
   useGetCardsQuery,
   useGetMinMaxCardsQuery,
   useUpdateCardMutation,
-} = CardsService
+} = cardsService

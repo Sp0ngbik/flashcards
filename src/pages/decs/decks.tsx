@@ -75,9 +75,9 @@ const Decks = () => {
   if (deckIsLoading && meIsLoading) {
     return <div>Loading</div>
   }
-  if (deckError) {
-    return <div>{JSON.stringify(deckError)}</div>
-  }
+  // if (deckError) {
+  //   return <div>{JSON.stringify(deckError)}</div>
+  // }
 
   const tabs: TabType[] = [
     { title: 'My Cards', value: 'userCards' },

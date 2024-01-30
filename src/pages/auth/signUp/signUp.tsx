@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@/common/ui/button'
 import { Card } from '@/common/ui/card'
@@ -9,8 +9,6 @@ import { Typography } from '@/common/ui/typography'
 import { FormValuesSignUp, signUpSchema } from '@/pages/auth/signUp/utils'
 import { useSignUpMutation } from '@/services/auth/auth.sevice'
 import { ServerError } from '@/services/auth/auth.types'
-import { setAuthenticated } from '@/services/auth/authSlice'
-import { useAppDispatch, useAppSelector } from '@/services/store'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import s from './signUp.module.scss'
@@ -26,21 +24,15 @@ export const SignUp = () => {
     resolver: zodResolver(signUpSchema),
   })
 
-  // const dispatch = useAppDispatch()
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
 
   const [signUp, { error, isLoading }] = useSignUpMutation<ServerError>()
-  const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated)
 
   useEffect(() => {
     if (error) {
       setError('email', { message: error.data.errorMessages[0], type: 'custom' })
     }
   }, [error, setError])
-
-  if (isAuthenticated) {
-    return <Navigate to={'/'} />
-  }
 
   if (isLoading) {
     return <div>Loading</div>
@@ -50,12 +42,11 @@ export const SignUp = () => {
     const { confirmPassword, ...rest } = data
 
     await signUp(rest).unwrap()
-    // dispatch(setAuthenticated(true))
   }
 
-  // const handleSignInClick = () => {
-  //   navigate('/sign-in')
-  // }
+  const handleSignInClick = () => {
+    navigate('/sign-in')
+  }
 
   return (
     <Card>
@@ -96,11 +87,7 @@ export const SignUp = () => {
       <Typography className={s.formQuestion} variant={'body2'}>
         Already have an account?
       </Typography>
-      <Button
-        className={s.submitButton}
-        // onClick={handleSignInClick}
-        variant={'link'}
-      >
+      <Button className={s.submitButton} onClick={handleSignInClick} variant={'link'}>
         Sign In
       </Button>
     </Card>

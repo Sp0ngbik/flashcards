@@ -11,6 +11,7 @@ type DropdownMenuProps = {
   defaultOpen?: boolean
   disabled?: boolean
   flag?: 'editCard' | 'editProfile'
+  logout: () => void
   userEmail?: string
   userName?: string
 }
@@ -20,8 +21,9 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
     defaultOpen = false,
     disabled,
     flag = 'editProfile',
-    userEmail = 'jjohnson@gmail.com',
-    userName = 'Ivan',
+    logout,
+    userEmail,
+    userName,
     ...rest
   } = props
   const classNames = {
@@ -51,9 +53,10 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
             <EditCardComponent />
           ) : (
             <EditProfileComponent
+              logout={logout}
               userAvatar={userDefaultPhoto}
-              userEmail={userEmail}
-              userName={userName}
+              userEmail={userEmail ? userEmail : 'None'}
+              userName={userName ? userName : 'None'}
             />
           )}
 

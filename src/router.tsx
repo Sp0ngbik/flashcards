@@ -4,8 +4,10 @@ import {
   RouteObject,
   RouterProvider,
   createBrowserRouter,
+  useOutletContext,
 } from 'react-router-dom'
 
+import { AuthContext, Header } from '@/layout/header'
 import PageNotFound from '@/layout/pageNotFound/pageNotFound'
 import { Profile } from '@/pages/auth/profile'
 import { SignIn } from '@/pages/auth/signIn'
@@ -14,20 +16,37 @@ import { Cards } from '@/pages/cards/cards'
 import Decks from '@/pages/decs/decks'
 import { useMeQuery } from '@/services/auth/auth.sevice'
 
-function PrivateRoutes() {
-  const { isError } = useMeQuery()
+const useAuthContext = () => {
+  return useOutletContext<AuthContext>()
+}
 
-  const isAuthenticated = !isError
+function PrivateRoutes() {
+  const { isLoading } = useMeQuery()
+  const { isAuthenticated } = useAuthContext()
+
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
 
   return isAuthenticated ? <Outlet /> : <Navigate to={'/sign-in'} />
 }
 
+function PublicRoutes() {
+  const { isAuthenticated } = useAuthContext()
+
+  return isAuthenticated ? <Navigate to={'/'} /> : <Outlet />
+}
+
 const publicRoutes: RouteObject[] = [
-  { element: <SignUp />, path: '/login' },
-  { element: <SignIn />, path: '/sign-in' },
   {
-    element: <PageNotFound />,
-    path: '/*',
+    children: [
+      { element: <SignUp />, path: '/sign-up' },
+      { element: <SignIn />, path: '/sign-in' },
+      {
+        element: <PageNotFound />,
+        path: '/*',
+      },
+    ],
   },
 ]
 
@@ -42,18 +61,21 @@ const privateRoutes: RouteObject[] = [
 
 export const router = createBrowserRouter([
   {
-    children: privateRoutes,
-    element: <PrivateRoutes />,
+    children: [
+      {
+        children: privateRoutes,
+        element: <PrivateRoutes />,
+      },
+      {
+        children: publicRoutes,
+        element: <PublicRoutes />,
+      },
+      // ...publicRoutes,
+    ],
+    element: <Header />,
   },
-  ...publicRoutes,
 ])
 
 export const Router = () => {
-  const { isLoading: meIsLoading } = useMeQuery()
-
-  if (meIsLoading) {
-    return <div>Me is loading</div>
-  }
-
   return <RouterProvider router={router} />
 }

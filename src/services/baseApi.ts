@@ -1,8 +1,8 @@
-import { baseQueryWithReauth } from '@/services/base-api-with-reauth'
+import { baseQueryWithRauth } from '@/services/baseApiReauth'
 import { createApi } from '@reduxjs/toolkit/query/react'
 
 export const baseApi = createApi({
-  baseQuery: baseQueryWithReauth,
+  baseQuery: baseQueryWithRauth,
   endpoints() {
     return {}
   },

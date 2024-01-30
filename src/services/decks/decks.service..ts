@@ -8,11 +8,31 @@ import {
   GetDecksArgs,
 } from '@/services/decks/decks.types'
 
-export const DecksService = baseApi.injectEndpoints({
+export const decksService = baseApi.injectEndpoints({
   endpoints(build) {
     return {
       createDeck: build.mutation<Deck, CreateDeckArgs>({
         invalidatesTags: ['Decks'],
+        async onQueryStarted(_, { dispatch, getState, queryFulfilled }) {
+          const res = await queryFulfilled
+          const args = decksService.util.selectCachedArgsForQuery(getState(), 'getDecks')
+
+          console.log(args)
+
+          for (const { endpointName, originalArgs } of decksService.util.selectInvalidatedBy(
+            getState(),
+            [{ type: 'Decks' }]
+          )) {
+            if (endpointName !== 'getDecks') {
+              continue
+            }
+            dispatch(
+              decksService.util.updateQueryData(endpointName, originalArgs, draft => {
+                draft.items.unshift(res.data)
+              })
+            )
+          }
+        },
         query: args => ({
           body: args ?? undefined,
           method: 'POST',
@@ -21,6 +41,36 @@ export const DecksService = baseApi.injectEndpoints({
       }),
       deleteDeck: build.mutation<Deck, DeleteDeckArgs>({
         invalidatesTags: ['Decks'],
+        async onQueryStarted({ id }, { dispatch, getState, queryFulfilled }) {
+          let deleteResult: any
+          const args = decksService.util.selectCachedArgsForQuery(getState(), 'getDecks')
+
+          console.log(args)
+
+          for (const { endpointName, originalArgs } of decksService.util.selectInvalidatedBy(
+            getState(),
+            [{ type: 'Decks' }]
+          )) {
+            if (endpointName !== 'getDecks') {
+              continue
+            }
+            deleteResult = dispatch(
+              decksService.util.updateQueryData(endpointName, originalArgs, draft => {
+                const index = draft?.items?.findIndex(deck => deck.id === id)
+
+                if (index !== undefined && index !== -1) {
+                  draft?.items?.splice(index, 1)
+                }
+              })
+            )
+
+            try {
+              await queryFulfilled
+            } catch {
+              deleteResult.undo()
+            }
+          }
+        },
         query: args => ({
           method: 'DELETE',
           url: `v1/decks/${args.id}`,
@@ -57,4 +107,4 @@ export const {
   useGetDeckByIdQuery,
   useGetDecksQuery,
   useUserDecksQuery,
-} = DecksService
+} = decksService

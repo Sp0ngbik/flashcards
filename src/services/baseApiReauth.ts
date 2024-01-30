@@ -8,7 +8,7 @@ const baseQuery = fetchBaseQuery({
   credentials: 'include',
 })
 
-export const baseQueryWithReauth: BaseQueryFn<
+export const baseQueryWithRauth: BaseQueryFn<
   FetchArgs | string,
   unknown,
   FetchBaseQueryError
