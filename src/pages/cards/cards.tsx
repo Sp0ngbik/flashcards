@@ -3,7 +3,6 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 import { Delete, Edit } from '@/assets'
 import { ArrowBack } from '@/assets/icons/arrow-back-outline'
-import { DropDownEditCardIcon } from '@/assets/icons/dropDownEditCardIcon'
 import { useDebounce } from '@/common/hooks/useDebounce'
 import { Button } from '@/common/ui/button'
 import { DropdownMenu } from '@/common/ui/dropDownMenu'
@@ -105,10 +104,9 @@ export const Cards = () => {
       </Button>
       <div className={s.cardsHeader}>
         <div>
-          <Typography variant={'h1'}>{getCardByIdData?.name}</Typography>
           <div className={s.dropDownDiv}>
-            <DropDownEditCardIcon className={s.dropDown} />{' '}
-            <DropdownMenu flag={'editCard'} logout={() => {}} />
+            <Typography variant={'h1'}>{getCardByIdData?.name}</Typography>
+            {isOwner && <DropdownMenu flag={'editCard'} logout={() => {}} />}
           </div>
           <img alt={''} className={s.tableImage} src={getCardByIdData?.cover} />
         </div>
@@ -180,6 +178,11 @@ export const Cards = () => {
             totalCount={getCardsData?.pagination.totalItems || 4}
           />
         </>
+      )}
+      {isEmpty && !isOwner && (
+        <Typography className={s.emptyTypography} variant={'subtitle1'}>
+          This pack is empty.
+        </Typography>
       )}
       {isEmpty && isOwner && (
         <div className={s.addCardDown}>

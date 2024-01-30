@@ -60,5 +60,6 @@
   height: 20px;
 }
 .dropDownDiv{
-  position: relative;
+  display: flex;
+  flex-direction: row;
 }

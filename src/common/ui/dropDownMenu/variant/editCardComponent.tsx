@@ -7,14 +7,15 @@ import * as DropdownMenuRadix from '@radix-ui/react-dropdown-menu'
 import s from '../dropDownMenu.module.scss'
 
 type EditCardComponentProps = {
-  userAvatar: string
+  delete?: () => void
+  edit?: () => void
+  learn?: () => void
 }
 
-export const EditCardComponent = ({ userAvatar }: EditCardComponentProps) => {
+export const EditCardComponent = ({}: EditCardComponentProps) => {
   return (
     <>
       <DropdownMenuRadix.Item className={s.DropdownMenuItem}>
-        <img alt={'user avatar'} className={s.UserAvatar} src={userAvatar} />
         <Play />
         <Typography variant={'caption'}>Learn</Typography>
       </DropdownMenuRadix.Item>

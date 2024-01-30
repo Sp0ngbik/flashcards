@@ -1,5 +1,5 @@
 import userDefaultPhoto from '@/assets/image/defaultAvatar.png'
-import { Button } from '@/common/ui/button'
+import svgDots from '@/assets/image/svgDots.svg'
 import { EditCardComponent } from '@/common/ui/dropDownMenu/variant/editCardComponent'
 import { EditProfileComponent } from '@/common/ui/dropDownMenu/variant/editProfileComponent'
 import * as DropdownMenuRadix from '@radix-ui/react-dropdown-menu'
@@ -9,6 +9,7 @@ import s from './dropDownMenu.module.scss'
 
 type DropdownMenuProps = {
   defaultOpen?: boolean
+  deleteDeck?: () => void
   disabled?: boolean
   flag?: 'editCard' | 'editProfile'
   logout: () => void
@@ -19,6 +20,7 @@ type DropdownMenuProps = {
 export const DropdownMenu = (props: DropdownMenuProps) => {
   const {
     defaultOpen = false,
+    deleteDeck,
     disabled,
     flag = 'editProfile',
     logout,
@@ -37,7 +39,7 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
           {flag === 'editProfile' ? (
             <img alt={'userPhoto'} className={s.UserAvatar} src={userDefaultPhoto} />
           ) : (
-            <Button className={s.buttonDrop} variant={'link'} />
+            <img alt={'dots'} className={s.dotsDrop} src={svgDots} />
           )}
         </button>
       </DropdownMenuRadix.Trigger>
@@ -50,7 +52,7 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
           {...rest}
         >
           {flag === 'editCard' ? (
-            <EditCardComponent userAvatar={userDefaultPhoto} />
+            <EditCardComponent delete={deleteDeck} />
           ) : (
             <EditProfileComponent
               logout={logout}
