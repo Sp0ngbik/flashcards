@@ -44,15 +44,17 @@ export const CreateNewCard = ({ id, isOpen, onOpenChange, title }: AddNewDeckMod
     try {
       const formData = new FormData()
 
+      formData.append('question', data.question)
+      formData.append('answer', data.answer)
+
       if (questionPhoto) {
         formData.append('questionImg', questionPhoto)
       }
       if (answerPhoto) {
         formData.append('answerImg', answerPhoto)
       }
-      formData.append('question', data.question)
-      formData.append('answer', data.answer)
-      await createCard({ data, id: id! }).unwrap()
+
+      await createCard({ data: formData, id: id! }).unwrap()
 
       setQuestionPhoto(null)
       setAnswerPhoto(null)
