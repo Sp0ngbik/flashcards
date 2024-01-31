@@ -19,8 +19,9 @@ const Template: Story<ProfileProps> = args => <Profile {...args} />
 export const Default = Template.bind({})
 Default.args = {
   edit: false,
-  email: 'useremail@mail.com',
-  nickname: 'profile_nickname',
+  //todo:
+  // email: 'useremail@mail.com',
+  // nickname: 'profile_nickname',
 }
 
 export const EditMode = Template.bind({})
