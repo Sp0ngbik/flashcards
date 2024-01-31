@@ -52,7 +52,7 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
           {...rest}
         >
           {flag === 'editCard' ? (
-            <EditCardComponent delete={deleteDeck} />
+            <EditCardComponent deleteDeck={deleteDeck} />
           ) : (
             <EditProfileComponent
               logout={logout}
