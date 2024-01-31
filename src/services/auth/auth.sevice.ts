@@ -28,7 +28,6 @@ export const authService = baseApi.injectEndpoints({
         providesTags: ['Me'],
         query: () => 'v1/auth/me',
       }),
-
       signUp: build.mutation<SignUpResponseType, SignUpArgsType>({
         invalidatesTags: ['Me'],
         query: args => ({

@@ -32,35 +32,31 @@ export const decksService = baseApi.injectEndpoints({
         }),
       }),
       deleteDeck: build.mutation<Deck, DeleteDeckArgs>({
-        invalidatesTags: ['Decks'],
+        // invalidatesTags: ['Decks'],
         async onQueryStarted({ id }, { dispatch, getState, queryFulfilled }) {
-          let deleteResult: any
           const args = decksService.util.selectCachedArgsForQuery(getState(), 'getDecks')
 
-          console.log(args)
+          // for (const { endpointName } of decksService.util.selectInvalidatedBy(getState(), [
+          //   { type: 'Decks' },
+          // ])) {
+          //   if (endpointName !== 'getDecks') {
+          //     continue
+          //   }
+          const deleteResult = dispatch(
+            decksService.util.updateQueryData('getDecks', args[0], draft => {
+              const index = draft?.items?.findIndex(deck => deck.id === id)
 
-          for (const { endpointName, originalArgs } of decksService.util.selectInvalidatedBy(
-            getState(),
-            [{ type: 'Decks' }]
-          )) {
-            if (endpointName !== 'getDecks') {
-              continue
-            }
-            deleteResult = dispatch(
-              decksService.util.updateQueryData(endpointName, originalArgs, draft => {
-                const index = draft?.items?.findIndex(deck => deck.id === id)
+              if (index !== undefined && index !== -1) {
+                draft?.items?.splice(index, 1)
+              }
+            })
+          )
 
-                if (index !== undefined && index !== -1) {
-                  draft?.items?.splice(index, 1)
-                }
-              })
-            )
-
-            try {
-              await queryFulfilled
-            } catch {
-              deleteResult.undo()
-            }
+          // }
+          try {
+            await queryFulfilled
+          } catch {
+            deleteResult.undo()
           }
         },
         query: args => ({
@@ -70,7 +66,7 @@ export const decksService = baseApi.injectEndpoints({
       }),
 
       getDeckById: build.query<GetCardByIdResponse, { id?: string }>({
-        providesTags: ['Decks'],
+        providesTags: ['Cards'],
         query: args => ({
           url: `v1/decks/${args.id}`,
         }),

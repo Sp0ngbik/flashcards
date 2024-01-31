@@ -52,7 +52,7 @@ const publicRoutes: RouteObject[] = [
 
 const privateRoutes: RouteObject[] = [
   { element: <Decks />, path: '/' },
-  { element: <Profile email={'asdasd'} nickname={'asdasd'} />, path: '/profile' },
+  { element: <Profile />, path: '/profile' },
   {
     element: <Cards />,
     path: '/cards/:id?',
@@ -66,10 +66,12 @@ export const router = createBrowserRouter([
         children: privateRoutes,
         element: <PrivateRoutes />,
       },
+
       {
         children: publicRoutes,
         element: <PublicRoutes />,
       },
+
       // ...publicRoutes,
     ],
     element: <Header />,

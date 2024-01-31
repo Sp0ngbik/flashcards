@@ -44,7 +44,7 @@ const Decks = () => {
     clearFilter,
     currentPage,
     data,
-    deckError,
+    // deckError,
     deckIsLoading,
     deleteDeck,
     getCurrentTab,

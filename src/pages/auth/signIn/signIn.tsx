@@ -28,7 +28,6 @@ export const SignIn = () => {
   const onSubmit = async (data: FormValuesSignIn) => {
     try {
       await login(data).unwrap()
-      // navigate('/')
     } catch (e: unknown) {
       const err = e as ErrorResponse
 
