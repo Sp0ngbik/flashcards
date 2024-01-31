@@ -16,7 +16,7 @@ import { Typography } from '@/common/ui/typography'
 import { CreateNewCard } from '@/features/cards/createNewCard/createNewCard'
 import { useMeQuery } from '@/services/auth/auth.sevice'
 import { useDeleteCardMutation, useGetCardsQuery } from '@/services/cards/cards.service'
-import { useGetDeckByIdQuery } from '@/services/decks/decks.service.'
+import { useDeleteDeckMutation, useGetDeckByIdQuery } from '@/services/decks/decks.service.'
 
 import s from './cards.module.scss'
 
@@ -90,6 +90,13 @@ export const Cards = () => {
   }
   const isOwner = me?.id === getCardByIdData?.userId
   const isEmpty = getCardByIdData?.cardsCount === 0
+  const [deleteD] = useDeleteDeckMutation()
+  const deleteDeckHandler = async () => {
+    if (id) {
+      await deleteD({ id }).unwrap()
+      navigate(`${backDeck}`)
+    }
+  }
 
   return (
     <div className={s.cardWrapper}>
@@ -106,10 +113,12 @@ export const Cards = () => {
         <div>
           <div className={s.dropDownDiv}>
             <Typography variant={'h1'}>{getCardByIdData?.name}</Typography>
-            {isOwner && <DropdownMenu flag={'editCard'} logout={() => {}} />}
+            {isOwner && (
+              <DropdownMenu deleteDeck={deleteDeckHandler} flag={'editCard'} logout={() => {}} />
+            )}
             <Dots />
           </div>
-          <img alt={''} className={s.tableImage} src={getCardByIdData?.cover} />
+          <img alt={'321'} className={s.tableImage} src={getCardByIdData?.cover} />
         </div>
         {!isOwner && <Button variant={'primary'}>Learn to Pack</Button>}
         {isOwner && !isEmpty && (
