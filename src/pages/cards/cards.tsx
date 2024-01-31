@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { NavLink, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 import { Delete, Dots, Edit } from '@/assets'
 import { ArrowBack } from '@/assets/icons/arrow-back-outline'
@@ -37,10 +37,6 @@ export const Cards = () => {
   const [deleteCard] = useDeleteCardMutation()
 
   const backDeck = sessionStorage.getItem('lastLocation')
-  const backToDeckHandler = () => {
-    navigate(`${backDeck}`)
-  }
-
   const changeSearchHandler = (field: string, params: string) => {
     if (!params) {
       search.delete(field)
@@ -101,14 +97,10 @@ export const Cards = () => {
   return (
     <div className={s.cardWrapper}>
       <CreateNewCard id={id} isOpen={isOpen} onOpenChange={setIsOpen} title={'Add New Card'} />
-      <Button
-        className={s.backToDeck}
-        icon={<ArrowBack className={s.arrowBack} />}
-        onClick={backToDeckHandler}
-        variant={'link'}
-      >
+      <NavLink className={s.backToDeck} to={`${backDeck}`}>
+        <ArrowBack className={s.arrowBack} />
         Back to Decks List
-      </Button>
+      </NavLink>
       <div className={s.cardsHeader}>
         <div>
           <div className={s.dropDownDiv}>

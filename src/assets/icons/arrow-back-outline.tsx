@@ -26,7 +26,7 @@ export const ArrowBack = ({ className, ...props }: SvgWithColor) => {
       </g>
       <defs>
         <clipPath id={'clip0_52363_1990'}>
-          <rect fill={'white'} height={'16'} width={'16'} />
+          <rect className={className} fill={'white'} height={'16'} width={'16'} />
         </clipPath>
       </defs>
     </svg>
