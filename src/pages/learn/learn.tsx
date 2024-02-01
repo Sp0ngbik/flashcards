@@ -56,6 +56,7 @@ const Learn = () => {
           <div>
             <Typography>{`Answer: ${data?.answer}`}</Typography>
             <img alt={''} className={s.learnImage} src={`${data?.answerImg}`} />
+            <Typography>Rate yourself:</Typography>
             <RadioGroup defaultValue={prevGrade} onValueChange={setGrade}>
               <RadioItem value={'1'}>Did not know</RadioItem>
               <RadioItem value={'2'}>Forgot</RadioItem>
