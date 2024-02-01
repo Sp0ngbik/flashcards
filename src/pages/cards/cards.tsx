@@ -112,7 +112,11 @@ export const Cards = () => {
           </div>
           <img alt={'321'} className={s.tableImage} src={getCardByIdData?.cover} />
         </div>
-        {!isOwner && <Button variant={'primary'}>Learn to Pack</Button>}
+        {!isOwner && (
+          <Button onClick={() => navigate(`/cards/${id}/learn`)} variant={'primary'}>
+            Learn to Pack
+          </Button>
+        )}
         {isOwner && !isEmpty && (
           <Button onClick={onAddNewCardHandler} variant={'primary'}>
             Add New Card
