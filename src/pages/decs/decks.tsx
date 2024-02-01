@@ -10,8 +10,9 @@ import { Table, TableBody, TableDataCell, TableRow } from '@/common/ui/table/tab
 import { TableHeader } from '@/common/ui/table/tableHeader/tableHeader'
 import TextField from '@/common/ui/textField/textField'
 import { Typography } from '@/common/ui/typography'
-import { CreateNewDeck } from '@/features/deck/createNewDeck/createNewDeck'
+import { CreateNewDeck, EditDeckType } from '@/features/deck/createNewDeck/createNewDeck'
 import { useDeckFilter } from '@/pages/decs/deckFIlter'
+import { UpdateDeck } from '@/services/decks/decks.types'
 import { clsx } from 'clsx'
 
 import s from './decks.module.scss'
@@ -42,13 +43,16 @@ const Decks = () => {
   }, [location])
   const {
     clearFilter,
+    createDeck,
     currentPage,
     data,
     // deckError,
     deckIsLoading,
     deleteDeck,
     getCurrentTab,
+    isDeckBeingCreated,
     isDeckBeingDeleted,
+    isDeckBeingUpdate,
     itemsPerPage,
     maxCards,
     me,
@@ -63,11 +67,15 @@ const Decks = () => {
     searchBy,
     setItemsPerPage,
     setSortedBy,
+    updateDeck,
   } = useDeckFilter()
   const navigate = useNavigate()
   const divAnchor: RefObject<HTMLDivElement> = useRef(null)
   const defaultPaginationValue = 10
   const [isOpen, setIsOpen] = useState(false)
+  const [deck, setDeck] = useState<EditDeckType>({ cover: undefined, isPrivate: false, name: '' })
+  const [isOpenEdit, setIsOpenEdit] = useState(false)
+  const [currentId, setCurrentId] = useState('')
   const onCreateDeck = () => {
     setIsOpen(true)
   }
@@ -91,9 +99,35 @@ const Decks = () => {
     navigate(`/cards/${id}`)
   }
 
+  const onClickEditHandler = (deck: EditDeckType) => {
+    setDeck(deck)
+    setCurrentId(deck.id ?? '')
+
+    setIsOpenEdit(true)
+  }
+
+  const updateEditDeck = (data: UpdateDeck) => {
+    updateDeck({ data, id: currentId })
+  }
+
   return (
     <div className={s.deckWrapper}>
-      <CreateNewDeck isOpen={isOpen} onOpenChange={setIsOpen} title={'Add New Deck'} />
+      <CreateNewDeck
+        disabled={isDeckBeingCreated}
+        isOpen={isOpen}
+        onOpenChange={setIsOpen}
+        onSubmitDeck={createDeck}
+        title={'Add New Deck'}
+      />
+      <CreateNewDeck
+        deck={deck}
+        disabled={isDeckBeingUpdate}
+        isOpen={isOpenEdit}
+        onOpenChange={setIsOpenEdit}
+        onSubmitDeck={updateEditDeck}
+        title={'Edit Your Deck'}
+      />
+
       <div className={s.deckHead}>
         <Typography variant={'h1'}>Decks List</Typography>
         <Button onClick={onCreateDeck}>Add New Deck</Button>
@@ -155,7 +189,7 @@ const Decks = () => {
                 <TableDataCell className={s.iconRow}>
                   {me?.id === deck.userId ? (
                     <>
-                      <Edit className={s.icon} />
+                      <Edit className={classNames.icon} onClick={() => onClickEditHandler(deck)} />
                       <Play className={s.icon} />
                       <Delete
                         className={classNames.icon}
