@@ -1,4 +1,4 @@
-import { RefObject, useRef, useState } from 'react'
+import { RefObject, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Button } from '@/common/ui/button'
@@ -9,35 +9,62 @@ import {
   FormValuesAddDeck,
   addDeckSchema,
 } from '@/features/deck/createNewDeck/utils/addNewDeckModalSchema'
-import { useCreateDeckMutation } from '@/services/decks/decks.service.'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ImageIcon } from '@radix-ui/react-icons'
 
 import s from './addNewDeckModal.module.scss'
 
 type AddNewDeckModalProps = {
+  deck?: EditDeckType
+  disabled?: boolean
   isOpen: boolean
   onOpenChange: (open: boolean) => void
+  onSubmitDeck: (data: any) => void
   title: string
 }
 
-export const CreateNewDeck = ({ isOpen, onOpenChange, title }: AddNewDeckModalProps) => {
+export type EditDeckType = {
+  cover: string | undefined
+  id?: string
+  isPrivate: boolean
+  name: string
+}
+
+export const CreateNewDeck = ({
+  deck,
+  disabled,
+  isOpen,
+  onOpenChange,
+  onSubmitDeck,
+  title,
+}: AddNewDeckModalProps) => {
   const fileInputRef: RefObject<HTMLInputElement> = useRef(null)
 
   const {
     control,
     formState: { errors },
     handleSubmit,
+    setValue,
   } = useForm<FormValuesAddDeck>({
     defaultValues: { isPrivate: false, name: '' },
     resolver: zodResolver(addDeckSchema),
   })
 
-  const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
+  useEffect(() => {
+    if (deck) {
+      setValue('name', deck.name || '')
+      setValue('isPrivate', deck.isPrivate || false)
+      setPhoto(deck.cover ? new File([], deck.cover) : null)
+    }
+  }, [deck, setValue])
+
   const [photo, setPhoto] = useState<File | null>(null)
+
   const closeHandler = () => {
     onOpenChange(false)
   }
+
+  console.log(deck?.cover)
 
   const onSubmit = async (data: FormValuesAddDeck) => {
     try {
@@ -50,7 +77,7 @@ export const CreateNewDeck = ({ isOpen, onOpenChange, title }: AddNewDeckModalPr
       formData.append('isPrivate', String(data.isPrivate))
 
       onOpenChange(false)
-      await createDeck(formData).unwrap()
+      onSubmitDeck(formData)
       setPhoto(null)
     } catch (error) {
       console.error('Error creating deck:', error)
@@ -63,7 +90,7 @@ export const CreateNewDeck = ({ isOpen, onOpenChange, title }: AddNewDeckModalPr
     }
   }
 
-  const uploadedImage = photo ? URL.createObjectURL(photo) : ''
+  const uploadedImage = photo ? URL.createObjectURL(photo) : deck?.cover
 
   return (
     <>
@@ -92,13 +119,8 @@ export const CreateNewDeck = ({ isOpen, onOpenChange, title }: AddNewDeckModalPr
           </Button>
           <CheckboxControlled control={control} name={'isPrivate'} text={'Private pack'} />
           <div className={s.btnArea}>
-            <Button
-              disabled={isDeckBeingCreated}
-              form={'hook-form'}
-              type={'submit'}
-              variant={'primary'}
-            >
-              Add New Deck
+            <Button disabled={disabled} form={'hook-form'} type={'submit'} variant={'primary'}>
+              {title}
             </Button>
             <Button onClick={closeHandler} type={'reset'} variant={'secondary'}>
               Cancel

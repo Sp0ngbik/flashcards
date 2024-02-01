@@ -85,3 +85,9 @@ export type GetCardByIdResponse = {
   updated: string
   userId: string
 }
+
+export type UpdateDeck = {
+  cover?: string
+  isPrivate?: boolean
+  name?: string
+}

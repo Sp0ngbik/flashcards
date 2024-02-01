@@ -6,6 +6,7 @@ import {
   DeleteDeckArgs,
   GetCardByIdResponse,
   GetDecksArgs,
+  UpdateDeck,
 } from '@/services/decks/decks.types'
 
 export const decksService = baseApi.injectEndpoints({
@@ -78,6 +79,14 @@ export const decksService = baseApi.injectEndpoints({
           url: 'v2/decks',
         }),
       }),
+      updateDeck: build.mutation<GetCardByIdResponse, { data: UpdateDeck; id: string }>({
+        invalidatesTags: ['Decks'],
+        query: args => ({
+          body: args.data,
+          method: 'PATCH',
+          url: `v1/decks/${args.id}`,
+        }),
+      }),
 
       userDecks: build.query<Deck, { id: string }>({
         query: args => ({
@@ -94,5 +103,6 @@ export const {
   useDeleteDeckMutation,
   useGetDeckByIdQuery,
   useGetDecksQuery,
+  useUpdateDeckMutation,
   useUserDecksQuery,
 } = decksService

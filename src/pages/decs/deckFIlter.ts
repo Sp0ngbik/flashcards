@@ -5,7 +5,12 @@ import { useDebounce } from '@/common/hooks/useDebounce'
 import { Sort } from '@/common/ui/table/table.stories'
 import { useMeQuery } from '@/services/auth/auth.sevice'
 import { useGetMinMaxCardsQuery } from '@/services/cards/cards.service'
-import { useDeleteDeckMutation, useGetDecksQuery } from '@/services/decks/decks.service.'
+import {
+  useCreateDeckMutation,
+  useDeleteDeckMutation,
+  useGetDecksQuery,
+  useUpdateDeckMutation,
+} from '@/services/decks/decks.service.'
 
 export const useDeckFilter = () => {
   const [search, setSearch] = useSearchParams()
@@ -13,6 +18,8 @@ export const useDeckFilter = () => {
   const { data: me, isLoading: meIsLoading } = useMeQuery()
   const { data: minMaxValues } = useGetMinMaxCardsQuery()
   const [deleteDeck, { isLoading: isDeckBeingDeleted }] = useDeleteDeckMutation()
+  const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
+  const [updateDeck, { isLoading: isDeckBeingUpdate }] = useUpdateDeckMutation()
 
   const changeSearchHandler = (field: string, params: string) => {
     if (!params) {
@@ -97,15 +104,17 @@ export const useDeckFilter = () => {
 
   return {
     clearFilter,
+    createDeck,
     currentPage,
     data,
-
     debounceName,
     deckError,
     deckIsLoading,
     deleteDeck,
     getCurrentTab,
+    isDeckBeingCreated,
     isDeckBeingDeleted,
+    isDeckBeingUpdate,
     itemsPerPage,
     maxCards,
     me,
@@ -120,5 +129,6 @@ export const useDeckFilter = () => {
     searchBy,
     setItemsPerPage,
     setSortedBy,
+    updateDeck,
   }
 }
