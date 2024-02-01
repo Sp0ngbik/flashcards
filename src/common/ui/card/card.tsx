@@ -4,12 +4,13 @@ import s from './card.module.scss'
 
 type Props = {
   children: ReactNode
+  className?: string
 }
 
-export const Card = ({ children }: Props) => {
+export const Card = ({ children, className }: Props) => {
   return (
     <div className={s.card}>
-      <div className={s.cardItems}>{children}</div>
+      <div className={className}>{children}</div>
     </div>
   )
 }
