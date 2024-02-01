@@ -14,15 +14,19 @@
   gap: 30px;
   justify-content: space-between;
 }
-
-.arrowBack {
-  margin-left: 12px;
-}
-
 .backToDeck {
   display: flex;
-  padding-left: 22px;
+  gap: 5px;
   color: var(--color-light-100);
+  text-decoration: none;
+  --font-family-primary: 'Roboto';
+  &:hover{
+    color: var(--color-accent-300);
+  }
+}
+.arrowBack {
+  fill: currentColor;
+  margin-top:2px ;
 }
 
 .tableImage {
