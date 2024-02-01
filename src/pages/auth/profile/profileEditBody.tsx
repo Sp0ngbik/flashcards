@@ -3,6 +3,7 @@ import { Button } from '@/common/ui/button'
 import { TextFieldControlled } from '@/common/ui/controlled'
 import { Typography } from '@/common/ui/typography'
 import { FormProfile, useEditProfile } from '@/pages/auth/profile/useEditProfile'
+import { useLogoutMutation } from '@/services/auth/auth.sevice'
 
 import s from './profile.module.scss'
 
@@ -26,6 +27,7 @@ export const ProfileEditBody = ({
     formState: { errors },
     handleSubmit,
   } = useEditProfile({ nickname })
+  const [logout] = useLogoutMutation()
 
   if (editMode) {
     return (
@@ -55,7 +57,7 @@ export const ProfileEditBody = ({
       <Typography className={s.userEmail} variant={'body2'}>
         {email}
       </Typography>
-      <Button className={s.logoutBtn} variant={'secondary'}>
+      <Button className={s.logoutBtn} onClick={() => logout()} variant={'secondary'}>
         <LogOut className={s.logoutIcon} />
         Logout
       </Button>

@@ -6,7 +6,9 @@ import * as DropdownMenuRadix from '@radix-ui/react-dropdown-menu'
 
 import s from '../dropDownMenu.module.scss'
 
-export const EditCardComponent = () => {
+type EditCardComponentProps = { deleteDeck?: () => void; edit?: () => void; learn?: () => void }
+
+export const EditCardComponent = ({ deleteDeck }: EditCardComponentProps) => {
   return (
     <>
       <DropdownMenuRadix.Item className={s.DropdownMenuItem}>
@@ -19,7 +21,7 @@ export const EditCardComponent = () => {
         <Typography variant={'caption'}>Edit</Typography>
       </DropdownMenuRadix.Item>
       <DropdownMenuRadix.Separator className={s.DropdownMenuSeparator} />
-      <DropdownMenuRadix.Item className={s.DropdownMenuItem}>
+      <DropdownMenuRadix.Item className={s.DropdownMenuItem} onSelect={deleteDeck}>
         <Delete />
         <Typography variant={'caption'}>Delete</Typography>
       </DropdownMenuRadix.Item>

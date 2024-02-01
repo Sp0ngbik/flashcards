@@ -8,6 +8,7 @@ import ImageLoader from '@/common/ui/imageLoader/imageLoader'
 import { Typography } from '@/common/ui/typography'
 import { ProfileEditBody } from '@/pages/auth/profile/profileEditBody'
 import { FormProfile } from '@/pages/auth/profile/useEditProfile'
+import { useMeQuery } from '@/services/auth/auth.sevice'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import s from './profile.module.scss'
@@ -16,11 +17,10 @@ import defaultImage from '../../../assets/image/defaultAvatar.png'
 
 export type ProfileProps = {
   edit?: boolean
-  email?: string
-  nickname: string
 }
 
-export const Profile: FC<ProfileProps> = ({ edit = false, email, nickname }) => {
+export const Profile: FC<ProfileProps> = ({ edit = false }) => {
+  const { data: me } = useMeQuery()
   const [editMode, setEditMode] = useState<boolean>(edit)
   const [photo, setPhoto] = useState<File | null>(null)
 
@@ -74,8 +74,8 @@ export const Profile: FC<ProfileProps> = ({ edit = false, email, nickname }) => 
 
           <ProfileEditBody
             editMode={editMode}
-            email={email}
-            nickname={nickname}
+            email={me?.email}
+            nickname={me?.name ?? ''}
             onEditOnHandler={onEditOnHandler}
             onSubmit={onSubmit}
           />

@@ -108,6 +108,17 @@
   width: 36px;
   border-radius: 50%;
 }
+.dotsDrop{
+  border: 2px solid var(--color-light-100) ;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  transition: box-shadow 0.5s ease;
+}
+.dotsDrop:hover{
+  box-shadow: 0 0 5px 5px gray;
+}
 
 .IconButton {
   display: inline-flex;

@@ -1,7 +1,6 @@
 import { Provider } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
 
-import { Header } from '@/layout/header'
 import { Router } from '@/router'
 import { store } from '@/services/store'
 

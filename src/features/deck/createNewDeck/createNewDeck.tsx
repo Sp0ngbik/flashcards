@@ -49,9 +49,9 @@ export const CreateNewDeck = ({ isOpen, onOpenChange, title }: AddNewDeckModalPr
       formData.append('name', data.name)
       formData.append('isPrivate', String(data.isPrivate))
 
+      onOpenChange(false)
       await createDeck(formData).unwrap()
       setPhoto(null)
-      onOpenChange(false)
     } catch (error) {
       console.error('Error creating deck:', error)
     }
