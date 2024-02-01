@@ -37,6 +37,18 @@ export const cardsService = baseApi.injectEndpoints({
         providesTags: ['Cards'],
         query: () => 'v2/decks/min-max-cards',
       }),
+      learnCard: build.query<CardsResponse, { id?: string }>({
+        providesTags: ['Cards'],
+        query: ({ id }) => `v1/decks/${id}/learn`,
+      }),
+      postCard: build.mutation<CardsResponse, { cardId: string; grade: number }>({
+        invalidatesTags: ['Cards'],
+        query: args => ({
+          body: args,
+          method: 'POST',
+          url: `v1/decks/${args.cardId}/learn`,
+        }),
+      }),
       updateCard: build.mutation<CardsResponse, UpdateCardsArgs>({
         invalidatesTags: ['Cards'],
         query: args => ({
@@ -54,5 +66,7 @@ export const {
   useGetCardByIdQuery,
   useGetCardsQuery,
   useGetMinMaxCardsQuery,
+  useLearnCardQuery,
+  usePostCardMutation,
   useUpdateCardMutation,
 } = cardsService

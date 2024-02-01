@@ -14,6 +14,7 @@ import { SignIn } from '@/pages/auth/signIn'
 import { SignUp } from '@/pages/auth/signUp'
 import { Cards } from '@/pages/cards/cards'
 import Decks from '@/pages/decs/decks'
+import Learn from '@/pages/learn/learn'
 import { useMeQuery } from '@/services/auth/auth.sevice'
 
 const useAuthContext = () => {
@@ -57,6 +58,7 @@ const privateRoutes: RouteObject[] = [
     element: <Cards />,
     path: '/cards/:id?',
   },
+  { element: <Learn />, path: '/cards/:id?/learn' },
 ]
 
 export const router = createBrowserRouter([

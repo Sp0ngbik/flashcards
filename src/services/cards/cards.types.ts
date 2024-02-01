@@ -13,6 +13,7 @@ export type CardsResponse = {
   updated: string
   userId: string
 }
+
 export type UpdateCardsArgs = {
   body: UpdateCardsBody
   id: string
