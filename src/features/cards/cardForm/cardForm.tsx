@@ -55,16 +55,15 @@ export const CardForm = ({
     if (card) {
       setValue('answer', card.answer || '')
       setValue('question', card.question || '')
-
-      // setCurrentAnswerPhoto(card.answerImg)
-      // setCurrentQuestionPhoto(card.questionImg)
+      setCurrentQuestionPhoto(card.questionImg ?? null)
+      setCurrentAnswerPhoto(card.answerImg ?? null)
     }
   }, [card, setValue])
 
-  // const [questionPhoto, setQuestionPhoto] = useState<File | null>(null)
-  // const [answerPhoto, setAnswerPhoto] = useState<File | null>(null)
-  const [currentAnswerPhoto, setCurrentAnswerPhoto] = useState<File | null>(null)
-  const [currentQuestionPhoto, setCurrentQuestionPhoto] = useState<File | null>(null)
+  const [currentQuestionPhoto, setCurrentQuestionPhoto] = useState<File | null | string>(null)
+
+  const [currentAnswerPhoto, setCurrentAnswerPhoto] = useState<File | null | string>(null)
+
   const closeHandler = () => {
     onOpenChange(false)
   }
@@ -76,23 +75,19 @@ export const CardForm = ({
       formData.append('question', data.question)
       formData.append('answer', data.answer)
 
-      if (currentAnswerPhoto) {
+      if (currentAnswerPhoto instanceof File) {
         formData.append('answerImg', currentAnswerPhoto)
+      } else if (currentAnswerPhoto === null) {
+        formData.append('answerImg', '')
       }
-      // else {
-      //   formData.append('answerImg', '')
-      // }
-      if (currentQuestionPhoto) {
+      if (currentQuestionPhoto instanceof File) {
         formData.append('questionImg', currentQuestionPhoto)
+      } else if (currentQuestionPhoto === null) {
+        formData.append('questionImg', '')
       }
-      // else {
-      //   formData.append('questionImg', '')
-      // }
 
       onSubmitCard(formData)
 
-      // setCurrentQuestionPhoto('')
-      // setCurrentAnswerPhoto('')
       onOpenChange(false)
     } catch (error) {
       console.error('Error creating card:', error)
@@ -111,31 +106,21 @@ export const CardForm = ({
     }
   }
 
-  // const uploadedQuestionImage = currentQuestionPhoto
-  //   ? URL.createObjectURL(currentQuestionPhoto)
-  //   : ''
   const questionImageValidator = () => {
-    if (currentQuestionPhoto) {
+    if (currentQuestionPhoto instanceof File) {
       return URL.createObjectURL(currentQuestionPhoto)
+    } else {
+      return currentQuestionPhoto
     }
-    if (card?.questionImg) {
-      return card.questionImg
-    }
-
-    return ''
   }
+
   const answerImageValidator = () => {
-    if (currentAnswerPhoto) {
+    if (currentAnswerPhoto instanceof File) {
       return URL.createObjectURL(currentAnswerPhoto)
+    } else {
+      return currentAnswerPhoto
     }
-    if (card?.answerImg) {
-      return card.answerImg
-    }
-
-    return ''
   }
-
-  console.log(questionImageValidator())
 
   return (
     <>
