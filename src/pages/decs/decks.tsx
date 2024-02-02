@@ -11,9 +11,10 @@ import { Table, TableBody, TableDataCell, TableRow } from '@/common/ui/table/tab
 import { TableHeader } from '@/common/ui/table/tableHeader/tableHeader'
 import TextField from '@/common/ui/textField/textField'
 import { Typography } from '@/common/ui/typography'
-import { CreateNewDeck, EditDeckType } from '@/features/deck/createNewDeck/createNewDeck'
+import { CreateNewDeck } from '@/features/deck/createNewDeck/createNewDeck'
+import { EditDeckType } from '@/features/deck/deckForm/DeckForm'
+import { UpdateDeck } from '@/features/deck/updateDeck/updateDeck'
 import { useDeckFilter } from '@/pages/decs/deckFIlter'
-import { UpdateDeck } from '@/services/decks/decks.types'
 import { clsx } from 'clsx'
 
 import s from './decks.module.scss'
@@ -44,20 +45,15 @@ const Decks = () => {
   }, [location])
   const {
     clearFilter,
-    createDeck,
     currentPage,
     data,
-    // deckError,
     deckIsLoading,
     deleteDeck,
     getCurrentTab,
-    isDeckBeingCreated,
     isDeckBeingDeleted,
-    isDeckBeingUpdate,
     itemsPerPage,
     maxCards,
     me,
-    // meIsLoading,
     minCards,
     minMaxValues,
     onChangeCurrentPage,
@@ -68,7 +64,6 @@ const Decks = () => {
     searchBy,
     setItemsPerPage,
     setSortedBy,
-    updateDeck,
   } = useDeckFilter()
   const navigate = useNavigate()
   const divAnchor: RefObject<HTMLDivElement> = useRef(null)
@@ -76,7 +71,6 @@ const Decks = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [deck, setDeck] = useState<EditDeckType>({ cover: undefined, isPrivate: false, name: '' })
   const [isOpenEdit, setIsOpenEdit] = useState(false)
-  const [currentId, setCurrentId] = useState('')
   const onCreateDeck = () => {
     setIsOpen(true)
   }
@@ -84,9 +78,6 @@ const Decks = () => {
   if (deckIsLoading) {
     return <Loader />
   }
-  // if (deckError) {
-  //   return <div>{JSON.stringify(deckError)}</div>
-  // }
 
   const tabs: TabType[] = [
     { title: 'My Cards', value: 'userCards' },
@@ -100,35 +91,21 @@ const Decks = () => {
     navigate(`/cards/${id}`)
   }
 
-  const onClickEditHandler = (deck: EditDeckType) => {
-    setDeck(deck)
-    setCurrentId(deck.id ?? '')
-
+  const onClickEditHandler = (currentDeck: EditDeckType) => {
+    setDeck(currentDeck)
     setIsOpenEdit(true)
-  }
-
-  const updateEditDeck = (data: UpdateDeck) => {
-    updateDeck({ data, id: currentId })
   }
 
   return (
     <div className={s.deckWrapper}>
-      <CreateNewDeck
-        disabled={isDeckBeingCreated}
-        isOpen={isOpen}
-        onOpenChange={setIsOpen}
-        onSubmitDeck={createDeck}
-        title={'Add New Deck'}
-      />
-
-      <CreateNewDeck
+      <CreateNewDeck isOpen={isOpen} onOpenChange={setIsOpen} title={'Add New Deck'} />
+      <UpdateDeck
         deck={deck}
-        disabled={isDeckBeingUpdate}
         isOpen={isOpenEdit}
         onOpenChange={setIsOpenEdit}
-        onSubmitDeck={updateEditDeck}
-        title={'Edit Your Deck'}
+        title={'Update Deck'}
       />
+
       <div className={s.deckHead}>
         <Typography variant={'h1'}>Decks List</Typography>
         <Button onClick={onCreateDeck}>Add New Deck</Button>
