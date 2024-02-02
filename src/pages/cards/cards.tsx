@@ -117,16 +117,15 @@ export const Cards = () => {
         <div>
           <div className={s.dropDownDiv}>
             <Typography variant={'h1'}>{getCardByIdData?.name}</Typography>
-              <DropdownMenu
-                deleteDeck={deleteDeckHandler}
-                flag={'editCard'}
-                onEditClick={onEditClickHandler}
-              />
-            )}
+            <DropdownMenu
+              deleteDeck={deleteDeckHandler}
+              flag={'editCard'}
+              onEditClick={onEditClickHandler}
+            />
 
             <Dots />
           </div>
-          <img alt={'321'} className={s.tableImage} src={getCardByIdData?.cover} />
+          <img alt={''} className={s.tableImage} src={getCardByIdData?.cover} />
         </div>
         {!isOwner && (
           <Button onClick={() => navigate(`/cards/${id}/learn`)} variant={'primary'}>

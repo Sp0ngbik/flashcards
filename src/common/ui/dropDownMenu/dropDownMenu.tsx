@@ -13,7 +13,7 @@ type DropdownMenuProps = {
   deleteDeck?: () => void
   disabled?: boolean
   flag?: 'editCard' | 'editProfile'
-  onEditClick: () => void
+  onEditClick?: () => void
   userAvatar?: null | string
   userEmail?: string
   userName?: string
@@ -35,6 +35,9 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
     dropDownContent: clsx(s.DropdownMenuContent, flag === 'editProfile' && s.fullWidth),
   }
   const [logout] = useLogoutMutation()
+  const onEditHandler = () => {
+    return onEditClick ? onEditClick : ''
+  }
 
   return (
     <DropdownMenuRadix.Root defaultOpen={defaultOpen}>
@@ -56,7 +59,7 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
           {...rest}
         >
           {flag === 'editCard' ? (
-            <EditCardComponent deleteDeck={deleteDeck} onEditClick={onEditClick} />
+            <EditCardComponent deleteDeck={deleteDeck} onEditClick={onEditHandler} />
           ) : (
             <EditProfileComponent
               logout={logout}
