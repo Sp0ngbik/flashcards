@@ -14,6 +14,7 @@ import { TableHeader } from '@/common/ui/table/tableHeader/tableHeader'
 import TextField from '@/common/ui/textField/textField'
 import { Typography } from '@/common/ui/typography'
 import { CreateNewCard } from '@/features/cards/createNewCard/createNewCard'
+import UpdateDeck from '@/features/deck/updateDeck/updateDeck'
 import { useMeQuery } from '@/services/auth/auth.sevice'
 import { useDeleteCardMutation, useGetCardsQuery } from '@/services/cards/cards.service'
 import { useDeleteDeckMutation, useGetDeckByIdQuery } from '@/services/decks/decks.service.'
@@ -35,6 +36,7 @@ export const Cards = () => {
   const [isOpen, setIsOpen] = useState(false)
   const { data: me } = useMeQuery()
   const [deleteCard] = useDeleteCardMutation()
+  const [isOpenEdit, setIsOpenEdit] = useState(false)
 
   const backDeck = sessionStorage.getItem('lastLocation')
   const changeSearchHandler = (field: string, params: string) => {
@@ -94,8 +96,18 @@ export const Cards = () => {
     }
   }
 
+  const onEditClickHandler = () => {
+    setIsOpenEdit(true)
+  }
+
   return (
     <div className={s.cardWrapper}>
+      <UpdateDeck
+        deck={getCardByIdData}
+        isOpen={isOpenEdit}
+        onOpenChange={setIsOpenEdit}
+        title={'Update Deck'}
+      />
       <CreateNewCard id={id} isOpen={isOpen} onOpenChange={setIsOpen} title={'Add New Card'} />
       <NavLink className={s.backToDeck} to={`${backDeck}`}>
         <ArrowBack className={s.arrowBack} />
@@ -106,7 +118,13 @@ export const Cards = () => {
           <div className={s.dropDownDiv}>
             <Typography variant={'h1'}>{getCardByIdData?.name}</Typography>
             {isOwner && (
-              <DropdownMenu deleteDeck={deleteDeckHandler} flag={'editCard'} logout={() => {}} />
+              <DropdownMenu
+                deleteDeck={deleteDeckHandler}
+                flag={'editCard'}
+                logout={() => {}}
+                onEditClick={onEditClickHandler}
+                userAvatar={null}
+              />
             )}
             <Dots />
           </div>

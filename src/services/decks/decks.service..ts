@@ -80,7 +80,7 @@ export const decksService = baseApi.injectEndpoints({
         }),
       }),
       updateDeck: build.mutation<GetCardByIdResponse, { data: UpdateDeck; id: string }>({
-        invalidatesTags: ['Decks'],
+        invalidatesTags: ['Decks', 'Cards'],
         query: args => ({
           body: args.data,
           method: 'PATCH',

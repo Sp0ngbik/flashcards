@@ -13,6 +13,7 @@ type DropdownMenuProps = {
   disabled?: boolean
   flag?: 'editCard' | 'editProfile'
   logout: () => void
+  onEditClick: () => void
   userAvatar: null | string
   userEmail?: string
   userName?: string
@@ -25,6 +26,7 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
     disabled,
     flag = 'editProfile',
     logout,
+    onEditClick,
     userAvatar,
     userEmail,
     userName,
@@ -54,7 +56,7 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
           {...rest}
         >
           {flag === 'editCard' ? (
-            <EditCardComponent deleteDeck={deleteDeck} />
+            <EditCardComponent deleteDeck={deleteDeck} onEditClick={onEditClick} />
           ) : (
             <EditProfileComponent
               logout={logout}

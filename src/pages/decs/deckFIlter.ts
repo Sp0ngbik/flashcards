@@ -5,21 +5,14 @@ import { useDebounce } from '@/common/hooks/useDebounce'
 import { Sort } from '@/common/ui/table/table.stories'
 import { useMeQuery } from '@/services/auth/auth.sevice'
 import { useGetMinMaxCardsQuery } from '@/services/cards/cards.service'
-import {
-  useCreateDeckMutation,
-  useDeleteDeckMutation,
-  useGetDecksQuery,
-  useUpdateDeckMutation,
-} from '@/services/decks/decks.service.'
+import { useDeleteDeckMutation, useGetDecksQuery } from '@/services/decks/decks.service.'
 
 export const useDeckFilter = () => {
   const [search, setSearch] = useSearchParams()
 
-  const { data: me, isLoading: meIsLoading } = useMeQuery()
+  const { data: me } = useMeQuery()
   const { data: minMaxValues } = useGetMinMaxCardsQuery()
   const [deleteDeck, { isLoading: isDeckBeingDeleted }] = useDeleteDeckMutation()
-  const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
-  const [updateDeck, { isLoading: isDeckBeingUpdate }] = useUpdateDeckMutation()
 
   const changeSearchHandler = (field: string, params: string) => {
     if (!params) {
@@ -88,11 +81,7 @@ export const useDeckFilter = () => {
     changeSearchHandler('itemsPerPage', '')
     changeSearchHandler('currentTab', '')
   }
-  const {
-    data,
-    error: deckError,
-    isLoading: deckIsLoading,
-  } = useGetDecksQuery({
+  const { data, isLoading: deckIsLoading } = useGetDecksQuery({
     authorId: getCurrentTab === 'userCards' ? me?.id : undefined,
     currentPage: debounceCurrentPage,
     itemsPerPage: itemsPerPage,
@@ -104,21 +93,16 @@ export const useDeckFilter = () => {
 
   return {
     clearFilter,
-    createDeck,
     currentPage,
     data,
     debounceName,
-    deckError,
     deckIsLoading,
     deleteDeck,
     getCurrentTab,
-    isDeckBeingCreated,
     isDeckBeingDeleted,
-    isDeckBeingUpdate,
     itemsPerPage,
     maxCards,
     me,
-    meIsLoading,
     minCards,
     minMaxValues,
     onChangeCurrentPage,
@@ -129,6 +113,5 @@ export const useDeckFilter = () => {
     searchBy,
     setItemsPerPage,
     setSortedBy,
-    updateDeck,
   }
 }

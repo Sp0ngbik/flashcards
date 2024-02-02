@@ -8,7 +8,7 @@ import { Card } from '@/common/ui/card'
 import ImageLoader from '@/common/ui/imageLoader/imageLoader'
 import { Typography } from '@/common/ui/typography'
 import { ProfileEditBody } from '@/pages/auth/profile/profileEditBody'
-import { FormProfile } from '@/pages/auth/profile/useEditProfile'
+import { FormProfile } from '@/pages/auth/profile/utils/useEditProfile'
 import { useMeQuery, useUpdateProfileMutation } from '@/services/auth/auth.sevice'
 
 import s from './profile.module.scss'
@@ -77,7 +77,7 @@ export const Profile: FC<ProfileProps> = ({ edit = false }) => {
   }
 
   return (
-    <>
+    <div className={s.profileWrapper}>
       <Card>
         <Typography className={s.profileLabel} variant={'h1'}>
           Personal Information
@@ -111,6 +111,6 @@ export const Profile: FC<ProfileProps> = ({ edit = false }) => {
           />
         </div>
       </Card>
-    </>
+    </div>
   )
 }
