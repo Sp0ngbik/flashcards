@@ -14,56 +14,59 @@
   gap: 30px;
   justify-content: space-between;
 }
+
 .backToDeck {
+  --font-family-primary: 'Roboto';
+
   display: flex;
   gap: 5px;
   color: var(--color-light-100);
   text-decoration: none;
-  --font-family-primary: 'Roboto';
-  &:hover{
+
+  &:hover {
     color: var(--color-accent-300);
   }
 }
+
 .arrowBack {
-  fill: currentColor;
-  margin-top:2px ;
+  margin-top: 2px;
+  fill: currentcolor;
 }
 
 .tableImage {
-  min-width: 50px;
-  max-height: 50px;
-}
-
-.tableDataContent {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  align-items: center;
+  min-width: 150px;
+  max-height: 150px;
 }
 
 .emptyTypography {
   font-size: 20px;
   color: var(--color-dark-100);
 }
-.addCardDown{
+
+.addCardDown {
   display: flex;
   flex-direction: column;
+  gap: 20px;
   align-items: center;
   justify-content: center;
-  gap: 20px;
 }
+
 .icon {
   cursor: pointer;
   margin-right: 10px;
 }
-.dropDown{
+
+.dropDown {
   z-index: 0;
-  border: 2px solid white;
-  border-radius: 50%;
+
   width: 20px;
   height: 20px;
+
+  border: 2px solid white;
+  border-radius: 50%;
 }
-.dropDownDiv{
+
+.dropDownDiv {
   display: flex;
   flex-direction: row;
 }
