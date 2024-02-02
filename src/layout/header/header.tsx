@@ -3,7 +3,7 @@ import { Outlet, useNavigate } from 'react-router-dom'
 import { Logo } from '@/assets'
 import { Button } from '@/common/ui/button'
 import { DropdownMenu } from '@/common/ui/dropDownMenu'
-import { useLogoutMutation, useMeQuery } from '@/services/auth/auth.sevice'
+import { useMeQuery } from '@/services/auth/auth.sevice'
 
 import s from './header.module.scss'
 
@@ -13,7 +13,6 @@ export type AuthContext = {
 
 export const Header = () => {
   const { data, isError, isLoading } = useMeQuery()
-  const [logout] = useLogoutMutation()
   const isAuthenticated = !isError && !isLoading
   const navigate = useNavigate()
 
@@ -37,7 +36,6 @@ export const Header = () => {
               <div className={s.userBlock}>
                 <span>{data?.name}</span>
                 <DropdownMenu
-                  logout={logout}
                   userAvatar={data.avatar}
                   userEmail={data.email}
                   userName={data.name}
