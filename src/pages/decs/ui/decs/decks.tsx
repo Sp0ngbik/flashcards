@@ -1,21 +1,21 @@
-import { RefObject, useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-import { Delete, Edit, Play } from '@/assets'
+import { Delete } from '@/assets'
 import { Button } from '@/common/ui/button'
 import { Loader } from '@/common/ui/loader/Loader'
 import { Pagination } from '@/common/ui/pagination'
 import { DoubleSlider } from '@/common/ui/slider'
 import { TabSwitcher, TabType } from '@/common/ui/tabSwitcher'
-import { Table, TableBody, TableDataCell, TableRow } from '@/common/ui/table/tableConstuctor'
+import { Table, TableBody } from '@/common/ui/table/tableConstuctor'
 import { TableHeader } from '@/common/ui/table/tableHeader/tableHeader'
 import TextField from '@/common/ui/textField/textField'
 import { Typography } from '@/common/ui/typography'
 import { CreateNewDeck } from '@/features/deck/createNewDeck/createNewDeck'
 import { EditDeckType } from '@/features/deck/deckForm/deckForm'
 import { UpdateDeck } from '@/features/deck/updateDeck/updateDeck'
-import { useDeckFilter } from '@/pages/decs/deckFIlter'
-import { clsx } from 'clsx'
+import { useDeckFilter } from '@/pages/decs/hooks/useDeckFIlter'
+import DeckRow from '@/pages/decs/ui/deckRow/deckRow'
 
 import s from './decks.module.scss'
 
@@ -66,7 +66,6 @@ const Decks = () => {
     setSortedBy,
   } = useDeckFilter()
   const navigate = useNavigate()
-  const divAnchor: RefObject<HTMLDivElement> = useRef(null)
   const defaultPaginationValue = 10
   const [isOpen, setIsOpen] = useState(false)
   const [deck, setDeck] = useState<EditDeckType>({ cover: undefined, isPrivate: false, name: '' })
@@ -83,17 +82,18 @@ const Decks = () => {
     { title: 'My Cards', value: 'userCards' },
     { title: 'All Cards', value: 'allCards' },
   ]
-  const classNames = {
-    icon: clsx(s.icon, isDeckBeingDeleted && s.disableIcon),
-  }
 
   const openDeckHandler = (id: string) => {
     navigate(`/cards/${id}`)
   }
 
-  const onClickEditHandler = (currentDeck: EditDeckType) => {
+  const onOpenEditMode = (currentDeck: EditDeckType) => {
     setDeck(currentDeck)
     setIsOpenEdit(true)
+  }
+
+  const ownerValidation = (userId: string) => {
+    return userId === me?.id
   }
 
   return (
@@ -150,37 +150,15 @@ const Decks = () => {
         <TableBody>
           {data?.items?.map(deck => {
             return (
-              <TableRow key={deck.id}>
-                <TableDataCell>
-                  <Button
-                    className={s.tableDataContent}
-                    onClick={() => openDeckHandler(deck.id)}
-                    variant={'link'}
-                  >
-                    {deck.cover && <img alt={'image'} className={s.tableImage} src={deck.cover} />}
-                    {deck.name}
-                  </Button>
-                </TableDataCell>
-                <TableDataCell>{deck.cardsCount}</TableDataCell>
-                <TableDataCell>{new Date(deck.updated).toLocaleDateString('ru-RU')}</TableDataCell>
-                <TableDataCell>{deck.author.name}</TableDataCell>
-                <TableDataCell className={s.iconRow}>
-                  {me?.id === deck.userId ? (
-                    <>
-                      <Edit className={s.icon} onClick={() => onClickEditHandler(deck)} />
-                      <Play className={s.icon} />
-                      <Delete
-                        className={classNames.icon}
-                        onClick={() => {
-                          deleteDeck({ id: deck.id })
-                        }}
-                      />
-                    </>
-                  ) : (
-                    <Play className={s.icon} />
-                  )}
-                </TableDataCell>
-              </TableRow>
+              <DeckRow
+                deck={deck}
+                deleteDeck={deleteDeck}
+                isDeleted={isDeckBeingDeleted}
+                isOwner={ownerValidation(deck.userId)}
+                key={deck.id}
+                openDeck={openDeckHandler}
+                openEditMode={onOpenEditMode}
+              />
             )
           })}
         </TableBody>
@@ -193,7 +171,6 @@ const Decks = () => {
         pageSize={itemsPerPage}
         totalCount={data?.pagination.totalItems ?? defaultPaginationValue}
       />
-      <div ref={divAnchor} />
     </div>
   )
 }
