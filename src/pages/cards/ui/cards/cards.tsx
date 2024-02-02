@@ -16,6 +16,7 @@ import { UpdateCard } from '@/features/cards/updateCard/updateCard'
 import { UpdateDeck } from '@/features/deck/updateDeck/updateDeck'
 import { useCardFilter } from '@/pages/cards/hooks/useCardFilter'
 import { CardRow } from '@/pages/cards/ui/card/cardRow'
+import { useDeleteDeckMutation } from '@/services/decks/decks.service.'
 
 import s from './cards.module.scss'
 
@@ -30,9 +31,7 @@ const columns = [
 export const Cards = () => {
   const { id } = useParams<{ id: string }>()
   const {
-    backDeck,
     currentPage,
-    deleteDeckHandler,
     getCardByIdData,
     getCardsData,
     isEmpty,
@@ -41,10 +40,8 @@ export const Cards = () => {
     isOwner,
     itemsPerPage,
     navigate,
-    onAddNewCardHandler,
     onChangeCurrentPage,
     onChangeName,
-    onEditClickHandler,
     orderBy,
     searchBy,
     setIsOpen,
@@ -52,17 +49,35 @@ export const Cards = () => {
     setItemsPerPage,
     setSortedBy,
   } = useCardFilter(id)
-  const [card, setCard] = useState<EditCardType>({
+
+  const [isOpenCardEdit, setIsOpenCardEdit] = useState(false)
+        
+       const onEditCardClickHandler = (currentCard: EditCardType) => {
+    setIsOpenCardEdit(true)
+    setCard(currentCard)}
+       
+        const [card, setCard] = useState<EditCardType>({
     answer: '',
     answerImg: undefined,
     question: '',
     questionImg: undefined,
   })
-  const [isOpenCardEdit, setIsOpenCardEdit] = useState(false)
+  const [deleteDeck] = useDeleteDeckMutation()
 
-  const onEditCardClickHandler = (currentCard: EditCardType) => {
-    setIsOpenCardEdit(true)
-    setCard(currentCard)
+  const backDeck = sessionStorage.getItem('lastLocation')
+
+  const deleteDeckHandler = async () => {
+    if (id) {
+      await deleteDeck(id).unwrap()
+      navigate(`${backDeck}`)
+    }
+  }
+
+  const onEditClickHandler = () => {
+    setIsOpenEdit(true)
+  }
+  const onAddNewCardHandler = () => {
+    setIsOpen(true)
   }
 
   return (
