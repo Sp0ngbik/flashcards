@@ -32,9 +32,6 @@ export type GetDecksArgs = {
 export type CreateDeckArgs = FormData
 export type UpdateDeck = CreateDeckArgs
 
-export type DeleteDeckArgs = {
-  id: string
-}
 export type MinMax = {
   max: number
   min: number

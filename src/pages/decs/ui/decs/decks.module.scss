@@ -3,16 +3,6 @@
   justify-content: space-between;
 }
 
-.icon {
-  cursor: pointer;
-  margin-right: 10px;
-}
-
-.disableIcon {
-  pointer-events: none;
-  fill: var(--color-dark-100);
-}
-
 .deckWrapper {
   display: flex;
   flex-direction: column;
@@ -35,23 +25,6 @@
 
 .paginationBlock {
   margin-top: 24px;
-}
-
-.tableImage {
-  width: 118px;
-  height: 48px;
-  margin-right: 10px;
-  object-fit: cover;
-}
-
-.tableDataContent {
-  display: flex;
-  align-items: center;
-
-  padding: 6px 0;
-
-  font-size: 14px;
-  color: var(--color-light-100);
 }
 
 .deleteIcon {
