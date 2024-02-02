@@ -36,7 +36,7 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
   }
   const [logout] = useLogoutMutation()
   const onEditHandler = () => {
-    return onEditClick ? onEditClick : ''
+    return onEditClick ? onEditClick() : ''
   }
 
   return (
