@@ -30,6 +30,7 @@ export type GetDecksArgs = {
 }
 
 export type CreateDeckArgs = FormData
+export type UpdateDeck = CreateDeckArgs
 
 export type DeleteDeckArgs = {
   id: string
@@ -84,10 +85,4 @@ export type GetCardByIdResponse = {
   name: string
   updated: string
   userId: string
-}
-
-export type UpdateDeck = {
-  cover?: string
-  isPrivate?: boolean
-  name?: string
 }

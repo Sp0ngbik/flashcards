@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 import { Delete, Edit, Play } from '@/assets'
 import { Button } from '@/common/ui/button'
+import { Loader } from '@/common/ui/loader/Loader'
 import { Pagination } from '@/common/ui/pagination'
 import { DoubleSlider } from '@/common/ui/slider'
 import { TabSwitcher, TabType } from '@/common/ui/tabSwitcher'
@@ -56,7 +57,7 @@ const Decks = () => {
     itemsPerPage,
     maxCards,
     me,
-    meIsLoading,
+    // meIsLoading,
     minCards,
     minMaxValues,
     onChangeCurrentPage,
@@ -80,8 +81,8 @@ const Decks = () => {
     setIsOpen(true)
   }
 
-  if (deckIsLoading && meIsLoading) {
-    return <div>Loading</div>
+  if (deckIsLoading) {
+    return <Loader />
   }
   // if (deckError) {
   //   return <div>{JSON.stringify(deckError)}</div>
@@ -119,6 +120,7 @@ const Decks = () => {
         onSubmitDeck={createDeck}
         title={'Add New Deck'}
       />
+
       <CreateNewDeck
         deck={deck}
         disabled={isDeckBeingUpdate}
@@ -127,7 +129,6 @@ const Decks = () => {
         onSubmitDeck={updateEditDeck}
         title={'Edit Your Deck'}
       />
-
       <div className={s.deckHead}>
         <Typography variant={'h1'}>Decks List</Typography>
         <Button onClick={onCreateDeck}>Add New Deck</Button>

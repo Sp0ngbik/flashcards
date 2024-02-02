@@ -3,6 +3,7 @@ import {
   MeResponse,
   SignUpArgsType,
   SignUpResponseType,
+  UpdateProfile,
 } from '@/services/auth/auth.types'
 import { baseApi } from '@/services/baseApi'
 
@@ -36,8 +37,18 @@ export const authService = baseApi.injectEndpoints({
           url: '/v1/auth/sign-up',
         }),
       }),
+      updateProfile: build.mutation<MeResponse, UpdateProfile>({
+        invalidatesTags: ['Me'],
+        query: args => ({ body: args ?? undefined, method: 'PATCH', url: '/v1/auth/me' }),
+      }),
     }
   },
 })
 
-export const { useLoginMutation, useLogoutMutation, useMeQuery, useSignUpMutation } = authService
+export const {
+  useLoginMutation,
+  useLogoutMutation,
+  useMeQuery,
+  useSignUpMutation,
+  useUpdateProfileMutation,
+} = authService

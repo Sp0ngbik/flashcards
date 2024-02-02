@@ -11,6 +11,7 @@ type Props = {
   editMode: boolean
   email?: string
   nickname: string
+  onEditOffHandler: () => void
   onEditOnHandler: () => void
   onSubmit: (data: FormProfile) => void
 }
@@ -19,6 +20,7 @@ export const ProfileEditBody = ({
   editMode,
   email,
   nickname,
+  onEditOffHandler,
   onEditOnHandler,
   onSubmit,
 }: Props) => {
@@ -41,7 +43,12 @@ export const ProfileEditBody = ({
           name={'nickname'}
           placeholder={'nickname'}
         />
-        <Button fullWidth>Save Changes</Button>
+        <Button className={s.saveChanges} fullWidth type={'submit'}>
+          Save Changes
+        </Button>
+        <Button fullWidth onClick={onEditOffHandler} type={'button'} variant={'secondary'}>
+          Cancel
+        </Button>
       </form>
     )
   }

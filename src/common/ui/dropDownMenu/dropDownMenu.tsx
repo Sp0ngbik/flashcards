@@ -13,6 +13,7 @@ type DropdownMenuProps = {
   disabled?: boolean
   flag?: 'editCard' | 'editProfile'
   logout: () => void
+  userAvatar: null | string
   userEmail?: string
   userName?: string
 }
@@ -24,6 +25,7 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
     disabled,
     flag = 'editProfile',
     logout,
+    userAvatar,
     userEmail,
     userName,
     ...rest
@@ -37,7 +39,7 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
       <DropdownMenuRadix.Trigger asChild>
         <button aria-label={'Customise options'} className={s.IconButton}>
           {flag === 'editProfile' ? (
-            <img alt={'userPhoto'} className={s.UserAvatar} src={userDefaultPhoto} />
+            <img alt={'userPhoto'} className={s.userAvatar} src={userAvatar ?? userDefaultPhoto} />
           ) : (
             <DotsForDropDown className={s.dotsDrop} />
           )}
@@ -56,9 +58,9 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
           ) : (
             <EditProfileComponent
               logout={logout}
-              userAvatar={userDefaultPhoto}
-              userEmail={userEmail ? userEmail : 'None'}
-              userName={userName ? userName : 'None'}
+              userAvatar={userAvatar ?? userDefaultPhoto}
+              userEmail={userEmail ?? 'None'}
+              userName={userName ?? 'None'}
             />
           )}
 

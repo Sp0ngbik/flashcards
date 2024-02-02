@@ -25,7 +25,7 @@ export const EditProfileComponent = (props: PropsType) => {
   return (
     <>
       <DropdownMenuRadix.Item className={s.DropdownMenuItem}>
-        <img alt={'user avatar'} className={s.UserAvatar} src={userAvatar} />
+        <img alt={'user avatar'} className={s.userAvatar} src={userAvatar} />
         <div>
           <Typography variant={'subtitle2'}>{userName}</Typography>
           <Typography className={s.userEmail} variant={'caption'}>

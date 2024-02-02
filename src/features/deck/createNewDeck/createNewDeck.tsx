@@ -19,7 +19,7 @@ type AddNewDeckModalProps = {
   disabled?: boolean
   isOpen: boolean
   onOpenChange: (open: boolean) => void
-  onSubmitDeck: (data: any) => void
+  onSubmitDeck: (data: FormData) => void
   title: string
 }
 
@@ -54,7 +54,7 @@ export const CreateNewDeck = ({
     if (deck) {
       setValue('name', deck.name || '')
       setValue('isPrivate', deck.isPrivate || false)
-      setPhoto(deck.cover ? new File([], deck.cover) : null)
+      setPhoto(null)
     }
   }, [deck, setValue])
 
@@ -63,8 +63,6 @@ export const CreateNewDeck = ({
   const closeHandler = () => {
     onOpenChange(false)
   }
-
-  console.log(deck?.cover)
 
   const onSubmit = async (data: FormValuesAddDeck) => {
     try {
@@ -103,7 +101,9 @@ export const CreateNewDeck = ({
             name={'name'}
           />
           <div>
-            {photo && <img alt={'upload cover'} className={s.deckImage} src={uploadedImage} />}
+            {uploadedImage && (
+              <img alt={'image not found'} className={s.deckImage} src={uploadedImage} />
+            )}
             <ImageLoader className={s.fileInput} ref={fileInputRef} setPhoto={setPhoto} />
           </div>
           <Button

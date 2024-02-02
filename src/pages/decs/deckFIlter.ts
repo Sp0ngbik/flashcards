@@ -48,7 +48,7 @@ export const useDeckFilter = () => {
   }
   const currentPage = Number(search.get('currentPage') || 1)
 
-  const debounceCurrentPage = useDebounce(currentPage, 1000)
+  const debounceCurrentPage = useDebounce(currentPage, 400)
 
   const onChangeSliderValues = (value: number[]) => {
     changeSearchHandler('minCardsCount', value[0].toString())
