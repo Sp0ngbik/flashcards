@@ -167,7 +167,7 @@ const Decks = () => {
                 <TableDataCell className={s.iconRow}>
                   {me?.id === deck.userId ? (
                     <>
-                      <Edit className={classNames.icon} onClick={() => onClickEditHandler(deck)} />
+                      <Edit className={s.icon} onClick={() => onClickEditHandler(deck)} />
                       <Play className={s.icon} />
                       <Delete
                         className={classNames.icon}

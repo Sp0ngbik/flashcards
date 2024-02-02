@@ -1,6 +1,7 @@
 import { RefObject, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { Trash } from '@/assets/icons/trash'
 import { Button } from '@/common/ui/button'
 import { CheckboxControlled, TextFieldControlled } from '@/common/ui/controlled'
 import ImageLoader from '@/common/ui/imageLoader/imageLoader'
@@ -98,7 +99,10 @@ const DeckForm = ({
           />
           <div>
             {uploadedImage && (
-              <img alt={'image not found'} className={s.deckImage} src={uploadedImage} />
+              <div className={s.imageWrapper}>
+                <img alt={'image not found'} className={s.deckImage} src={uploadedImage} />
+                <Trash className={s.icon} />
+              </div>
             )}
             <ImageLoader className={s.fileInput} ref={fileInputRef} setPhoto={setPhoto} />
           </div>
