@@ -1,5 +1,5 @@
 import DeckForm, { EditDeckType } from '@/features/deck/deckForm/deckForm'
-import { useUpdateDeckMutation } from '@/services/decks/decks.service.'
+import { useUpdateDeckMutation } from '@/services/decks/decks.service'
 
 type UpdateDeckProps = {
   deck?: EditDeckType
@@ -24,5 +24,3 @@ export const UpdateDeck = ({ deck, isOpen, onOpenChange, title }: UpdateDeckProp
     />
   )
 }
-
-export default UpdateDeck

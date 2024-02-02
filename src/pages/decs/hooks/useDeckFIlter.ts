@@ -1,7 +1,7 @@
 import { useDebounce } from '@/common/hooks/useDebounce'
 import { usePageFilter } from '@/pages/hooks/pageFilter'
 import { useGetMinMaxCardsQuery } from '@/services/cards/cards.service'
-import { useDeleteDeckMutation, useGetDecksQuery } from '@/services/decks/decks.service.'
+import { useDeleteDeckMutation, useGetDecksQuery } from '@/services/decks/decks.service'
 
 export const useDeckFilter = () => {
   const {

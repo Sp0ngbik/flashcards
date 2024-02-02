@@ -1,6 +1,7 @@
 import { Delete, Edit } from '@/assets'
 import { Grade } from '@/common/ui/grade/grade'
 import { TableDataCell, TableRow } from '@/common/ui/table/tableConstuctor'
+import { EditCardType } from '@/features/cards/cardForm/cardForm'
 import { useDeleteCardMutation } from '@/services/cards/cards.service'
 import { RootObjectItems } from '@/services/decks/decks.types'
 
@@ -8,10 +9,15 @@ import s from './cardRow.module.scss'
 type CardRowProps = {
   card: RootObjectItems
   isOwner: boolean
+  onEditCardClickHandler: (card: EditCardType) => void
 }
 
-export const CardRow = ({ card, isOwner }: CardRowProps) => {
+export const CardRow = ({ card, isOwner, onEditCardClickHandler }: CardRowProps) => {
   const [deleteCard] = useDeleteCardMutation()
+
+  const openEditModeHandler = () => {
+    onEditCardClickHandler(card)
+  }
 
   return (
     <TableRow key={card.id}>
@@ -34,7 +40,7 @@ export const CardRow = ({ card, isOwner }: CardRowProps) => {
       <TableDataCell>
         {isOwner && (
           <>
-            <Edit className={s.icon} />
+            <Edit className={s.icon} onClick={openEditModeHandler} />
             <Delete className={s.icon} onClick={() => deleteCard({ id: card.id })} />
           </>
         )}

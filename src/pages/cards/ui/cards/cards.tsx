@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
 
 import { Dots } from '@/assets'
@@ -9,7 +10,9 @@ import { Table, TableBody } from '@/common/ui/table/tableConstuctor'
 import { TableHeader } from '@/common/ui/table/tableHeader/tableHeader'
 import TextField from '@/common/ui/textField/textField'
 import { Typography } from '@/common/ui/typography'
+import { EditCardType } from '@/features/cards/cardForm/cardForm'
 import { CreateNewCard } from '@/features/cards/createNewCard/createNewCard'
+import { UpdateCard } from '@/features/cards/updateCard/updateCard'
 import { UpdateDeck } from '@/features/deck/updateDeck/updateDeck'
 import { useCardFilter } from '@/pages/cards/hooks/useCardFilter'
 import { CardRow } from '@/pages/cards/ui/card/cardRow'
@@ -46,6 +49,19 @@ export const Cards = () => {
     setItemsPerPage,
     setSortedBy,
   } = useCardFilter(id)
+
+  const [isOpenCardEdit, setIsOpenCardEdit] = useState(false)
+        
+       const onEditCardClickHandler = (currentCard: EditCardType) => {
+    setIsOpenCardEdit(true)
+    setCard(currentCard)}
+       
+        const [card, setCard] = useState<EditCardType>({
+    answer: '',
+    answerImg: undefined,
+    question: '',
+    questionImg: undefined,
+  })
   const [deleteDeck] = useDeleteDeckMutation()
 
   const backDeck = sessionStorage.getItem('lastLocation')
@@ -73,6 +89,13 @@ export const Cards = () => {
         title={'Update Deck'}
       />
       <CreateNewCard id={id} isOpen={isOpen} onOpenChange={setIsOpen} title={'Add New Card'} />
+      <UpdateCard
+        card={card}
+        id={card.id}
+        isOpen={isOpenCardEdit}
+        onOpenChange={setIsOpenCardEdit}
+        title={'Update Card'}
+      />
       <NavLink className={s.backToDeck} to={`${backDeck}`}>
         <ArrowBack className={s.arrowBack} />
         Back to Decks List
@@ -117,7 +140,14 @@ export const Cards = () => {
             <TableHeader columns={columns} onSort={setSortedBy} sort={orderBy} />
             <TableBody>
               {getCardsData?.items?.map(card => {
-                return <CardRow card={card} isOwner={isOwner} key={card.id} />
+                return (
+                  <CardRow
+                    card={card}
+                    isOwner={isOwner}
+                    key={card.id}
+                    onEditCardClickHandler={onEditCardClickHandler}
+                  />
+                )
               })}
             </TableBody>
           </Table>
