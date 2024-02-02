@@ -28,6 +28,7 @@
   height: 150px;
   margin-top: 20px;
 
+
   background-position: left;
   border-radius: 4px;
 }
@@ -36,7 +37,19 @@
   display: none;
 }
 
+.imageWrapper {
+  position: relative;
+}
+
 .imageAction {
   display: flex;
   flex-direction: row;
+}
+
+.icon {
+  position: fixed;
+  top: 10px;
+  fill: var(--color-danger-500);
+  background-color: var(--color-dark-300);
+  border-radius: 4px;
 }
