@@ -2,6 +2,7 @@ import { DotsForDropDown } from '@/assets/icons/dotsForDropDown'
 import userDefaultPhoto from '@/assets/image/defaultAvatar.png'
 import { EditCardComponent } from '@/common/ui/dropDownMenu/variant/editCardComponent'
 import { EditProfileComponent } from '@/common/ui/dropDownMenu/variant/editProfileComponent'
+import { useLogoutMutation } from '@/services/auth/auth.sevice'
 import * as DropdownMenuRadix from '@radix-ui/react-dropdown-menu'
 import { clsx } from 'clsx'
 
@@ -12,8 +13,7 @@ type DropdownMenuProps = {
   deleteDeck?: () => void
   disabled?: boolean
   flag?: 'editCard' | 'editProfile'
-  logout: () => void
-  userAvatar: null | string
+  userAvatar?: null | string
   userEmail?: string
   userName?: string
 }
@@ -24,7 +24,6 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
     deleteDeck,
     disabled,
     flag = 'editProfile',
-    logout,
     userAvatar,
     userEmail,
     userName,
@@ -33,6 +32,7 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
   const classNames = {
     dropDownContent: clsx(s.DropdownMenuContent, flag === 'editProfile' && s.fullWidth),
   }
+  const [logout] = useLogoutMutation()
 
   return (
     <DropdownMenuRadix.Root defaultOpen={defaultOpen}>
