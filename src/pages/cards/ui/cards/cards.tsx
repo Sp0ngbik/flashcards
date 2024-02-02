@@ -16,7 +16,7 @@ import { UpdateCard } from '@/features/cards/updateCard/updateCard'
 import { UpdateDeck } from '@/features/deck/updateDeck/updateDeck'
 import { useCardFilter } from '@/pages/cards/hooks/useCardFilter'
 import { CardRow } from '@/pages/cards/ui/card/cardRow'
-import { useDeleteDeckMutation } from '@/services/decks/decks.service.'
+import { useDeleteDeckMutation } from '@/services/decks/decks.service'
 
 import s from './cards.module.scss'
 
@@ -51,12 +51,13 @@ export const Cards = () => {
   } = useCardFilter(id)
 
   const [isOpenCardEdit, setIsOpenCardEdit] = useState(false)
-        
-       const onEditCardClickHandler = (currentCard: EditCardType) => {
+
+  const onEditCardClickHandler = (currentCard: EditCardType) => {
     setIsOpenCardEdit(true)
-    setCard(currentCard)}
-       
-        const [card, setCard] = useState<EditCardType>({
+    setCard(currentCard)
+  }
+
+  const [card, setCard] = useState<EditCardType>({
     answer: '',
     answerImg: undefined,
     question: '',
