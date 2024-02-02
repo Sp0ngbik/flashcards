@@ -5,7 +5,7 @@ import { useDebounce } from '@/common/hooks/useDebounce'
 import { Sort } from '@/common/ui/table/table.stories'
 import { useMeQuery } from '@/services/auth/auth.sevice'
 import { useGetMinMaxCardsQuery } from '@/services/cards/cards.service'
-import { useDeleteDeckMutation, useGetDecksQuery } from '@/services/decks/decks.service.'
+import { useDeleteDeckMutation, useGetDecksQuery } from '@/services/decks/decks.service'
 
 export const useDeckFilter = () => {
   const [search, setSearch] = useSearchParams()

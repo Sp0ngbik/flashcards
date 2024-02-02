@@ -56,15 +56,15 @@ export const CardForm = ({
       setValue('answer', card.answer || '')
       setValue('question', card.question || '')
 
-      setCurrentAnswerPhoto(card.answerImg)
-      setCurrentQuestionPhoto(card.questionImg)
+      // setCurrentAnswerPhoto(card.answerImg)
+      // setCurrentQuestionPhoto(card.questionImg)
     }
   }, [card, setValue])
 
-  const [questionPhoto, setQuestionPhoto] = useState<File | null>(null)
-  const [answerPhoto, setAnswerPhoto] = useState<File | null>(null)
-  const [currentAnswerPhoto, setCurrentAnswerPhoto] = useState(card?.answerImg)
-  const [currentQuestionPhoto, setCurrentQuestionPhoto] = useState(card?.questionImg)
+  // const [questionPhoto, setQuestionPhoto] = useState<File | null>(null)
+  // const [answerPhoto, setAnswerPhoto] = useState<File | null>(null)
+  const [currentAnswerPhoto, setCurrentAnswerPhoto] = useState<File | null>(null)
+  const [currentQuestionPhoto, setCurrentQuestionPhoto] = useState<File | null>(null)
   const closeHandler = () => {
     onOpenChange(false)
   }
@@ -76,21 +76,23 @@ export const CardForm = ({
       formData.append('question', data.question)
       formData.append('answer', data.answer)
 
-      if (questionPhoto) {
-        formData.append('questionImg', questionPhoto)
-      } else {
-        formData.append('questionImg', '')
+      if (currentAnswerPhoto) {
+        formData.append('answerImg', currentAnswerPhoto)
       }
-      if (answerPhoto) {
-        formData.append('answerImg', answerPhoto)
-      } else {
-        formData.append('answerImg', '')
+      // else {
+      //   formData.append('answerImg', '')
+      // }
+      if (currentQuestionPhoto) {
+        formData.append('questionImg', currentQuestionPhoto)
       }
+      // else {
+      //   formData.append('questionImg', '')
+      // }
 
       onSubmitCard(formData)
 
-      setQuestionPhoto(null)
-      setAnswerPhoto(null)
+      // setCurrentQuestionPhoto('')
+      // setCurrentAnswerPhoto('')
       onOpenChange(false)
     } catch (error) {
       console.error('Error creating card:', error)
@@ -109,10 +111,31 @@ export const CardForm = ({
     }
   }
 
-  const uploadedQuestionImage = questionPhoto
-    ? URL.createObjectURL(questionPhoto)
-    : currentQuestionPhoto
-  const uploadedAnswerImage = answerPhoto ? URL.createObjectURL(answerPhoto) : currentAnswerPhoto
+  // const uploadedQuestionImage = currentQuestionPhoto
+  //   ? URL.createObjectURL(currentQuestionPhoto)
+  //   : ''
+  const questionImageValidator = () => {
+    if (currentQuestionPhoto) {
+      return URL.createObjectURL(currentQuestionPhoto)
+    }
+    if (card?.questionImg) {
+      return card.questionImg
+    }
+
+    return ''
+  }
+  const answerImageValidator = () => {
+    if (currentAnswerPhoto) {
+      return URL.createObjectURL(currentAnswerPhoto)
+    }
+    if (card?.answerImg) {
+      return card.answerImg
+    }
+
+    return ''
+  }
+
+  console.log(questionImageValidator())
 
   return (
     <>
@@ -125,8 +148,8 @@ export const CardForm = ({
             label={'Question'}
             name={'question'}
             openFileInput={openQuestionFileInput}
-            setPhoto={setQuestionPhoto}
-            uploadedImage={uploadedQuestionImage}
+            setCurrentPhoto={setCurrentQuestionPhoto}
+            uploadedImage={questionImageValidator()}
           />
           <CardSection
             control={control}
@@ -135,8 +158,8 @@ export const CardForm = ({
             label={'Answer'}
             name={'answer'}
             openFileInput={openAnswerFileInput}
-            setPhoto={setAnswerPhoto}
-            uploadedImage={uploadedAnswerImage}
+            setCurrentPhoto={setCurrentAnswerPhoto}
+            uploadedImage={answerImageValidator()}
           />
           <div className={s.btnArea}>
             <Button disabled={isLoading} form={'hook-form'} type={'submit'} variant={'primary'}>
