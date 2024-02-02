@@ -67,7 +67,7 @@ export const useCardFilter = (id: string | undefined) => {
   const [deleteDeck] = useDeleteDeckMutation()
   const deleteDeckHandler = async () => {
     if (id) {
-      await deleteDeck({ id }).unwrap()
+      await deleteDeck(id).unwrap()
       navigate(`${backDeck}`)
     }
   }
