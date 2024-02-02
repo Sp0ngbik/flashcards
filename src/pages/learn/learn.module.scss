@@ -1,0 +1,50 @@
+.learnImage {
+  max-width: 200px;
+  max-height: 200px;
+  margin-left: 75px;
+}
+
+.backToDeck {
+  --font-family-primary: 'Roboto';
+
+  display: flex;
+  gap: 5px;
+  color: var(--color-light-100);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--color-accent-300);
+  }
+}
+
+.arrowBack {
+  margin-top: 2px;
+  fill: currentcolor;
+}
+
+.learnCard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  width: 100%;
+  margin-top: 40px;
+}
+
+header {
+  margin: 0 auto;
+}
+
+.sub {
+  color: grey;
+}
+
+.cardWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px 137px;
+}

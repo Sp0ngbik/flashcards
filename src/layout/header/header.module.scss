@@ -1,0 +1,39 @@
+.headerWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 12px 50px 12px 137px;
+
+  & .headerRightSection {
+    display: flex;
+    justify-content: center;
+    width: 300px;
+  }
+}
+
+.headerLogo:hover {
+  cursor: pointer;
+}
+
+.headerBackGround {
+  background-color: var(--color-dark-700);
+}
+
+.userBlock {
+  display: flex;
+  align-items: center;
+
+  & img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+  }
+
+  & span {
+    text-decoration: underline dashed var(--color-light-100) 2px;
+    text-underline-offset: 5px;
+  }
+}

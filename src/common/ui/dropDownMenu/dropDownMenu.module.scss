@@ -1,0 +1,198 @@
+.DropdownMenuContent {
+  will-change: transform, opacity;
+
+  margin-top: 5px;
+  padding: 12px;
+
+  background-color: var(--color-dark-700);
+  border: 1px solid var(--color-dark-500);
+  border-radius: 4px;
+
+  animation-duration: 400ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+
+  &.fullWidth {
+    width: 100%;
+    min-width: 217px;
+  }
+
+  &[data-side='top'] {
+    animation-name: slide-down-and-fade;
+  }
+
+  &[data-side='right'] {
+    animation-name: slide-left-and-fade;
+  }
+
+  &[data-side='bottom'] {
+    animation-name: slide-up-and-fade;
+  }
+
+  &[data-side='left'] {
+    animation-name: slide-right-and-fade;
+  }
+}
+
+.DropdownMenuItem,
+.DropdownMenuCheckboxItem,
+.DropdownMenuRadioItem,
+.DropdownMenuSubTrigger {
+  position: relative;
+
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+
+  padding: 5px;
+
+  background-color: var(--color-dark-700);
+  border-radius: 4px;
+  outline: none;
+}
+
+.DropdownMenuSubTrigger[data-state='open'] {
+  color: var(--color-light-900);
+  background-color: var(--color-dark-500);
+}
+
+.DropdownMenuItem[data-disabled],
+.DropdownMenuCheckboxItem[data-disabled],
+.DropdownMenuRadioItem[data-disabled],
+.DropdownMenuSubTrigger[data-disabled] {
+  pointer-events: none;
+  color: var(--color-light-900);
+}
+
+.DropdownMenuItem[data-highlighted],
+.DropdownMenuCheckboxItem[data-highlighted],
+.DropdownMenuRadioItem[data-highlighted],
+.DropdownMenuSubTrigger[data-highlighted] {
+  cursor: pointer;
+  color: var(--color-light-900);
+  background-color: var(--color-dark-500);
+}
+
+.DropdownMenuLabel {
+  padding-left: 25px;
+  font-size: 12px;
+  line-height: 25px;
+  color: var(--color-light-900);
+}
+
+.DropdownMenuSeparator {
+  height: 1px;
+  margin: 12px 0;
+  background-color: var(--color-dark-500);
+}
+
+.arrow {
+  position: absolute;
+  top: -4px;
+  right: -5px;
+  transform: rotate(135deg);
+
+  width: 9px;
+  height: 9px;
+
+  background-color: var(--color-dark-700);
+  border-top: 1px solid var(--color-dark-500);
+  border-right: 1px solid var(--color-dark-500);
+}
+
+.userEmail {
+  color: var(--color-dark-100);
+}
+
+.userAvatar {
+  width: 36px;
+  height: 36px;
+  object-fit: cover;
+  border-radius: 50%;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.dotsDrop {
+  cursor: pointer;
+
+  width: 18px;
+  height: 18px;
+
+  border: 2px solid var(--color-light-100);
+  border-radius: 50%;
+
+  transition: box-shadow 0.5s ease;
+}
+
+.dotsDrop:hover {
+  box-shadow: 0 0 5px 5px gray;
+}
+
+.IconButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 35px;
+  height: 35px;
+  margin-left: 14px;
+
+  font-family: inherit;
+
+  border-radius: 100%;
+
+  &:focus {
+    outline: 2px solid var(--color-info-700);
+  }
+}
+
+@keyframes slide-up-and-fade {
+  from {
+    transform: translateY(2px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-right-and-fade {
+  from {
+    transform: translateX(-2px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-down-and-fade {
+  from {
+    transform: translateY(-2px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-left-and-fade {
+  from {
+    transform: translateX(2px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

@@ -1,7 +1,6 @@
 html {
   box-sizing: border-box;
   font-size: 100%;
-
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -25,17 +24,32 @@ option {
   color: inherit;
 }
 
-a:visited {
-  color: inherit;
-}
-
 body {
   margin: 0;
   padding: 0;
-
   font-family: var(--font-family-primary), sans-serif;
   line-height: var(--line-height-m);
   color: var(--color-light-100);
 
   background-color: var(--color-dark-900);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus input:-webkit-autofill,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  background: linear-gradient(
+    rgb(255 255 255 / 0%) 0%,
+    rgb(0 174 255 / 4%) 50%,
+    rgb(255 255 255 / 0%) 51%,
+    rgb(0 174 255 / 3%) 100%
+  );
+  box-shadow: 0 0 0 1000px transparent inset;
+  transition: background-color 5000s ease-in-out 0s;
+
+  -webkit-text-fill-color: var(--color-light-100);
 }

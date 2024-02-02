@@ -1,0 +1,69 @@
+.cardWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px 137px;
+}
+
+.cardsHeader {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  justify-content: space-between;
+}
+.backToDeck {
+  display: flex;
+  gap: 5px;
+  color: var(--color-light-100);
+  text-decoration: none;
+  --font-family-primary: 'Roboto';
+  &:hover{
+    color: var(--color-accent-300);
+  }
+}
+.arrowBack {
+  fill: currentColor;
+  margin-top:2px ;
+}
+
+.tableImage {
+  min-width: 50px;
+  max-height: 50px;
+}
+
+.tableDataContent {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+
+.emptyTypography {
+  font-size: 20px;
+  color: var(--color-dark-100);
+}
+.addCardDown{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.icon {
+  cursor: pointer;
+  margin-right: 10px;
+}
+.dropDown{
+  z-index: 0;
+  border: 2px solid white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+}
+.dropDownDiv{
+  display: flex;
+  flex-direction: row;
+}

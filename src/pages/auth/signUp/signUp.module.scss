@@ -1,0 +1,31 @@
+.signUpWrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.signUpLabel {
+  margin-bottom: 27px;
+  text-align: center;
+}
+
+.passwordField {
+  margin: 24px 0;
+}
+
+.confirmPassword {
+  margin-bottom: 60px;
+}
+
+.formQuestion {
+  margin: 20px 0 7px;
+  color: var(--color-light-700);
+  text-align: center;
+}
+
+.submitButton {
+  display: flex;
+  margin: 0 auto;
+  text-decoration: underline;
+}
