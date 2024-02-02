@@ -1,4 +1,4 @@
-import DeckForm, { EditDeckType } from '@/features/deck/deckForm/DeckForm'
+import DeckForm, { EditDeckType } from '@/features/deck/deckForm/deckForm'
 import { useUpdateDeckMutation } from '@/services/decks/decks.service.'
 
 type UpdateDeckProps = {

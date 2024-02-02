@@ -1,4 +1,4 @@
-import DeckForm from '@/features/deck/deckForm/DeckForm'
+import DeckForm from '@/features/deck/deckForm/deckForm'
 import { useCreateDeckMutation } from '@/services/decks/decks.service.'
 
 type AddNewDeckModalProps = {

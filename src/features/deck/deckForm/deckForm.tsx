@@ -52,10 +52,11 @@ const DeckForm = ({
     if (deck) {
       setValue('name', deck.name || '')
       setValue('isPrivate', deck.isPrivate || false)
-      setPhoto(null)
+      setCurrentPhoto(deck.cover)
     }
   }, [deck, setValue])
   const [photo, setPhoto] = useState<File | null>(null)
+  const [currentPhoto, setCurrentPhoto] = useState(deck?.cover)
 
   const closeHandler = () => {
     onOpenChange(false)
@@ -67,6 +68,8 @@ const DeckForm = ({
 
       if (photo) {
         formData.append('cover', photo)
+      } else {
+        formData.append('cover', '')
       }
       formData.append('name', data.name)
       formData.append('isPrivate', String(data.isPrivate))
@@ -85,7 +88,12 @@ const DeckForm = ({
     }
   }
 
-  const uploadedImage = photo ? URL.createObjectURL(photo) : deck?.cover
+  const removeImg = () => {
+    setPhoto(null)
+    setCurrentPhoto('')
+  }
+
+  const uploadedImage = photo ? URL.createObjectURL(photo) : currentPhoto
 
   return (
     <>
@@ -101,7 +109,7 @@ const DeckForm = ({
             {uploadedImage && (
               <div className={s.imageWrapper}>
                 <img alt={'image not found'} className={s.deckImage} src={uploadedImage} />
-                <Trash className={s.icon} />
+                <Trash className={s.icon} onClick={removeImg} />
               </div>
             )}
             <ImageLoader className={s.fileInput} ref={fileInputRef} setPhoto={setPhoto} />
