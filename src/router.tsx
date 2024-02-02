@@ -17,6 +17,8 @@ import Decks from '@/pages/decs/decks'
 import Learn from '@/pages/learn/learn'
 import { useMeQuery } from '@/services/auth/auth.sevice'
 
+import { Loader } from './common/ui/loader/Loader'
+
 const useAuthContext = () => {
   return useOutletContext<AuthContext>()
 }
@@ -26,7 +28,7 @@ function PrivateRoutes() {
   const { isAuthenticated } = useAuthContext()
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <Loader />
   }
 
   return isAuthenticated ? <Outlet /> : <Navigate to={'/sign-in'} />

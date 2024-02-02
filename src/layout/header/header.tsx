@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 import { Logo } from '@/assets'
 import { Button } from '@/common/ui/button'
@@ -15,25 +15,43 @@ export const Header = () => {
   const { data, isError, isLoading } = useMeQuery()
   const [logout] = useLogoutMutation()
   const isAuthenticated = !isError && !isLoading
+  const navigate = useNavigate()
+
+  const logoRedirect = () => {
+    return navigate('/')
+  }
+
+  const signInRedirect = () => {
+    return navigate('/sign-in')
+  }
 
   return (
     <div>
       <header className={s.headerBackGround}>
-        <main className={s.headerWrapper}>
-          <Logo />
+        <div className={s.headerWrapper}>
+          <div className={s.headerLogo} onClick={logoRedirect}>
+            <Logo onClick={logoRedirect} />
+          </div>
           <div className={s.headerRightSection}>
-            {data ? (
+            {!isError && data ? (
               <div className={s.userBlock}>
-                <span>{data.name}</span>
-                <DropdownMenu logout={logout} userEmail={data.email} userName={data.name} />
+                <span>{data?.name}</span>
+                <DropdownMenu
+                  logout={logout}
+                  userAvatar={data.avatar}
+                  userEmail={data.email}
+                  userName={data.name}
+                />
               </div>
             ) : (
-              <Button>Sign In</Button>
+              <Button onClick={signInRedirect}>Sign In</Button>
             )}
           </div>
-        </main>
+        </div>
       </header>
-      <Outlet context={{ isAuthenticated } satisfies AuthContext} />
+      <main>
+        <Outlet context={{ isAuthenticated } satisfies AuthContext} />
+      </main>
     </div>
   )
 }

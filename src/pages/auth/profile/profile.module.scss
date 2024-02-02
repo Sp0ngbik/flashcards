@@ -107,3 +107,19 @@
 .inputFile {
   display: none;
 }
+
+.saveChanges {
+  margin-bottom: 15px;
+}
+
+.imageAction {
+  display: flex;
+  justify-content: space-evenly;
+  width: 60%;
+  margin: 5px 0;
+
+  & button {
+    width: 40px;
+    text-align: center;
+  }
+}
