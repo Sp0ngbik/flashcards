@@ -16,9 +16,8 @@ type CardSectionProps<T extends FormValuesAddCard> = Omit<UseControllerProps<T>,
   label: string
   name: string
   openFileInput: () => void
-  photo: File | null
   setPhoto: (image: File) => void
-  uploadedImage: string
+  uploadedImage: string | undefined
 }
 const CardSection = <T extends FormValuesAddCard>({
   control,
@@ -27,7 +26,6 @@ const CardSection = <T extends FormValuesAddCard>({
   label,
   name,
   openFileInput,
-  photo,
   setPhoto,
   uploadedImage,
   ...rest
@@ -43,7 +41,7 @@ const CardSection = <T extends FormValuesAddCard>({
         {...rest}
       />
       <div>
-        {photo && <img alt={'upload cover'} className={s.deckImage} src={uploadedImage} />}
+        {uploadedImage && <img alt={'upload cover'} className={s.deckImage} src={uploadedImage} />}
         <ImageLoader className={s.fileInput} ref={fileInputRef} setPhoto={setPhoto} />
       </div>
       <Button

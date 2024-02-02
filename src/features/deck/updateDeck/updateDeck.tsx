@@ -24,5 +24,3 @@ export const UpdateDeck = ({ deck, isOpen, onOpenChange, title }: UpdateDeckProp
     />
   )
 }
-
-export default UpdateDeck
