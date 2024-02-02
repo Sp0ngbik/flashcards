@@ -1,41 +1,49 @@
-.learnImage{
+.learnImage {
   max-width: 200px;
   max-height: 200px;
-  margin-left:75px;
-  object-fit: cover;
-  border-radius: 2px;
+  margin-left: 75px;
 }
+
 .backToDeck {
+  --font-family-primary: 'Roboto';
+
   display: flex;
   gap: 5px;
   color: var(--color-light-100);
   text-decoration: none;
-  --font-family-primary: 'Roboto';
-  &:hover{
+
+  &:hover {
     color: var(--color-accent-300);
   }
 }
+
 .arrowBack {
-  fill: currentColor;
-  margin-top:2px ;
+  margin-top: 2px;
+  fill: currentcolor;
 }
-.learnCard{
-  margin-top: 40px;
-  width: 100%;
+
+.learnCard {
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  width: 100%;
+  margin-top: 40px;
 }
-header{
+
+header {
   margin: 0 auto;
 }
-.sub{
+
+.sub {
   color: grey;
 }
+
 .cardWrapper {
   display: flex;
   flex-direction: column;
   gap: 15px;
+
   max-width: 1280px;
   margin: 0 auto;
   padding: 24px 137px;

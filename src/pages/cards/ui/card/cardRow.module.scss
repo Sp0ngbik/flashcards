@@ -1,0 +1,17 @@
+.tableDataContent {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+
+.rowImage {
+  min-width: 100px;
+  max-height: 50px;
+  object-fit: cover;
+}
+
+.icon {
+  cursor: pointer;
+  margin-right: 10px;
+}

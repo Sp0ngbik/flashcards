@@ -2,7 +2,7 @@ import { Edit, LogOut } from '@/assets'
 import { Button } from '@/common/ui/button'
 import { TextFieldControlled } from '@/common/ui/controlled'
 import { Typography } from '@/common/ui/typography'
-import { FormProfile, useEditProfile } from '@/pages/auth/profile/useEditProfile'
+import { FormProfile, useEditProfile } from '@/pages/auth/profile/utils/useEditProfile'
 import { useLogoutMutation } from '@/services/auth/auth.sevice'
 
 import s from './profile.module.scss'
@@ -11,6 +11,7 @@ type Props = {
   editMode: boolean
   email?: string
   nickname: string
+  onEditOffHandler: () => void
   onEditOnHandler: () => void
   onSubmit: (data: FormProfile) => void
 }
@@ -19,6 +20,7 @@ export const ProfileEditBody = ({
   editMode,
   email,
   nickname,
+  onEditOffHandler,
   onEditOnHandler,
   onSubmit,
 }: Props) => {
@@ -41,13 +43,18 @@ export const ProfileEditBody = ({
           name={'nickname'}
           placeholder={'nickname'}
         />
-        <Button fullWidth>Save Changes</Button>
+        <Button className={s.saveChanges} fullWidth type={'submit'}>
+          Save Changes
+        </Button>
+        <Button fullWidth onClick={onEditOffHandler} type={'button'} variant={'secondary'}>
+          Cancel
+        </Button>
       </form>
     )
   }
 
   return (
-    <div className={s.profileWrapper}>
+    <div className={s.profileEditWrapper}>
       <Typography className={s.profileName} variant={'h2'}>
         {nickname}
         <button className={s.profileEditNameBtn} onClick={onEditOnHandler}>

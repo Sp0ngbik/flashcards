@@ -3,7 +3,6 @@ import {
   CreateDeckArgs,
   Deck,
   DeckResponse,
-  DeleteDeckArgs,
   GetCardByIdResponse,
   GetDecksArgs,
   UpdateDeck,
@@ -32,9 +31,9 @@ export const decksService = baseApi.injectEndpoints({
           url: 'v1/decks',
         }),
       }),
-      deleteDeck: build.mutation<Deck, DeleteDeckArgs>({
+      deleteDeck: build.mutation<Deck, string>({
         // invalidatesTags: ['Decks'],
-        async onQueryStarted({ id }, { dispatch, getState, queryFulfilled }) {
+        async onQueryStarted(id, { dispatch, getState, queryFulfilled }) {
           const args = decksService.util.selectCachedArgsForQuery(getState(), 'getDecks')
 
           // for (const { endpointName } of decksService.util.selectInvalidatedBy(getState(), [
@@ -62,7 +61,7 @@ export const decksService = baseApi.injectEndpoints({
         },
         query: args => ({
           method: 'DELETE',
-          url: `v1/decks/${args.id}`,
+          url: `v1/decks/${args}`,
         }),
       }),
 
@@ -80,7 +79,7 @@ export const decksService = baseApi.injectEndpoints({
         }),
       }),
       updateDeck: build.mutation<GetCardByIdResponse, { data: UpdateDeck; id: string }>({
-        invalidatesTags: ['Decks'],
+        invalidatesTags: ['Decks', 'Cards'],
         query: args => ({
           body: args.data,
           method: 'PATCH',

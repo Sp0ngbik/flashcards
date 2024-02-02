@@ -32,6 +32,8 @@ export type SignUpResponseType = {
   updated: string
 }
 
+export type UpdateProfile = { name?: string } | FormData
+
 export type ErrorResponse = {
   data: {
     errorMessage: string

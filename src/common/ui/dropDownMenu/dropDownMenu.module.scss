@@ -104,19 +104,30 @@
   color: var(--color-dark-100);
 }
 
-.UserAvatar {
+.userAvatar {
   width: 36px;
+  height: 36px;
+  object-fit: cover;
   border-radius: 50%;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
-.dotsDrop{
-  border: 2px solid var(--color-light-100) ;
-  border-radius: 50%;
+
+.dotsDrop {
+  cursor: pointer;
+
   width: 18px;
   height: 18px;
-  cursor: pointer;
+
+  border: 2px solid var(--color-light-100);
+  border-radius: 50%;
+
   transition: box-shadow 0.5s ease;
 }
-.dotsDrop:hover{
+
+.dotsDrop:hover {
   box-shadow: 0 0 5px 5px gray;
 }
 

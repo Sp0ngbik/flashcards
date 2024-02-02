@@ -28,10 +28,36 @@
   height: 150px;
   margin-top: 20px;
 
+
   background-position: left;
   border-radius: 4px;
 }
 
 .fileInput {
   display: none;
+}
+
+.imageWrapper {
+  position: relative;
+}
+
+.imageAction {
+  display: flex;
+  flex-direction: row;
+}
+
+.icon {
+  position: absolute;
+  top: 30px;
+  right: 10px;
+  fill: var(--color-light-100);
+  background-color: var(--color-dark-300);
+  border-radius: 4px;
+  padding: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: var(--color-dark-100);
+  }
 }

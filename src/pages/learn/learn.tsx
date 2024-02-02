@@ -8,7 +8,7 @@ import { RadioGroup } from '@/common/ui/radio-group'
 import { RadioItem } from '@/common/ui/radio-group/radioItem'
 import { Typography } from '@/common/ui/typography'
 import { useLearnCardQuery, usePostCardMutation } from '@/services/cards/cards.service'
-import { useGetDeckByIdQuery } from '@/services/decks/decks.service.'
+import { useGetDeckByIdQuery } from '@/services/decks/decks.service'
 
 import s from './learn.module.scss'
 
