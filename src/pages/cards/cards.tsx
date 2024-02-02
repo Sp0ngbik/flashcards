@@ -86,10 +86,10 @@ export const Cards = () => {
   }
   const isOwner = me?.id === getCardByIdData?.userId
   const isEmpty = getCardByIdData?.cardsCount === 0
-  const [deleteD] = useDeleteDeckMutation()
+  const [deleteDeck] = useDeleteDeckMutation()
   const deleteDeckHandler = async () => {
     if (id) {
-      await deleteD({ id }).unwrap()
+      await deleteDeck({ id }).unwrap()
       navigate(`${backDeck}`)
     }
   }
