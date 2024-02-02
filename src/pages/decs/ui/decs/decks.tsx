@@ -46,7 +46,7 @@ const Decks = () => {
   const {
     clearFilter,
     currentPage,
-    data,
+    deckData,
     deckIsLoading,
     deleteDeck,
     getCurrentTab,
@@ -148,7 +148,7 @@ const Decks = () => {
       <Table>
         <TableHeader columns={columns} onSort={setSortedBy} sort={orderBy} />
         <TableBody>
-          {data?.items?.map(deck => {
+          {deckData?.items?.map(deck => {
             return (
               <DeckRow
                 deck={deck}
@@ -169,7 +169,7 @@ const Decks = () => {
         className={s.paginationBlock}
         currentPage={currentPage}
         pageSize={itemsPerPage}
-        totalCount={data?.pagination.totalItems ?? defaultPaginationValue}
+        totalCount={deckData?.pagination.totalItems ?? defaultPaginationValue}
       />
     </div>
   )

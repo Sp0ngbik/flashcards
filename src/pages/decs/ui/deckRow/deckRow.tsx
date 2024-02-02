@@ -1,7 +1,7 @@
 import { Delete, Edit, Play } from '@/assets'
 import { Button } from '@/common/ui/button'
 import { TableDataCell, TableRow } from '@/common/ui/table/tableConstuctor'
-import { EditDeckType } from '@/features/deck/deckForm/DeckForm'
+import { EditDeckType } from '@/features/deck/deckForm/deckForm'
 import { Deck } from '@/services/decks/decks.types'
 import { clsx } from 'clsx'
 

@@ -13,6 +13,7 @@ import { CreateNewCard } from '@/features/cards/createNewCard/createNewCard'
 import { UpdateDeck } from '@/features/deck/updateDeck/updateDeck'
 import { useCardFilter } from '@/pages/cards/hooks/useCardFilter'
 import { CardRow } from '@/pages/cards/ui/card/cardRow'
+import { useDeleteDeckMutation } from '@/services/decks/decks.service.'
 
 import s from './cards.module.scss'
 
@@ -27,9 +28,7 @@ const columns = [
 export const Cards = () => {
   const { id } = useParams<{ id: string }>()
   const {
-    backDeck,
     currentPage,
-    deleteDeckHandler,
     getCardByIdData,
     getCardsData,
     isEmpty,
@@ -38,10 +37,8 @@ export const Cards = () => {
     isOwner,
     itemsPerPage,
     navigate,
-    onAddNewCardHandler,
     onChangeCurrentPage,
     onChangeName,
-    onEditClickHandler,
     orderBy,
     searchBy,
     setIsOpen,
@@ -49,6 +46,23 @@ export const Cards = () => {
     setItemsPerPage,
     setSortedBy,
   } = useCardFilter(id)
+  const [deleteDeck] = useDeleteDeckMutation()
+
+  const backDeck = sessionStorage.getItem('lastLocation')
+
+  const deleteDeckHandler = async () => {
+    if (id) {
+      await deleteDeck(id).unwrap()
+      navigate(`${backDeck}`)
+    }
+  }
+
+  const onEditClickHandler = () => {
+    setIsOpenEdit(true)
+  }
+  const onAddNewCardHandler = () => {
+    setIsOpen(true)
+  }
 
   return (
     <div className={s.cardWrapper}>
