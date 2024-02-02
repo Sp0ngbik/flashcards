@@ -1,0 +1,12 @@
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.loaderWrapper {
+  z-index: 9999;
+  height: 100vh;
+  background-color: rgb(35 31 31 / 25%);
+}

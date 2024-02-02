@@ -1,19 +1,21 @@
-import { RefObject, useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-import { Delete, Edit, Play } from '@/assets'
+import { Delete } from '@/assets'
 import { Button } from '@/common/ui/button'
+import { Loader } from '@/common/ui/loader/Loader'
 import { Pagination } from '@/common/ui/pagination'
 import { DoubleSlider } from '@/common/ui/slider'
 import { TabSwitcher, TabType } from '@/common/ui/tabSwitcher'
-import { Table, TableBody, TableDataCell, TableRow } from '@/common/ui/table/tableConstuctor'
+import { Table, TableBody } from '@/common/ui/table/tableConstuctor'
 import { TableHeader } from '@/common/ui/table/tableHeader/tableHeader'
 import TextField from '@/common/ui/textField/textField'
 import { Typography } from '@/common/ui/typography'
-import { CreateNewDeck, EditDeckType } from '@/features/deck/createNewDeck/createNewDeck'
-import { useDeckFilter } from '@/pages/decs/deckFIlter'
-import { UpdateDeck } from '@/services/decks/decks.types'
-import { clsx } from 'clsx'
+import { CreateNewDeck } from '@/features/deck/createNewDeck/createNewDeck'
+import { EditDeckType } from '@/features/deck/deckForm/deckForm'
+import { UpdateDeck } from '@/features/deck/updateDeck/updateDeck'
+import { useDeckFilter } from '@/pages/decs/hooks/useDeckFIlter'
+import DeckRow from '@/pages/decs/ui/deckRow/deckRow'
 
 import s from './decks.module.scss'
 
@@ -43,20 +45,15 @@ const Decks = () => {
   }, [location])
   const {
     clearFilter,
-    createDeck,
     currentPage,
-    data,
-    // deckError,
+    deckData,
     deckIsLoading,
     deleteDeck,
     getCurrentTab,
-    isDeckBeingCreated,
     isDeckBeingDeleted,
-    isDeckBeingUpdate,
     itemsPerPage,
     maxCards,
     me,
-    meIsLoading,
     minCards,
     minMaxValues,
     onChangeCurrentPage,
@@ -67,65 +64,46 @@ const Decks = () => {
     searchBy,
     setItemsPerPage,
     setSortedBy,
-    updateDeck,
   } = useDeckFilter()
   const navigate = useNavigate()
-  const divAnchor: RefObject<HTMLDivElement> = useRef(null)
   const defaultPaginationValue = 10
   const [isOpen, setIsOpen] = useState(false)
   const [deck, setDeck] = useState<EditDeckType>({ cover: undefined, isPrivate: false, name: '' })
   const [isOpenEdit, setIsOpenEdit] = useState(false)
-  const [currentId, setCurrentId] = useState('')
   const onCreateDeck = () => {
     setIsOpen(true)
   }
 
-  if (deckIsLoading && meIsLoading) {
-    return <div>Loading</div>
+  if (deckIsLoading) {
+    return <Loader />
   }
-  // if (deckError) {
-  //   return <div>{JSON.stringify(deckError)}</div>
-  // }
 
   const tabs: TabType[] = [
     { title: 'My Cards', value: 'userCards' },
     { title: 'All Cards', value: 'allCards' },
   ]
-  const classNames = {
-    icon: clsx(s.icon, isDeckBeingDeleted && s.disableIcon),
-  }
 
   const openDeckHandler = (id: string) => {
     navigate(`/cards/${id}`)
   }
 
-  const onClickEditHandler = (deck: EditDeckType) => {
-    setDeck(deck)
-    setCurrentId(deck.id ?? '')
-
+  const onOpenEditMode = (currentDeck: EditDeckType) => {
+    setDeck(currentDeck)
     setIsOpenEdit(true)
   }
 
-  const updateEditDeck = (data: UpdateDeck) => {
-    updateDeck({ data, id: currentId })
+  const ownerValidation = (userId: string) => {
+    return userId === me?.id
   }
 
   return (
     <div className={s.deckWrapper}>
-      <CreateNewDeck
-        disabled={isDeckBeingCreated}
-        isOpen={isOpen}
-        onOpenChange={setIsOpen}
-        onSubmitDeck={createDeck}
-        title={'Add New Deck'}
-      />
-      <CreateNewDeck
+      <CreateNewDeck isOpen={isOpen} onOpenChange={setIsOpen} title={'Add New Deck'} />
+      <UpdateDeck
         deck={deck}
-        disabled={isDeckBeingUpdate}
         isOpen={isOpenEdit}
         onOpenChange={setIsOpenEdit}
-        onSubmitDeck={updateEditDeck}
-        title={'Edit Your Deck'}
+        title={'Update Deck'}
       />
 
       <div className={s.deckHead}>
@@ -170,39 +148,17 @@ const Decks = () => {
       <Table>
         <TableHeader columns={columns} onSort={setSortedBy} sort={orderBy} />
         <TableBody>
-          {data?.items?.map(deck => {
+          {deckData?.items?.map(deck => {
             return (
-              <TableRow key={deck.id}>
-                <TableDataCell>
-                  <Button
-                    className={s.tableDataContent}
-                    onClick={() => openDeckHandler(deck.id)}
-                    variant={'link'}
-                  >
-                    {deck.cover && <img alt={'image'} className={s.tableImage} src={deck.cover} />}
-                    {deck.name}
-                  </Button>
-                </TableDataCell>
-                <TableDataCell>{deck.cardsCount}</TableDataCell>
-                <TableDataCell>{new Date(deck.updated).toLocaleDateString('ru-RU')}</TableDataCell>
-                <TableDataCell>{deck.author.name}</TableDataCell>
-                <TableDataCell className={s.iconRow}>
-                  {me?.id === deck.userId ? (
-                    <>
-                      <Edit className={classNames.icon} onClick={() => onClickEditHandler(deck)} />
-                      <Play className={s.icon} />
-                      <Delete
-                        className={classNames.icon}
-                        onClick={() => {
-                          deleteDeck({ id: deck.id })
-                        }}
-                      />
-                    </>
-                  ) : (
-                    <Play className={s.icon} />
-                  )}
-                </TableDataCell>
-              </TableRow>
+              <DeckRow
+                deck={deck}
+                deleteDeck={deleteDeck}
+                isDeleted={isDeckBeingDeleted}
+                isOwner={ownerValidation(deck.userId)}
+                key={deck.id}
+                openDeck={openDeckHandler}
+                openEditMode={onOpenEditMode}
+              />
             )
           })}
         </TableBody>
@@ -213,9 +169,8 @@ const Decks = () => {
         className={s.paginationBlock}
         currentPage={currentPage}
         pageSize={itemsPerPage}
-        totalCount={data?.pagination.totalItems ?? defaultPaginationValue}
+        totalCount={deckData?.pagination.totalItems ?? defaultPaginationValue}
       />
-      <div ref={divAnchor} />
     </div>
   )
 }

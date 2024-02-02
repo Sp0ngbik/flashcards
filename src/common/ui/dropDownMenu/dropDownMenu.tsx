@@ -2,6 +2,7 @@ import { DotsForDropDown } from '@/assets/icons/dotsForDropDown'
 import userDefaultPhoto from '@/assets/image/defaultAvatar.png'
 import { EditCardComponent } from '@/common/ui/dropDownMenu/variant/editCardComponent'
 import { EditProfileComponent } from '@/common/ui/dropDownMenu/variant/editProfileComponent'
+import { useLogoutMutation } from '@/services/auth/auth.sevice'
 import * as DropdownMenuRadix from '@radix-ui/react-dropdown-menu'
 import { clsx } from 'clsx'
 
@@ -12,7 +13,8 @@ type DropdownMenuProps = {
   deleteDeck?: () => void
   disabled?: boolean
   flag?: 'editCard' | 'editProfile'
-  logout: () => void
+  onEditClick?: () => void
+  userAvatar?: null | string
   userEmail?: string
   userName?: string
 }
@@ -23,7 +25,8 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
     deleteDeck,
     disabled,
     flag = 'editProfile',
-    logout,
+    onEditClick,
+    userAvatar,
     userEmail,
     userName,
     ...rest
@@ -31,13 +34,17 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
   const classNames = {
     dropDownContent: clsx(s.DropdownMenuContent, flag === 'editProfile' && s.fullWidth),
   }
+  const [logout] = useLogoutMutation()
+  const onEditHandler = () => {
+    return onEditClick ? onEditClick() : ''
+  }
 
   return (
     <DropdownMenuRadix.Root defaultOpen={defaultOpen}>
       <DropdownMenuRadix.Trigger asChild>
         <button aria-label={'Customise options'} className={s.IconButton}>
           {flag === 'editProfile' ? (
-            <img alt={'userPhoto'} className={s.UserAvatar} src={userDefaultPhoto} />
+            <img alt={'userPhoto'} className={s.userAvatar} src={userAvatar ?? userDefaultPhoto} />
           ) : (
             <DotsForDropDown className={s.dotsDrop} />
           )}
@@ -52,13 +59,13 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
           {...rest}
         >
           {flag === 'editCard' ? (
-            <EditCardComponent deleteDeck={deleteDeck} />
+            <EditCardComponent deleteDeck={deleteDeck} onEditClick={onEditHandler} />
           ) : (
             <EditProfileComponent
               logout={logout}
-              userAvatar={userDefaultPhoto}
-              userEmail={userEmail ? userEmail : 'None'}
-              userName={userName ? userName : 'None'}
+              userAvatar={userAvatar ?? userDefaultPhoto}
+              userEmail={userEmail ?? 'None'}
+              userName={userName ?? 'None'}
             />
           )}
 

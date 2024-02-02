@@ -52,9 +52,9 @@ export const cardsService = baseApi.injectEndpoints({
       updateCard: build.mutation<CardsResponse, UpdateCardsArgs>({
         invalidatesTags: ['Cards'],
         query: args => ({
-          body: args ?? undefined,
+          body: args.body ?? undefined,
           method: 'PATCH',
-          url: `v1/cards${args.id}`,
+          url: `v1/cards/${args.id}`,
         }),
       }),
     }
