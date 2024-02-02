@@ -1,5 +1,7 @@
 import { ReactNode } from 'react'
 
+import { clsx } from 'clsx'
+
 import s from './card.module.scss'
 
 type Props = {
@@ -8,9 +10,13 @@ type Props = {
 }
 
 export const Card = ({ children, className }: Props) => {
+  const classNames = {
+    cardItems: clsx(s.cardItems, className),
+  }
+
   return (
     <div className={s.card}>
-      <div className={className}>{children}</div>
+      <div className={classNames.cardItems}>{children}</div>
     </div>
   )
 }
