@@ -9,6 +9,7 @@ import { clsx } from 'clsx'
 import s from './dropDownMenu.module.scss'
 
 type DropdownMenuProps = {
+  className?: string
   defaultOpen?: boolean
   deleteDeck?: () => void
   disabled?: boolean
@@ -22,6 +23,7 @@ type DropdownMenuProps = {
 
 export const DropdownMenu = (props: DropdownMenuProps) => {
   const {
+    className,
     defaultOpen = false,
     deleteDeck,
     disabled,
@@ -43,7 +45,7 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
 
   return (
     <DropdownMenuRadix.Root defaultOpen={defaultOpen}>
-      <DropdownMenuRadix.Trigger asChild>
+      <DropdownMenuRadix.Trigger asChild className={className}>
         <button aria-label={'Customise options'} className={s.IconButton}>
           {flag === 'editProfile' ? (
             <img alt={'userPhoto'} className={s.userAvatar} src={userAvatar ?? userDefaultPhoto} />

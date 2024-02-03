@@ -73,6 +73,12 @@
   background-color: var(--color-dark-500);
 }
 
+.userInfo[data-highlighted] {
+  cursor: inherit;
+  user-select: none;
+  background-color: inherit;
+}
+
 .DropdownMenuLabel {
   padding-left: 25px;
   font-size: 12px;
@@ -109,10 +115,6 @@
   height: 36px;
   object-fit: cover;
   border-radius: 50%;
-
-  &:hover {
-    cursor: pointer;
-  }
 }
 
 .dotsDrop {

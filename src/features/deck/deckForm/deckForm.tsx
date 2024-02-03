@@ -52,11 +52,11 @@ const DeckForm = ({
     if (deck) {
       setValue('name', deck.name || '')
       setValue('isPrivate', deck.isPrivate || false)
-      deck.cover && setPhoto(deck.cover)
+      setPhoto(deck.cover ?? null)
     }
   }, [deck, setValue])
+
   const [photo, setPhoto] = useState<File | null | string>(null)
-  // const [currentPhoto, setCurrentPhoto] = useState(deck?.cover)
 
   const closeHandler = () => {
     onOpenChange(false)
@@ -68,7 +68,7 @@ const DeckForm = ({
 
       if (photo instanceof File) {
         formData.append('cover', photo)
-      } else {
+      } else if (photo === null) {
         formData.append('cover', '')
       }
       formData.append('name', data.name)
@@ -90,10 +90,9 @@ const DeckForm = ({
 
   const removeImg = () => {
     setPhoto(null)
-    // setCurrentPhoto('')
   }
 
-  const uploadedImage = () => {}
+  const uploadedImage = photo instanceof File ? URL.createObjectURL(photo) : photo
 
   return (
     <>

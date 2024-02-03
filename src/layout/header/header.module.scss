@@ -23,6 +23,7 @@
 }
 
 .userBlock {
+  user-select: none;
   display: flex;
   align-items: center;
 
@@ -36,4 +37,8 @@
     text-decoration: underline dashed var(--color-light-100) 2px;
     text-underline-offset: 5px;
   }
+}
+
+.dropDownTrigger :hover {
+  cursor: pointer;
 }

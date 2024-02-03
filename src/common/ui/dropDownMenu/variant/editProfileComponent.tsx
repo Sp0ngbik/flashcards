@@ -4,6 +4,7 @@ import { SignOut } from '@/assets/icons/sign-out'
 import { User } from '@/assets/icons/user'
 import { Typography } from '@/common/ui/typography'
 import * as DropdownMenuRadix from '@radix-ui/react-dropdown-menu'
+import clsx from 'clsx'
 
 import s from '../dropDownMenu.module.scss'
 
@@ -21,10 +22,13 @@ export const EditProfileComponent = (props: PropsType) => {
   }
 
   const { logout, userAvatar, userEmail, userName } = props
+  const classNames = {
+    userInfo: clsx(s.DropdownMenuItem, s.userInfo),
+  }
 
   return (
     <>
-      <DropdownMenuRadix.Item className={s.DropdownMenuItem}>
+      <DropdownMenuRadix.Item className={classNames.userInfo}>
         <img alt={'user avatar'} className={s.userAvatar} src={userAvatar} />
         <div>
           <Typography variant={'subtitle2'}>{userName}</Typography>
