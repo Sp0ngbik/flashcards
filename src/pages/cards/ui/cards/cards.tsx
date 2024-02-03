@@ -108,12 +108,14 @@ export const Cards = () => {
         <div>
           <div className={s.dropDownDiv}>
             <Typography variant={'h1'}>{getCardByIdData?.name}</Typography>
-            <DropdownMenu
-              deleteDeck={deleteDeckHandler}
-              flag={'editCard'}
-              learnDeck={learnDeckHandler}
-              onEditClick={onEditClickHandler}
-            />
+            {isOwner && (
+              <DropdownMenu
+                deleteDeck={deleteDeckHandler}
+                flag={'editCard'}
+                learnDeck={learnDeckHandler}
+                onEditClick={onEditClickHandler}
+              />
+            )}
 
             <Dots />
           </div>
