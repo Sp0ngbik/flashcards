@@ -87,6 +87,9 @@ const Decks = () => {
     navigate(`/cards/${id}`)
   }
 
+  const learnDeckHandler = (id: string) => {
+    navigate(`/cards/${id}/learn`)
+  }
   const onOpenEditMode = (currentDeck: EditDeckType) => {
     setDeck(currentDeck)
     setIsOpenEdit(true)
@@ -156,6 +159,7 @@ const Decks = () => {
                 isDeleted={isDeckBeingDeleted}
                 isOwner={ownerValidation(deck.userId)}
                 key={deck.id}
+                learnDeck={learnDeckHandler}
                 openDeck={openDeckHandler}
                 openEditMode={onOpenEditMode}
               />
