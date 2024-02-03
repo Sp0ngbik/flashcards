@@ -13,7 +13,7 @@ import { ImageIcon } from '@radix-ui/react-icons'
 import s from '@/features/deck/deckForm/deckForm.module.scss'
 
 export type EditDeckType = {
-  cover: string | undefined
+  cover: null | string | undefined
   id?: string
   isPrivate: boolean
   name: string
@@ -52,11 +52,11 @@ const DeckForm = ({
     if (deck) {
       setValue('name', deck.name || '')
       setValue('isPrivate', deck.isPrivate || false)
-      setCurrentPhoto(deck.cover)
+      setPhoto(deck.cover ?? null)
     }
   }, [deck, setValue])
-  const [photo, setPhoto] = useState<File | null>(null)
-  const [currentPhoto, setCurrentPhoto] = useState(deck?.cover)
+
+  const [photo, setPhoto] = useState<File | null | string>(null)
 
   const closeHandler = () => {
     onOpenChange(false)
@@ -66,9 +66,9 @@ const DeckForm = ({
     try {
       const formData = new FormData()
 
-      if (photo) {
+      if (photo instanceof File) {
         formData.append('cover', photo)
-      } else {
+      } else if (photo === null) {
         formData.append('cover', '')
       }
       formData.append('name', data.name)
@@ -90,10 +90,9 @@ const DeckForm = ({
 
   const removeImg = () => {
     setPhoto(null)
-    setCurrentPhoto('')
   }
 
-  const uploadedImage = photo ? URL.createObjectURL(photo) : currentPhoto
+  const uploadedImage = photo instanceof File ? URL.createObjectURL(photo) : photo
 
   return (
     <>
