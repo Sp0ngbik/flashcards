@@ -13,6 +13,7 @@ type DropdownMenuProps = {
   deleteDeck?: () => void
   disabled?: boolean
   flag?: 'editCard' | 'editProfile'
+  learnDeck?: () => void
   onEditClick?: () => void
   userAvatar?: null | string
   userEmail?: string
@@ -25,6 +26,7 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
     deleteDeck,
     disabled,
     flag = 'editProfile',
+    learnDeck,
     onEditClick,
     userAvatar,
     userEmail,
@@ -59,7 +61,11 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
           {...rest}
         >
           {flag === 'editCard' ? (
-            <EditCardComponent deleteDeck={deleteDeck} onEditClick={onEditHandler} />
+            <EditCardComponent
+              deleteDeck={deleteDeck}
+              learn={learnDeck}
+              onEditClick={onEditHandler}
+            />
           ) : (
             <EditProfileComponent
               logout={logout}

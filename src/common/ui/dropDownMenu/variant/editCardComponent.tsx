@@ -13,10 +13,10 @@ type EditCardComponentProps = {
   onEditClick: () => void
 }
 
-export const EditCardComponent = ({ deleteDeck, onEditClick }: EditCardComponentProps) => {
+export const EditCardComponent = ({ deleteDeck, learn, onEditClick }: EditCardComponentProps) => {
   return (
     <>
-      <DropdownMenuRadix.Item className={s.DropdownMenuItem}>
+      <DropdownMenuRadix.Item className={s.DropdownMenuItem} onSelect={learn}>
         <Play />
         <Typography variant={'caption'}>Learn</Typography>
       </DropdownMenuRadix.Item>
