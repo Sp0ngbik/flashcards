@@ -1,6 +1,8 @@
 import { FC, RefObject, useRef, useState } from 'react'
+import { NavLink } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
+import { ArrowBack } from '@/assets/icons/arrow-back-outline'
 import { Edit } from '@/assets/icons/edit'
 import defaultImage from '@/assets/image/defaultAvatar.png'
 import { Button } from '@/common/ui/button'
@@ -78,6 +80,10 @@ export const Profile: FC<ProfileProps> = ({ edit = false }) => {
 
   return (
     <div className={s.profileWrapper}>
+      <NavLink className={s.backToDeck} to={'/'}>
+        <ArrowBack className={s.arrowBack} />
+        Back to Decks List
+      </NavLink>
       <Card>
         <Typography className={s.profileLabel} variant={'h1'}>
           Personal Information
