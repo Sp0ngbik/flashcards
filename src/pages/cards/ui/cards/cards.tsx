@@ -73,6 +73,9 @@ export const Cards = () => {
       navigate(`${backDeck}`)
     }
   }
+  const learnDeckHandler = () => {
+    navigate(`/cards/${id}/learn`)
+  }
 
   const onEditClickHandler = () => {
     setIsOpenEdit(true)
@@ -108,6 +111,7 @@ export const Cards = () => {
             <DropdownMenu
               deleteDeck={deleteDeckHandler}
               flag={'editCard'}
+              learnDeck={learnDeckHandler}
               onEditClick={onEditClickHandler}
             />
 
@@ -116,7 +120,7 @@ export const Cards = () => {
           <img alt={''} className={s.tableImage} src={getCardByIdData?.cover} />
         </div>
         {!isOwner && (
-          <Button onClick={() => navigate(`/cards/${id}/learn`)} variant={'primary'}>
+          <Button onClick={learnDeckHandler} variant={'primary'}>
             Learn to Pack
           </Button>
         )}
