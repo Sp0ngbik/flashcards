@@ -36,6 +36,7 @@ export const Header = () => {
               <div className={s.userBlock}>
                 <span>{data?.name}</span>
                 <DropdownMenu
+                  className={s.dropDownTrigger}
                   userAvatar={data.avatar}
                   userEmail={data.email}
                   userName={data.name}

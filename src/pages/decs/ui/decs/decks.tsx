@@ -67,8 +67,8 @@ const Decks = () => {
   } = useDeckFilter()
   const navigate = useNavigate()
   const defaultPaginationValue = 10
+  const [deck, setDeck] = useState<EditDeckType>({ cover: null, isPrivate: false, name: '' })
   const [isOpen, setIsOpen] = useState(false)
-  const [deck, setDeck] = useState<EditDeckType>({ cover: undefined, isPrivate: false, name: '' })
   const [isOpenEdit, setIsOpenEdit] = useState(false)
   const onCreateDeck = () => {
     setIsOpen(true)
