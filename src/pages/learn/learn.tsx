@@ -37,7 +37,7 @@ const Learn = () => {
     <div className={s.cardWrapper}>
       <NavLink className={s.backToDeck} to={`/cards/${id}`}>
         <ArrowBack className={s.arrowBack} />
-        Back to Decks List
+        Back to Previous Page
       </NavLink>
       <Card className={s.learnCard}>
         <Typography as={'header'} variant={'h1'}>{`Learn ${getCardByIdData?.name}`}</Typography>
