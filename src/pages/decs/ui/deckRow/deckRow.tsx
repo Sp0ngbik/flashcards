@@ -12,6 +12,7 @@ type DeckRowProps = {
   deleteDeck: (id: string) => void
   isDeleted: boolean
   isOwner: boolean
+  learnDeck: (id: string) => void
   openDeck: (id: string) => void
   openEditMode: (deck: EditDeckType) => void
 }
@@ -21,6 +22,7 @@ const DeckRow = ({
   deleteDeck,
   isDeleted,
   isOwner,
+  learnDeck,
   openDeck,
   openEditMode,
 }: DeckRowProps) => {
@@ -38,6 +40,9 @@ const DeckRow = ({
   const openEditModeHandler = () => {
     openEditMode(deck)
   }
+  const learnDeckHandler = () => {
+    learnDeck(deck.id)
+  }
 
   return (
     <TableRow key={deck.id}>
@@ -54,7 +59,7 @@ const DeckRow = ({
         {isOwner ? (
           <>
             <Edit className={s.icon} onClick={openEditModeHandler} />
-            <Play className={s.icon} />
+            <Play className={s.icon} onClick={learnDeckHandler} />
             <Delete className={classNames.icon} onClick={deleteDeckHandler} />
           </>
         ) : (
