@@ -29,7 +29,7 @@ const DeckRow = ({
   const isEmpty = deck.cardsCount === 0
   const classNames = {
     icon: clsx(s.icon, isDeleted && s.disableIcon),
-    iconDelete: clsx(s.icon, isEmpty && s.disableIcon),
+    iconPlay: clsx(s.icon, isEmpty && s.disableIcon),
   }
 
   const openDeckHandler = () => {
@@ -61,11 +61,11 @@ const DeckRow = ({
         {isOwner ? (
           <>
             <Edit className={s.icon} onClick={openEditModeHandler} />
-            <Play className={classNames.iconDelete} onClick={learnDeckHandler} />
+            <Play className={classNames.iconPlay} onClick={learnDeckHandler} />
             <Delete className={classNames.icon} onClick={deleteDeckHandler} />
           </>
         ) : (
-          <Play className={classNames.iconDelete} onClick={learnDeckHandler} />
+          <Play className={classNames.iconPlay} onClick={learnDeckHandler} />
         )}
       </TableDataCell>
     </TableRow>
