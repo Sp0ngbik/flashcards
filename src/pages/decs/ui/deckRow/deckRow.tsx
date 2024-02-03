@@ -63,7 +63,7 @@ const DeckRow = ({
             <Delete className={classNames.icon} onClick={deleteDeckHandler} />
           </>
         ) : (
-          <Play className={s.icon} />
+          <Play className={s.icon} onClick={learnDeckHandler} />
         )}
       </TableDataCell>
     </TableRow>
