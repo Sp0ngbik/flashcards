@@ -9,21 +9,21 @@ import s from './deckRow.module.scss'
 
 type DeckRowProps = {
   deck: Deck
-  deleteDeck: (id: string) => void
   isDeleted: boolean
   isOwner: boolean
   learnDeck: (id: string) => void
   openDeck: (id: string) => void
+  openDeleteForm: (value: true) => void
   openEditMode: (deck: EditDeckType) => void
 }
 
 const DeckRow = ({
   deck,
-  deleteDeck,
   isDeleted,
   isOwner,
   learnDeck,
   openDeck,
+  openDeleteForm,
   openEditMode,
 }: DeckRowProps) => {
   const isEmpty = deck.cardsCount === 0
@@ -36,7 +36,7 @@ const DeckRow = ({
     openDeck(deck.id)
   }
   const deleteDeckHandler = () => {
-    deleteDeck(deck.id)
+    openDeleteForm(true)
   }
 
   const openEditModeHandler = () => {

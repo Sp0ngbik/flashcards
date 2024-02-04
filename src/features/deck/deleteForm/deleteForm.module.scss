@@ -1,0 +1,17 @@
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.text {
+  width: 100%;
+  margin-bottom: 20px;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  width: 100%;
+  padding: 24px;
+}

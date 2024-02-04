@@ -11,11 +11,11 @@ import s from './dropDownMenu.module.scss'
 type DropdownMenuProps = {
   className?: string
   defaultOpen?: boolean
-  deleteDeck?: () => void
   disabled?: boolean
   flag?: 'editCard' | 'editProfile'
   learnDeck?: () => void
   onEditClick?: () => void
+  onOpenDeleteForm?: (open: boolean) => void
   userAvatar?: null | string
   userEmail?: string
   userName?: string
@@ -25,11 +25,11 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
   const {
     className,
     defaultOpen = false,
-    deleteDeck,
     disabled,
     flag = 'editProfile',
     learnDeck,
     onEditClick,
+    onOpenDeleteForm,
     userAvatar,
     userEmail,
     userName,
@@ -64,9 +64,9 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
         >
           {flag === 'editCard' ? (
             <EditCardComponent
-              deleteDeck={deleteDeck}
               learn={learnDeck}
               onEditClick={onEditHandler}
+              onOpenDeleteForm={onOpenDeleteForm}
             />
           ) : (
             <EditProfileComponent
