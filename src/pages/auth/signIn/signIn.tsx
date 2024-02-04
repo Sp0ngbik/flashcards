@@ -40,50 +40,48 @@ export const SignIn = () => {
   }
 
   return (
-    <div className={s.signInWrapper}>
-      <Card>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Typography className={s.signInLabel} variant={'large'}>
-            Sign In
-          </Typography>
-          <TextFieldControlled
-            className={s.emailField}
-            control={control}
-            errorMessage={errors.email?.message}
-            id={'email'}
-            label={'Email'}
-            name={'email'}
-            placeholder={'example@gmail.com'}
-          />
-          <TextFieldControlled
-            className={s.passwordField}
-            control={control}
-            errorMessage={errors.password?.message}
-            id={'password'}
-            label={'Password'}
-            name={'password'}
-            placeholder={'Your password'}
-            variant={'password'}
-          />
-          <CheckboxControlled
-            className={s.rememberMe}
-            control={control}
-            id={'rememberMe'}
-            name={'rememberMe'}
-            text={'Remember me'}
-          />
-          <NavLink className={s.forgotPassword} to={'/forgot-password'}>
-            Forgot Password?
-          </NavLink>
-          <Button fullWidth>Sign In</Button>
-        </form>
-        <Typography className={s.formQuestion} variant={'body2'}>
-          Don&apos;t have an account?
+    <Card classNameWrapper={s.signInWrapper}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Typography className={s.signInLabel} variant={'large'}>
+          Sign In
         </Typography>
-        <Button className={s.submitButton} onClick={handleSignUpClick} variant={'link'}>
-          Sign Up
-        </Button>
-      </Card>
-    </div>
+        <TextFieldControlled
+          className={s.emailField}
+          control={control}
+          errorMessage={errors.email?.message}
+          id={'email'}
+          label={'Email'}
+          name={'email'}
+          placeholder={'example@gmail.com'}
+        />
+        <TextFieldControlled
+          className={s.passwordField}
+          control={control}
+          errorMessage={errors.password?.message}
+          id={'password'}
+          label={'Password'}
+          name={'password'}
+          placeholder={'Your password'}
+          variant={'password'}
+        />
+        <CheckboxControlled
+          className={s.rememberMe}
+          control={control}
+          id={'rememberMe'}
+          name={'rememberMe'}
+          text={'Remember me'}
+        />
+        <NavLink className={s.forgotPassword} to={'/forgot-password'}>
+          Forgot Password?
+        </NavLink>
+        <Button fullWidth>Sign In</Button>
+      </form>
+      <Typography className={s.formQuestion} variant={'body2'}>
+        Don&apos;t have an account?
+      </Typography>
+      <Button className={s.submitButton} onClick={handleSignUpClick} variant={'link'}>
+        Sign Up
+      </Button>
+    </Card>
   )
 }

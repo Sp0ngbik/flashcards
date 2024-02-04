@@ -1,5 +1,6 @@
 import {
   AuthArgsType,
+  CreateNewPassword,
   MeResponse,
   PasswordRecovery,
   SignUpArgsType,
@@ -11,6 +12,12 @@ import { baseApi } from '@/services/baseApi'
 export const authService = baseApi.injectEndpoints({
   endpoints(build) {
     return {
+      createNewPassword: build.mutation<void, CreateNewPassword>({
+        query: ({ token, ...args }) => ({
+          body: args,
+          url: `/v1/auth/reset-password/${token}`,
+        }),
+      }),
       login: build.mutation<void, AuthArgsType>({
         invalidatesTags: ['Me'],
         query: args => ({
@@ -54,6 +61,7 @@ export const authService = baseApi.injectEndpoints({
 })
 
 export const {
+  useCreateNewPasswordMutation,
   useLoginMutation,
   useLogoutMutation,
   useMeQuery,

@@ -41,16 +41,15 @@ function PublicRoutes() {
 
   return isAuthenticated ? <Navigate to={'/'} /> : <Outlet />
 }
-const publicRoutes: RouteObject[] = [
-  { element: <ForgotPassword />, path: '/forgot-password' },
-  { element: <CreateNewPassword />, path: '/recover-password/:token?' },
-  { element: <CheckEmail />, path: '/check-email' },
-]
+
 const publicProtectedRoutes: RouteObject[] = [
   {
     children: [
       { element: <SignUp />, path: '/sign-up' },
       { element: <SignIn />, path: '/sign-in' },
+      { element: <ForgotPassword />, path: '/forgot-password' },
+      { element: <CreateNewPassword />, path: '/recover-password/:token?' },
+      { element: <CheckEmail />, path: '/check-email' },
       {
         element: <PageNotFound />,
         path: '/*',
@@ -81,7 +80,7 @@ export const router = createBrowserRouter([
         children: publicProtectedRoutes,
         element: <PublicRoutes />,
       },
-      ...publicRoutes,
+      // ...publicRoutes,
     ],
     element: <Header />,
   },

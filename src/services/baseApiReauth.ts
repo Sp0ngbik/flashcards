@@ -27,8 +27,6 @@ export const baseQueryWithRauth: BaseQueryFn<
 
       if (refreshResult.meta?.response?.status === 204) {
         result = await baseQuery(args, api, extraOptions)
-      } else {
-        // await router.navigate('/sign-in')
       }
       release()
     } else {

@@ -14,7 +14,7 @@ const CheckEmail = () => {
   }
 
   return (
-    <Card>
+    <Card classNameWrapper={s.checkEmailWrapper}>
       <Typography className={s.checkEmailLabel} variant={'large'}>
         Check Email?
       </Typography>
