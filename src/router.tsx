@@ -11,6 +11,7 @@ import { Loader } from '@/common/ui/loader'
 import { AuthContext, Header } from '@/layout/header'
 import PageNotFound from '@/layout/pageNotFound/pageNotFound'
 import CheckEmail from '@/pages/auth/checkEmail/checkEmail'
+import CreateNewPassword from '@/pages/auth/createNewPassword/createNewPassword'
 import { ForgotPassword } from '@/pages/auth/forgotPassword'
 import { Profile } from '@/pages/auth/profile'
 import { SignIn } from '@/pages/auth/signIn'
@@ -42,7 +43,7 @@ function PublicRoutes() {
 }
 const publicRoutes: RouteObject[] = [
   { element: <ForgotPassword />, path: '/forgot-password' },
-  { element: <div>YES</div>, path: '/recover-password/:token?' },
+  { element: <CreateNewPassword />, path: '/recover-password/:token?' },
   { element: <CheckEmail />, path: '/check-email' },
 ]
 const publicProtectedRoutes: RouteObject[] = [
@@ -50,9 +51,6 @@ const publicProtectedRoutes: RouteObject[] = [
     children: [
       { element: <SignUp />, path: '/sign-up' },
       { element: <SignIn />, path: '/sign-in' },
-      // { element: <ForgotPassword />, path: '/forgot-password' },
-      // { element: <div>YES</div>, path: '/recover-password/:token?' },
-      // { element: <CheckEmail />, path: '/check-email' },
       {
         element: <PageNotFound />,
         path: '/*',
@@ -83,7 +81,6 @@ export const router = createBrowserRouter([
         children: publicProtectedRoutes,
         element: <PublicRoutes />,
       },
-
       ...publicRoutes,
     ],
     element: <Header />,

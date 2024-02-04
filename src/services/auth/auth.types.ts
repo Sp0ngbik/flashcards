@@ -51,4 +51,5 @@ export type ServerError = {
 
 export type PasswordRecovery = {
   email: string
+  html: string
 }

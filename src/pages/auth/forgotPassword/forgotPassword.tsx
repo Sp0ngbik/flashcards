@@ -23,7 +23,10 @@ export const ForgotPassword = () => {
   const navigate = useNavigate()
   const [passwordRecovery] = usePasswordRecoveryMutation()
   const onSubmit = (data: FormValuesForgotPassword) => {
-    passwordRecovery(data)
+    const link =
+      '<h1>Hi , ##name##</h1><p>Click <a href="http://127.0.0.1:5173/recover-password/##token##">here</a> to recover your password</p>'
+
+    passwordRecovery({ email: data.email, html: link })
     navigate('/check-email')
   }
 
