@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { Button } from '@/common/ui/button'
@@ -72,9 +72,9 @@ export const SignIn = () => {
             name={'rememberMe'}
             text={'Remember me'}
           />
-          <Typography className={s.forgotPassword} variant={'body2'}>
+          <NavLink className={s.forgotPassword} to={'/forgot-password'}>
             Forgot Password?
-          </Typography>
+          </NavLink>
           <Button fullWidth>Sign In</Button>
         </form>
         <Typography className={s.formQuestion} variant={'body2'}>

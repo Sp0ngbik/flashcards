@@ -7,8 +7,11 @@ import {
   useOutletContext,
 } from 'react-router-dom'
 
+import { Loader } from '@/common/ui/loader'
 import { AuthContext, Header } from '@/layout/header'
 import PageNotFound from '@/layout/pageNotFound/pageNotFound'
+import CheckEmail from '@/pages/auth/checkEmail/checkEmail'
+import { ForgotPassword } from '@/pages/auth/forgotPassword'
 import { Profile } from '@/pages/auth/profile'
 import { SignIn } from '@/pages/auth/signIn'
 import { SignUp } from '@/pages/auth/signUp'
@@ -16,8 +19,6 @@ import { Cards } from '@/pages/cards/ui/cards/cards'
 import Decks from '@/pages/decs/ui/decs/decks'
 import Learn from '@/pages/learn/learn'
 import { useMeQuery } from '@/services/auth/auth.sevice'
-
-import { Loader } from './common/ui/loader/Loader'
 
 const useAuthContext = () => {
   return useOutletContext<AuthContext>()
@@ -39,12 +40,19 @@ function PublicRoutes() {
 
   return isAuthenticated ? <Navigate to={'/'} /> : <Outlet />
 }
-
 const publicRoutes: RouteObject[] = [
+  { element: <ForgotPassword />, path: '/forgot-password' },
+  { element: <div>YES</div>, path: '/recover-password/:token?' },
+  { element: <CheckEmail />, path: '/check-email' },
+]
+const publicProtectedRoutes: RouteObject[] = [
   {
     children: [
       { element: <SignUp />, path: '/sign-up' },
       { element: <SignIn />, path: '/sign-in' },
+      // { element: <ForgotPassword />, path: '/forgot-password' },
+      // { element: <div>YES</div>, path: '/recover-password/:token?' },
+      // { element: <CheckEmail />, path: '/check-email' },
       {
         element: <PageNotFound />,
         path: '/*',
@@ -72,11 +80,11 @@ export const router = createBrowserRouter([
       },
 
       {
-        children: publicRoutes,
+        children: publicProtectedRoutes,
         element: <PublicRoutes />,
       },
 
-      // ...publicRoutes,
+      ...publicRoutes,
     ],
     element: <Header />,
   },
