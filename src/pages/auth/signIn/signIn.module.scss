@@ -30,7 +30,17 @@
 .forgotPassword {
   display: flex;
   justify-content: flex-end;
+
   margin-bottom: 66px;
+
+  color: var(--color-light-100);
+  text-decoration: none;
+
+  transition: 0.1s linear;
+
+  &:hover {
+    color: var(--color-light-900);
+  }
 }
 
 .formQuestion {

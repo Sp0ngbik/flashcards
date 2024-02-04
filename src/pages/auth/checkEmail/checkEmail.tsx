@@ -1,16 +1,24 @@
+import { useLocation, useNavigate } from 'react-router-dom'
+
 import { Email } from '@/assets/icons/email'
 import { Button } from '@/common/ui/button'
 import { Card } from '@/common/ui/card'
 import { Typography } from '@/common/ui/typography'
 
 import s from './checkEmail.module.scss'
-type Props = {
-  email: string
-}
 
-const CheckEmail = ({ email }: Props) => {
+const CheckEmail = () => {
+  const navigate = useNavigate()
+  const redirectHandler = () => {
+    navigate('/sign-in')
+  }
+  const {
+    state: { email },
+  } = useLocation()
+  const linkTo = email.split('@')[1]
+
   return (
-    <Card>
+    <Card classNameWrapper={s.checkEmailWrapper}>
       <Typography className={s.checkEmailLabel} variant={'large'}>
         Check Email?
       </Typography>
@@ -18,9 +26,12 @@ const CheckEmail = ({ email }: Props) => {
         <Email className={s.icon} />
       </div>
       <Typography as={'p'} className={s.sentEmail} variant={'body2'}>
-        We’ve sent an Email with instructions to <br /> {email}
+        We’ve sent an Email with instructions to
       </Typography>
-      <Button className={s.button} fullWidth>
+      <Typography as={'a'} className={s.userEmail} href={`https://${linkTo}`} variant={'link1'}>
+        {email}
+      </Typography>
+      <Button className={s.button} fullWidth onClick={redirectHandler}>
         Back to Sign In
       </Button>
     </Card>

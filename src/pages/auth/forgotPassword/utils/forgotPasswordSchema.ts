@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
-export type FormValuesForgotPassword = z.infer<typeof signInSchema>
+export type FormValuesForgotPassword = z.infer<typeof forgotPasswordSchema>
 
-export const signInSchema = z.object({
+export const forgotPasswordSchema = z.object({
   email: z.string().email(),
 })
