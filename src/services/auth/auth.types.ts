@@ -48,3 +48,7 @@ export type ServerError = {
   }
   isLoading: boolean
 }
+
+export type PasswordRecovery = {
+  email: string
+}

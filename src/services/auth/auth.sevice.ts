@@ -1,6 +1,7 @@
 import {
   AuthArgsType,
   MeResponse,
+  PasswordRecovery,
   SignUpArgsType,
   SignUpResponseType,
   UpdateProfile,
@@ -29,6 +30,13 @@ export const authService = baseApi.injectEndpoints({
         providesTags: ['Me'],
         query: () => 'v1/auth/me',
       }),
+      passwordRecovery: build.mutation<void, PasswordRecovery>({
+        query: args => ({
+          body: args,
+          method: 'POST',
+          url: '/v1/auth/recover-password',
+        }),
+      }),
       signUp: build.mutation<SignUpResponseType, SignUpArgsType>({
         invalidatesTags: ['Me'],
         query: args => ({
@@ -49,6 +57,7 @@ export const {
   useLoginMutation,
   useLogoutMutation,
   useMeQuery,
+  usePasswordRecoveryMutation,
   useSignUpMutation,
   useUpdateProfileMutation,
 } = authService
