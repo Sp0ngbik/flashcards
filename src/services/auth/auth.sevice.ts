@@ -38,6 +38,7 @@ export const authService = baseApi.injectEndpoints({
         providesTags: ['Me'],
         query: () => 'v1/auth/me',
       }),
+
       passwordRecovery: build.mutation<void, PasswordRecovery>({
         query: args => ({
           body: args,

@@ -37,9 +37,10 @@ function PrivateRoutes() {
 }
 
 function PublicRoutes() {
-  const { isAuthenticated } = useAuthContext()
+  // const { isAuthenticated } = useAuthContext()
 
-  return isAuthenticated ? <Navigate to={'/'} /> : <Outlet />
+  // return isAuthenticated ? <Navigate to={'/'} /> : <Outlet />
+  return <Outlet />
 }
 
 const publicProtectedRoutes: RouteObject[] = [
@@ -75,12 +76,10 @@ export const router = createBrowserRouter([
         children: privateRoutes,
         element: <PrivateRoutes />,
       },
-
       {
         children: publicProtectedRoutes,
         element: <PublicRoutes />,
       },
-      // ...publicRoutes,
     ],
     element: <Header />,
   },

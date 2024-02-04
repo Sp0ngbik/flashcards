@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import { Email } from '@/assets/icons/email'
 import { Button } from '@/common/ui/button'
@@ -12,6 +12,10 @@ const CheckEmail = () => {
   const redirectHandler = () => {
     navigate('/sign-in')
   }
+  const {
+    state: { email },
+  } = useLocation()
+  const linkTo = email.split('@')[1]
 
   return (
     <Card classNameWrapper={s.checkEmailWrapper}>
@@ -22,7 +26,10 @@ const CheckEmail = () => {
         <Email className={s.icon} />
       </div>
       <Typography as={'p'} className={s.sentEmail} variant={'body2'}>
-        We’ve sent an Email with instructions to <br /> Заглушка
+        We’ve sent an Email with instructions to
+      </Typography>
+      <Typography as={'a'} className={s.userEmail} href={`https://${linkTo}`} variant={'link1'}>
+        {email}
       </Typography>
       <Button className={s.button} fullWidth onClick={redirectHandler}>
         Back to Sign In
