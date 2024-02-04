@@ -7,20 +7,23 @@ import s from './deleteForm.module.scss'
 type DeleteProps = {
   cancel: () => void
   deleteCB: (id: string) => void
-  id: string
+  id: string | undefined
   isOpen: boolean
-  name: string
+  name?: string
   onOpenChange: (open: boolean) => void
+  title: string
 }
 
-const DeleteForm = ({ cancel, deleteCB, id, isOpen, name, onOpenChange }: DeleteProps) => {
+const DeleteForm = ({ cancel, deleteCB, id, isOpen, name, onOpenChange, title }: DeleteProps) => {
   const onDeleteDeck = () => {
-    deleteCB(id)
-    onOpenChange(false)
+    if (id) {
+      deleteCB(id)
+      onOpenChange(false)
+    }
   }
 
   return (
-    <Modal onOpenChange={onOpenChange} open={isOpen} title={name}>
+    <Modal onOpenChange={onOpenChange} open={isOpen} title={title}>
       <div className={s.form}>
         <div className={s.text}>
           <Typography>{`Do you really want to remove ${name} ?`}</Typography>

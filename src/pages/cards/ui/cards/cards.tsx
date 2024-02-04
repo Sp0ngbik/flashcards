@@ -13,6 +13,7 @@ import { Typography } from '@/common/ui/typography'
 import { EditCardType } from '@/features/cards/cardForm/cardForm'
 import { CreateNewCard } from '@/features/cards/createNewCard/createNewCard'
 import { UpdateCard } from '@/features/cards/updateCard/updateCard'
+import DeleteForm from '@/features/deck/deleteForm/deleteForm'
 import { UpdateDeck } from '@/features/deck/updateDeck/updateDeck'
 import { useCardFilter } from '@/pages/cards/hooks/useCardFilter'
 import { CardRow } from '@/pages/cards/ui/card/cardRow'
@@ -64,15 +65,10 @@ export const Cards = () => {
     questionImg: undefined,
   })
   const [deleteDeck] = useDeleteDeckMutation()
+  const [isDeleteForm, setDeleteForm] = useState(false)
 
   const backDeck = sessionStorage.getItem('lastLocation')
 
-  const deleteDeckHandler = async () => {
-    if (id) {
-      await deleteDeck(id).unwrap()
-      navigate(`${backDeck}`)
-    }
-  }
   const learnDeckHandler = () => {
     navigate(`/cards/${id}/learn`)
   }
@@ -82,6 +78,18 @@ export const Cards = () => {
   }
   const onAddNewCardHandler = () => {
     setIsOpen(true)
+  }
+  const onOpenDeleteForm = () => {
+    setDeleteForm(true)
+  }
+  const onCloseDeleteForm = () => {
+    setDeleteForm(false)
+  }
+  const onDeleteDeck = async (id: string) => {
+    if (id) {
+      await deleteDeck(id).unwrap()
+      navigate(`${backDeck}`)
+    }
   }
 
   return (
@@ -100,6 +108,15 @@ export const Cards = () => {
         onOpenChange={setIsOpenCardEdit}
         title={'Update Card'}
       />
+      <DeleteForm
+        cancel={onCloseDeleteForm}
+        deleteCB={onDeleteDeck}
+        id={id}
+        isOpen={isDeleteForm}
+        name={getCardByIdData?.name}
+        onOpenChange={setDeleteForm}
+        title={'Delete Pack'}
+      />
       <NavLink className={s.backToDeck} to={`${backDeck}`}>
         <ArrowBack className={s.arrowBack} />
         Back to Decks List
@@ -110,10 +127,10 @@ export const Cards = () => {
             <Typography variant={'h1'}>{getCardByIdData?.name}</Typography>
             {isOwner && (
               <DropdownMenu
-                deleteDeck={deleteDeckHandler}
                 flag={'editCard'}
                 learnDeck={learnDeckHandler}
                 onEditClick={onEditClickHandler}
+                onOpenDeleteForm={onOpenDeleteForm}
               />
             )}
 

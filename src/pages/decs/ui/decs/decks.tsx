@@ -171,8 +171,10 @@ const Decks = () => {
                   deleteCB={onDeleteDeck}
                   id={deck.id}
                   isOpen={isDeleteForm}
-                  name={'Delete Pack'}
+                  key={deck.id}
+                  name={deck.name}
                   onOpenChange={setDeleteForm}
+                  title={'Delete Pack'}
                 />
                 <DeckRow
                   deck={deck}
