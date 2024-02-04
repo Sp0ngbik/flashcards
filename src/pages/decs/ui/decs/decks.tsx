@@ -120,14 +120,7 @@ const Decks = () => {
         onOpenChange={setIsOpenEdit}
         title={'Update Deck'}
       />
-      <DeleteForm
-        cancel={onCloseDeleteForm}
-        deck={deckData}
-        deleteCB={onDeleteDeck}
-        isOpen={isDeleteForm}
-        name={'Delete Pack'}
-        onOpenChange={setDeleteForm}
-      />
+
       <div className={s.deckHead}>
         <Typography variant={'h1'}>Decks List</Typography>
         <Button onClick={onCreateDeck}>Add New Deck</Button>
@@ -172,16 +165,26 @@ const Decks = () => {
         <TableBody>
           {deckData?.items?.map(deck => {
             return (
-              <DeckRow
-                deck={deck}
-                isDeleted={isDeckBeingDeleted}
-                isOwner={ownerValidation(deck.userId)}
-                key={deck.id}
-                learnDeck={learnDeckHandler}
-                openDeck={openDeckHandler}
-                openDeleteForm={onOpenDeleteForm}
-                openEditMode={onOpenEditMode}
-              />
+              <>
+                <DeleteForm
+                  cancel={onCloseDeleteForm}
+                  deleteCB={onDeleteDeck}
+                  id={deck.id}
+                  isOpen={isDeleteForm}
+                  name={'Delete Pack'}
+                  onOpenChange={setDeleteForm}
+                />
+                <DeckRow
+                  deck={deck}
+                  isDeleted={isDeckBeingDeleted}
+                  isOwner={ownerValidation(deck.userId)}
+                  key={deck.id}
+                  learnDeck={learnDeckHandler}
+                  openDeck={openDeckHandler}
+                  openDeleteForm={onOpenDeleteForm}
+                  openEditMode={onOpenEditMode}
+                />
+              </>
             )
           })}
         </TableBody>

@@ -6,17 +6,17 @@ import s from './deleteForm.module.scss'
 
 type DeleteProps = {
   cancel: () => void
-  deck: any
   deleteCB: (id: string) => void
+  id: string
   isOpen: boolean
   name: string
   onOpenChange: (open: boolean) => void
 }
 
-const DeleteForm = ({ cancel, deck, deleteCB, isOpen, name, onOpenChange }: DeleteProps) => {
+const DeleteForm = ({ cancel, deleteCB, id, isOpen, name, onOpenChange }: DeleteProps) => {
   const onDeleteDeck = () => {
-    console.log(deck)
-    deleteCB(deck || '')
+    deleteCB(id)
+    onOpenChange(false)
   }
 
   return (
