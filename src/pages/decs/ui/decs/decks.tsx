@@ -13,6 +13,7 @@ import TextField from '@/common/ui/textField/textField'
 import { Typography } from '@/common/ui/typography'
 import { CreateNewDeck } from '@/features/deck/createNewDeck/createNewDeck'
 import { EditDeckType } from '@/features/deck/deckForm/deckForm'
+import DeleteForm from '@/features/deck/deleteForm/deleteForm'
 import { UpdateDeck } from '@/features/deck/updateDeck/updateDeck'
 import { useDeckFilter } from '@/pages/decs/hooks/useDeckFIlter'
 import DeckRow from '@/pages/decs/ui/deckRow/deckRow'
@@ -70,6 +71,8 @@ const Decks = () => {
   const [deck, setDeck] = useState<EditDeckType>({ cover: null, isPrivate: false, name: '' })
   const [isOpen, setIsOpen] = useState(false)
   const [isOpenEdit, setIsOpenEdit] = useState(false)
+  const [isDeleteForm, setDeleteForm] = useState(false)
+
   const onCreateDeck = () => {
     setIsOpen(true)
   }
@@ -98,6 +101,15 @@ const Decks = () => {
   const ownerValidation = (userId: string) => {
     return userId === me?.id
   }
+  const onOpenDeleteForm = () => {
+    setDeleteForm(true)
+  }
+  const onCloseDeleteForm = () => {
+    setDeleteForm(false)
+  }
+  const onDeleteDeck = (id: string) => {
+    deleteDeck(id)
+  }
 
   return (
     <div className={s.deckWrapper}>
@@ -108,7 +120,14 @@ const Decks = () => {
         onOpenChange={setIsOpenEdit}
         title={'Update Deck'}
       />
-
+      <DeleteForm
+        cancel={onCloseDeleteForm}
+        deck={deckData}
+        deleteCB={onDeleteDeck}
+        isOpen={isDeleteForm}
+        name={'Delete Pack'}
+        onOpenChange={setDeleteForm}
+      />
       <div className={s.deckHead}>
         <Typography variant={'h1'}>Decks List</Typography>
         <Button onClick={onCreateDeck}>Add New Deck</Button>
@@ -155,12 +174,12 @@ const Decks = () => {
             return (
               <DeckRow
                 deck={deck}
-                deleteDeck={deleteDeck}
                 isDeleted={isDeckBeingDeleted}
                 isOwner={ownerValidation(deck.userId)}
                 key={deck.id}
                 learnDeck={learnDeckHandler}
                 openDeck={openDeckHandler}
+                openDeleteForm={onOpenDeleteForm}
                 openEditMode={onOpenEditMode}
               />
             )
