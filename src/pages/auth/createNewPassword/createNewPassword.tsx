@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import { Button } from '@/common/ui/button'
 import { Card } from '@/common/ui/card'
@@ -26,9 +27,14 @@ const CreateNewPassword = () => {
   })
   const [createNewPassword] = useCreateNewPasswordMutation()
   const navigate = useNavigate()
-  const onSubmit = (data: FormValuesCreatePassword) => {
-    token && createNewPassword({ password: data.password, token: token })
-    navigate('/sign-in')
+  const onSubmit = async (data: FormValuesCreatePassword) => {
+    if (token) {
+      await createNewPassword({ password: data.password, token: token })
+      toast.success('Password was updated')
+      navigate('/sign-in')
+    } else {
+      toast.error('No such user')
+    }
   }
 
   return (
