@@ -30,3 +30,10 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.userEmail {
+  display: flex;
+  justify-content: center;
+  color: var(--color-info-300);
+  text-decoration: none;
+}

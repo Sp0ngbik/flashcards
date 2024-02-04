@@ -24,7 +24,7 @@ export const ForgotPassword = () => {
   const [passwordRecovery] = usePasswordRecoveryMutation()
   const onSubmit = async (data: FormValuesForgotPassword) => {
     passwordRecovery({ email: data.email, html: htmlContent })
-    navigate('/check-email')
+    navigate('/check-email', { state: { email: data.email } })
   }
 
   const signInRedirect = () => {
