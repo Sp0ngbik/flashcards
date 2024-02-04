@@ -24,7 +24,7 @@ export const ForgotPassword = () => {
   const [passwordRecovery] = usePasswordRecoveryMutation()
   const onSubmit = (data: FormValuesForgotPassword) => {
     const link =
-      '<h1>Hi , ##name##</h1><p>Click <a href="http://127.0.0.1:5173/recover-password/##token##">here</a> to recover your password</p>'
+      '<h1>Hi , ##name##</h1><p>Click <a href="https://flashcards-beige.vercel.app/recover-password/##token##">here</a> to recover your password</p>'
 
     passwordRecovery({ email: data.email, html: link })
     navigate('/check-email')
