@@ -10,7 +10,7 @@ type EditCardComponentProps = {
   edit?: () => void
   learn?: () => void
   onEditClick: () => void
-  onOpenDeleteForm: (value: boolean) => void
+  onOpenDeleteForm?: (open: boolean) => void
 }
 
 export const EditCardComponent = ({
@@ -18,6 +18,12 @@ export const EditCardComponent = ({
   onEditClick,
   onOpenDeleteForm,
 }: EditCardComponentProps) => {
+  const openDeleteForm = () => {
+    if (onOpenDeleteForm) {
+      onOpenDeleteForm(true)
+    }
+  }
+
   return (
     <>
       <DropdownMenuRadix.Item className={s.DropdownMenuItem} onSelect={learn}>
@@ -30,10 +36,7 @@ export const EditCardComponent = ({
         <Typography variant={'caption'}>Edit</Typography>
       </DropdownMenuRadix.Item>
       <DropdownMenuRadix.Separator className={s.DropdownMenuSeparator} />
-      <DropdownMenuRadix.Item
-        className={s.DropdownMenuItem}
-        onSelect={() => onOpenDeleteForm(true)}
-      >
+      <DropdownMenuRadix.Item className={s.DropdownMenuItem} onSelect={openDeleteForm}>
         <Delete />
         <Typography variant={'caption'}>Delete</Typography>
       </DropdownMenuRadix.Item>

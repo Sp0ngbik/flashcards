@@ -15,7 +15,7 @@ type DropdownMenuProps = {
   flag?: 'editCard' | 'editProfile'
   learnDeck?: () => void
   onEditClick?: () => void
-  onOpenDeleteForm: (open: boolean) => void
+  onOpenDeleteForm?: (open: boolean) => void
   userAvatar?: null | string
   userEmail?: string
   userName?: string
