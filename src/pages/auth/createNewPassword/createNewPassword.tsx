@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { Button } from '@/common/ui/button'
 import { Card } from '@/common/ui/card'
@@ -8,11 +9,13 @@ import {
   FormValuesCreatePassword,
   createPasswordSchema,
 } from '@/pages/auth/createNewPassword/utils'
+import { useCreateNewPasswordMutation } from '@/services/auth/auth.sevice'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import s from './createNewPassword.module.scss'
 
 const CreateNewPassword = () => {
+  const { token } = useParams<{ token: string }>()
   const {
     control,
     formState: { errors },
@@ -21,13 +24,15 @@ const CreateNewPassword = () => {
     defaultValues: { password: '' },
     resolver: zodResolver(createPasswordSchema),
   })
-
+  const [createNewPassword] = useCreateNewPasswordMutation()
+  const navigate = useNavigate()
   const onSubmit = (data: FormValuesCreatePassword) => {
-    console.log(data)
+    token && createNewPassword({ password: data.password, token: token })
+    navigate('/sign-in')
   }
 
   return (
-    <Card>
+    <Card classNameWrapper={s.newPasswordWrapper}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Typography className={s.createPasswordLabel} variant={'large'}>
           Create new password

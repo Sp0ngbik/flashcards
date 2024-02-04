@@ -53,3 +53,8 @@ export type PasswordRecovery = {
   email: string
   html: string
 }
+
+export type CreateNewPassword = {
+  password: string
+  token: string
+}

@@ -49,7 +49,11 @@ export const useDeckFilter = () => {
     changeSearchHandler('itemsPerPage', '')
     changeSearchHandler('currentTab', '')
   }
-  const { data: deckData, isLoading: deckIsLoading } = useGetDecksQuery({
+  const {
+    data: deckData,
+    isError: deckError,
+    isLoading: deckIsLoading,
+  } = useGetDecksQuery({
     authorId: getCurrentTab === 'userCards' ? me?.id : undefined,
     currentPage: debounceCurrentPage,
     itemsPerPage: itemsPerPage,
@@ -62,8 +66,8 @@ export const useDeckFilter = () => {
   return {
     clearFilter,
     currentPage,
-    debounceName,
     deckData,
+    deckError,
     deckIsLoading,
     deleteDeck,
     getCurrentTab,

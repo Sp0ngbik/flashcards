@@ -6,11 +6,11 @@ import { Card } from '@/common/ui/card'
 import { TextFieldControlled } from '@/common/ui/controlled'
 import { Typography } from '@/common/ui/typography'
 import { FormValuesForgotPassword, forgotPasswordSchema } from '@/pages/auth/forgotPassword/utils'
+import { htmlContent } from '@/pages/auth/forgotPassword/utils/sendEmail'
 import { usePasswordRecoveryMutation } from '@/services/auth/auth.sevice'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import s from './forgotPassword.module.scss'
-
 export const ForgotPassword = () => {
   const {
     control,
@@ -22,16 +22,17 @@ export const ForgotPassword = () => {
   })
   const navigate = useNavigate()
   const [passwordRecovery] = usePasswordRecoveryMutation()
-  const onSubmit = (data: FormValuesForgotPassword) => {
-    const link =
-      '<h1>Hi , ##name##</h1><p>Click <a href="https://flashcards-beige.vercel.app/recover-password/##token##">here</a> to recover your password</p>'
-
-    passwordRecovery({ email: data.email, html: link })
+  const onSubmit = async (data: FormValuesForgotPassword) => {
+    passwordRecovery({ email: data.email, html: htmlContent })
     navigate('/check-email')
   }
 
+  const signInRedirect = () => {
+    navigate('/sign-in')
+  }
+
   return (
-    <Card>
+    <Card classNameWrapper={s.forgotPasswordWrapper}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Typography className={s.signInLabel} variant={'large'}>
           Forgot your password?
@@ -55,7 +56,7 @@ export const ForgotPassword = () => {
       <Typography className={s.formQuestion} variant={'body2'}>
         Did you remember your password?
       </Typography>
-      <Button className={s.submitButton} variant={'link'}>
+      <Button className={s.submitButton} onClick={signInRedirect} variant={'link'}>
         Try logging in
       </Button>
     </Card>

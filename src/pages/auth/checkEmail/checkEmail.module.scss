@@ -1,22 +1,32 @@
 .checkEmailLabel {
-    text-align: center;
+  text-align: center;
 }
 
-.iconWrapper{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    & .icon {
-        width: 96px;
-        height: 96px;
-        margin: 27px auto 0;
-    }
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  & .icon {
+    width: 96px;
+    height: 96px;
+    margin: 27px auto 0;
+  }
 }
+
 .sentEmail {
-        margin-top: 19px;
-        color: var(--color-light-900);
-        text-align: center;
+  margin-top: 19px;
+  color: var(--color-light-900);
+  text-align: center;
 }
-.button{
-    margin-top: 65px;
+
+.button {
+  margin-top: 65px;
+}
+
+.checkEmailWrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
