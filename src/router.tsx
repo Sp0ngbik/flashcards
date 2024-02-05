@@ -37,25 +37,17 @@ function PrivateRoutes() {
 }
 
 function PublicRoutes() {
-  // const { isAuthenticated } = useAuthContext()
+  const { isAuthenticated } = useAuthContext()
 
-  // return isAuthenticated ? <Navigate to={'/'} /> : <Outlet />
-  return <Outlet />
+  return isAuthenticated ? <Navigate to={'/'} /> : <Outlet />
 }
 
 const publicRoutes: RouteObject[] = [
-  { element: <CreateNewPassword />, path: '/recover-password/:token?' },
-]
-
-const publicProtectedRoutes: RouteObject[] = [
   { element: <SignUp />, path: '/sign-up' },
   { element: <SignIn />, path: '/sign-in' },
+  { element: <CreateNewPassword />, path: '/recover-password/:token' },
   { element: <ForgotPassword />, path: '/forgot-password' },
   { element: <CheckEmail />, path: '/check-email' },
-  {
-    element: <PageNotFound />,
-    path: '/*',
-  },
 ]
 
 const privateRoutes: RouteObject[] = [
@@ -68,21 +60,14 @@ const privateRoutes: RouteObject[] = [
   { element: <Learn />, path: '/cards/:id?/learn' },
 ]
 
+const appRoutes: RouteObject[] = [
+  { children: privateRoutes, element: <PrivateRoutes /> },
+  { children: publicRoutes, element: <PublicRoutes /> },
+]
+
 export const router = createBrowserRouter([
-  {
-    children: [
-      {
-        children: privateRoutes,
-        element: <PrivateRoutes />,
-      },
-      {
-        children: publicProtectedRoutes,
-        element: <PublicRoutes />,
-      },
-    ],
-    ...publicRoutes,
-    element: <Header />,
-  },
+  { children: appRoutes, element: <Header /> },
+  { element: <PageNotFound />, path: '/*' },
 ])
 
 export const Router = () => {

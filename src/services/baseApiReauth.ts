@@ -1,4 +1,3 @@
-import { router } from '@/router'
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError, fetchBaseQuery } from '@reduxjs/toolkit/query'
 import { Mutex } from 'async-mutex'
 
@@ -28,8 +27,6 @@ export const baseQueryWithRauth: BaseQueryFn<
 
       if (refreshResult.meta?.response?.status === 204) {
         result = await baseQuery(args, api, extraOptions)
-      } else {
-        await router.navigate('/sign-in')
       }
       release()
     } else {
