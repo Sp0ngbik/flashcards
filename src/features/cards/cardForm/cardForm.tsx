@@ -45,6 +45,7 @@ export const CardForm = ({
     control,
     formState: { errors },
     handleSubmit,
+    reset,
     setValue,
   } = useForm<FormValuesAddCard>({
     defaultValues: { answer: '', question: '' },
@@ -92,6 +93,7 @@ export const CardForm = ({
     } catch (error) {
       console.error('Error creating card:', error)
     }
+    reset()
   }
 
   const openQuestionFileInput = () => {

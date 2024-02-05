@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { usePageFilter } from '@/pages/hooks/pageFilter'
+import { usePageFilter } from '@/common/hooks/usePageFilter'
 import { useGetCardsQuery } from '@/services/cards/cards.service'
 import { useGetDeckByIdQuery } from '@/services/decks/decks.service'
 

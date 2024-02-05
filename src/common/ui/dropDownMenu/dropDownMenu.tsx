@@ -2,7 +2,7 @@ import { DotsForDropDown } from '@/assets/icons/dotsForDropDown'
 import userDefaultPhoto from '@/assets/image/defaultAvatar.png'
 import { EditCardComponent } from '@/common/ui/dropDownMenu/variant/editCardComponent'
 import { EditProfileComponent } from '@/common/ui/dropDownMenu/variant/editProfileComponent'
-import { useLogoutMutation } from '@/services/auth/auth.sevice'
+import { useLogoutMutation } from '@/services/auth/auth.service'
 import * as DropdownMenuRadix from '@radix-ui/react-dropdown-menu'
 import { clsx } from 'clsx'
 

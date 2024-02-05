@@ -10,7 +10,7 @@ import {
   FormValuesCreatePassword,
   createPasswordSchema,
 } from '@/pages/auth/createNewPassword/utils'
-import { useCreateNewPasswordMutation } from '@/services/auth/auth.sevice'
+import { useCreateNewPasswordMutation } from '@/services/auth/auth.service'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import s from './createNewPassword.module.scss'

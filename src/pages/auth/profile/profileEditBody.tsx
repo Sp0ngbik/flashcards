@@ -3,7 +3,7 @@ import { Button } from '@/common/ui/button'
 import { TextFieldControlled } from '@/common/ui/controlled'
 import { Typography } from '@/common/ui/typography'
 import { FormProfile, useEditProfile } from '@/pages/auth/profile/utils/useEditProfile'
-import { useLogoutMutation } from '@/services/auth/auth.sevice'
+import { useLogoutMutation } from '@/services/auth/auth.service'
 
 import s from './profile.module.scss'
 
