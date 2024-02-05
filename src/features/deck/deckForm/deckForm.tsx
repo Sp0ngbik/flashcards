@@ -42,6 +42,7 @@ const DeckForm = ({
     control,
     formState: { errors },
     handleSubmit,
+    reset,
     setValue,
   } = useForm<FormValuesAddDeck>({
     defaultValues: { isPrivate: false, name: '' },
@@ -80,6 +81,7 @@ const DeckForm = ({
     } catch (error) {
       console.error('Error creating deck:', error)
     }
+    reset()
   }
 
   const openFileInput = () => {

@@ -1,12 +1,12 @@
 import { useDebounce } from '@/common/hooks/useDebounce'
-import { usePageFilter } from '@/pages/hooks/pageFilter'
+import { usePageFilter } from '@/common/hooks/usePageFilter'
 import { useGetMinMaxCardsQuery } from '@/services/cards/cards.service'
-import { useDeleteDeckMutation, useGetDecksQuery } from '@/services/decks/decks.service'
+import { useGetDecksQuery } from '@/services/decks/decks.service'
 
 export const useDeckFilter = () => {
   const {
     changeSearchHandler,
-    debounceCurrentPage,
+    currentPage, // debounceCurrentPage,
     debounceName,
     me,
     onChangeCurrentPage,
@@ -19,7 +19,6 @@ export const useDeckFilter = () => {
     sortedString,
   } = usePageFilter()
   const { data: minMaxValues } = useGetMinMaxCardsQuery()
-  const [deleteDeck, { isLoading: isDeckBeingDeleted }] = useDeleteDeckMutation()
 
   const onTabValueChange = (value: string) => {
     changeSearchHandler('currentTab', value)
@@ -28,8 +27,6 @@ export const useDeckFilter = () => {
   const getCurrentTab = search.get('currentTab') || 'allCards'
 
   const itemsPerPage = Number(search.get('itemsPerPage') || '10')
-
-  const currentPage = Number(search.get('currentPage') || 1)
 
   const onChangeSliderValues = (value: number[]) => {
     changeSearchHandler('minCardsCount', value[0].toString())
@@ -55,7 +52,7 @@ export const useDeckFilter = () => {
     isLoading: deckIsLoading,
   } = useGetDecksQuery({
     authorId: getCurrentTab === 'userCards' ? me?.id : undefined,
-    currentPage: debounceCurrentPage,
+    currentPage: currentPage,
     itemsPerPage: itemsPerPage,
     maxCardsCount: debounceMaxCards,
     minCardsCount: debounceMinCards,
@@ -69,9 +66,7 @@ export const useDeckFilter = () => {
     deckData,
     deckError,
     deckIsLoading,
-    deleteDeck,
     getCurrentTab,
-    isDeckBeingDeleted,
     itemsPerPage,
     maxCards,
     me,

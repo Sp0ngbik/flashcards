@@ -8,7 +8,7 @@ import { TextFieldControlled } from '@/common/ui/controlled'
 import { Loader } from '@/common/ui/loader/Loader'
 import { Typography } from '@/common/ui/typography'
 import { FormValuesSignUp, signUpSchema } from '@/pages/auth/signUp/utils'
-import { useSignUpMutation } from '@/services/auth/auth.sevice'
+import { useSignUpMutation } from '@/services/auth/auth.service'
 import { ServerError } from '@/services/auth/auth.types'
 import { zodResolver } from '@hookform/resolvers/zod'
 

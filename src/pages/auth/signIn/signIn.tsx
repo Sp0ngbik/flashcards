@@ -7,7 +7,7 @@ import { Card } from '@/common/ui/card'
 import { CheckboxControlled, TextFieldControlled } from '@/common/ui/controlled'
 import { Typography } from '@/common/ui/typography'
 import { FormValuesSignIn, signInSchema } from '@/pages/auth/signIn/utils'
-import { useLoginMutation } from '@/services/auth/auth.sevice'
+import { useLoginMutation } from '@/services/auth/auth.service'
 import { ErrorResponse } from '@/services/auth/auth.types'
 import { zodResolver } from '@hookform/resolvers/zod'
 

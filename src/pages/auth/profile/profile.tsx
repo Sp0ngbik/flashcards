@@ -11,7 +11,7 @@ import ImageLoader from '@/common/ui/imageLoader/imageLoader'
 import { Typography } from '@/common/ui/typography'
 import { ProfileEditBody } from '@/pages/auth/profile/profileEditBody'
 import { FormProfile } from '@/pages/auth/profile/utils/useEditProfile'
-import { useMeQuery, useUpdateProfileMutation } from '@/services/auth/auth.sevice'
+import { useMeQuery, useUpdateProfileMutation } from '@/services/auth/auth.service'
 
 import s from './profile.module.scss'
 

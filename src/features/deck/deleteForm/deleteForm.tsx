@@ -14,7 +14,15 @@ type DeleteProps = {
   title: string
 }
 
-const DeleteForm = ({ cancel, deleteCB, id, isOpen, name, onOpenChange, title }: DeleteProps) => {
+export const DeleteForm = ({
+  cancel,
+  deleteCB,
+  id,
+  isOpen,
+  name,
+  onOpenChange,
+  title,
+}: DeleteProps) => {
   const onDeleteDeck = () => {
     if (id) {
       deleteCB(id)
@@ -41,5 +49,3 @@ const DeleteForm = ({ cancel, deleteCB, id, isOpen, name, onOpenChange, title }:
     </Modal>
   )
 }
-
-export default DeleteForm

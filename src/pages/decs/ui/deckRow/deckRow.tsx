@@ -1,7 +1,11 @@
+import { useState } from 'react'
+
 import { Delete, Edit, Play } from '@/assets'
 import { Button } from '@/common/ui/button'
 import { TableDataCell, TableRow } from '@/common/ui/table/tableConstuctor'
-import { EditDeckType } from '@/features/deck/deckForm/deckForm'
+import { EditDeckType } from '@/features/deck/deckForm'
+import { DeleteForm } from '@/features/deck/deleteForm'
+import { useDeleteDeckMutation } from '@/services/decks/decks.service'
 import { Deck } from '@/services/decks/decks.types'
 import { clsx } from 'clsx'
 
@@ -9,34 +13,32 @@ import s from './deckRow.module.scss'
 
 type DeckRowProps = {
   deck: Deck
-  isDeleted: boolean
   isOwner: boolean
   learnDeck: (id: string) => void
   openDeck: (id: string) => void
-  openDeleteForm: (value: true) => void
   openEditMode: (deck: EditDeckType) => void
 }
 
-const DeckRow = ({
-  deck,
-  isDeleted,
-  isOwner,
-  learnDeck,
-  openDeck,
-  openDeleteForm,
-  openEditMode,
-}: DeckRowProps) => {
+const DeckRow = ({ deck, isOwner, learnDeck, openDeck, openEditMode }: DeckRowProps) => {
   const isEmpty = deck.cardsCount === 0
+  const [isDeleteForm, setDeleteForm] = useState(false)
+  const [deleteDeck, { isLoading: isDeckBeingDeleted }] = useDeleteDeckMutation()
   const classNames = {
-    icon: clsx(s.icon, isDeleted && s.disableIcon),
+    icon: clsx(s.icon, isDeckBeingDeleted && s.disableIcon),
     iconPlay: clsx(s.icon, isEmpty && s.disableIcon),
   }
 
+  const onCloseDeleteForm = () => {
+    setDeleteForm(false)
+  }
+  const onDeleteDeck = (id: string) => {
+    deleteDeck(id)
+  }
   const openDeckHandler = () => {
     openDeck(deck.id)
   }
   const deleteDeckHandler = () => {
-    openDeleteForm(true)
+    setDeleteForm(true)
   }
 
   const openEditModeHandler = () => {
@@ -48,6 +50,16 @@ const DeckRow = ({
 
   return (
     <TableRow key={deck.id}>
+      <DeleteForm
+        cancel={onCloseDeleteForm}
+        deleteCB={onDeleteDeck}
+        id={deck.id}
+        isOpen={isDeleteForm}
+        key={deck.id}
+        name={deck.name}
+        onOpenChange={setDeleteForm}
+        title={'Delete Pack'}
+      />
       <TableDataCell>
         <Button className={s.tableDataContent} onClick={openDeckHandler} variant={'link'}>
           {deck.cover && <img alt={'image'} className={s.tableImage} src={deck.cover} />}

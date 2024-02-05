@@ -19,7 +19,7 @@ import { SignUp } from '@/pages/auth/signUp'
 import { Cards } from '@/pages/cards/ui/cards/cards'
 import Decks from '@/pages/decs/ui/decs/decks'
 import Learn from '@/pages/learn/learn'
-import { useMeQuery } from '@/services/auth/auth.sevice'
+import { useMeQuery } from '@/services/auth/auth.service'
 
 const useAuthContext = () => {
   return useOutletContext<AuthContext>()

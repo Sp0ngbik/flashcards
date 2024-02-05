@@ -3,7 +3,7 @@ import { Outlet, useNavigate } from 'react-router-dom'
 import { Logo } from '@/assets'
 import { Button } from '@/common/ui/button'
 import { DropdownMenu } from '@/common/ui/dropDownMenu'
-import { useMeQuery } from '@/services/auth/auth.sevice'
+import { useMeQuery } from '@/services/auth/auth.service'
 
 import s from './header.module.scss'
 

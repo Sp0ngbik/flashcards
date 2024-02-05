@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import { useDebounce } from '@/common/hooks/useDebounce'
 import { Sort } from '@/common/ui/table/table.stories'
-import { useMeQuery } from '@/services/auth/auth.sevice'
+import { useMeQuery } from '@/services/auth/auth.service'
 
 export const usePageFilter = () => {
   const navigate = useNavigate()
@@ -32,8 +32,6 @@ export const usePageFilter = () => {
   }
   const currentPage = Number(search.get('currentPage') || 1)
 
-  const debounceCurrentPage = useDebounce(currentPage, 400)
-
   const minCards = Number(search.get('minCardsCount') || 0)
   const maxCards = Number(search.get('maxCardsCount') || 15)
 
@@ -60,7 +58,6 @@ export const usePageFilter = () => {
   return {
     changeSearchHandler,
     currentPage,
-    debounceCurrentPage,
     debounceName,
     itemsPerPage,
     maxCards,

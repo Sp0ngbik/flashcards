@@ -15,7 +15,6 @@ const CheckEmail = () => {
   const {
     state: { email },
   } = useLocation()
-  const linkTo = email.split('@')[1]
 
   return (
     <Card classNameWrapper={s.checkEmailWrapper}>
@@ -28,7 +27,7 @@ const CheckEmail = () => {
       <Typography as={'p'} className={s.sentEmail} variant={'body2'}>
         We’ve sent an Email with instructions to
       </Typography>
-      <Typography as={'a'} className={s.userEmail} href={`https://${linkTo}`} variant={'link1'}>
+      <Typography as={'a'} className={s.userEmail} variant={'link1'}>
         {email}
       </Typography>
       <Button className={s.button} fullWidth onClick={redirectHandler}>

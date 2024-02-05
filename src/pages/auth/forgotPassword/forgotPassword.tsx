@@ -7,7 +7,7 @@ import { TextFieldControlled } from '@/common/ui/controlled'
 import { Typography } from '@/common/ui/typography'
 import { FormValuesForgotPassword, forgotPasswordSchema } from '@/pages/auth/forgotPassword/utils'
 import { htmlContent } from '@/pages/auth/forgotPassword/utils/sendEmail'
-import { usePasswordRecoveryMutation } from '@/services/auth/auth.sevice'
+import { usePasswordRecoveryMutation } from '@/services/auth/auth.service'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import s from './forgotPassword.module.scss'

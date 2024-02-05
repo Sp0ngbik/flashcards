@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 import { Delete } from '@/assets'
 import { Button } from '@/common/ui/button'
-import { Loader } from '@/common/ui/loader/Loader'
+import { Loader } from '@/common/ui/loader'
 import { Pagination } from '@/common/ui/pagination'
 import { DoubleSlider } from '@/common/ui/slider'
 import { TabSwitcher, TabType } from '@/common/ui/tabSwitcher'
@@ -11,10 +11,9 @@ import { Table, TableBody } from '@/common/ui/table/tableConstuctor'
 import { TableHeader } from '@/common/ui/table/tableHeader/tableHeader'
 import TextField from '@/common/ui/textField/textField'
 import { Typography } from '@/common/ui/typography'
-import { CreateNewDeck } from '@/features/deck/createNewDeck/createNewDeck'
-import { EditDeckType } from '@/features/deck/deckForm/deckForm'
-import DeleteForm from '@/features/deck/deleteForm/deleteForm'
-import { UpdateDeck } from '@/features/deck/updateDeck/updateDeck'
+import { CreateNewDeck } from '@/features/deck/createNewDeck'
+import { EditDeckType } from '@/features/deck/deckForm'
+import { UpdateDeck } from '@/features/deck/updateDeck'
 import { useDeckFilter } from '@/pages/decs/hooks/useDeckFIlter'
 import DeckRow from '@/pages/decs/ui/deckRow/deckRow'
 
@@ -44,14 +43,13 @@ const Decks = () => {
       sessionStorage.setItem('lastLocation', location.pathname + location.search)
     }
   }, [location])
+
   const {
     clearFilter,
     currentPage,
     deckData,
     deckIsLoading,
-    deleteDeck,
     getCurrentTab,
-    isDeckBeingDeleted,
     itemsPerPage,
     maxCards,
     me,
@@ -71,7 +69,6 @@ const Decks = () => {
   const [deck, setDeck] = useState<EditDeckType>({ cover: null, isPrivate: false, name: '' })
   const [isOpen, setIsOpen] = useState(false)
   const [isOpenEdit, setIsOpenEdit] = useState(false)
-  const [isDeleteForm, setDeleteForm] = useState(false)
 
   const onCreateDeck = () => {
     setIsOpen(true)
@@ -100,15 +97,6 @@ const Decks = () => {
 
   const ownerValidation = (userId: string) => {
     return userId === me?.id
-  }
-  const onOpenDeleteForm = () => {
-    setDeleteForm(true)
-  }
-  const onCloseDeleteForm = () => {
-    setDeleteForm(false)
-  }
-  const onDeleteDeck = (id: string) => {
-    deleteDeck(id)
   }
 
   return (
@@ -165,28 +153,14 @@ const Decks = () => {
         <TableBody>
           {deckData?.items?.map(deck => {
             return (
-              <>
-                <DeleteForm
-                  cancel={onCloseDeleteForm}
-                  deleteCB={onDeleteDeck}
-                  id={deck.id}
-                  isOpen={isDeleteForm}
-                  key={deck.id}
-                  name={deck.name}
-                  onOpenChange={setDeleteForm}
-                  title={'Delete Pack'}
-                />
-                <DeckRow
-                  deck={deck}
-                  isDeleted={isDeckBeingDeleted}
-                  isOwner={ownerValidation(deck.userId)}
-                  key={deck.id}
-                  learnDeck={learnDeckHandler}
-                  openDeck={openDeckHandler}
-                  openDeleteForm={onOpenDeleteForm}
-                  openEditMode={onOpenEditMode}
-                />
-              </>
+              <DeckRow
+                deck={deck}
+                isOwner={ownerValidation(deck.userId)}
+                key={deck.id}
+                learnDeck={learnDeckHandler}
+                openDeck={openDeckHandler}
+                openEditMode={onOpenEditMode}
+              />
             )
           })}
         </TableBody>
