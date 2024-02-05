@@ -1,10 +1,12 @@
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 
 import { Delete, Edit, Play } from '@/assets'
 import { Button } from '@/common/ui/button'
 import { TableDataCell, TableRow } from '@/common/ui/table/tableConstuctor'
 import { EditDeckType } from '@/features/deck/deckForm'
 import { DeleteForm } from '@/features/deck/deleteForm'
+import { ErrorResponse } from '@/services/auth/auth.types'
 import { useDeleteDeckMutation } from '@/services/decks/decks.service'
 import { Deck } from '@/services/decks/decks.types'
 import { clsx } from 'clsx'
@@ -31,8 +33,16 @@ const DeckRow = ({ deck, isOwner, learnDeck, openDeck, openEditMode }: DeckRowPr
   const onCloseDeleteForm = () => {
     setDeleteForm(false)
   }
-  const onDeleteDeck = (id: string) => {
-    deleteDeck(id)
+  const onDeleteDeck = async (id: string) => {
+    try {
+      if (id) {
+        await toast.promise(deleteDeck(id).unwrap(), { pending: 'In progress', success: 'Success' })
+      }
+    } catch (e: unknown) {
+      const err = e as ErrorResponse
+
+      toast.error(err.data.message ?? 'Coudnt Delete')
+    }
   }
   const openDeckHandler = () => {
     openDeck(deck.id)
