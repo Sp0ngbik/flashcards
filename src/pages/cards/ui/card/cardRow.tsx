@@ -1,10 +1,12 @@
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 
 import { Delete, Edit } from '@/assets'
 import { Grade } from '@/common/ui/grade/grade'
 import { TableDataCell, TableRow } from '@/common/ui/table/tableConstuctor'
 import { EditCardType } from '@/features/cards/cardForm/cardForm'
 import { DeleteForm } from '@/features/deck/deleteForm'
+import { ErrorResponse } from '@/services/auth/auth.types'
 import { useDeleteCardMutation } from '@/services/cards/cards.service'
 import { RootObjectItems } from '@/services/decks/decks.types'
 
@@ -24,8 +26,19 @@ export const CardRow = ({ card, isOwner, onEditCardClickHandler }: CardRowProps)
   const cancelDeleteForm = () => {
     setDeleteForm(false)
   }
-  const deleteCardCB = (id: string) => {
-    deleteCard({ id })
+  const deleteCardCB = async (id: string) => {
+    try {
+      if (id) {
+        await toast.promise(deleteCard({ id }).unwrap(), {
+          pending: 'In progress',
+          success: 'Success',
+        })
+      }
+    } catch (e: unknown) {
+      const err = e as ErrorResponse
+
+      toast.error(err.data.message ?? 'Coudnt Delete')
+    }
   }
   const onOpenDeleteCardForm = () => {
     setDeleteForm(true)

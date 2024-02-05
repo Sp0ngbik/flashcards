@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import { Dots } from '@/assets'
 import { ArrowBack } from '@/assets/icons/arrow-back-outline'
@@ -17,6 +18,7 @@ import { DeleteForm } from '@/features/deck/deleteForm'
 import { UpdateDeck } from '@/features/deck/updateDeck'
 import { useCardFilter } from '@/pages/cards/hooks/useCardFilter'
 import { CardRow } from '@/pages/cards/ui/card/cardRow'
+import { ErrorResponse } from '@/services/auth/auth.types'
 import { useDeleteDeckMutation } from '@/services/decks/decks.service'
 
 import s from './cards.module.scss'
@@ -86,9 +88,15 @@ export const Cards = () => {
     setDeleteForm(false)
   }
   const onDeleteDeck = async (id: string) => {
-    if (id) {
-      await deleteDeck(id).unwrap()
-      navigate(`${backDeck}`)
+    try {
+      if (id) {
+        await toast.promise(deleteDeck(id).unwrap(), { pending: 'In progress', success: 'Success' })
+        navigate(`${backDeck}`)
+      }
+    } catch (e: unknown) {
+      const err = e as ErrorResponse
+
+      toast.error(err.data.message ?? 'Coudnt Delete')
     }
   }
 

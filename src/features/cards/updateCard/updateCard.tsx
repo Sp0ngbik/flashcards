@@ -1,4 +1,7 @@
+import { toast } from 'react-toastify'
+
 import { CardForm, EditCardType } from '@/features/cards/cardForm/cardForm'
+import { ErrorResponse } from '@/services/auth/auth.types'
 import { useUpdateCardMutation } from '@/services/cards/cards.service'
 
 type UpdateCardModalProps = {
@@ -11,8 +14,19 @@ type UpdateCardModalProps = {
 export const UpdateCard = ({ card, id, isOpen, onOpenChange, title }: UpdateCardModalProps) => {
   const [updateCard] = useUpdateCardMutation()
 
-  const updateCurrentCard = (body: FormData) => {
-    id && updateCard({ body, id })
+  const updateCurrentCard = async (body: FormData) => {
+    try {
+      if (id) {
+        await toast.promise(updateCard({ body, id }).unwrap(), {
+          pending: 'In progress',
+          success: 'Success',
+        })
+      }
+    } catch (e: unknown) {
+      const err = e as ErrorResponse
+
+      toast.error(err.data.message ?? 'Could not update')
+    }
   }
 
   return (
