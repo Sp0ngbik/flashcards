@@ -7,7 +7,7 @@ import { useMeQuery } from '@/services/auth/auth.service'
 
 export const usePageFilter = () => {
   const navigate = useNavigate()
-  const [search, setSearch] = useSearchParams()
+  const [search, setSearch] = useSearchParams({})
 
   const { data: me } = useMeQuery()
 
@@ -31,9 +31,6 @@ export const usePageFilter = () => {
     changeSearchHandler('currentPage', value.toString())
   }
   const currentPage = Number(search.get('currentPage') || 1)
-
-  const minCards = Number(search.get('minCardsCount') || 0)
-  const maxCards = Number(search.get('maxCardsCount') || 15)
 
   const orderBy = JSON.parse(search.get('orderBy') || '""')
   const searchBy = search.get('name') || ''
@@ -60,9 +57,7 @@ export const usePageFilter = () => {
     currentPage,
     debounceName,
     itemsPerPage,
-    maxCards,
     me,
-    minCards,
     navigate,
     onChangeCurrentPage,
     onChangeName,
@@ -70,6 +65,7 @@ export const usePageFilter = () => {
     search,
     searchBy,
     setItemsPerPage,
+    setSearch,
     setSortedBy,
     sortedString,
   }

@@ -7,7 +7,6 @@ import {
   useOutletContext,
 } from 'react-router-dom'
 
-import { Loader } from '@/common/ui/loader'
 import { AuthContext, Header } from '@/layout/header'
 import PageNotFound from '@/layout/pageNotFound/pageNotFound'
 import CheckEmail from '@/pages/auth/checkEmail/checkEmail'
@@ -17,21 +16,15 @@ import { Profile } from '@/pages/auth/profile'
 import { SignIn } from '@/pages/auth/signIn'
 import { SignUp } from '@/pages/auth/signUp'
 import { Cards } from '@/pages/cards/ui/cards/cards'
-import Decks from '@/pages/decs/ui/decs/decks'
+import Decks from '@/pages/decs/ui/decks/decks'
 import Learn from '@/pages/learn/learn'
-import { useMeQuery } from '@/services/auth/auth.service'
 
 const useAuthContext = () => {
   return useOutletContext<AuthContext>()
 }
 
 function PrivateRoutes() {
-  const { isLoading } = useMeQuery()
   const { isAuthenticated } = useAuthContext()
-
-  if (isLoading) {
-    return <Loader />
-  }
 
   return isAuthenticated ? <Outlet /> : <Navigate to={'/sign-in'} />
 }

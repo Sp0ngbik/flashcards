@@ -3,11 +3,8 @@ import { useForm } from 'react-hook-form'
 
 import { Button } from '@/common/ui/button'
 import { Modal } from '@/common/ui/modal'
-import CardSection from '@/features/cards/createNewCard/cardSection/cardSection'
-import {
-  FormValuesAddCard,
-  addCardSchema,
-} from '@/features/cards/createNewCard/utils/addNewCardModalSchema'
+import CardSection from '@/features/cards/cardSection/cardSection'
+import { FormValuesAddCard, addCardSchema } from '@/features/cards/utils/addNewCardModalSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import s from '@/features/cards/createNewCard/addNewCardModal.module.scss'

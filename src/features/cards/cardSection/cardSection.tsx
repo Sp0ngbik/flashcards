@@ -6,7 +6,7 @@ import { Button } from '@/common/ui/button'
 import { TextFieldControlled } from '@/common/ui/controlled'
 import ImageLoader from '@/common/ui/imageLoader/imageLoader'
 import { Typography } from '@/common/ui/typography'
-import { FormValuesAddCard } from '@/features/cards/createNewCard/utils/addNewCardModalSchema'
+import { FormValuesAddCard } from '@/features/cards/utils/addNewCardModalSchema'
 import { ImageIcon } from '@radix-ui/react-icons'
 
 import s from '@/features/cards/createNewCard/addNewCardModal.module.scss'
