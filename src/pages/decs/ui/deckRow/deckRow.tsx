@@ -54,6 +54,7 @@ const DeckRow = ({ deck, isOwner, learnDeck, openDeck, openEditMode }: DeckRowPr
         cancel={onCloseDeleteForm}
         deleteCB={onDeleteDeck}
         id={deck.id}
+        isDeck
         isOpen={isDeleteForm}
         key={deck.id}
         name={deck.name}
