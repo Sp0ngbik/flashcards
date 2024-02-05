@@ -43,19 +43,18 @@ function PublicRoutes() {
   return <Outlet />
 }
 
+const publicRoutes: RouteObject[] = [
+  { element: <CreateNewPassword />, path: '/recover-password/:token?' },
+]
+
 const publicProtectedRoutes: RouteObject[] = [
+  { element: <SignUp />, path: '/sign-up' },
+  { element: <SignIn />, path: '/sign-in' },
+  { element: <ForgotPassword />, path: '/forgot-password' },
+  { element: <CheckEmail />, path: '/check-email' },
   {
-    children: [
-      { element: <SignUp />, path: '/sign-up' },
-      { element: <SignIn />, path: '/sign-in' },
-      { element: <ForgotPassword />, path: '/forgot-password' },
-      { element: <CreateNewPassword />, path: '/recover-password/:token?' },
-      { element: <CheckEmail />, path: '/check-email' },
-      {
-        element: <PageNotFound />,
-        path: '/*',
-      },
-    ],
+    element: <PageNotFound />,
+    path: '/*',
   },
 ]
 
@@ -81,6 +80,7 @@ export const router = createBrowserRouter([
         element: <PublicRoutes />,
       },
     ],
+    ...publicRoutes,
     element: <Header />,
   },
 ])
