@@ -27,12 +27,12 @@ export const SignIn = () => {
 
   const onSubmit = async (data: FormValuesSignIn) => {
     try {
-      await login(data).unwrap()
+      await toast.promise(login(data).unwrap(), { pending: 'In progress', success: 'Success' })
       navigate('/')
     } catch (e: unknown) {
       const err = e as ErrorResponse
 
-      toast.error(err.data.errorMessage ?? 'Could not sign in')
+      toast.error(err.data.message ?? 'Could not sign in')
     }
   }
 
