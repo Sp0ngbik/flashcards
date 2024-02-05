@@ -74,10 +74,6 @@ const Decks = () => {
     setIsOpen(true)
   }
 
-  if (deckIsLoading) {
-    return <Loader />
-  }
-
   const tabs: TabType[] = [
     { title: 'My Cards', value: 'userCards' },
     { title: 'All Cards', value: 'allCards' },
@@ -97,6 +93,10 @@ const Decks = () => {
 
   const ownerValidation = (userId: string) => {
     return userId === me?.id
+  }
+
+  if (deckIsLoading) {
+    return <Loader />
   }
 
   return (

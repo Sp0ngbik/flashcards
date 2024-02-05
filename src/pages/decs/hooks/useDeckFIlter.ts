@@ -6,7 +6,7 @@ import { useGetDecksQuery } from '@/services/decks/decks.service'
 export const useDeckFilter = () => {
   const {
     changeSearchHandler,
-    currentPage, // debounceCurrentPage,
+    currentPage,
     debounceName,
     me,
     onChangeCurrentPage,
@@ -15,6 +15,7 @@ export const useDeckFilter = () => {
     search,
     searchBy,
     setItemsPerPage,
+    setSearch,
     setSortedBy,
     sortedString,
   } = usePageFilter()
@@ -39,18 +40,9 @@ export const useDeckFilter = () => {
   const debounceMaxCards = useDebounce(maxCards, 1000)
 
   const clearFilter = () => {
-    changeSearchHandler('orderBy', '')
-    changeSearchHandler('name', '')
-    changeSearchHandler('minCardsCount', '')
-    changeSearchHandler('maxCardsCount', '')
-    changeSearchHandler('itemsPerPage', '')
-    changeSearchHandler('currentTab', '')
+    setSearch({})
   }
-  const {
-    data: deckData,
-    isError: deckError,
-    isLoading: deckIsLoading,
-  } = useGetDecksQuery({
+  const { data: deckData, isLoading: deckIsLoading } = useGetDecksQuery({
     authorId: getCurrentTab === 'userCards' ? me?.id : undefined,
     currentPage: currentPage,
     itemsPerPage: itemsPerPage,
@@ -64,7 +56,6 @@ export const useDeckFilter = () => {
     clearFilter,
     currentPage,
     deckData,
-    deckError,
     deckIsLoading,
     getCurrentTab,
     itemsPerPage,
