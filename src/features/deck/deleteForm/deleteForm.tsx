@@ -8,6 +8,7 @@ type DeleteProps = {
   cancel: () => void
   deleteCB: (id: string) => void
   id: string | undefined
+  isDeck: boolean
   isOpen: boolean
   name?: string
   onOpenChange: (open: boolean) => void
@@ -18,6 +19,7 @@ export const DeleteForm = ({
   cancel,
   deleteCB,
   id,
+  isDeck,
   isOpen,
   name,
   onOpenChange,
@@ -34,16 +36,28 @@ export const DeleteForm = ({
     <Modal onOpenChange={onOpenChange} open={isOpen} title={title}>
       <div className={s.form}>
         <div className={s.text}>
-          <Typography>{`Do you really want to remove ${name} ?`}</Typography>
-          <Typography>{`All cards will be deleted.`}</Typography>
+          {isDeck ? (
+            <>
+              <Typography>{`Do you really want to remove ${name} ?`}</Typography>
+              <Typography>{`All cards will be deleted.`}</Typography>
+            </>
+          ) : (
+            <Typography>{'Do you really want to remove this card?'}</Typography>
+          )}
         </div>
         <div className={s.buttons}>
           <Button onClick={cancel} variant={'secondary'}>
             Cancel
           </Button>
-          <Button onClick={onDeleteDeck} variant={'primary'}>
-            Delete Pack
-          </Button>
+          {isDeck ? (
+            <Button onClick={onDeleteDeck} variant={'primary'}>
+              Delete Pack
+            </Button>
+          ) : (
+            <Button onClick={onDeleteDeck} variant={'primary'}>
+              Delete Card
+            </Button>
+          )}
         </div>
       </div>
     </Modal>

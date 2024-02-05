@@ -112,6 +112,7 @@ export const Cards = () => {
         cancel={onCloseDeleteForm}
         deleteCB={onDeleteDeck}
         id={id}
+        isDeck
         isOpen={isDeleteForm}
         name={getCardByIdData?.name}
         onOpenChange={setDeleteForm}
