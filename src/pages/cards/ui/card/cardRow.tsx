@@ -5,6 +5,7 @@ import { Delete, Edit } from '@/assets'
 import noImageCover from '@/assets/image/noImage.png'
 import { Grade } from '@/common/ui/grade/grade'
 import { TableDataCell, TableRow } from '@/common/ui/table/tableConstuctor'
+import { Typography } from '@/common/ui/typography'
 import { UpdateCard } from '@/features/cards/updateCard/updateCard'
 import { DeleteForm } from '@/features/deck/deleteForm'
 import { ErrorResponse } from '@/services/auth/auth.types'
@@ -73,7 +74,9 @@ export const CardRow = ({ card, isOwner }: CardRowProps) => {
           ) : (
             <img alt={'image'} className={s.noImageCover} src={noImageCover} />
           )}
-          {card.question}
+          <Typography className={s.cardTypography} variant={'subtitle2'}>
+            {card.question}
+          </Typography>
         </span>
       </TableDataCell>
       <TableDataCell>
@@ -83,7 +86,9 @@ export const CardRow = ({ card, isOwner }: CardRowProps) => {
           ) : (
             <img alt={'image'} className={s.noImageCover} src={noImageCover} />
           )}
-          {card.answer}
+          <Typography className={s.cardTypography} variant={'subtitle2'}>
+            {card.answer}
+          </Typography>
         </span>
       </TableDataCell>
       <TableDataCell>{new Date(card.created).toLocaleDateString('ru-RU')}</TableDataCell>
