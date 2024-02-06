@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { Delete, Edit } from '@/assets'
+import noImageCover from '@/assets/image/noImage.png'
 import { Grade } from '@/common/ui/grade/grade'
 import { TableDataCell, TableRow } from '@/common/ui/table/tableConstuctor'
 import { EditCardType } from '@/features/cards/cardForm/cardForm'
@@ -58,13 +59,21 @@ export const CardRow = ({ card, isOwner, onEditCardClickHandler }: CardRowProps)
       />
       <TableDataCell>
         <span className={s.tableDataContent}>
-          {card.questionImg && <img alt={'image'} className={s.rowImage} src={card.questionImg} />}
+          {card.questionImg ? (
+            <img alt={'image'} className={s.rowImage} src={card.questionImg} />
+          ) : (
+            <img alt={'image'} className={s.noImageCover} src={noImageCover} />
+          )}
           {card.question}
         </span>
       </TableDataCell>
       <TableDataCell>
         <span className={s.tableDataContent}>
-          {card.answerImg && <img alt={'image'} className={s.rowImage} src={card.answerImg} />}
+          {card.answerImg ? (
+            <img alt={'image'} className={s.rowImage} src={card.answerImg} />
+          ) : (
+            <img alt={'image'} className={s.noImageCover} src={noImageCover} />
+          )}
           {card.answer}
         </span>
       </TableDataCell>
