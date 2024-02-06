@@ -8,48 +8,6 @@
   padding: 24px 137px;
 }
 
-.cardsHeader {
-  display: flex;
-  flex-direction: row;
-  gap: 30px;
-  justify-content: space-between;
-}
-
-.backToDeck {
-  display: flex;
-  gap: 5px;
-  color: var(--color-light-100);
-  text-decoration: none;
-
-  &:hover {
-    color: var(--color-accent-300);
-  }
-}
-
-.arrowBack {
-  margin-top: 2px;
-  fill: currentcolor;
-}
-
-.tableImage {
-  min-width: 150px;
-  max-height: 150px;
-}
-
-.emptyTypography {
-  margin: 0 auto;
-  font-size: 20px;
-  color: var(--color-dark-100);
-}
-
-.addCardDown {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  align-items: center;
-  justify-content: center;
-}
-
 .icon {
   cursor: pointer;
   margin-right: 10px;
@@ -63,9 +21,4 @@
 
   border: 2px solid white;
   border-radius: 50%;
-}
-
-.dropDownDiv {
-  display: flex;
-  flex-direction: row;
 }

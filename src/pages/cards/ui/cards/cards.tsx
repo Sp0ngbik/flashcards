@@ -1,26 +1,13 @@
-import { useState } from 'react'
-import { NavLink, useNavigate, useParams } from 'react-router-dom'
-import { toast } from 'react-toastify'
+import { useParams } from 'react-router-dom'
 
-import { Dots } from '@/assets'
-import { ArrowBack } from '@/assets/icons/arrow-back-outline'
 import { cardColumns } from '@/common/const'
-import { Button } from '@/common/ui/button'
-import { DropdownMenu } from '@/common/ui/dropDownMenu'
 import { Pagination } from '@/common/ui/pagination'
 import { Table, TableBody } from '@/common/ui/table/tableConstuctor'
 import { TableHeader } from '@/common/ui/table/tableHeader/tableHeader'
-import TextField from '@/common/ui/textField/textField'
 import { Typography } from '@/common/ui/typography'
-import { EditCardType } from '@/features/cards/cardForm/cardForm'
-import { CreateNewCard } from '@/features/cards/createNewCard/createNewCard'
-import { UpdateCard } from '@/features/cards/updateCard/updateCard'
-import { DeleteForm } from '@/features/deck/deleteForm'
-import { UpdateDeck } from '@/features/deck/updateDeck'
 import { useCardFilter } from '@/pages/cards/hooks/useCardFilter'
 import { CardRow } from '@/pages/cards/ui/card/cardRow'
-import { ErrorResponse } from '@/services/auth/auth.types'
-import { useDeleteDeckMutation } from '@/services/decks/decks.service'
+import CardHeader from '@/pages/cards/ui/cardHeader/cardHeader'
 
 import s from './cards.module.scss'
 
@@ -28,151 +15,27 @@ export const Cards = () => {
   const { id } = useParams<{ id: string }>()
   const {
     currentPage,
-    getCardByIdData,
     getCardsData,
     isEmpty,
-    isOpen,
-    isOpenEdit,
     isOwner,
     itemsPerPage,
     onChangeCurrentPage,
-    onChangeName,
     orderBy,
-    searchBy,
-    setIsOpen,
-    setIsOpenEdit,
     setItemsPerPage,
     setSortedBy,
   } = useCardFilter(id)
-  const navigate = useNavigate()
-  const [isOpenCardEdit, setIsOpenCardEdit] = useState(false)
-
-  const onEditCardClickHandler = (currentCard: EditCardType) => {
-    setIsOpenCardEdit(true)
-    setCard(currentCard)
-  }
-
-  const [card, setCard] = useState<EditCardType>({
-    answer: '',
-    answerImg: undefined,
-    question: '',
-    questionImg: undefined,
-  })
-  const [deleteDeck] = useDeleteDeckMutation()
-  const [isDeleteForm, setDeleteForm] = useState(false)
-
-  const backDeck = sessionStorage.getItem('lastLocation')
-
-  const learnDeckHandler = () => {
-    navigate(`/cards/${id}/learn`)
-  }
-
-  const onEditClickHandler = () => {
-    setIsOpenEdit(true)
-  }
-  const onAddNewCardHandler = () => {
-    setIsOpen(true)
-  }
-  const onOpenDeleteForm = () => {
-    setDeleteForm(true)
-  }
-  const onCloseDeleteForm = () => {
-    setDeleteForm(false)
-  }
-  const onDeleteDeck = async (id: string) => {
-    try {
-      if (id) {
-        await toast.promise(deleteDeck(id).unwrap(), { pending: 'In progress', success: 'Success' })
-        navigate(`${backDeck}`)
-      }
-    } catch (e: unknown) {
-      const err = e as ErrorResponse
-
-      toast.error(err.data.message ?? 'Coudnt Delete')
-    }
-  }
 
   return (
     <div className={s.cardWrapper}>
-      <UpdateDeck
-        deck={getCardByIdData}
-        isOpen={isOpenEdit}
-        onOpenChange={setIsOpenEdit}
-        title={'Update Deck'}
-      />
-      <CreateNewCard id={id} isOpen={isOpen} onOpenChange={setIsOpen} title={'Add New Card'} />
-      <UpdateCard
-        card={card}
-        id={card.id}
-        isOpen={isOpenCardEdit}
-        onOpenChange={setIsOpenCardEdit}
-        title={'Update Card'}
-      />
-      <DeleteForm
-        cancel={onCloseDeleteForm}
-        deleteCB={onDeleteDeck}
-        id={id}
-        isDeck
-        isOpen={isDeleteForm}
-        name={getCardByIdData?.name}
-        onOpenChange={setDeleteForm}
-        title={'Delete Pack'}
-      />
-      <NavLink className={s.backToDeck} to={`${backDeck}`}>
-        <ArrowBack className={s.arrowBack} />
-        Back to Decks List
-      </NavLink>
-      <div className={s.cardsHeader}>
-        <div>
-          <div className={s.dropDownDiv}>
-            <Typography variant={'h1'}>{getCardByIdData?.name}</Typography>
-            {isOwner && (
-              <DropdownMenu
-                flag={'editCard'}
-                learnDeck={learnDeckHandler}
-                onEditClick={onEditClickHandler}
-                onOpenDeleteForm={onOpenDeleteForm}
-              />
-            )}
+      <CardHeader />
 
-            <Dots />
-          </div>
-          <img alt={''} className={s.tableImage} src={getCardByIdData?.cover} />
-        </div>
-        {!isOwner && (
-          <Button onClick={learnDeckHandler} variant={'primary'}>
-            Learn to Pack
-          </Button>
-        )}
-        {isOwner && !isEmpty && (
-          <Button onClick={onAddNewCardHandler} variant={'primary'}>
-            Add New Card
-          </Button>
-        )}
-      </div>
-      {!isEmpty && (
-        <TextField
-          label={'Search'}
-          onValueChange={onChangeName}
-          placeholder={'Input search'}
-          value={searchBy}
-          variant={'search'}
-        />
-      )}
       {!isEmpty && (
         <>
           <Table>
             <TableHeader columns={cardColumns} onSort={setSortedBy} sort={orderBy} />
             <TableBody>
               {getCardsData?.items?.map(card => {
-                return (
-                  <CardRow
-                    card={card}
-                    isOwner={isOwner}
-                    key={card.id}
-                    onEditCardClickHandler={onEditCardClickHandler}
-                  />
-                )
+                return <CardRow card={card} isOwner={isOwner} key={card.id} />
               })}
             </TableBody>
           </Table>
@@ -189,16 +52,6 @@ export const Cards = () => {
         <Typography className={s.emptyTypography} variant={'subtitle1'}>
           This pack is empty.
         </Typography>
-      )}
-      {isEmpty && isOwner && (
-        <div className={s.addCardDown}>
-          <Typography className={s.emptyTypography} variant={'subtitle1'}>
-            This pack is empty. Click add new card to fill this pack{' '}
-          </Typography>
-          <Button onClick={onAddNewCardHandler} variant={'primary'}>
-            Add New Card
-          </Button>
-        </div>
       )}
     </div>
   )

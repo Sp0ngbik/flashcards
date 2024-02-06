@@ -4,24 +4,26 @@ import { toast } from 'react-toastify'
 import { Delete, Edit } from '@/assets'
 import { Grade } from '@/common/ui/grade/grade'
 import { TableDataCell, TableRow } from '@/common/ui/table/tableConstuctor'
-import { EditCardType } from '@/features/cards/cardForm/cardForm'
+import { UpdateCard } from '@/features/cards/updateCard/updateCard'
 import { DeleteForm } from '@/features/deck/deleteForm'
 import { ErrorResponse } from '@/services/auth/auth.types'
-import { useDeleteCardMutation } from '@/services/cards/cards.service'
+import { useDeleteCardMutation, useGetCardByIdQuery } from '@/services/cards/cards.service'
 import { RootObjectItems } from '@/services/decks/decks.types'
 
 import s from './cardRow.module.scss'
 type CardRowProps = {
   card: RootObjectItems
   isOwner: boolean
-  onEditCardClickHandler: (card: EditCardType) => void
 }
 
-export const CardRow = ({ card, isOwner, onEditCardClickHandler }: CardRowProps) => {
+export const CardRow = ({ card, isOwner }: CardRowProps) => {
   const [deleteCard] = useDeleteCardMutation()
+  const { data: cardById } = useGetCardByIdQuery({ id: card.id })
   const [isDeleteForm, setIsDeleteForm] = useState(false)
+  const [isOpenCardEdit, setIsOpenCardEdit] = useState(false)
+
   const openEditModeHandler = () => {
-    onEditCardClickHandler(card)
+    setIsOpenCardEdit(true)
   }
   const cancelDeleteForm = () => {
     setIsDeleteForm(false)
@@ -46,6 +48,13 @@ export const CardRow = ({ card, isOwner, onEditCardClickHandler }: CardRowProps)
 
   return (
     <TableRow key={card.id}>
+      <UpdateCard
+        card={cardById}
+        id={card.id}
+        isOpen={isOpenCardEdit}
+        onOpenChange={setIsOpenCardEdit}
+        title={'Update Card'}
+      />
       <DeleteForm
         cancel={cancelDeleteForm}
         deleteCB={deleteCardCB}
