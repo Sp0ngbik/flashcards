@@ -81,6 +81,7 @@ export const Profile: FC<ProfileProps> = ({ editStatus = false }) => {
             ) : (
               <img alt={'user image'} className={s.profileImg} src={uploadedImage()} />
             )}
+
             <button className={s.profileEditImgBtn} onClick={openFileInput}>
               <Edit />
             </button>
