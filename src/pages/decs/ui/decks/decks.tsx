@@ -6,6 +6,7 @@ import { Loader } from '@/common/ui/loader'
 import { Pagination } from '@/common/ui/pagination'
 import { Table, TableBody } from '@/common/ui/table/tableConstuctor'
 import { TableHeader } from '@/common/ui/table/tableHeader/tableHeader'
+import { Typography } from '@/common/ui/typography'
 import { useDeckFilter } from '@/pages/decs/hooks/useDeckFIlter'
 import DeckHeader from '@/pages/decs/ui/deckHeader/deckHeader'
 import DeckRow from '@/pages/decs/ui/deckRow/deckRow'
@@ -55,22 +56,28 @@ const Decks = () => {
   return (
     <div className={s.deckWrapper}>
       <DeckHeader />
-      <Table>
-        <TableHeader columns={deckColumns} onSort={setSortedBy} sort={orderBy} />
-        <TableBody>
-          {deckData?.items?.map(deck => {
-            return (
-              <DeckRow
-                deck={deck}
-                isOwner={isOwner(deck.userId)}
-                key={deck.id}
-                learnDeck={learnDeckHandler}
-                openDeck={openDeckHandler}
-              />
-            )
-          })}
-        </TableBody>
-      </Table>
+      {deckData?.items?.length ? (
+        <Table>
+          <TableHeader columns={deckColumns} onSort={setSortedBy} sort={orderBy} />
+          <TableBody>
+            {deckData?.items?.map(deck => {
+              return (
+                <DeckRow
+                  deck={deck}
+                  isOwner={isOwner(deck.userId)}
+                  key={deck.id}
+                  learnDeck={learnDeckHandler}
+                  openDeck={openDeckHandler}
+                />
+              )
+            })}
+          </TableBody>
+        </Table>
+      ) : (
+        <Typography className={s.deckText} variant={'subtitle1'}>
+          No content with these terms...
+        </Typography>
+      )}
       <Pagination
         changeCurrentPage={onChangeCurrentPage}
         changeItemsPerPage={setItemsPerPage}
