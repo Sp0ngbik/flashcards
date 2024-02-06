@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 
 import { Edit, LogOut } from '@/assets'
 import { Button } from '@/common/ui/button'
@@ -6,6 +7,7 @@ import { TextFieldControlled } from '@/common/ui/controlled'
 import { Typography } from '@/common/ui/typography'
 import { FormProfile, useEditProfile } from '@/pages/auth/profile/utils/useEditProfile'
 import { useLogoutMutation, useUpdateProfileMutation } from '@/services/auth/auth.service'
+import { ErrorResponse } from '@/services/auth/auth.types'
 
 import s from './profileEditBody.module.scss'
 
@@ -33,9 +35,18 @@ export const ProfileEditBody = ({ editStatus, email, nickname }: Props) => {
   const onEditOffHandler = () => {
     setEditMode(false)
   }
-  const onSubmit = (data: FormProfile) => {
-    updateName({ name: data.nickname })
-    onEditOffHandler()
+  const onSubmit = async (data: FormProfile) => {
+    try {
+      await toast.promise(updateName({ name: data.nickname }).unwrap, {
+        pending: 'In progress',
+        success: 'Name was updated',
+      })
+      onEditOffHandler()
+    } catch (e: unknown) {
+      const err = e as ErrorResponse
+
+      toast.error(err.data.message ?? 'Could not change username')
+    }
   }
 
   const onLogout = () => {
