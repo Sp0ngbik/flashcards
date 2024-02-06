@@ -31,13 +31,13 @@ export const CardRow = ({ card, isOwner, onEditCardClickHandler }: CardRowProps)
       if (id) {
         await toast.promise(deleteCard({ id }).unwrap(), {
           pending: 'In progress',
-          success: 'Success',
+          success: 'Card was deleted',
         })
       }
     } catch (e: unknown) {
       const err = e as ErrorResponse
 
-      toast.error(err.data.message ?? 'Coudnt Delete')
+      toast.error(err.data.message ?? "Couldn't Delete")
     }
   }
   const onOpenDeleteCardForm = () => {

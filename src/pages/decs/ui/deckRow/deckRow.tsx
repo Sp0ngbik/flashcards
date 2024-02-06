@@ -36,12 +36,15 @@ const DeckRow = ({ deck, isOwner, learnDeck, openDeck, openEditMode }: DeckRowPr
   const onDeleteDeck = async (id: string) => {
     try {
       if (id) {
-        await toast.promise(deleteDeck(id).unwrap(), { pending: 'In progress', success: 'Success' })
+        await toast.promise(deleteDeck(id).unwrap(), {
+          pending: 'In progress',
+          success: 'Deck was deleted',
+        })
       }
     } catch (e: unknown) {
       const err = e as ErrorResponse
 
-      toast.error(err.data.message ?? 'Coudnt Delete')
+      toast.error(err.data.message ?? "Couldn't Delete")
     }
   }
   const openDeckHandler = () => {
