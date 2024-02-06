@@ -28,15 +28,15 @@ export const useCardFilter = (id: string | undefined) => {
     orderBy: sortedString,
     question: debounceName,
   })
-  const { data: getCardByIdData } = useGetDeckByIdQuery({ id })
+  const { data: getDeckById } = useGetDeckByIdQuery({ id })
 
-  const isOwner = me?.id === getCardByIdData?.userId
-  const isEmpty = getCardByIdData?.cardsCount === 0
+  const isOwner = me?.id === getDeckById?.userId
+  const isEmpty = getDeckById?.cardsCount === 0
 
   return {
     currentPage,
-    getCardByIdData,
     getCardsData,
+    getDeckById,
     isEmpty,
     isOpen,
     isOpenEdit,

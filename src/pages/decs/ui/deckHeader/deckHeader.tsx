@@ -10,9 +10,9 @@ import { Typography } from '@/common/ui/typography'
 import { CreateNewDeck } from '@/features/deck/createNewDeck'
 import { useDeckFilter } from '@/pages/decs/hooks/useDeckFIlter'
 
-import s from './deckSearch.module.scss'
+import s from './deckHeader.module.scss'
 
-const DeckSearch = () => {
+const DeckHeader = () => {
   const {
     clearFilter,
     getCurrentTab,
@@ -77,4 +77,4 @@ const DeckSearch = () => {
   )
 }
 
-export default DeckSearch
+export default DeckHeader

@@ -7,8 +7,8 @@ import { Pagination } from '@/common/ui/pagination'
 import { Table, TableBody } from '@/common/ui/table/tableConstuctor'
 import { TableHeader } from '@/common/ui/table/tableHeader/tableHeader'
 import { useDeckFilter } from '@/pages/decs/hooks/useDeckFIlter'
+import DeckHeader from '@/pages/decs/ui/deckHeader/deckHeader'
 import DeckRow from '@/pages/decs/ui/deckRow/deckRow'
-import DeckSearch from '@/pages/decs/ui/deckSearch/deckSearch'
 
 import s from './decks.module.scss'
 
@@ -54,7 +54,7 @@ const Decks = () => {
 
   return (
     <div className={s.deckWrapper}>
-      <DeckSearch />
+      <DeckHeader />
       <Table>
         <TableHeader columns={deckColumns} onSort={setSortedBy} sort={orderBy} />
         <TableBody>
