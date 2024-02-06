@@ -11,6 +11,12 @@
   object-fit: cover;
 }
 
+
+.noImageCover {
+  min-width: 100px;
+  max-height: 50px;
+}
+
 .icon {
   cursor: pointer;
   margin-right: 10px;

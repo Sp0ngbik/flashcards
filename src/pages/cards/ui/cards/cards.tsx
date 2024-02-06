@@ -4,6 +4,7 @@ import { toast } from 'react-toastify'
 
 import { Dots } from '@/assets'
 import { ArrowBack } from '@/assets/icons/arrow-back-outline'
+import noImageCover from '@/assets/image/noImage.png'
 import { cardColumns } from '@/common/const'
 import { Button } from '@/common/ui/button'
 import { DropdownMenu } from '@/common/ui/dropDownMenu'
@@ -137,7 +138,11 @@ export const Cards = () => {
 
             <Dots />
           </div>
-          <img alt={''} className={s.tableImage} src={getCardByIdData?.cover} />
+          {getCardByIdData?.cover ? (
+            <img alt={''} className={s.tableImage} src={getCardByIdData.cover} />
+          ) : (
+            <img alt={''} className={s.tableImage} src={noImageCover} />
+          )}
         </div>
         {!isOwner && (
           <Button onClick={learnDeckHandler} variant={'primary'}>
