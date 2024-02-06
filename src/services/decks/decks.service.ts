@@ -32,28 +32,29 @@ export const decksService = baseApi.injectEndpoints({
         }),
       }),
       deleteDeck: build.mutation<Deck, string>({
-        // invalidatesTags: ['Decks'],
+        invalidatesTags: ['Decks'],
         async onQueryStarted(id, { dispatch, getState, queryFulfilled }) {
           const args = decksService.util.selectCachedArgsForQuery(getState(), 'getDecks')
-          let deleteResult
+          // let deleteResult
 
-          for (const { endpointName } of decksService.util.selectInvalidatedBy(getState(), [
-            { type: 'Decks' },
-          ])) {
-            if (endpointName !== 'getDecks') {
-              continue
-            }
+          // for (const { endpointName } of decksService.util.selectInvalidatedBy(getState(), [
+          //   { type: 'Decks' },
+          // ])) {
+          //   if (endpointName !== 'getDecks') {
+          //     continue
+          //   }
 
-            deleteResult = dispatch(
-              decksService.util.updateQueryData('getDecks', args[0], draft => {
-                const index = draft?.items?.findIndex(deck => deck.id === id)
+          const deleteResult = dispatch(
+            decksService.util.updateQueryData('getDecks', args[0], draft => {
+              const index = draft?.items?.findIndex(deck => deck.id === id)
 
-                if (index !== undefined && index !== -1) {
-                  draft?.items?.splice(index, 1)
-                }
-              })
-            )
-          }
+              if (index !== undefined && index !== -1) {
+                draft?.items?.splice(index, 1)
+              }
+            })
+          )
+
+          // }
           try {
             await queryFulfilled
           } catch {

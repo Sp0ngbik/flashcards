@@ -16,9 +16,10 @@
 }
 
 .noImageCover {
-  width: 118px;
-  height: 48px;
+  min-width: 50px;
+  min-height: 50px;
   margin-right: 10px;
+  object-fit: cover;
 }
 
 .icon {
