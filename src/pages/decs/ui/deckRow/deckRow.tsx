@@ -4,8 +4,8 @@ import { toast } from 'react-toastify'
 import { Delete, Edit, Play } from '@/assets'
 import { Button } from '@/common/ui/button'
 import { TableDataCell, TableRow } from '@/common/ui/table/tableConstuctor'
-import { EditDeckType } from '@/features/deck/deckForm'
 import { DeleteForm } from '@/features/deck/deleteForm'
+import { UpdateDeck } from '@/features/deck/updateDeck'
 import { ErrorResponse } from '@/services/auth/auth.types'
 import { useDeleteDeckMutation } from '@/services/decks/decks.service'
 import { Deck } from '@/services/decks/decks.types'
@@ -18,13 +18,14 @@ type DeckRowProps = {
   isOwner: boolean
   learnDeck: (id: string) => void
   openDeck: (id: string) => void
-  openEditMode: (deck: EditDeckType) => void
 }
 
-const DeckRow = ({ deck, isOwner, learnDeck, openDeck, openEditMode }: DeckRowProps) => {
-  const isEmpty = deck.cardsCount === 0
-  const [isDeleteForm, setDeleteForm] = useState(false)
+const DeckRow = ({ deck, isOwner, learnDeck, openDeck }: DeckRowProps) => {
   const [deleteDeck, { isLoading: isDeckBeingDeleted }] = useDeleteDeckMutation()
+  const [isDeleteForm, setDeleteForm] = useState(false)
+  const [isOpenEdit, setIsOpenEdit] = useState(false)
+
+  const isEmpty = deck.cardsCount === 0
   const classNames = {
     icon: clsx(s.icon, isDeckBeingDeleted && s.disableIcon),
     iconPlay: clsx(s.icon, isEmpty && s.disableIcon),
@@ -33,6 +34,22 @@ const DeckRow = ({ deck, isOwner, learnDeck, openDeck, openEditMode }: DeckRowPr
   const onCloseDeleteForm = () => {
     setDeleteForm(false)
   }
+
+  const openDeckHandler = () => {
+    openDeck(deck.id)
+  }
+  const deleteDeckHandler = () => {
+    setDeleteForm(true)
+  }
+
+  const learnDeckHandler = () => {
+    learnDeck(deck.id)
+  }
+
+  const onOpenEditMode = () => {
+    setIsOpenEdit(true)
+  }
+
   const onDeleteDeck = async (id: string) => {
     try {
       if (id) {
@@ -47,22 +64,15 @@ const DeckRow = ({ deck, isOwner, learnDeck, openDeck, openEditMode }: DeckRowPr
       toast.error(err.data.message ?? "Couldn't Delete")
     }
   }
-  const openDeckHandler = () => {
-    openDeck(deck.id)
-  }
-  const deleteDeckHandler = () => {
-    setDeleteForm(true)
-  }
-
-  const openEditModeHandler = () => {
-    openEditMode(deck)
-  }
-  const learnDeckHandler = () => {
-    learnDeck(deck.id)
-  }
 
   return (
     <TableRow key={deck.id}>
+      <UpdateDeck
+        deck={deck}
+        isOpen={isOpenEdit}
+        onOpenChange={setIsOpenEdit}
+        title={'Update Deck'}
+      />
       <DeleteForm
         cancel={onCloseDeleteForm}
         deleteCB={onDeleteDeck}
@@ -86,7 +96,7 @@ const DeckRow = ({ deck, isOwner, learnDeck, openDeck, openEditMode }: DeckRowPr
       <TableDataCell>
         {isOwner ? (
           <>
-            <Edit className={s.icon} onClick={openEditModeHandler} />
+            <Edit className={s.icon} onClick={onOpenEditMode} />
             <Play className={classNames.iconPlay} onClick={learnDeckHandler} />
             <Delete className={classNames.icon} onClick={deleteDeckHandler} />
           </>

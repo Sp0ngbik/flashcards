@@ -19,12 +19,12 @@ type CardRowProps = {
 
 export const CardRow = ({ card, isOwner, onEditCardClickHandler }: CardRowProps) => {
   const [deleteCard] = useDeleteCardMutation()
-  const [isDeleteForm, setDeleteForm] = useState(false)
+  const [isDeleteForm, setIsDeleteForm] = useState(false)
   const openEditModeHandler = () => {
     onEditCardClickHandler(card)
   }
   const cancelDeleteForm = () => {
-    setDeleteForm(false)
+    setIsDeleteForm(false)
   }
   const deleteCardCB = async (id: string) => {
     try {
@@ -41,7 +41,7 @@ export const CardRow = ({ card, isOwner, onEditCardClickHandler }: CardRowProps)
     }
   }
   const onOpenDeleteCardForm = () => {
-    setDeleteForm(true)
+    setIsDeleteForm(true)
   }
 
   return (
@@ -53,7 +53,7 @@ export const CardRow = ({ card, isOwner, onEditCardClickHandler }: CardRowProps)
         isDeck={false}
         isOpen={isDeleteForm}
         name={card.question}
-        onOpenChange={setDeleteForm}
+        onOpenChange={setIsDeleteForm}
         title={'Delete card'}
       />
       <TableDataCell>

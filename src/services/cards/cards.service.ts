@@ -6,7 +6,7 @@ export const cardsService = baseApi.injectEndpoints({
   endpoints(build) {
     return {
       createCard: build.mutation<CardsResponse, { data: CreateCard; id: string }>({
-        invalidatesTags: ['Cards'],
+        invalidatesTags: ['Cards', 'Decks'],
         query: args => ({
           body: args.data,
           method: 'POST',
