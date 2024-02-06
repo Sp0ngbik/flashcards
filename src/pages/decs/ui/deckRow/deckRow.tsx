@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { Delete, Edit, Play } from '@/assets'
+import noImageCover from '@/assets/image/noImage.png'
 import { Button } from '@/common/ui/button'
 import { TableDataCell, TableRow } from '@/common/ui/table/tableConstuctor'
 import { DeleteForm } from '@/features/deck/deleteForm'
@@ -86,7 +87,11 @@ const DeckRow = ({ deck, isOwner, learnDeck, openDeck }: DeckRowProps) => {
       />
       <TableDataCell>
         <Button className={s.tableDataContent} onClick={openDeckHandler} variant={'link'}>
-          {deck.cover && <img alt={'image'} className={s.tableImage} src={deck.cover} />}
+          {deck.cover ? (
+            <img alt={'image'} className={s.tableImage} src={deck.cover} />
+          ) : (
+            <img alt={'image'} className={s.noImageCover} src={noImageCover} />
+          )}
           {deck.name}
         </Button>
       </TableDataCell>

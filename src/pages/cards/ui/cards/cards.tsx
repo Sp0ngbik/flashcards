@@ -1,5 +1,9 @@
 import { useParams } from 'react-router-dom'
 
+
+import { Dots } from '@/assets'
+import { ArrowBack } from '@/assets/icons/arrow-back-outline'
+import noImageCover from '@/assets/image/noImage.png'
 import { cardColumns } from '@/common/const'
 import { Pagination } from '@/common/ui/pagination'
 import { Table, TableBody } from '@/common/ui/table/tableConstuctor'
@@ -28,7 +32,6 @@ export const Cards = () => {
   return (
     <div className={s.cardWrapper}>
       <CardHeader />
-
       {!isEmpty && (
         <>
           <Table>
