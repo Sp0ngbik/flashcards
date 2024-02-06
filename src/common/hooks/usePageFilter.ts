@@ -1,12 +1,11 @@
 import { useMemo } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 
 import { useDebounce } from '@/common/hooks/useDebounce'
 import { Sort } from '@/common/ui/table/table.stories'
 import { useMeQuery } from '@/services/auth/auth.service'
 
 export const usePageFilter = () => {
-  const navigate = useNavigate()
   const [search, setSearch] = useSearchParams({})
 
   const { data: me } = useMeQuery()
@@ -58,7 +57,6 @@ export const usePageFilter = () => {
     debounceName,
     itemsPerPage,
     me,
-    navigate,
     onChangeCurrentPage,
     onChangeName,
     orderBy,

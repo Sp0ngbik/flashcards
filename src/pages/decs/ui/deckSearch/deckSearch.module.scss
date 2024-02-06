@@ -1,0 +1,20 @@
+.deckHead {
+  display: flex;
+  justify-content: space-between;
+}
+
+.deckFilter {
+  display: flex;
+  place-content: center space-between;
+  place-items: flex-end center;
+  margin: 7px 0 36px;
+}
+
+.deleteIcon {
+  align-items: center;
+  margin-left: 50px;
+}
+
+.sliderLabel {
+  margin-bottom: 5px;
+}

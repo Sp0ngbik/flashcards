@@ -19,29 +19,29 @@ type CardRowProps = {
 
 export const CardRow = ({ card, isOwner, onEditCardClickHandler }: CardRowProps) => {
   const [deleteCard] = useDeleteCardMutation()
-  const [isDeleteForm, setDeleteForm] = useState(false)
+  const [isDeleteForm, setIsDeleteForm] = useState(false)
   const openEditModeHandler = () => {
     onEditCardClickHandler(card)
   }
   const cancelDeleteForm = () => {
-    setDeleteForm(false)
+    setIsDeleteForm(false)
   }
   const deleteCardCB = async (id: string) => {
     try {
       if (id) {
         await toast.promise(deleteCard({ id }).unwrap(), {
           pending: 'In progress',
-          success: 'Success',
+          success: 'Card was deleted',
         })
       }
     } catch (e: unknown) {
       const err = e as ErrorResponse
 
-      toast.error(err.data.message ?? 'Coudnt Delete')
+      toast.error(err.data.message ?? "Couldn't Delete")
     }
   }
   const onOpenDeleteCardForm = () => {
-    setDeleteForm(true)
+    setIsDeleteForm(true)
   }
 
   return (
@@ -53,7 +53,7 @@ export const CardRow = ({ card, isOwner, onEditCardClickHandler }: CardRowProps)
         isDeck={false}
         isOpen={isDeleteForm}
         name={card.question}
-        onOpenChange={setDeleteForm}
+        onOpenChange={setIsDeleteForm}
         title={'Delete card'}
       />
       <TableDataCell>

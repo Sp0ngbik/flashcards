@@ -8,6 +8,7 @@ export const useDeckFilter = () => {
     changeSearchHandler,
     currentPage,
     debounceName,
+    itemsPerPage,
     me,
     onChangeCurrentPage,
     onChangeName,
@@ -26,8 +27,6 @@ export const useDeckFilter = () => {
   }
 
   const getCurrentTab = search.get('currentTab') || 'allCards'
-
-  const itemsPerPage = Number(search.get('itemsPerPage') || '10')
 
   const onChangeSliderValues = (value: number[]) => {
     changeSearchHandler('minCardsCount', value[0].toString())

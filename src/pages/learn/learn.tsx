@@ -29,7 +29,6 @@ const Learn = () => {
   const [grade, setGrade] = useState<string>('1')
   const nextQuestion = async () => {
     await post({ cardId, grade: Number(grade) }).unwrap()
-    setGrade('1')
     showAnswer(false)
   }
 
@@ -37,7 +36,7 @@ const Learn = () => {
     <div className={s.cardWrapper}>
       <NavLink className={s.backToDeck} to={`/cards/${id}`}>
         <ArrowBack className={s.arrowBack} />
-        Back to Previous Page
+        Back to Cards
       </NavLink>
       <Card className={s.learnCard}>
         <Typography as={'header'} variant={'h1'}>{`Learn ${getCardByIdData?.name}`}</Typography>
