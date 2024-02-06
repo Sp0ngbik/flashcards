@@ -1,14 +1,18 @@
 import s from './loader.module.scss'
 
-export const Loader = () => {
+type LoaderProps = {
+  smallVersion?: boolean
+}
+
+export const Loader = ({ smallVersion }: LoaderProps) => {
   return (
-    <div className={s.loaderWrapper}>
+    <div className={smallVersion ? '' : s.loaderWrapper}>
       <svg
-        className={s.loader}
-        height={'244px'}
+        className={smallVersion ? '' : s.loader}
+        height={smallVersion ? '100%' : '244px'}
         preserveAspectRatio={'xMidYMid'}
         viewBox={'0 0 100 100'}
-        width={'244px'}
+        width={smallVersion ? '100%' : '244px'}
         xmlns={'http://www.w3.org/2000/svg'}
       >
         <path d={'M6 50A44 44 0 0 0 94 50A44 45.2 0 0 1 6 50'} fill={'#8c61ff'} stroke={'none'}>

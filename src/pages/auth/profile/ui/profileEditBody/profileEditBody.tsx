@@ -1,35 +1,46 @@
+import { useState } from 'react'
+
 import { Edit, LogOut } from '@/assets'
 import { Button } from '@/common/ui/button'
 import { TextFieldControlled } from '@/common/ui/controlled'
 import { Typography } from '@/common/ui/typography'
 import { FormProfile, useEditProfile } from '@/pages/auth/profile/utils/useEditProfile'
-import { useLogoutMutation } from '@/services/auth/auth.service'
+import { useLogoutMutation, useUpdateProfileMutation } from '@/services/auth/auth.service'
 
-import s from './profile.module.scss'
+import s from './profileEditBody.module.scss'
 
 type Props = {
-  editMode: boolean
+  editStatus: boolean
   email?: string
   nickname: string
-  onEditOffHandler: () => void
-  onEditOnHandler: () => void
-  onSubmit: (data: FormProfile) => void
 }
 
-export const ProfileEditBody = ({
-  editMode,
-  email,
-  nickname,
-  onEditOffHandler,
-  onEditOnHandler,
-  onSubmit,
-}: Props) => {
+export const ProfileEditBody = ({ editStatus, email, nickname }: Props) => {
+  const [updateName] = useUpdateProfileMutation()
+
   const {
     control,
     formState: { errors },
     handleSubmit,
   } = useEditProfile({ nickname })
+  const [editMode, setEditMode] = useState<boolean>(editStatus)
+
   const [logout] = useLogoutMutation()
+  const onEditOnHandler = () => {
+    setEditMode(true)
+  }
+
+  const onEditOffHandler = () => {
+    setEditMode(false)
+  }
+  const onSubmit = (data: FormProfile) => {
+    updateName({ name: data.nickname })
+    onEditOffHandler()
+  }
+
+  const onLogout = () => {
+    logout()
+  }
 
   if (editMode) {
     return (
@@ -64,7 +75,7 @@ export const ProfileEditBody = ({
       <Typography className={s.userEmail} variant={'body2'}>
         {email}
       </Typography>
-      <Button className={s.logoutBtn} onClick={() => logout()} variant={'secondary'}>
+      <Button className={s.logoutBtn} onClick={onLogout} variant={'secondary'}>
         <LogOut className={s.logoutIcon} />
         Logout
       </Button>
