@@ -12,6 +12,7 @@ type ImageLoaderProps<T extends ElementType = 'input'> = {
 const ImageLoader = forwardRef<HTMLInputElement, ImageLoaderProps>(({ setPhoto, ...rest }, ref) => {
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0]
+
     let err = null
 
     try {
@@ -28,6 +29,7 @@ const ImageLoader = forwardRef<HTMLInputElement, ImageLoaderProps>(({ setPhoto, 
     if (!err) {
       selectedFile && setPhoto(selectedFile)
     }
+    e.target.value = ''
   }
 
   return <input onChange={handleFileChange} ref={ref} type={'file'} {...rest} />

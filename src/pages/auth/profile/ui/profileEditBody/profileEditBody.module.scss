@@ -1,0 +1,58 @@
+.form {
+  width: 100%;
+}
+
+.editNameField {
+  margin-bottom: 15px;
+}
+
+.saveChanges {
+  margin-bottom: 15px;
+}
+
+.profileEditWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profileName {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 9px;
+}
+
+.profileEditNameBtn {
+  padding: 4px 4px 0;
+  background-color: transparent;
+  border: none;
+  border-radius: 4px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: var(--color-dark-100);
+    border-radius: 4px;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-info-500);
+  }
+}
+
+.userEmail {
+  margin-bottom: 15px;
+  color: var(--color-dark-100);
+}
+
+.logoutBtn {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.logoutIcon {
+  width: 16px;
+  height: 16px;
+  fill: white;
+}

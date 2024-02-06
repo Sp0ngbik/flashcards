@@ -1,2 +1,2 @@
-export * from './profile'
-export { ProfileEditBody } from './profileEditBody'
+export * from './ui/profile/profile'
+export { ProfileEditBody } from './ui/profileEditBody/profileEditBody'
