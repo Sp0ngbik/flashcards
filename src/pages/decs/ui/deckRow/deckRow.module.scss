@@ -1,25 +1,16 @@
 .tableDataContent {
   display: flex;
+  max-width: 280px;
+  flex-direction: row;
+  gap: 20px;
   align-items: center;
-
-  padding: 6px 0;
-
-  font-size: 14px;
-  color: var(--color-light-100);
+  cursor: pointer;
 }
 
 .tableImage {
-  width: 118px;
-  height: 48px;
-  margin-right: 10px;
-  object-fit: cover;
-}
-
-.noImageCover {
-  min-width: 50px;
-  min-height: 50px;
-  margin-right: 10px;
-  object-fit: cover;
+    width: 70px;
+    max-height: 50px;
+    object-fit: cover;
 }
 
 .icon {
