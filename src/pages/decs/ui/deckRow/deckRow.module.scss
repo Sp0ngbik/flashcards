@@ -8,15 +8,13 @@
 }
 
 .tableImage {
-    min-width: 70px;
-    max-width: 70px;
+    width: 70px;
     max-height: 50px;
     object-fit: cover;
 }
 
 .noImageCover {
-  min-width: 70px;
-  max-width: 70px;
+  width: 70px;
   max-height: 50px;
   object-fit: cover;
 }
