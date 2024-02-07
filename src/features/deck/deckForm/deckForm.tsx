@@ -1,6 +1,5 @@
 import { RefObject, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { toast } from 'react-toastify'
 
 import { Trash } from '@/assets/icons/trash'
 import { Button } from '@/common/ui/button'
@@ -25,7 +24,7 @@ type AddNewDeckModalProps = {
   disabled?: boolean
   isOpen: boolean
   onOpenChange: (open: boolean) => void
-  onSubmitDeck: (data: FormData) => any
+  onSubmitDeck: (data: FormData) => void
   title: string
 }
 
@@ -65,28 +64,18 @@ const DeckForm = ({
   }
 
   const onSubmit = async (data: FormValuesAddDeck) => {
-    try {
-      const formData = new FormData()
+    const formData = new FormData()
 
-      if (photo instanceof File) {
-        formData.append('cover', photo)
-      } else if (photo === null) {
-        formData.append('cover', '')
-      }
-      formData.append('name', data.name)
-      formData.append('isPrivate', String(data.isPrivate))
-
-      onOpenChange(false)
-      await toast.promise(onSubmitDeck(formData).unwrap(), {
-        pending: 'In progress',
-        success: 'Added',
-      })
-      setPhoto(null)
-    } catch (e: unknown) {
-      const err = e as any
-
-      toast.error(err.data.errorMessages[0].message ?? "Couldn't Add")
+    if (photo instanceof File) {
+      formData.append('cover', photo)
+    } else if (photo === null) {
+      formData.append('cover', '')
     }
+    formData.append('name', data.name)
+    formData.append('isPrivate', String(data.isPrivate))
+    onOpenChange(false)
+    onSubmitDeck(formData)
+    setPhoto(null)
     reset()
   }
 
