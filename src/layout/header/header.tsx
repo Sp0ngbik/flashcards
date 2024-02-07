@@ -25,7 +25,7 @@ export const Header = () => {
     return navigate('/sign-in')
   }
 
-  if (!isAuthenticated) {
+  if (isLoading) {
     return <Loader />
   }
 
