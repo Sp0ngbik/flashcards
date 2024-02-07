@@ -84,7 +84,7 @@ export const CardRow = ({ card, isOwner }: CardRowProps) => {
           {card.answerImg ? (
             <img alt={'image'} className={s.rowImage} src={card.answerImg} />
           ) : (
-            <img alt={'image'} className={s.noImageCover} src={noImageCover} />
+            <img alt={'image'} className={s.rowImage} src={noImageCover} />
           )}
           <Typography className={s.cardTypography} variant={'subtitle2'}>
             {card.answer}
