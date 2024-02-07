@@ -90,7 +90,7 @@ const DeckRow = ({ deck, isOwner, learnDeck, openDeck }: DeckRowProps) => {
           {deck.cover ? (
             <img alt={'image'} className={s.tableImage} src={deck.cover} />
           ) : (
-            <img alt={'image'} className={s.noImageCover} src={noImageCover} />
+            <img alt={'image'} className={s.tableImage} src={noImageCover} />
           )}
           <Typography variant={'subtitle2'}>{deck.name}</Typography>
         </span>
