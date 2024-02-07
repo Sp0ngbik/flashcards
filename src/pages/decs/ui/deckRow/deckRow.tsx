@@ -3,8 +3,8 @@ import { toast } from 'react-toastify'
 
 import { Delete, Edit, Play } from '@/assets'
 import noImageCover from '@/assets/image/noImage.png'
-import { Button } from '@/common/ui/button'
 import { TableDataCell, TableRow } from '@/common/ui/table/tableConstuctor'
+import { Typography } from '@/common/ui/typography'
 import { DeleteForm } from '@/features/deck/deleteForm'
 import { UpdateDeck } from '@/features/deck/updateDeck'
 import { ErrorResponse } from '@/services/auth/auth.types'
@@ -86,14 +86,14 @@ const DeckRow = ({ deck, isOwner, learnDeck, openDeck }: DeckRowProps) => {
         title={'Delete Pack'}
       />
       <TableDataCell>
-        <Button className={s.tableDataContent} onClick={openDeckHandler} variant={'link'}>
+        <span className={s.tableDataContent} onClick={openDeckHandler}>
           {deck.cover ? (
             <img alt={'image'} className={s.tableImage} src={deck.cover} />
           ) : (
             <img alt={'image'} className={s.noImageCover} src={noImageCover} />
           )}
-          {deck.name}
-        </Button>
+          <Typography variant={'subtitle2'}>{deck.name}</Typography>
+        </span>
       </TableDataCell>
       <TableDataCell>{deck.cardsCount}</TableDataCell>
       <TableDataCell>{new Date(deck.updated).toLocaleDateString('ru-RU')}</TableDataCell>
