@@ -1,20 +1,25 @@
 .tableDataContent {
   display: flex;
+  max-width: 280px;
   flex-direction: row;
-  gap: 10px;
+  gap: 50px;
   align-items: center;
+}
+.cardTypography{
+  white-space: pre-wrap;
 }
 
 .rowImage {
-  min-width: 100px;
+  min-width: 70px;
   max-height: 50px;
   object-fit: cover;
 }
 
 
 .noImageCover {
-  min-width: 100px;
+  min-width: 70px;
   max-height: 50px;
+  object-fit: cover;
 }
 
 .icon {

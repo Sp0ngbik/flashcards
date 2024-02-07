@@ -1,5 +1,6 @@
 import { RefObject, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 
 import { Trash } from '@/assets/icons/trash'
 import { Button } from '@/common/ui/button'
@@ -24,7 +25,7 @@ type AddNewDeckModalProps = {
   disabled?: boolean
   isOpen: boolean
   onOpenChange: (open: boolean) => void
-  onSubmitDeck: (data: FormData) => void
+  onSubmitDeck: (data: FormData) => any
   title: string
 }
 
@@ -76,10 +77,15 @@ const DeckForm = ({
       formData.append('isPrivate', String(data.isPrivate))
 
       onOpenChange(false)
-      onSubmitDeck(formData)
+      await toast.promise(onSubmitDeck(formData).unwrap(), {
+        pending: 'In progress',
+        success: 'Added',
+      })
       setPhoto(null)
-    } catch (error) {
-      console.error('Error creating deck:', error)
+    } catch (e: unknown) {
+      const err = e as any
+
+      toast.error(err.data.errorMessages[0].message ?? "Couldn't Add")
     }
     reset()
   }
