@@ -3,6 +3,7 @@ import { Outlet, useNavigate } from 'react-router-dom'
 import { Logo } from '@/assets'
 import { Button } from '@/common/ui/button'
 import { DropdownMenu } from '@/common/ui/dropDownMenu'
+import { Loader } from '@/common/ui/loader'
 import { useMeQuery } from '@/services/auth/auth.service'
 
 import s from './header.module.scss'
@@ -22,6 +23,10 @@ export const Header = () => {
 
   const signInRedirect = () => {
     return navigate('/sign-in')
+  }
+
+  if (isLoading) {
+    return <Loader />
   }
 
   return (
