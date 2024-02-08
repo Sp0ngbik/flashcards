@@ -38,7 +38,7 @@
   position: absolute;
   z-index: 2;
   right: -5px;
-  bottom: 15px;
+  bottom: 10px;
 
   padding: 4px 4px 0;
 
@@ -90,4 +90,32 @@
 .arrowBack {
   margin-top: 2px;
   fill: currentcolor;
+}
+
+.trashIcon {
+  width: 14px;
+  height: 14px;
+  fill: var(--color-light-100);
+}
+
+.deleteButton {
+  position: absolute;
+  z-index: 2;
+  bottom: 10px;
+  left: -5%;
+
+  padding: 4px 6px 0;
+
+  background-color: var(--color-dark-300);
+  border: none;
+  border-radius: 4px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: var(--color-dark-100);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-info-500);
+  }
 }
