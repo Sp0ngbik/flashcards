@@ -1,0 +1,90 @@
+.photoWrapper {
+  position: relative;
+  max-width: 96px;
+}
+
+.inputFile {
+  display: none;
+}
+
+.profileImg {
+  width: 96px;
+  height: 96px;
+  margin-bottom: 6px;
+  border-radius: 50%;
+}
+
+.deleteButton {
+  position: absolute;
+  bottom: 10px;
+  left: -5%;
+
+  padding: 4px 6px 0;
+
+  background-color: var(--color-dark-300);
+  border: none;
+  border-radius: 4px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: var(--color-dark-100);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-info-500);
+  }
+}
+
+.profileEditImgBtn {
+  position: absolute;
+  right: -5px;
+  bottom: 10px;
+
+  padding: 4px 4px 0;
+
+  background-color: var(--color-dark-300);
+  border: none;
+  border-radius: 4px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: var(--color-dark-100);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-info-500);
+  }
+}
+
+.imageAction {
+  display: flex;
+  justify-content: space-evenly;
+  width: 60%;
+  margin: 5px 0;
+
+  & button {
+    width: 40px;
+    text-align: center;
+  }
+}
+
+.trashIcon {
+  width: 14px;
+  height: 14px;
+  fill: var(--color-light-100);
+}
+
+.buttonSection {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.modalForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  width: 100%;
+  padding: 24px;
+}
