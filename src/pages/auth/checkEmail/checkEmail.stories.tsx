@@ -27,6 +27,4 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const CheckEmailAuth: Story = {
-  args: { email: 'yourmail@gmail.ru' },
-}
+export const CheckEmailAuth: Story = {}
