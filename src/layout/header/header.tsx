@@ -59,7 +59,7 @@ export const Header = ({ isAuth }: HeaderProps) => {
         </div>
       </header>
       <main>
-        <Outlet context={{ isAuthenticated } as AuthContext} />
+        <Outlet context={{ isAuthenticated } satisfies AuthContext} />
       </main>
     </div>
   )
