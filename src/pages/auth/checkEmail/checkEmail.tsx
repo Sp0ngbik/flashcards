@@ -12,9 +12,7 @@ const CheckEmail = () => {
   const redirectHandler = () => {
     navigate('/sign-in')
   }
-  const {
-    state: { email },
-  } = useLocation()
+  const { state } = useLocation()
 
   return (
     <Card classNameWrapper={s.checkEmailWrapper}>
@@ -28,7 +26,7 @@ const CheckEmail = () => {
         We’ve sent an Email with instructions to
       </Typography>
       <Typography as={'a'} className={s.userEmail} variant={'link1'}>
-        {email && 'example@test.com'}
+        {state ? state.email : 'example@test.com'}
       </Typography>
       <Button className={s.button} fullWidth onClick={redirectHandler}>
         Back to Sign In
