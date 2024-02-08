@@ -4,6 +4,7 @@ import { toast } from 'react-toastify'
 
 import { ArrowBack } from '@/assets/icons/arrow-back-outline'
 import { Edit } from '@/assets/icons/edit'
+import { Trash } from '@/assets/icons/trash'
 import defaultImage from '@/assets/image/defaultAvatar.png'
 import { Button } from '@/common/ui/button'
 import { Card } from '@/common/ui/card'
@@ -39,9 +40,16 @@ export const Profile: FC<ProfileProps> = ({ editStatus = false }) => {
     if (photo) {
       formData.append('avatar', photo)
       await updateAvatar(formData).unwrap()
-      setPhoto(null)
       toast.success('User avatar changed')
     }
+  }
+
+  const removeProfileAvatar = async () => {
+    const formData = new FormData()
+
+    formData.append('avatar', '')
+    await updateAvatar(formData).unwrap()
+    toast.success('User avatar removed')
   }
 
   const fileInputRef: RefObject<HTMLInputElement> = useRef(null)
@@ -81,7 +89,9 @@ export const Profile: FC<ProfileProps> = ({ editStatus = false }) => {
             ) : (
               <img alt={'user image'} className={s.profileImg} src={uploadedImage()} />
             )}
-
+            <button className={s.deleteButton} onClick={removeProfileAvatar}>
+              <Trash className={s.trashIcon} />
+            </button>
             <button className={s.profileEditImgBtn} onClick={openFileInput}>
               <Edit />
             </button>
