@@ -28,7 +28,7 @@ const CheckEmail = () => {
         We’ve sent an Email with instructions to
       </Typography>
       <Typography as={'a'} className={s.userEmail} variant={'link1'}>
-        {email}
+        {email && 'example@test.com'}
       </Typography>
       <Button className={s.button} fullWidth onClick={redirectHandler}>
         Back to Sign In
