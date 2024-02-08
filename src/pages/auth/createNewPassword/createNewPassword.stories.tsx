@@ -1,4 +1,8 @@
+import { Provider } from 'react-redux'
+import { BrowserRouter } from 'react-router-dom'
+
 import CreateNewPassword from '@/pages/auth/createNewPassword/createNewPassword'
+import { store } from '@/services/store'
 import { Meta, StoryObj } from '@storybook/react'
 import { userEvent, within } from '@storybook/test'
 
@@ -7,7 +11,11 @@ const meta = {
   decorators: [
     Story => (
       <div style={{ height: '340px' }}>
-        <Story />
+        <BrowserRouter>
+          <Provider store={store}>
+            <Story />
+          </Provider>
+        </BrowserRouter>
       </div>
     ),
   ],

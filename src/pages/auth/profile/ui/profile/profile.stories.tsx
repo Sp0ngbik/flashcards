@@ -1,3 +1,7 @@
+import { Provider } from 'react-redux'
+import { BrowserRouter } from 'react-router-dom'
+
+import { store } from '@/services/store'
 import { Meta, Story } from '@storybook/react'
 
 import { Profile, ProfileProps } from './profile'
@@ -7,7 +11,11 @@ export default {
   decorators: [
     Story => (
       <div style={{ height: '340px' }}>
-        <Story />
+        <BrowserRouter>
+          <Provider store={store}>
+            <Story />
+          </Provider>
+        </BrowserRouter>
       </div>
     ),
   ],
