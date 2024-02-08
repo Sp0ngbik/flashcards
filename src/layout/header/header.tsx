@@ -12,10 +12,15 @@ export type AuthContext = {
   isAuthenticated: boolean
 }
 
-export const Header = () => {
+interface HeaderProps {
+  isAuth?: boolean
+}
+
+export const Header = ({ isAuth }: HeaderProps) => {
   const { data, isError, isLoading } = useMeQuery()
   const isAuthenticated = !isError && !isLoading
   const navigate = useNavigate()
+  const isShowHeaderInfo = !isError && data
 
   const logoRedirect = () => {
     return navigate('/')
@@ -37,14 +42,14 @@ export const Header = () => {
             <Logo onClick={logoRedirect} />
           </div>
           <div className={s.headerRightSection}>
-            {!isError && data ? (
+            {isAuth ?? isShowHeaderInfo ? (
               <div className={s.userBlock}>
                 <span>{data?.name}</span>
                 <DropdownMenu
                   className={s.dropDownTrigger}
-                  userAvatar={data.avatar}
-                  userEmail={data.email}
-                  userName={data.name}
+                  userAvatar={data?.avatar}
+                  userEmail={data?.email}
+                  userName={data?.name}
                 />
               </div>
             ) : (
@@ -54,7 +59,7 @@ export const Header = () => {
         </div>
       </header>
       <main>
-        <Outlet context={{ isAuthenticated } satisfies AuthContext} />
+        <Outlet context={{ isAuthenticated: isAuth || isAuthenticated } as AuthContext} />
       </main>
     </div>
   )
