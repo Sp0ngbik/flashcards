@@ -27,7 +27,6 @@ export const SliderOwn: Story = {
     return (
       <>
         <DoubleSlider {...args} changeSliderValue={setSliderValue} defaultValue={sliderValue} />
-        <span>Value: {JSON.stringify(sliderValue)}</span>
       </>
     )
   },
