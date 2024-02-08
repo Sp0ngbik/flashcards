@@ -1,6 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
+import { Provider } from 'react-redux'
+import { BrowserRouter } from 'react-router-dom'
+
 import { DropdownMenu } from '@/common/ui/dropDownMenu/dropDownMenu'
+import { store } from '@/services/store'
 
 const meta = {
   argTypes: {
@@ -18,6 +22,15 @@ const meta = {
     },
   },
   component: DropdownMenu,
+  decorators: [
+    Story => (
+      <BrowserRouter>
+        <Provider store={store}>
+          <Story />
+        </Provider>
+      </BrowserRouter>
+    ),
+  ],
   tags: ['autodocs'],
   title: 'Components/DropdownMenu',
 } satisfies Meta<typeof DropdownMenu>
