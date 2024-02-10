@@ -7,6 +7,17 @@ export const cardsService = baseApi.injectEndpoints({
     return {
       createCard: build.mutation<CardsResponse, { data: CreateCard; id: string }>({
         invalidatesTags: ['Cards', 'Decks'],
+        async onQueryStarted(_, { dispatch, getState, queryFulfilled }) {
+          const res = await queryFulfilled
+          const args = cardsService.util.selectCachedArgsForQuery(getState(), 'getCards')
+
+          dispatch(
+            cardsService.util.updateQueryData('getCards', args[0], draft => {
+              draft.items.pop()
+              draft.items.unshift(res.data)
+            })
+          )
+        },
         query: args => ({
           body: args.data,
           method: 'POST',
