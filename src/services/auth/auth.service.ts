@@ -1,3 +1,5 @@
+import { toast } from 'react-toastify'
+
 import {
   AuthArgsType,
   CreateNewPassword,
@@ -28,7 +30,15 @@ export const authService = baseApi.injectEndpoints({
         }),
       }),
       logout: build.mutation<void, void>({
-        invalidatesTags: ['Me'],
+        invalidatesTags: (_, error) => (error ? [] : ['Me']),
+        async onQueryStarted(_, { dispatch, queryFulfilled }) {
+          try {
+            await queryFulfilled
+            dispatch(authService.util.resetApiState())
+          } catch {
+            toast.error('Unable to logout')
+          }
+        },
         query: () => ({
           method: 'POST',
           url: '/v1/auth/logout',

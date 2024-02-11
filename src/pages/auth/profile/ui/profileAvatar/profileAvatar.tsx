@@ -21,8 +21,6 @@ const ProfileAvatar = ({ avatar }: ProfileAvatarProps) => {
   const [photo, setPhoto] = useState<File | null | string>(null)
   const [deleteStatus, setDeleteStatus] = useState(false)
 
-  console.log(photo)
-  console.log(avatar)
   const onSetPhoto = (data: File) => {
     setPhoto(data)
   }
