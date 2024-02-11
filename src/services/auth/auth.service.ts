@@ -66,6 +66,27 @@ export const authService = baseApi.injectEndpoints({
       }),
       updateProfile: build.mutation<MeResponse, UpdateProfile>({
         invalidatesTags: ['Me'],
+        async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+          const updateResult = dispatch(
+            authService.util.updateQueryData('me', undefined, draft => {
+              const name = arg.get('name')
+              const avatar = arg.get('avatar')
+
+              if (avatar instanceof File) {
+                draft.avatar = URL.createObjectURL(avatar)
+              }
+              if (typeof name === 'string') {
+                draft.name = name
+              }
+            })
+          )
+
+          try {
+            await queryFulfilled
+          } catch {
+            updateResult.undo()
+          }
+        },
         query: args => ({ body: args ?? undefined, method: 'PATCH', url: '/v1/auth/me' }),
       }),
     }

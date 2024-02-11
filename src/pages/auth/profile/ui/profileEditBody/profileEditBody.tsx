@@ -37,7 +37,10 @@ export const ProfileEditBody = ({ editStatus, email, nickname }: Props) => {
   }
   const onSubmit = async (data: FormProfile) => {
     try {
-      await toast.promise(updateName({ name: data.nickname }).unwrap, {
+      const formData = new FormData()
+
+      formData.append('name', data.nickname)
+      await toast.promise(updateName(formData).unwrap, {
         pending: 'In progress',
         success: 'Name was updated',
       })
