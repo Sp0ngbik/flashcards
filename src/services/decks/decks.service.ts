@@ -3,10 +3,11 @@ import {
   CreateDeckArgs,
   Deck,
   DeckResponse,
-  GetCardByIdResponse,
+  GetCardsByIdResponse,
   GetDecksArgs,
   UpdateDeck,
 } from '@/services/decks/decks.types'
+import { boolean } from 'zod'
 
 export const decksService = baseApi.injectEndpoints({
   endpoints(build) {
@@ -35,14 +36,6 @@ export const decksService = baseApi.injectEndpoints({
         invalidatesTags: ['Decks'],
         async onQueryStarted(id, { dispatch, getState, queryFulfilled }) {
           const args = decksService.util.selectCachedArgsForQuery(getState(), 'getDecks')
-          // let deleteResult
-
-          // for (const { endpointName } of decksService.util.selectInvalidatedBy(getState(), [
-          //   { type: 'Decks' },
-          // ])) {
-          //   if (endpointName !== 'getDecks') {
-          //     continue
-          //   }
 
           const deleteResult = dispatch(
             decksService.util.updateQueryData('getDecks', args[0], draft => {
@@ -54,11 +47,10 @@ export const decksService = baseApi.injectEndpoints({
             })
           )
 
-          // }
           try {
             await queryFulfilled
           } catch {
-            deleteResult && deleteResult.undo()
+            deleteResult.undo()
           }
         },
         query: args => ({
@@ -67,7 +59,7 @@ export const decksService = baseApi.injectEndpoints({
         }),
       }),
 
-      getDeckById: build.query<GetCardByIdResponse, { id?: string }>({
+      getDeckById: build.query<GetCardsByIdResponse, { id?: string }>({
         providesTags: ['Cards'],
         query: args => ({
           url: `v1/decks/${args.id}`,
@@ -80,9 +72,40 @@ export const decksService = baseApi.injectEndpoints({
           url: 'v2/decks',
         }),
       }),
-      updateDeck: build.mutation<GetCardByIdResponse, { data: UpdateDeck; id: string }>({
+      updateDeck: build.mutation<GetCardsByIdResponse, { data: UpdateDeck; id: string }>({
         invalidatesTags: ['Decks', 'Cards'],
+        async onQueryStarted(args, { dispatch, getState, queryFulfilled }) {
+          const queryArgs = decksService.util.selectCachedArgsForQuery(getState(), 'getDecks')
 
+          const deleteResult = dispatch(
+            decksService.util.updateQueryData('getDecks', queryArgs[0], draft => {
+              const index = draft?.items?.findIndex(deck => deck.id === args.id)
+              const name = args.data.get('name')
+              const isPrivate = args.data.get('isPrivate')
+              const cover = args.data.get('cover')
+              const updated: Partial<Deck> = {}
+
+              updated.isPrivate = Boolean(isPrivate)
+
+              if (typeof name === 'string') {
+                updated.name = name
+              }
+              if (cover instanceof File) {
+                updated.cover = URL.createObjectURL(cover)
+              }
+
+              if (index !== undefined && index !== -1) {
+                draft.items[index] = { ...draft.items[index], ...updated }
+              }
+            })
+          )
+
+          try {
+            await queryFulfilled
+          } catch {
+            deleteResult.undo()
+          }
+        },
         query: args => ({
           body: args.data,
           method: 'PATCH',

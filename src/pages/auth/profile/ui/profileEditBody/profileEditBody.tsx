@@ -40,11 +40,11 @@ export const ProfileEditBody = ({ editStatus, email, nickname }: Props) => {
       const formData = new FormData()
 
       formData.append('name', data.nickname)
+      onEditOffHandler()
       await toast.promise(updateName(formData).unwrap, {
         pending: 'In progress',
         success: 'Name was updated',
       })
-      onEditOffHandler()
     } catch (e: unknown) {
       const err = e as ErrorResponse
 
