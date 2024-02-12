@@ -7,7 +7,7 @@ import CardSection from '@/features/cards/cardSection/cardSection'
 import { FormValuesAddCard, addCardSchema } from '@/features/cards/utils/addNewCardModalSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import s from '@/features/cards/createNewCard/addNewCardModal.module.scss'
+import s from '@/features/cards/cardForm/cardForm.module.scss'
 
 type AddNewDeckModalProps = {
   card?: EditCardType
@@ -127,6 +127,7 @@ export const CardForm = ({
         <form className={s.form} id={'hook-form'} onSubmit={handleSubmit(onSubmit)}>
           <CardSection
             control={control}
+            disabled={isLoading}
             errors={errors}
             fileInputRef={fileQuestionInputRef}
             label={'Question'}
@@ -137,6 +138,7 @@ export const CardForm = ({
           />
           <CardSection
             control={control}
+            disabled={isLoading}
             errors={errors}
             fileInputRef={fileAnswerInputRef}
             label={'Answer'}

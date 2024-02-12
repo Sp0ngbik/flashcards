@@ -14,6 +14,10 @@
   justify-content: center;
 
   margin: 24px 0;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 }
 
 .btnArea {
@@ -27,7 +31,6 @@
   width: 100%;
   height: 150px;
   margin-top: 20px;
-
 
   background-position: left;
   border-radius: 4px;
@@ -47,17 +50,26 @@
 }
 
 .icon {
+  cursor: pointer;
+
   position: absolute;
   top: 30px;
   right: 10px;
-  fill: var(--color-light-100);
+
+  padding: 3px;
+
   background-color: var(--color-dark-300);
   border-radius: 4px;
-  padding: 3px;
-  cursor: pointer;
+
+  fill: var(--color-light-100);
+
   transition: background-color 0.3s ease;
 
   &:hover {
     background-color: var(--color-dark-100);
+  }
+
+  &:focus {
+    outline: 2px solid var(--color-info-700);
   }
 }

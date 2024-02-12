@@ -12,7 +12,7 @@ type UpdateCardModalProps = {
   title: string
 }
 export const UpdateCard = ({ card, id, isOpen, onOpenChange, title }: UpdateCardModalProps) => {
-  const [updateCard] = useUpdateCardMutation()
+  const [updateCard, { isLoading }] = useUpdateCardMutation()
 
   const updateCurrentCard = async (body: FormData) => {
     try {
@@ -33,6 +33,7 @@ export const UpdateCard = ({ card, id, isOpen, onOpenChange, title }: UpdateCard
     <CardForm
       card={card}
       id={id}
+      isLoading={isLoading}
       isOpen={isOpen}
       onOpenChange={onOpenChange}
       onSubmitCard={updateCurrentCard}
