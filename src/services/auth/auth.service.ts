@@ -65,7 +65,7 @@ export const authService = baseApi.injectEndpoints({
         }),
       }),
       updateProfile: build.mutation<MeResponse, UpdateProfile>({
-        invalidatesTags: ['Me'],
+        invalidatesTags: (_, error) => (error ? [] : ['Me']),
         async onQueryStarted(arg, { dispatch, queryFulfilled }) {
           const updateResult = dispatch(
             authService.util.updateQueryData('me', undefined, draft => {

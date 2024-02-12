@@ -69,7 +69,7 @@ export type RootObjectItems = {
   updated: string
   userId: string
 }
-export type GetCardByIdResponse = {
+export type GetCardsByIdResponse = {
   author: {
     id: string
     name: string
