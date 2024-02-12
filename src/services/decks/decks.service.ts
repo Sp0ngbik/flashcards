@@ -7,7 +7,6 @@ import {
   GetDecksArgs,
   UpdateDeck,
 } from '@/services/decks/decks.types'
-import { boolean } from 'zod'
 
 export const decksService = baseApi.injectEndpoints({
   endpoints(build) {
@@ -77,7 +76,7 @@ export const decksService = baseApi.injectEndpoints({
         async onQueryStarted(args, { dispatch, getState, queryFulfilled }) {
           const queryArgs = decksService.util.selectCachedArgsForQuery(getState(), 'getDecks')
 
-          const deleteResult = dispatch(
+          const updateResult = dispatch(
             decksService.util.updateQueryData('getDecks', queryArgs[0], draft => {
               const index = draft?.items?.findIndex(deck => deck.id === args.id)
               const name = args.data.get('name')
@@ -103,7 +102,7 @@ export const decksService = baseApi.injectEndpoints({
           try {
             await queryFulfilled
           } catch {
-            deleteResult.undo()
+            updateResult.undo()
           }
         },
         query: args => ({
