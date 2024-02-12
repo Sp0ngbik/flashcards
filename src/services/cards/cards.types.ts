@@ -14,6 +14,11 @@ export type CardsResponse = {
   userId: string
 }
 
+export type OptimisticCard = Pick<
+  CardsResponse,
+  'answer' | 'answerImg' | 'question' | 'questionImg'
+>
+
 export type UpdateCardsArgs = {
   body: FormData
   id: string
