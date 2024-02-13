@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { ImagePreview } from '@/common/ui/imge-preview'
+import { ImagePreview } from '@/common/ui/image-preview'
 
 import s from '@/pages/learn/lernImage/learnImage.module.scss'
 
