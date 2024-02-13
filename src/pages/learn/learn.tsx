@@ -4,6 +4,7 @@ import { NavLink, useParams } from 'react-router-dom'
 import { ArrowBack } from '@/assets/icons/arrow-back-outline'
 import { Button } from '@/common/ui/button'
 import { Card } from '@/common/ui/card'
+import { ImagePreview } from '@/common/ui/imge-preview'
 import { RadioGroup } from '@/common/ui/radio-group'
 import { RadioItem } from '@/common/ui/radio-group/radioItem'
 import { Typography } from '@/common/ui/typography'
@@ -31,6 +32,13 @@ const Learn = () => {
     await post({ cardId, grade: Number(grade) }).unwrap()
     showAnswer(false)
   }
+  const [image, setShowImage] = useState<boolean>(false)
+  const showImage = () => {
+    setShowImage(true)
+  }
+  const hideImage = () => {
+    setShowImage(false)
+  }
 
   return (
     <div className={s.cardWrapper}>
@@ -41,7 +49,11 @@ const Learn = () => {
       <Card className={s.learnCard}>
         <Typography as={'header'} variant={'h1'}>{`Learn ${getCardByIdData?.name}`}</Typography>
         <Typography>{`Question  ${data?.question}`}</Typography>
-        <img alt={''} className={s.learnImage} src={`${data?.questionImg}`} />
+        {image ? (
+          <ImagePreview onClose={hideImage} open={image} src={`${data?.questionImg}`} />
+        ) : (
+          <img alt={''} className={s.learnImage} onClick={showImage} src={`${data?.questionImg}`} />
+        )}
         <Typography
           className={s.sub}
           variant={'caption'}
