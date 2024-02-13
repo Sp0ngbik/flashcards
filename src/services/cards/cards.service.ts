@@ -14,7 +14,6 @@ export const cardsService = baseApi.injectEndpoints({
         invalidatesTags: ['Cards', 'Decks'],
         async onQueryStarted(_, { dispatch, getState, queryFulfilled }) {
           const res = await queryFulfilled
-
           const args = cardsService.util.selectCachedArgsForQuery(getState(), 'getCards')
 
           dispatch(
