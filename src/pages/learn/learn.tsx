@@ -4,10 +4,10 @@ import { NavLink, useParams } from 'react-router-dom'
 import { ArrowBack } from '@/assets/icons/arrow-back-outline'
 import { Button } from '@/common/ui/button'
 import { Card } from '@/common/ui/card'
-import { ImagePreview } from '@/common/ui/imge-preview'
 import { RadioGroup } from '@/common/ui/radio-group'
 import { RadioItem } from '@/common/ui/radio-group/radioItem'
 import { Typography } from '@/common/ui/typography'
+import LearnImage from '@/pages/learn/lernImage/learnImage'
 import { useLearnCardQuery, usePostCardMutation } from '@/services/cards/cards.service'
 import { useGetDeckByIdQuery } from '@/services/decks/decks.service'
 
@@ -32,13 +32,6 @@ const Learn = () => {
     await post({ cardId, grade: Number(grade) }).unwrap()
     showAnswer(false)
   }
-  const [image, setShowImage] = useState<boolean>(false)
-  const showImage = () => {
-    setShowImage(true)
-  }
-  const hideImage = () => {
-    setShowImage(false)
-  }
 
   return (
     <div className={s.cardWrapper}>
@@ -49,11 +42,7 @@ const Learn = () => {
       <Card className={s.learnCard}>
         <Typography as={'header'} variant={'h1'}>{`Learn ${getCardByIdData?.name}`}</Typography>
         <Typography>{`Question  ${data?.question}`}</Typography>
-        {image ? (
-          <ImagePreview onClose={hideImage} open={image} src={`${data?.questionImg}`} />
-        ) : (
-          <img alt={''} className={s.learnImage} onClick={showImage} src={`${data?.questionImg}`} />
-        )}
+        <LearnImage imageSRC={`${data?.questionImg}`} />
         <Typography
           className={s.sub}
           variant={'caption'}
@@ -66,7 +55,7 @@ const Learn = () => {
         {answer && (
           <div>
             <Typography>{`Answer: ${data?.answer}`}</Typography>
-            <img alt={''} className={s.learnImage} src={`${data?.answerImg}`} />
+            <LearnImage imageSRC={`${data?.answerImg}`} />
             <Typography>Rate yourself:</Typography>
             <RadioGroup defaultValue={prevGrade} onValueChange={setGrade}>
               <RadioItem value={'1'}>Did not know</RadioItem>
