@@ -7,6 +7,7 @@ import { Card } from '@/common/ui/card'
 import { RadioGroup } from '@/common/ui/radio-group'
 import { RadioItem } from '@/common/ui/radio-group/radioItem'
 import { Typography } from '@/common/ui/typography'
+import LearnImage from '@/pages/learn/lernImage/learnImage'
 import { useLearnCardQuery, usePostCardMutation } from '@/services/cards/cards.service'
 import { useGetDeckByIdQuery } from '@/services/decks/decks.service'
 
@@ -41,7 +42,7 @@ const Learn = () => {
       <Card className={s.learnCard}>
         <Typography as={'header'} variant={'h1'}>{`Learn ${getCardByIdData?.name}`}</Typography>
         <Typography>{`Question  ${data?.question}`}</Typography>
-        <img alt={''} className={s.learnImage} src={`${data?.questionImg}`} />
+        <LearnImage imageSRC={`${data?.questionImg}`} />
         <Typography
           className={s.sub}
           variant={'caption'}
@@ -54,7 +55,7 @@ const Learn = () => {
         {answer && (
           <div>
             <Typography>{`Answer: ${data?.answer}`}</Typography>
-            <img alt={''} className={s.learnImage} src={`${data?.answerImg}`} />
+            <LearnImage imageSRC={`${data?.answerImg}`} />
             <Typography>Rate yourself:</Typography>
             <RadioGroup defaultValue={prevGrade} onValueChange={setGrade}>
               <RadioItem value={'1'}>Did not know</RadioItem>
