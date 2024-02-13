@@ -9,9 +9,10 @@ import { Typography } from '@/common/ui/typography'
 import { FormValuesAddCard } from '@/features/cards/utils/addNewCardModalSchema'
 import { ImageIcon } from '@radix-ui/react-icons'
 
-import s from '@/features/cards/createNewCard/addNewCardModal.module.scss'
+import s from '@/features/cards/cardForm/cardForm.module.scss'
 
 type CardSectionProps<T extends FormValuesAddCard> = Omit<UseControllerProps<T>, 'disabled'> & {
+  disabled?: boolean
   errors: FieldErrors<FormValuesAddCard>
   fileInputRef: RefObject<HTMLInputElement>
   label: string
@@ -22,6 +23,7 @@ type CardSectionProps<T extends FormValuesAddCard> = Omit<UseControllerProps<T>,
 }
 const CardSection = <T extends FormValuesAddCard>({
   control,
+  disabled,
   errors,
   fileInputRef,
   label,
@@ -40,6 +42,7 @@ const CardSection = <T extends FormValuesAddCard>({
       <Typography variant={'subtitle2'}>{label}:</Typography>
       <TextFieldControlled
         control={control}
+        disabled={disabled}
         errorMessage={errors[name]?.message}
         label={label + '?'}
         name={name}
@@ -50,12 +53,13 @@ const CardSection = <T extends FormValuesAddCard>({
         {uploadedImage && (
           <div className={s.imageWrapper}>
             <img alt={'upload cover'} className={s.deckImage} src={uploadedImage} />
-            <Trash className={s.icon} onClick={removeImg} />
+            <Trash className={s.icon} onClick={removeImg} tabIndex={0} />
           </div>
         )}
       </div>
       <Button
         className={s.uploadImageBtn}
+        disabled={disabled}
         fullWidth
         onClick={e => {
           e.preventDefault()

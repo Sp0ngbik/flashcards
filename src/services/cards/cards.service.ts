@@ -1,5 +1,10 @@
 import { baseApi } from '@/services/baseApi'
-import { CardsResponse, CreateCard, UpdateCardsArgs } from '@/services/cards/cards.types'
+import {
+  CardsResponse,
+  CreateCard,
+  OptimisticCard,
+  UpdateCardsArgs,
+} from '@/services/cards/cards.types'
 import { GetCardsArgs, GetCardsResponse, MinMax } from '@/services/decks/decks.types'
 
 export const cardsService = baseApi.injectEndpoints({
@@ -26,6 +31,25 @@ export const cardsService = baseApi.injectEndpoints({
       }),
       deleteCard: build.mutation<void, { id: string }>({
         invalidatesTags: ['Cards'],
+        async onQueryStarted(args, { dispatch, getState, queryFulfilled }) {
+          const queryArgs = cardsService.util.selectCachedArgsForQuery(getState(), 'getCards')
+
+          const deleteResult = dispatch(
+            cardsService.util.updateQueryData('getCards', queryArgs[0], draft => {
+              const index = draft?.items?.findIndex(deck => deck.id === args.id)
+
+              if (index !== undefined && index !== -1) {
+                draft?.items?.splice(index, 1)
+              }
+            })
+          )
+
+          try {
+            await queryFulfilled
+          } catch {
+            deleteResult.undo()
+          }
+        },
         query: args => ({
           method: 'DELETE',
           url: `v1/cards/${args.id}`,
@@ -62,6 +86,44 @@ export const cardsService = baseApi.injectEndpoints({
       }),
       updateCard: build.mutation<CardsResponse, UpdateCardsArgs>({
         invalidatesTags: ['Cards'],
+        async onQueryStarted(args, { dispatch, getState, queryFulfilled }) {
+          const queryArgs = cardsService.util.selectCachedArgsForQuery(getState(), 'getCards')
+
+          const updateCardResult = dispatch(
+            cardsService.util.updateQueryData('getCards', queryArgs[0], draft => {
+              const data = args.body
+              const index = draft.items.findIndex(el => el.id === args.id)
+              const question = data.get('question')
+              const answer = data.get('answer')
+              const questionImg = data.get('questionImg')
+              const answerImg = data.get('answerImg')
+
+              const updatedCard: Partial<OptimisticCard> = {}
+
+              if (typeof question === 'string') {
+                updatedCard.question = question
+              }
+              if (typeof answer === 'string') {
+                updatedCard.answer = answer
+              }
+
+              if (questionImg instanceof File) {
+                updatedCard.questionImg = URL.createObjectURL(questionImg)
+              }
+              if (answerImg instanceof File) {
+                updatedCard.answerImg = URL.createObjectURL(answerImg)
+              }
+
+              draft.items[index] = { ...draft.items[index], ...updatedCard }
+            })
+          )
+
+          try {
+            await queryFulfilled
+          } catch {
+            updateCardResult.undo()
+          }
+        },
         query: args => ({
           body: args.body ?? undefined,
           method: 'PATCH',
