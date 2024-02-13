@@ -5,6 +5,7 @@ import {
   DeckResponse,
   GetCardsByIdResponse,
   GetDecksArgs,
+  OptimisticDeck,
   UpdateDeck,
 } from '@/services/decks/decks.types'
 
@@ -78,11 +79,12 @@ export const decksService = baseApi.injectEndpoints({
 
           const updateResult = dispatch(
             decksService.util.updateQueryData('getDecks', queryArgs[0], draft => {
+              const data = args.data
               const index = draft?.items?.findIndex(deck => deck.id === args.id)
-              const name = args.data.get('name')
-              const isPrivate = args.data.get('isPrivate')
-              const cover = args.data.get('cover')
-              const updated: Partial<Deck> = {}
+              const name = data.get('name')
+              const isPrivate = data.get('isPrivate')
+              const cover = data.get('cover')
+              const updated: Partial<OptimisticDeck> = {}
 
               updated.isPrivate = Boolean(isPrivate)
 

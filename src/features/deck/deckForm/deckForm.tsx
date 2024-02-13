@@ -97,6 +97,7 @@ const DeckForm = ({
         <form className={s.form} id={'hook-form'} onSubmit={handleSubmit(onSubmit)}>
           <TextFieldControlled
             control={control}
+            disabled={disabled}
             errorMessage={errors.name?.message}
             label={'Name Pack'}
             name={'name'}
@@ -105,13 +106,14 @@ const DeckForm = ({
             {uploadedImage && (
               <div className={s.imageWrapper}>
                 <img alt={'image not found'} className={s.deckImage} src={uploadedImage} />
-                <Trash className={s.icon} onClick={removeImg} />
+                <Trash className={s.icon} onClick={removeImg} tabIndex={0} />
               </div>
             )}
             <ImageLoader className={s.fileInput} ref={fileInputRef} setPhoto={setPhoto} />
           </div>
           <Button
             className={s.uploadImageBtn}
+            disabled={disabled}
             fullWidth
             onClick={e => {
               e.preventDefault()
@@ -121,7 +123,12 @@ const DeckForm = ({
           >
             {<ImageIcon />}Upload Image
           </Button>
-          <CheckboxControlled control={control} name={'isPrivate'} text={'Private pack'} />
+          <CheckboxControlled
+            control={control}
+            disabled={disabled}
+            name={'isPrivate'}
+            text={'Private pack'}
+          />
           <div className={s.btnArea}>
             <Button disabled={disabled} form={'hook-form'} type={'submit'} variant={'primary'}>
               {title}

@@ -14,6 +14,8 @@ export type Deck = {
   userId: string
 }
 
+export type OptimisticDeck = Pick<Deck, 'cover' | 'isPrivate' | 'name'>
+
 export type DeckAuthor = {
   id: string
   name: string

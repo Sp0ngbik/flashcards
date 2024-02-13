@@ -12,7 +12,7 @@ type UpdateDeckProps = {
 }
 
 export const UpdateDeck = ({ deck, isOpen, onOpenChange, title }: UpdateDeckProps) => {
-  const [updateDeck] = useUpdateDeckMutation()
+  const [updateDeck, { isLoading }] = useUpdateDeckMutation()
   const updateEditDeck = async (data: FormData) => {
     try {
       if (deck?.id) {
@@ -31,6 +31,7 @@ export const UpdateDeck = ({ deck, isOpen, onOpenChange, title }: UpdateDeckProp
   return (
     <DeckForm
       deck={deck}
+      disabled={isLoading}
       isOpen={isOpen}
       onOpenChange={onOpenChange}
       onSubmitDeck={updateEditDeck}
