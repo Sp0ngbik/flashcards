@@ -4,5 +4,23 @@
   margin-left:75px;
   object-fit: cover;
   border-radius: 2px;
+  margin-top: 5px;
+  transform: scale(1);
+}
+.fadeIn {
+  animation: fadeIn 1s ease-in-out forwards;
+}
 
+.fadeOut {
+  animation: fadeOut 1s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
 }
