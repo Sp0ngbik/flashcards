@@ -4,6 +4,7 @@ import { NavLink, useParams } from 'react-router-dom'
 import { ArrowBack } from '@/assets/icons/arrow-back-outline'
 import { Button } from '@/common/ui/button'
 import { Card } from '@/common/ui/card'
+import { RadioGroup } from '@/common/ui/radioGroup'
 import { RadioItem } from '@/common/ui/radioGroup/radioItem'
 import { Typography } from '@/common/ui/typography'
 import LearnImage from '@/pages/learn/learnImage/learnImage'
@@ -11,8 +12,6 @@ import { useLearnCardQuery, usePostCardMutation } from '@/services/cards/cards.s
 import { useGetDeckByIdQuery } from '@/services/decks/decks.service'
 
 import s from './learn.module.scss'
-
-import { RadioGroup } from '../../common/ui/radioGroup'
 
 const Learn = () => {
   const { id } = useParams<{ id: string }>()

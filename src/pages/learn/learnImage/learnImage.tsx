@@ -22,7 +22,12 @@ const LearnImage = ({ imageSRC }: LearnImageProps) => {
       {image ? (
         <ImagePreview onClose={hideImage} open={image} src={imageSRC} />
       ) : (
-        <img alt={''} className={s.learnImage} onClick={showImage} src={imageSRC} />
+        <img
+          alt={''}
+          className={`${s.learnImage} ${s.learnImageWrapper}`}
+          onClick={showImage}
+          src={imageSRC}
+        />
       )}
     </div>
   )

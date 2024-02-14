@@ -15,7 +15,6 @@ import s from './deckHeader.module.scss'
 const DeckHeader = () => {
   const {
     clearFilter,
-    deckIsFetching,
     getCurrentTab,
     maxCards,
     minCards,
@@ -62,7 +61,6 @@ const DeckHeader = () => {
           <DoubleSlider
             changeSliderValue={onChangeSliderValues}
             defaultValue={[minCards, maxCards]}
-            disabled={deckIsFetching}
             max={minMaxValues?.max}
             min={minMaxValues?.min}
           />
