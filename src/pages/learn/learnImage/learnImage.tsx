@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
-import { ImagePreview } from '@/common/ui/image-preview'
+import { ImagePreview } from '@/common/ui/imagePreview'
 
-import s from '@/pages/learn/lernImage/learnImage.module.scss'
+import s from '@/pages/learn/learnImage/learnImage.module.scss'
 
 type LearnImageProps = {
   imageSRC: string

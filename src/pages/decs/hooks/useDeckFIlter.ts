@@ -41,7 +41,11 @@ export const useDeckFilter = () => {
   const clearFilter = () => {
     setSearch({})
   }
-  const { data: deckData, isLoading: deckIsLoading } = useGetDecksQuery({
+  const {
+    data: deckData,
+    isFetching: deckIsFetching,
+    isLoading: deckIsLoading,
+  } = useGetDecksQuery({
     authorId: getCurrentTab === 'userCards' ? me?.id : undefined,
     currentPage: currentPage,
     itemsPerPage: itemsPerPage,
@@ -55,6 +59,7 @@ export const useDeckFilter = () => {
     clearFilter,
     currentPage,
     deckData,
+    deckIsFetching,
     deckIsLoading,
     getCurrentTab,
     itemsPerPage,

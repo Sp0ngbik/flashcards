@@ -1,4 +1,4 @@
-import { RadioItem } from '@/common/ui/radio-group/radioItem'
+import { RadioItem } from '@/common/ui/radioGroup/radioItem'
 import { Meta, StoryObj } from '@storybook/react'
 
 import { RadioGroup } from './radioGroup'

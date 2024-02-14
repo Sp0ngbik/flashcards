@@ -1,0 +1,46 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgb(0 0 0 / 50%);
+  animation: overlay-show 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.content {
+  position: fixed;
+  z-index: var(--z-index-modal-content);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  display: inline-block;
+
+  border-radius: 5%;
+
+  animation: content-show 150ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  img {
+    max-width: 95vw;
+    max-height: 95vh;
+    border-radius: 5%;
+  }
+}
+
+@keyframes overlay-show {
+  from {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  to {
+    transform: translate(-50%, -48%) scale(0.96);
+  }
+}
+
+@keyframes content-show {
+  from {
+    transform: translate(-50%, -48%) scale(0.96);
+  }
+
+  to {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}

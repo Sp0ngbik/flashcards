@@ -9,7 +9,7 @@ export type DoubleSliderProps = {
 } & ComponentPropsWithoutRef<typeof Slider.Root>
 
 export const DoubleSlider = (props: DoubleSliderProps) => {
-  const { changeSliderValue, defaultValue = [0, 5], max, ...rest } = props
+  const { changeSliderValue, defaultValue = [0, 5], disabled, max, ...rest } = props
 
   const onValueChange = (data: number[]) => {
     changeSliderValue(data)
@@ -39,6 +39,7 @@ export const DoubleSlider = (props: DoubleSliderProps) => {
     <div className={s.container}>
       <input
         className={s.value}
+        disabled={disabled}
         onBlur={onBlurValidate}
         onChange={e => onChangeInput(+e.currentTarget.value, 'left')}
         pattern={'[0-100]'}
@@ -49,6 +50,7 @@ export const DoubleSlider = (props: DoubleSliderProps) => {
       <Slider.Root
         className={s.slider}
         defaultValue={defaultValue}
+        disabled={disabled}
         max={max}
         onValueChange={onValueChange}
         value={defaultValue}
@@ -63,6 +65,7 @@ export const DoubleSlider = (props: DoubleSliderProps) => {
 
       <input
         className={s.value}
+        disabled={disabled}
         onChange={e => onChangeInput(+e.currentTarget.value, 'right')}
         pattern={'[0-100]'}
         type={'number'}
