@@ -3,6 +3,18 @@ html {
   font-size: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  & ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  & ::-webkit-scrollbar-thumb {
+    background-color: var(--color-accent-700);
+  }
+
+  & ::-webkit-scrollbar-track {
+    background-color: var(--color-light-100);
+  }
 }
 
 *,

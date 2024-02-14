@@ -25,7 +25,7 @@ const Decks = () => {
   const {
     currentPage,
     deckData,
-    deckIsLoading,
+    deckIsFetching,
     itemsPerPage,
     me,
     onChangeCurrentPage,
@@ -49,10 +49,6 @@ const Decks = () => {
     return userId === me?.id
   }
 
-  if (deckIsLoading) {
-    return <Loader />
-  }
-
   return (
     <div className={s.deckWrapper}>
       <DeckHeader />
@@ -60,6 +56,7 @@ const Decks = () => {
         <Table>
           <TableHeader columns={deckColumns} onSort={setSortedBy} sort={orderBy} />
           <TableBody>
+            {deckIsFetching && <Loader smallVersion transparentBackground />}
             {deckData?.items?.map(deck => {
               return (
                 <DeckRow
@@ -74,9 +71,11 @@ const Decks = () => {
           </TableBody>
         </Table>
       ) : (
-        <Typography className={s.deckText} variant={'subtitle1'}>
-          No content with these terms...
-        </Typography>
+        <>
+          <Typography className={s.deckText} variant={'subtitle1'}>
+            No content with these terms...
+          </Typography>
+        </>
       )}
       <Pagination
         changeCurrentPage={onChangeCurrentPage}

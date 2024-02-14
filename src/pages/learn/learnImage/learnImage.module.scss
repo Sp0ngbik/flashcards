@@ -1,0 +1,15 @@
+.learnImage {
+  transform: scale(1);
+
+  max-width: 200px;
+  max-height: 200px;
+  margin-top: 5px;
+  margin-left: 75px;
+
+  object-fit: cover;
+  border-radius: 2px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

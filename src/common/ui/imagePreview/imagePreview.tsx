@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogOverlay, DialogPortal } from '@radix-ui/react-dialog'
 
-import s from './image-preview.module.scss'
+import s from './imagePreview.module.scss'
 
 export type ImagePreviewProps = {
   alt?: string
@@ -17,8 +17,13 @@ export const ImagePreview = ({ alt, onClose, open, src }: ImagePreviewProps) => 
     <Dialog onOpenChange={handleModalClosed} open={open}>
       <DialogPortal>
         <DialogOverlay className={s.overlay} />
-        <DialogContent className={s.content}>
-          <img alt={alt ?? 'preview'} onClick={handleModalClosed} src={src} />
+        <DialogContent asChild className={s.content}>
+          <img
+            alt={alt ?? 'preview'}
+            className={s.imageBlock}
+            onClick={handleModalClosed}
+            src={src}
+          />
         </DialogContent>
       </DialogPortal>
     </Dialog>

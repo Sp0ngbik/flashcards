@@ -13,9 +13,13 @@
   border-bottom: 1px solid var(--color-dark-500);
 }
 
+.tableBody {
+  position: relative;
+}
+
 .tableHeadCell {
   position: relative;
-  padding: 6px 24px;
+  padding: 6px 22px;
   text-align: left;
 
   & .tableHeadTitle {
@@ -31,7 +35,7 @@
 }
 
 .tableDataCell {
-  padding: 6px 16px;
+  padding: 6px 22px;
 
   &:last-child {
     text-align: center;

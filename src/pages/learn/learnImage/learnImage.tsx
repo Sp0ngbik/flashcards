@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
-import { ImagePreview } from '@/common/ui/image-preview'
+import { ImagePreview } from '@/common/ui/imagePreview'
 
-import s from '@/pages/learn/lernImage/learnImage.module.scss'
+import s from '@/pages/learn/learnImage/learnImage.module.scss'
 
 type LearnImageProps = {
   imageSRC: string
@@ -22,7 +22,12 @@ const LearnImage = ({ imageSRC }: LearnImageProps) => {
       {image ? (
         <ImagePreview onClose={hideImage} open={image} src={imageSRC} />
       ) : (
-        <img alt={''} className={s.learnImage} onClick={showImage} src={imageSRC} />
+        <img
+          alt={''}
+          className={`${s.learnImage} ${s.learnImageWrapper}`}
+          onClick={showImage}
+          src={imageSRC}
+        />
       )}
     </div>
   )

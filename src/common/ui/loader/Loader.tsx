@@ -1,14 +1,25 @@
+import { clsx } from 'clsx'
+
 import s from './loader.module.scss'
 
 type LoaderProps = {
   smallVersion?: boolean
+  transparentBackground?: boolean
 }
 
-export const Loader = ({ smallVersion }: LoaderProps) => {
+export const Loader = ({ smallVersion, transparentBackground }: LoaderProps) => {
+  const classNames = {
+    loader: clsx(smallVersion ? '' : s.loader),
+    loaderWrapper: clsx(
+      smallVersion ? '' : s.loaderWrapper,
+      transparentBackground && s.transparentBackground
+    ),
+  }
+
   return (
-    <div className={smallVersion ? '' : s.loaderWrapper}>
+    <div className={classNames.loaderWrapper}>
       <svg
-        className={smallVersion ? '' : s.loader}
+        className={classNames.loader}
         height={smallVersion ? '100%' : '244px'}
         preserveAspectRatio={'xMidYMid'}
         viewBox={'0 0 100 100'}
