@@ -110,7 +110,7 @@ const CardHeader = () => {
           </Button>
         )}
         {!isOwner && (
-          <Button onClick={learnDeckHandler} variant={'primary'}>
+          <Button disabled={isEmpty} onClick={learnDeckHandler} variant={'primary'}>
             Learn to Pack
           </Button>
         )}

@@ -1,7 +1,10 @@
+import { useParams } from 'react-router-dom'
+
 import { Delete } from '@/assets/icons/delete'
 import { Edit } from '@/assets/icons/edit'
 import { Play } from '@/assets/icons/play'
 import { Typography } from '@/common/ui/typography'
+import { useCardFilter } from '@/pages/cards/hooks/useCardFilter'
 import * as DropdownMenuRadix from '@radix-ui/react-dropdown-menu'
 
 import s from '../dropDownMenu.module.scss'
@@ -23,10 +26,13 @@ export const EditCardComponent = ({
       onOpenDeleteForm(true)
     }
   }
+  const { id } = useParams<{ id: string }>()
+
+  const { isEmpty } = useCardFilter(id)
 
   return (
     <>
-      <DropdownMenuRadix.Item className={s.DropdownMenuItem} onSelect={learn}>
+      <DropdownMenuRadix.Item className={s.DropdownMenuItem} disabled={isEmpty} onSelect={learn}>
         <Play className={s.icon} />
         <Typography variant={'caption'}>Learn</Typography>
       </DropdownMenuRadix.Item>
