@@ -70,7 +70,7 @@
 .DropdownMenuSubTrigger[data-highlighted] {
   cursor: pointer;
   color: var(--color-light-900);
-  background-color: var(--color-dark-500);
+  background-color: var(--color-dark-300);
 }
 
 .userInfo[data-highlighted] {
@@ -126,6 +126,8 @@
   border: 2px solid var(--color-light-100);
   border-radius: 50%;
 
+  fill: var(--color-light-100);
+
   transition: box-shadow 0.5s ease;
 }
 
@@ -149,6 +151,10 @@
   &:focus {
     outline: 2px solid var(--color-info-700);
   }
+}
+
+.icon {
+  fill: var(--color-light-100);
 }
 
 @keyframes slide-up-and-fade {

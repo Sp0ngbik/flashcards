@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom'
 
 import { cardColumns } from '@/common/const'
+import { Loader } from '@/common/ui/loader'
 import { Pagination } from '@/common/ui/pagination'
 import { Table, TableBody } from '@/common/ui/table/tableConstuctor'
 import { TableHeader } from '@/common/ui/table/tableHeader/tableHeader'
@@ -16,6 +17,7 @@ export const Cards = () => {
   const {
     currentPage,
     getCardsData,
+    isCardLoaded,
     isEmpty,
     isOwner,
     itemsPerPage,
@@ -24,6 +26,10 @@ export const Cards = () => {
     setItemsPerPage,
     setSortedBy,
   } = useCardFilter(id)
+
+  if (isCardLoaded) {
+    return <Loader transparentBackground />
+  }
 
   return (
     <div className={s.cardWrapper}>

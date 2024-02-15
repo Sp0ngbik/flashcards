@@ -14,6 +14,10 @@
   }
 }
 
+.logoIcon {
+  fill: var(--color-light-100);
+}
+
 .headerLogo:hover {
   cursor: pointer;
 }
@@ -41,4 +45,15 @@
 
 .dropDownTrigger :hover {
   cursor: pointer;
+}
+
+.themeSwitcher {
+  position: fixed;
+  z-index: 2;
+  top: 25px;
+  right: 25px;
+
+  &:hover {
+    cursor: pointer;
+  }
 }

@@ -1,0 +1,40 @@
+.switchRoot {
+  position: relative;
+
+  width: 42px;
+  height: 25px;
+
+  background-color: var(--color-light-900);
+  border-radius: 9999px;
+
+  -webkit-tap-highlight-color: rgb(0 0 0 / 0%);
+}
+
+.switchRoot:focus {
+  box-shadow: 0 0 0 2px var(--color-accent-700);
+}
+
+.switchThumb {
+  will-change: transform;
+
+  transform: translateX(2px);
+
+  display: block;
+
+  width: 21px;
+  height: 21px;
+
+  background-color: var(--color-accent-700);
+  border-radius: 9999px;
+
+  transition: transform 100ms;
+}
+
+.switchThumb[data-state='checked'] {
+  transform: translateX(19px);
+}
+
+.switchWrapper {
+  display: flex;
+  align-items: center;
+}

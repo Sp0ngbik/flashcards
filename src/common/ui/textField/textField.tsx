@@ -1,6 +1,7 @@
 import React, { ChangeEvent, ComponentPropsWithoutRef, ElementType, useId, useState } from 'react'
 
 import { EyeOffOutline, EyeOutline, SearchOutline } from '@/assets'
+import { Cross } from '@/assets/icons/cross'
 import { Typography } from '@/common/ui/typography'
 import { clsx } from 'clsx'
 
@@ -27,6 +28,9 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>((props, for
   const [passwordVisibility, setPasswordVisibility] = useState(false)
   const onChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
     onValueChange && onValueChange(e.currentTarget.value)
+  }
+  const clearValue = () => {
+    onValueChange && onValueChange('')
   }
   const searchVariant = variant === 'search'
   const passwordVariant = variant === 'password'
@@ -69,6 +73,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>((props, for
           type={passwordVisibility ? 'text' : variant}
           {...rest}
         />
+        <div>{searchVariant && <Cross className={s.cross} onClick={clearValue} />}</div>
         <div>
           {passwordVariant && (
             <div>

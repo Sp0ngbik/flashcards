@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { deckColumns } from '@/common/const'
 import { Loader } from '@/common/ui/loader'
 import { Pagination } from '@/common/ui/pagination'
-import { Table, TableBody } from '@/common/ui/table/tableConstuctor'
+import { Table, TableBody, TableDataCell, TableRow } from '@/common/ui/table/tableConstuctor'
 import { TableHeader } from '@/common/ui/table/tableHeader/tableHeader'
 import { Typography } from '@/common/ui/typography'
 import { useDeckFilter } from '@/pages/decs/hooks/useDeckFIlter'
@@ -56,7 +56,13 @@ const Decks = () => {
         <Table>
           <TableHeader columns={deckColumns} onSort={setSortedBy} sort={orderBy} />
           <TableBody>
-            {deckIsFetching && <Loader smallVersion transparentBackground />}
+            {deckIsFetching && (
+              <TableRow>
+                <TableDataCell>
+                  <Loader adaptiveVersion transparentBackground />
+                </TableDataCell>
+              </TableRow>
+            )}
             {deckData?.items?.map(deck => {
               return (
                 <DeckRow

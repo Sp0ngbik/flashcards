@@ -92,7 +92,7 @@ const ProfileAvatar = ({ avatar }: ProfileAvatarProps) => {
         </Modal>
         <ImageLoader className={s.inputFile} ref={fileInputRef} setPhoto={onSetPhoto} />
         {isProfileUpdated ? (
-          <Loader smallVersion />
+          <Loader adaptiveVersion />
         ) : (
           <img alt={'user image'} className={s.profileImg} src={uploadedImage()} />
         )}
@@ -102,7 +102,7 @@ const ProfileAvatar = ({ avatar }: ProfileAvatarProps) => {
           </button>
         )}
         <button className={s.profileEditImgBtn} onClick={openFileInput}>
-          <Edit />
+          <Edit className={s.editIcon} />
         </button>
       </div>
       {photo && (

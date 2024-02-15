@@ -21,7 +21,7 @@ export const useCardFilter = (id: string | undefined) => {
   const [isOpen, setIsOpen] = useState(false)
   const [isOpenEdit, setIsOpenEdit] = useState(false)
 
-  const { data: getCardsData } = useGetCardsQuery({
+  const { data: getCardsData, isLoading: isCardLoaded } = useGetCardsQuery({
     currentPage,
     id,
     itemsPerPage,
@@ -37,6 +37,7 @@ export const useCardFilter = (id: string | undefined) => {
     currentPage,
     getCardsData,
     getDeckById,
+    isCardLoaded,
     isEmpty,
     isOpen,
     isOpenEdit,

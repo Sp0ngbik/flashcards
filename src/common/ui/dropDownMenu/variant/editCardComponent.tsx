@@ -27,17 +27,17 @@ export const EditCardComponent = ({
   return (
     <>
       <DropdownMenuRadix.Item className={s.DropdownMenuItem} onSelect={learn}>
-        <Play />
+        <Play className={s.icon} />
         <Typography variant={'caption'}>Learn</Typography>
       </DropdownMenuRadix.Item>
       <DropdownMenuRadix.Separator className={s.DropdownMenuSeparator} />
       <DropdownMenuRadix.Item className={s.DropdownMenuItem} onSelect={onEditClick}>
-        <Edit />
+        <Edit className={s.icon} />
         <Typography variant={'caption'}>Edit</Typography>
       </DropdownMenuRadix.Item>
       <DropdownMenuRadix.Separator className={s.DropdownMenuSeparator} />
       <DropdownMenuRadix.Item className={s.DropdownMenuItem} onSelect={openDeleteForm}>
-        <Delete />
+        <Delete className={s.icon} />
         <Typography variant={'caption'}>Delete</Typography>
       </DropdownMenuRadix.Item>
     </>

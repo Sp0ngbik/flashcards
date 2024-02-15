@@ -49,10 +49,10 @@ const DeckHeader = () => {
           />
         </div>
         <TabSwitcher
-          defaultValue={getCurrentTab || tabs[0].value}
           label={'Show decks cards'}
           onValueChange={onTabValueChange}
           tabs={tabs}
+          value={getCurrentTab || tabs[0].value}
         />
         <div>
           <Typography className={s.sliderLabel} variant={'body2'}>
