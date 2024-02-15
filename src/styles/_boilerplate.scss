@@ -11,23 +11,6 @@ html {
   box-sizing: border-box;
 }
 
-* {
-  scrollbar-color: var(--color-accent-500) var(--color-dark-500);
-  scrollbar-width: thin;
-}
-
-* ::-webkit-scrollbar {
-  width: 5px;
-}
-
-* ::-webkit-scrollbar-thumb {
-  background-color: var(--color-accent-700);
-}
-
-* ::-webkit-scrollbar-track {
-  background-color: var(--color-light-100);
-}
-
 input,
 button,
 select,
@@ -69,4 +52,21 @@ select:-webkit-autofill:focus {
   transition: background-color 5000s ease-in-out 0s;
 
   -webkit-text-fill-color: var(--color-light-100);
+}
+
+* {
+  scrollbar-color: var(--color-accent-500) var(--color-dark-500);
+  scrollbar-width: thin;
+}
+
+* ::-webkit-scrollbar {
+  width: 5px;
+}
+
+* ::-webkit-scrollbar-thumb {
+  background-color: var(--color-accent-700);
+}
+
+* ::-webkit-scrollbar-track {
+  background-color: var(--color-light-100);
 }

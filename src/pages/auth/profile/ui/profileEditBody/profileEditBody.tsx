@@ -83,7 +83,7 @@ export const ProfileEditBody = ({ editStatus, email, nickname }: Props) => {
       <Typography className={s.profileName} variant={'h2'}>
         {nickname}
         <button className={s.profileEditNameBtn} onClick={onEditOnHandler}>
-          <Edit />
+          <Edit className={s.editIcon} />
         </button>
       </Typography>
       <Typography className={s.userEmail} variant={'body2'}>

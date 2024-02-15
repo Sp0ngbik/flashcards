@@ -3,15 +3,15 @@ import { clsx } from 'clsx'
 import s from './loader.module.scss'
 
 type LoaderProps = {
-  smallVersion?: boolean
+  adaptiveVersion?: boolean
   transparentBackground?: boolean
 }
 
-export const Loader = ({ smallVersion, transparentBackground }: LoaderProps) => {
+export const Loader = ({ adaptiveVersion, transparentBackground }: LoaderProps) => {
   const classNames = {
-    loader: clsx(smallVersion ? '' : s.loader),
+    loader: clsx(adaptiveVersion ? '' : s.loader),
     loaderWrapper: clsx(
-      smallVersion ? '' : s.loaderWrapper,
+      adaptiveVersion ? '' : s.loaderWrapper,
       transparentBackground && s.transparentBackground
     ),
   }
@@ -20,10 +20,10 @@ export const Loader = ({ smallVersion, transparentBackground }: LoaderProps) => 
     <div className={classNames.loaderWrapper}>
       <svg
         className={classNames.loader}
-        height={smallVersion ? '100%' : '244px'}
+        height={adaptiveVersion ? '100%' : '244px'}
         preserveAspectRatio={'xMidYMid'}
         viewBox={'0 0 100 100'}
-        width={smallVersion ? '100%' : '244px'}
+        width={adaptiveVersion ? '100%' : '244px'}
         xmlns={'http://www.w3.org/2000/svg'}
       >
         <path d={'M6 50A44 44 0 0 0 94 50A44 45.2 0 0 1 6 50'} fill={'#8c61ff'} stroke={'none'}>

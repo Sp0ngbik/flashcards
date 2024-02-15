@@ -16,12 +16,12 @@
   border-radius: 5%;
 
   animation: content-show 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-  img {
-    max-width: 95vw;
-    max-height: 95vh;
-    border-radius: 5%;
-  }
+.imageBlock {
+  max-width: 550px;
+  max-height: 550px;
+  border-radius: 5%;
 }
 
 @keyframes content-show {

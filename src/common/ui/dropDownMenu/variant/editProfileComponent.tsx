@@ -39,12 +39,12 @@ export const EditProfileComponent = (props: PropsType) => {
       </DropdownMenuRadix.Item>
       <DropdownMenuRadix.Separator className={s.DropdownMenuSeparator} />
       <DropdownMenuRadix.Item className={s.DropdownMenuItem} onClick={profileNavigate}>
-        <User />
+        <User className={s.icon} />
         <Typography variant={'caption'}>My Profile</Typography>
       </DropdownMenuRadix.Item>
       <DropdownMenuRadix.Separator className={s.DropdownMenuSeparator} />
       <DropdownMenuRadix.Item className={s.DropdownMenuItem} onClick={logout}>
-        <SignOut />
+        <SignOut className={s.icon} />
         <Typography variant={'caption'}>Sign Out</Typography>
       </DropdownMenuRadix.Item>
     </>

@@ -4,19 +4,20 @@ import { NavLink, useParams } from 'react-router-dom'
 import { ArrowBack } from '@/assets/icons/arrow-back-outline'
 import { Button } from '@/common/ui/button'
 import { Card } from '@/common/ui/card'
+import { Loader } from '@/common/ui/loader'
 import { RadioGroup } from '@/common/ui/radioGroup'
 import { RadioItem } from '@/common/ui/radioGroup/radioItem'
 import { Typography } from '@/common/ui/typography'
+import { useCardFilter } from '@/pages/cards/hooks/useCardFilter'
 import LearnImage from '@/pages/learn/learnImage/learnImage'
 import { useLearnCardQuery, usePostCardMutation } from '@/services/cards/cards.service'
-import { useGetDeckByIdQuery } from '@/services/decks/decks.service'
 
 import s from './learn.module.scss'
 
 const Learn = () => {
   const { id } = useParams<{ id: string }>()
-  const { data } = useLearnCardQuery({ id })
-  const { data: getCardByIdData } = useGetDeckByIdQuery({ id })
+  const { data, isLoading } = useLearnCardQuery({ id })
+  const { getDeckById } = useCardFilter(id)
   const [post] = usePostCardMutation()
   const [answer, showAnswer] = useState<boolean>(false)
 
@@ -33,6 +34,10 @@ const Learn = () => {
     showAnswer(false)
   }
 
+  if (isLoading) {
+    return <Loader transparentBackground />
+  }
+
   return (
     <div className={s.cardWrapper}>
       <NavLink className={s.backToDeck} to={`/cards/${id}`}>
@@ -40,8 +45,8 @@ const Learn = () => {
         Back to Cards
       </NavLink>
       <Card className={s.learnCard}>
-        <Typography as={'header'} variant={'h1'}>{`Learn ${getCardByIdData?.name}`}</Typography>
-        <Typography>{`Question  ${data?.question}`}</Typography>
+        <Typography as={'header'} variant={'h1'}>{`Learn ${getDeckById?.name}`}</Typography>
+        <Typography className={s.text}>{`Question:  ${data?.question}`}</Typography>
         <LearnImage imageSRC={`${data?.questionImg}`} />
         <Typography
           className={s.sub}
@@ -54,7 +59,7 @@ const Learn = () => {
         )}
         {answer && (
           <div>
-            <Typography>{`Answer: ${data?.answer}`}</Typography>
+            <Typography className={s.text}>{`Answer: ${data?.answer}`}</Typography>
             <LearnImage imageSRC={`${data?.answerImg}`} />
             <Typography>Rate yourself:</Typography>
             <RadioGroup defaultValue={prevGrade} onValueChange={setGrade}>

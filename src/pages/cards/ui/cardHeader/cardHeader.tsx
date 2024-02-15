@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import { Dots } from '@/assets'
 import { ArrowBack } from '@/assets/icons/arrow-back-outline'
 import noImageCover from '@/assets/image/noImage.png'
 import { Button } from '@/common/ui/button'
@@ -98,8 +97,6 @@ const CardHeader = () => {
                 onOpenDeleteForm={onOpenDeleteForm}
               />
             )}
-
-            <Dots />
           </div>
           {getDeckById?.cover ? (
             <img alt={''} className={s.tableImage} src={getDeckById.cover} />

@@ -1,22 +1,25 @@
 .tableDataContent {
+  cursor: pointer;
+
   display: flex;
-  max-width: 280px;
   flex-direction: row;
   gap: 20px;
   align-items: center;
-  cursor: pointer;
+
+  max-width: 280px;
 }
 
 .tableImage {
-  max-width: 70px;
   min-width: 70px;
-    height: 50px;
-    object-fit: cover;
+  max-width: 70px;
+  height: 50px;
+  object-fit: cover;
 }
 
 .icon {
   cursor: pointer;
   margin-right: 10px;
+  fill: var(--color-light-100);
 }
 
 .disableIcon {
