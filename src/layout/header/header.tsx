@@ -36,8 +36,8 @@ export const Header = ({ isAuth }: HeaderProps) => {
 
   return (
     <div>
-      <header className={s.headerBackGround}>
-        <div className={s.headerWrapper}>
+      <header className={s.headerBlock}>
+        <div className={s.headerContent}>
           <div className={s.headerLogo} onClick={logoRedirect}>
             <Logo onClick={logoRedirect} />
           </div>
