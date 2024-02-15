@@ -60,8 +60,11 @@
 .DropdownMenuCheckboxItem[data-disabled],
 .DropdownMenuRadioItem[data-disabled],
 .DropdownMenuSubTrigger[data-disabled] {
-  pointer-events: none;
-  color: var(--color-light-900);
+  background-color: var(--color-danger-900);
+
+  &:hover {
+    cursor: not-allowed;
+  }
 }
 
 .DropdownMenuItem[data-highlighted],
