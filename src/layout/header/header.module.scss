@@ -1,4 +1,4 @@
-.headerWrapper {
+.headerContent {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -18,7 +18,7 @@
   cursor: pointer;
 }
 
-.headerBackGround {
+.headerBlock {
   background-color: var(--color-dark-700);
 }
 
