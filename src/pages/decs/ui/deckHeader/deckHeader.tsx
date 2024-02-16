@@ -20,7 +20,7 @@ const DeckHeader = () => {
     minCards,
     minMaxValues,
     onChangeName,
-    onChangeSliderValues,
+    onCommitSliderValues,
     onTabValueChange,
     searchBy,
   } = useDeckFilter()
@@ -43,7 +43,7 @@ const DeckHeader = () => {
           <TextField
             label={'Search'}
             onValueChange={onChangeName}
-            placeholder={'Input search'}
+            placeholder={'Search deck'}
             value={searchBy}
             variant={'search'}
           />
@@ -59,10 +59,10 @@ const DeckHeader = () => {
             Number of cards
           </Typography>
           <DoubleSlider
-            changeSliderValue={onChangeSliderValues}
             defaultValue={[minCards, maxCards]}
             max={minMaxValues?.max}
             min={minMaxValues?.min}
+            onValueCommit={onCommitSliderValues}
           />
         </div>
         <Button
