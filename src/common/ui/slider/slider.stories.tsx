@@ -26,7 +26,7 @@ export const SliderOwn: Story = {
 
     return (
       <>
-        <DoubleSlider {...args} changeSliderValue={setSliderValue} defaultValue={sliderValue} />
+        <DoubleSlider {...args} defaultValue={sliderValue} onValueCommit={setSliderValue} />
       </>
     )
   },
