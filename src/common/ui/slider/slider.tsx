@@ -1,18 +1,20 @@
-import { ComponentPropsWithoutRef } from 'react'
+import { ComponentPropsWithoutRef, useEffect, useState } from 'react'
 
 import * as Slider from '@radix-ui/react-slider'
 
 import s from './slider.module.scss'
 
-export type DoubleSliderProps = {
-  changeSliderValue: (value: number[]) => void
-} & ComponentPropsWithoutRef<typeof Slider.Root>
+export type DoubleSliderProps = ComponentPropsWithoutRef<typeof Slider.Root>
 
 export const DoubleSlider = (props: DoubleSliderProps) => {
-  const { changeSliderValue, defaultValue = [0, 5], disabled, max, ...rest } = props
+  const { defaultValue = [0, 5], disabled, max, ...rest } = props
+  const [sliderValue, setSliderValue] = useState(defaultValue)
 
+  useEffect(() => {
+    setSliderValue(defaultValue)
+  }, [defaultValue])
   const onValueChange = (data: number[]) => {
-    changeSliderValue(data)
+    setSliderValue(data)
   }
 
   const onChangeInput = (value: number, side: 'left' | 'right') => {
@@ -24,14 +26,14 @@ export const DoubleSlider = (props: DoubleSliderProps) => {
     } else {
       temp[1] = clampedValue
     }
-    changeSliderValue(temp)
+    setSliderValue(temp)
   }
 
   const onBlurValidate = () => {
     const temp = [...defaultValue]
 
     if (temp[0] > temp[1]) {
-      changeSliderValue([temp[1], temp[0]])
+      setSliderValue([temp[1], temp[0]])
     }
   }
 
@@ -44,16 +46,16 @@ export const DoubleSlider = (props: DoubleSliderProps) => {
         onChange={e => onChangeInput(+e.currentTarget.value, 'left')}
         pattern={'[0-100]'}
         type={'number'}
-        value={defaultValue[0]}
+        value={sliderValue[0]}
       />
 
       <Slider.Root
         className={s.slider}
-        defaultValue={defaultValue}
+        defaultValue={sliderValue}
         disabled={disabled}
         max={max}
         onValueChange={onValueChange}
-        value={defaultValue}
+        value={sliderValue}
         {...rest}
       >
         <Slider.Track className={s.sliderTrack}>
@@ -69,7 +71,7 @@ export const DoubleSlider = (props: DoubleSliderProps) => {
         onChange={e => onChangeInput(+e.currentTarget.value, 'right')}
         pattern={'[0-100]'}
         type={'number'}
-        value={defaultValue[1]}
+        value={sliderValue[1]}
       />
     </div>
   )

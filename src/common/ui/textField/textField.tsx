@@ -22,6 +22,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>((props, for
     id,
     label,
     onValueChange,
+    value,
     variant = 'text',
     ...rest
   } = props
@@ -34,6 +35,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>((props, for
   }
   const searchVariant = variant === 'search'
   const passwordVariant = variant === 'password'
+  const crossVisibility = searchVariant && value
   const changePasswordVision = () => {
     setPasswordVisibility(!passwordVisibility)
   }
@@ -71,9 +73,10 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>((props, for
           onChange={onChangeValue}
           ref={forwardRef}
           type={passwordVisibility ? 'text' : variant}
+          value={value}
           {...rest}
         />
-        <div>{searchVariant && <Cross className={s.cross} onClick={clearValue} />}</div>
+        <div>{crossVisibility && <Cross className={s.cross} onClick={clearValue} />}</div>
         <div>
           {passwordVariant && (
             <div>

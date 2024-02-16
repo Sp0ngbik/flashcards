@@ -1,4 +1,3 @@
-import { useDebounce } from '@/common/hooks/useDebounce'
 import { usePageFilter } from '@/common/hooks/usePageFilter'
 import { useGetMinMaxCardsQuery } from '@/services/cards/cards.service'
 import { useGetDecksQuery } from '@/services/decks/decks.service'
@@ -28,15 +27,12 @@ export const useDeckFilter = () => {
 
   const getCurrentTab = search.get('currentTab') || 'allCards'
 
-  const onChangeSliderValues = (value: number[]) => {
+  const onCommitSliderValues = (value: number[]) => {
     changeSearchHandler('minCardsCount', value[0].toString())
     changeSearchHandler('maxCardsCount', value[1].toString())
   }
   const minCards = Number(search.get('minCardsCount') || 0)
   const maxCards = Number(search.get('maxCardsCount') || 15)
-
-  const debounceMinCards = useDebounce(minCards, 1000)
-  const debounceMaxCards = useDebounce(maxCards, 1000)
 
   const clearFilter = () => {
     setSearch({})
@@ -49,8 +45,8 @@ export const useDeckFilter = () => {
     authorId: getCurrentTab === 'userCards' ? me?.id : undefined,
     currentPage: currentPage,
     itemsPerPage: itemsPerPage,
-    maxCardsCount: debounceMaxCards,
-    minCardsCount: debounceMinCards,
+    maxCardsCount: maxCards,
+    minCardsCount: minCards,
     name: debounceName,
     orderBy: sortedString,
   })
@@ -69,7 +65,8 @@ export const useDeckFilter = () => {
     minMaxValues,
     onChangeCurrentPage,
     onChangeName,
-    onChangeSliderValues,
+    // onChangeSliderValues,
+    onCommitSliderValues,
     onTabValueChange,
     orderBy,
     searchBy,

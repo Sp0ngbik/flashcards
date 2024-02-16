@@ -57,8 +57,8 @@ const Decks = () => {
           <TableHeader columns={deckColumns} onSort={setSortedBy} sort={orderBy} />
           <TableBody>
             {deckIsFetching && (
-              <TableRow>
-                <TableDataCell>
+              <TableRow className={s.loaderRow}>
+                <TableDataCell className={s.loaderCell}>
                   <Loader adaptiveVersion transparentBackground />
                 </TableDataCell>
               </TableRow>
