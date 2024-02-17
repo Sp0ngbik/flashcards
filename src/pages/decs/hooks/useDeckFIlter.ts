@@ -65,7 +65,6 @@ export const useDeckFilter = () => {
     minMaxValues,
     onChangeCurrentPage,
     onChangeName,
-    // onChangeSliderValues,
     onCommitSliderValues,
     onTabValueChange,
     orderBy,

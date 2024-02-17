@@ -11,7 +11,10 @@
 .TabsList {
   display: flex;
   flex-shrink: 0;
+
+  height: 36px;
   margin-top: 5px;
+
   border-bottom: 1px solid var(--mauve-6);
 
   &:focus-visible {
@@ -26,7 +29,7 @@
   align-items: center;
   justify-content: center;
 
-  padding: 6px 24px;
+  padding: 5px 24px;
 
   font-family: inherit;
   color: var(--color-light-100);

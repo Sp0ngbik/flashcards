@@ -85,12 +85,12 @@ export const Header = ({ isAuth }: HeaderProps) => {
             )}
           </div>
         </div>
+        <ThemeSwitch
+          className={s.themeSwitcher}
+          defaultChecked={theme}
+          onCheckedChange={changeThemeHandler}
+        />
       </header>
-      <ThemeSwitch
-        className={s.themeSwitcher}
-        defaultChecked={theme}
-        onCheckedChange={changeThemeHandler}
-      />
       <main>
         <Outlet context={{ isAuthenticated } satisfies AuthContext} />
       </main>

@@ -41,6 +41,7 @@ const DeckHeader = () => {
       <div className={s.deckFilter}>
         <div>
           <TextField
+            className={s.searchInput}
             label={'Search'}
             onValueChange={onChangeName}
             placeholder={'Search deck'}
@@ -62,6 +63,7 @@ const DeckHeader = () => {
             defaultValue={[minCards, maxCards]}
             max={minMaxValues?.max}
             min={minMaxValues?.min}
+            // onValueChange={onChangeSliderValues}
             onValueCommit={onCommitSliderValues}
           />
         </div>
