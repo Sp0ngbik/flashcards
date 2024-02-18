@@ -1,18 +1,31 @@
 import { baseApi } from '@/services/baseApi'
 import {
-  CreateDeckArgs,
   Deck,
+  DeckBody,
   DeckResponse,
   GetCardsByIdResponse,
   GetDecksArgs,
   OptimisticDeck,
-  UpdateDeck,
 } from '@/services/decks/decks.types'
+
+const deckFormDataHandler = (data: DeckBody) => {
+  const formData = new FormData()
+
+  if (data.cover instanceof File) {
+    formData.append('cover', data.cover)
+  } else if (data.cover === null) {
+    formData.append('cover', '')
+  }
+  formData.append('name', data.name)
+  formData.append('isPrivate', String(data.isPrivate))
+
+  return formData
+}
 
 export const decksService = baseApi.injectEndpoints({
   endpoints(build) {
     return {
-      createDeck: build.mutation<Deck, CreateDeckArgs>({
+      createDeck: build.mutation<Deck, DeckBody>({
         invalidatesTags: ['Decks'],
         async onQueryStarted(_, { dispatch, getState, queryFulfilled }) {
           const res = await queryFulfilled
@@ -27,7 +40,7 @@ export const decksService = baseApi.injectEndpoints({
           )
         },
         query: args => ({
-          body: args ?? undefined,
+          body: deckFormDataHandler(args),
           method: 'POST',
           url: 'v1/decks',
         }),
@@ -72,25 +85,20 @@ export const decksService = baseApi.injectEndpoints({
           url: 'v2/decks',
         }),
       }),
-      updateDeck: build.mutation<GetCardsByIdResponse, { data: UpdateDeck; id: string }>({
+      updateDeck: build.mutation<GetCardsByIdResponse, { data: DeckBody; id: string }>({
         invalidatesTags: ['Decks', 'Cards'],
         async onQueryStarted(args, { dispatch, getState, queryFulfilled }) {
           const queryArgs = decksService.util.selectCachedArgsForQuery(getState(), 'getDecks')
 
           const updateResult = dispatch(
             decksService.util.updateQueryData('getDecks', queryArgs[0], draft => {
-              const data = args.data
+              const { cover, isPrivate, name } = args.data
               const index = draft?.items?.findIndex(deck => deck.id === args.id)
-              const name = data.get('name')
-              const isPrivate = data.get('isPrivate')
-              const cover = data.get('cover')
+
               const updated: Partial<OptimisticDeck> = {}
 
-              updated.isPrivate = Boolean(isPrivate)
-
-              if (typeof name === 'string') {
-                updated.name = name
-              }
+              updated.isPrivate = isPrivate
+              updated.name = name
               if (cover instanceof File) {
                 updated.cover = URL.createObjectURL(cover)
               }
@@ -108,7 +116,7 @@ export const decksService = baseApi.injectEndpoints({
           }
         },
         query: args => ({
-          body: args.data,
+          body: deckFormDataHandler(args.data),
           method: 'PATCH',
           url: `v1/decks/${args.id}`,
         }),

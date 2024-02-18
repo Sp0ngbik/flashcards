@@ -3,6 +3,7 @@ import { toast } from 'react-toastify'
 import DeckForm, { EditDeckType } from '@/features/deck/deckForm/deckForm'
 import { ErrorResponse } from '@/services/auth/auth.types'
 import { useUpdateDeckMutation } from '@/services/decks/decks.service'
+import { DeckBody } from '@/services/decks/decks.types'
 
 type UpdateDeckProps = {
   deck?: EditDeckType
@@ -13,7 +14,7 @@ type UpdateDeckProps = {
 
 export const UpdateDeck = ({ deck, isOpen, onOpenChange, title }: UpdateDeckProps) => {
   const [updateDeck, { isLoading }] = useUpdateDeckMutation()
-  const updateEditDeck = async (data: FormData) => {
+  const updateEditDeck = async (data: DeckBody) => {
     try {
       if (deck?.id) {
         await toast.promise(updateDeck({ data, id: deck?.id }).unwrap(), {
