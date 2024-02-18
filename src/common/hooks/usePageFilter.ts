@@ -33,7 +33,7 @@ export const usePageFilter = () => {
 
   const orderBy = JSON.parse(search.get('orderBy') || '""')
   const searchBy = search.get('name') || ''
-  const debounceName = useDebounce(searchBy, 2000)
+  const debounceName = useDebounce(searchBy, 700)
   const sortedString = useMemo(() => {
     if (!orderBy) {
       return null

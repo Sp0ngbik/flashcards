@@ -48,9 +48,9 @@
 }
 
 .themeSwitcher {
-  position: fixed;
+  position: absolute;
   z-index: 2;
-  top: 25px;
+  top: 20px;
   right: 25px;
 
   &:hover {

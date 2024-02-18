@@ -2,6 +2,7 @@ import { toast } from 'react-toastify'
 
 import { CardForm } from '@/features/cards/cardForm/cardForm'
 import { useCreateCardMutation } from '@/services/cards/cards.service'
+import { CardBody } from '@/services/cards/cards.types'
 
 type AddNewDeckModalProps = {
   id?: string
@@ -12,7 +13,7 @@ type AddNewDeckModalProps = {
 export const CreateNewCard = ({ id, isOpen, onOpenChange, title }: AddNewDeckModalProps) => {
   const [createCard, { isLoading }] = useCreateCardMutation()
 
-  const onSubmitHandler = async (data: FormData) => {
+  const onSubmitHandler = async (data: CardBody) => {
     id &&
       (await toast.promise(createCard({ data, id }).unwrap(), {
         error: 'Failed to add new Deck',

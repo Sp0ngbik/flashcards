@@ -14,14 +14,14 @@ export type CardsResponse = {
   userId: string
 }
 
+export type CardBody = {
+  answer: string
+  answerImg: File | null | string
+  question: string
+  questionImg: File | null | string
+}
+
 export type OptimisticCard = Pick<
   CardsResponse,
   'answer' | 'answerImg' | 'question' | 'questionImg'
 >
-
-export type UpdateCardsArgs = {
-  body: FormData
-  id: string
-}
-
-export type CreateCard = FormData
