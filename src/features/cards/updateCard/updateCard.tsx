@@ -3,6 +3,7 @@ import { toast } from 'react-toastify'
 import { CardForm, EditCardType } from '@/features/cards/cardForm/cardForm'
 import { ErrorResponse } from '@/services/auth/auth.types'
 import { useUpdateCardMutation } from '@/services/cards/cards.service'
+import { CardBody } from '@/services/cards/cards.types'
 
 type UpdateCardModalProps = {
   card?: EditCardType
@@ -14,10 +15,10 @@ type UpdateCardModalProps = {
 export const UpdateCard = ({ card, id, isOpen, onOpenChange, title }: UpdateCardModalProps) => {
   const [updateCard, { isLoading }] = useUpdateCardMutation()
 
-  const updateCurrentCard = async (body: FormData) => {
+  const updateCurrentCard = async (body: CardBody) => {
     try {
       if (id) {
-        await toast.promise(updateCard({ body, id }).unwrap(), {
+        await toast.promise(updateCard({ data: body, id }).unwrap(), {
           pending: 'In progress',
           success: 'Success',
         })
