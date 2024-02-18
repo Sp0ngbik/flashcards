@@ -5,6 +5,7 @@ import { Button } from '@/common/ui/button'
 import { Modal } from '@/common/ui/modal'
 import CardSection from '@/features/cards/cardSection/cardSection'
 import { FormValuesAddCard, addCardSchema } from '@/features/cards/utils/addNewCardModalSchema'
+import { CardBody } from '@/services/cards/cards.types'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import s from '@/features/cards/cardForm/cardForm.module.scss'
@@ -15,7 +16,7 @@ type AddNewDeckModalProps = {
   isLoading?: boolean
   isOpen: boolean
   onOpenChange: (open: boolean) => void
-  onSubmitCard: (data: FormData) => void
+  onSubmitCard: (data: CardBody) => void
   title: string
 }
 
@@ -68,23 +69,13 @@ export const CardForm = ({
 
   const onSubmit = async (data: FormValuesAddCard) => {
     try {
-      const formData = new FormData()
-
-      formData.append('question', data.question)
-      formData.append('answer', data.answer)
-
-      if (currentAnswerPhoto instanceof File) {
-        formData.append('answerImg', currentAnswerPhoto)
-      } else if (currentAnswerPhoto === null) {
-        formData.append('answerImg', '')
-      }
-      if (currentQuestionPhoto instanceof File) {
-        formData.append('questionImg', currentQuestionPhoto)
-      } else if (currentQuestionPhoto === null) {
-        formData.append('questionImg', '')
+      const cardData: CardBody = {
+        ...data,
+        answerImg: currentAnswerPhoto,
+        questionImg: currentQuestionPhoto,
       }
 
-      onSubmitCard(formData)
+      onSubmitCard(cardData)
 
       onOpenChange(false)
     } catch (error) {

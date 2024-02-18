@@ -1,16 +1,30 @@
 import { baseApi } from '@/services/baseApi'
-import {
-  CardsResponse,
-  CreateCard,
-  OptimisticCard,
-  UpdateCardsArgs,
-} from '@/services/cards/cards.types'
+import { CardBody, CardsResponse, OptimisticCard } from '@/services/cards/cards.types'
 import { GetCardsArgs, GetCardsResponse, MinMax } from '@/services/decks/decks.types'
+const cardFormDataHandler = (data: CardBody) => {
+  const formData = new FormData()
+
+  formData.append('question', data.question)
+  formData.append('answer', data.answer)
+
+  if (data.answerImg instanceof File) {
+    formData.append('answerImg', data.answerImg)
+  } else if (data.answerImg === null) {
+    formData.append('answerImg', '')
+  }
+  if (data.questionImg instanceof File) {
+    formData.append('questionImg', data.questionImg)
+  } else if (data.questionImg === null) {
+    formData.append('questionImg', '')
+  }
+
+  return formData
+}
 
 export const cardsService = baseApi.injectEndpoints({
   endpoints(build) {
     return {
-      createCard: build.mutation<CardsResponse, { data: CreateCard; id: string }>({
+      createCard: build.mutation<CardsResponse, { data: CardBody; id: string }>({
         invalidatesTags: ['Cards', 'Decks'],
         async onQueryStarted(_, { dispatch, getState, queryFulfilled }) {
           const res = await queryFulfilled
@@ -24,7 +38,7 @@ export const cardsService = baseApi.injectEndpoints({
           )
         },
         query: args => ({
-          body: args.data,
+          body: cardFormDataHandler(args.data),
           method: 'POST',
           url: `v1/decks/${args.id}/cards`,
         }),
@@ -84,28 +98,19 @@ export const cardsService = baseApi.injectEndpoints({
           url: `v1/decks/${args.cardId}/learn`,
         }),
       }),
-      updateCard: build.mutation<CardsResponse, UpdateCardsArgs>({
+      updateCard: build.mutation<CardsResponse, { data: CardBody; id: string }>({
         invalidatesTags: ['Cards'],
         async onQueryStarted(args, { dispatch, getState, queryFulfilled }) {
           const queryArgs = cardsService.util.selectCachedArgsForQuery(getState(), 'getCards')
 
           const updateCardResult = dispatch(
             cardsService.util.updateQueryData('getCards', queryArgs[0], draft => {
-              const data = args.body
               const index = draft.items.findIndex(el => el.id === args.id)
-              const question = data.get('question')
-              const answer = data.get('answer')
-              const questionImg = data.get('questionImg')
-              const answerImg = data.get('answerImg')
-
+              const { answer, answerImg, question, questionImg } = args.data
               const updatedCard: Partial<OptimisticCard> = {}
 
-              if (typeof question === 'string') {
-                updatedCard.question = question
-              }
-              if (typeof answer === 'string') {
-                updatedCard.answer = answer
-              }
+              updatedCard.question = question
+              updatedCard.answer = answer
 
               if (questionImg instanceof File) {
                 updatedCard.questionImg = URL.createObjectURL(questionImg)
@@ -125,7 +130,7 @@ export const cardsService = baseApi.injectEndpoints({
           }
         },
         query: args => ({
-          body: args.body ?? undefined,
+          body: cardFormDataHandler(args.data),
           method: 'PATCH',
           url: `v1/cards/${args.id}`,
         }),
