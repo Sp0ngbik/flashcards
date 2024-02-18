@@ -2,10 +2,10 @@ import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import { ArrowBack } from '@/assets/icons/arrow-back-outline'
 import noImageCover from '@/assets/image/noImage.png'
 import { Button } from '@/common/ui/button'
 import { DropdownMenu } from '@/common/ui/dropDownMenu'
+import GoBackButton from '@/common/ui/goBackButton/goBackButton'
 import TextField from '@/common/ui/textField/textField'
 import { Typography } from '@/common/ui/typography'
 import { CreateNewCard } from '@/features/cards/createNewCard/createNewCard'
@@ -83,10 +83,7 @@ const CardHeader = () => {
         onOpenChange={setDeleteForm}
         title={'Delete Pack'}
       />
-      <Button className={s.backToDeck} onClick={goBackHandler} variant={'link'}>
-        <ArrowBack className={s.arrowBack} />
-        Back to Decks List
-      </Button>
+      <GoBackButton />
       <div className={s.cardsHeader}>
         <div>
           <div className={s.dropDownDiv}>

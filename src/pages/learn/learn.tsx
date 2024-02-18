@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
-import { ArrowBack } from '@/assets/icons/arrow-back-outline'
 import { Button } from '@/common/ui/button'
 import { Card } from '@/common/ui/card'
+import GoBackButton from '@/common/ui/goBackButton/goBackButton'
 import { Loader } from '@/common/ui/loader'
 import { RadioGroup } from '@/common/ui/radioGroup'
 import { RadioItem } from '@/common/ui/radioGroup/radioItem'
@@ -17,7 +17,6 @@ import s from './learn.module.scss'
 const Learn = () => {
   const { id } = useParams<{ id: string }>()
   const { data, isLoading } = useLearnCardQuery({ id })
-  const navigate = useNavigate()
   const { getDeckById } = useCardFilter(id)
   const [post] = usePostCardMutation()
   const [answer, showAnswer] = useState<boolean>(false)
@@ -41,16 +40,7 @@ const Learn = () => {
 
   return (
     <div className={s.cardWrapper}>
-      <Button
-        className={s.backToDeck}
-        onClick={() => {
-          navigate(-1)
-        }}
-        variant={'link'}
-      >
-        <ArrowBack className={s.arrowBack} />
-        Back to Cards
-      </Button>
+      <GoBackButton />
       <Card className={s.learnCard}>
         <Typography as={'header'} variant={'h1'}>{`Learn ${getDeckById?.name}`}</Typography>
         <Typography className={s.text}>{`Question:  ${data?.question}`}</Typography>
