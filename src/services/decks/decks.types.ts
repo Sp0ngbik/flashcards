@@ -31,8 +31,11 @@ export type GetDecksArgs = {
   orderBy?: null | string
 }
 
-export type CreateDeckArgs = FormData
-export type UpdateDeck = CreateDeckArgs
+export type DeckBody = {
+  cover: File | null | string
+  isPrivate: boolean
+  name: string
+}
 
 export type MinMax = {
   max: number

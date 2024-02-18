@@ -7,6 +7,7 @@ import { CheckboxControlled, TextFieldControlled } from '@/common/ui/controlled'
 import ImageLoader from '@/common/ui/imageLoader/imageLoader'
 import { Modal } from '@/common/ui/modal'
 import { FormValuesAddDeck, addDeckSchema } from '@/features/deck/utils/addNewDeckModalSchema'
+import { DeckBody } from '@/services/decks/decks.types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ImageIcon } from '@radix-ui/react-icons'
 
@@ -24,7 +25,7 @@ type AddNewDeckModalProps = {
   disabled?: boolean
   isOpen: boolean
   onOpenChange: (open: boolean) => void
-  onSubmitDeck: (data: FormData) => void
+  onSubmitDeck: (data: DeckBody) => void
   title: string
 }
 
@@ -64,17 +65,10 @@ const DeckForm = ({
   }
 
   const onSubmit = async (data: FormValuesAddDeck) => {
-    const formData = new FormData()
-
-    if (photo instanceof File) {
-      formData.append('cover', photo)
-    } else if (photo === null) {
-      formData.append('cover', '')
-    }
-    formData.append('name', data.name)
-    formData.append('isPrivate', String(data.isPrivate))
     onOpenChange(false)
-    onSubmitDeck(formData)
+    const deckBody: DeckBody = { ...data, cover: photo }
+
+    onSubmitDeck(deckBody)
     setPhoto(null)
     reset()
   }

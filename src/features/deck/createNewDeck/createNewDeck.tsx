@@ -2,6 +2,7 @@ import { toast } from 'react-toastify'
 
 import DeckForm from '@/features/deck/deckForm/deckForm'
 import { useCreateDeckMutation } from '@/services/decks/decks.service'
+import { DeckBody } from '@/services/decks/decks.types'
 
 type AddNewDeckModalProps = {
   disabled?: boolean
@@ -12,7 +13,7 @@ type AddNewDeckModalProps = {
 
 export const CreateNewDeck = ({ isOpen, onOpenChange, title }: AddNewDeckModalProps) => {
   const [createDeck] = useCreateDeckMutation()
-  const onSubmitHandler = async (data: FormData) => {
+  const onSubmitHandler = async (data: DeckBody) => {
     await toast.promise(createDeck(data).unwrap(), {
       error: 'Failed to add new Deck',
       pending: 'In progress',

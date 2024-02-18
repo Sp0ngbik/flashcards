@@ -25,5 +25,3 @@ export type OptimisticCard = Pick<
   CardsResponse,
   'answer' | 'answerImg' | 'question' | 'questionImg'
 >
-
-export type CreateCard = FormData
