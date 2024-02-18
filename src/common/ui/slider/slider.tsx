@@ -7,34 +7,34 @@ import s from './slider.module.scss'
 export type DoubleSliderProps = ComponentPropsWithoutRef<typeof Slider.Root>
 
 export const DoubleSlider = (props: DoubleSliderProps) => {
-  const { defaultValue = [0, 5], disabled, max, ...rest } = props
+  const { defaultValue = [0, 5], disabled, max, onValueCommit, ...rest } = props
   const [sliderValue, setSliderValue] = useState(defaultValue)
 
   useEffect(() => {
     setSliderValue(defaultValue)
   }, [defaultValue])
-  const onValueChange = (data: number[]) => {
+  const onChangeValueHandler = (data: number[]) => {
     setSliderValue(data)
   }
-
-  const onChangeInput = (value: number, side: 'left' | 'right') => {
+  const handleChangeValidator = (newValue: number, side?: 'left' | 'right') => {
     const temp = [...defaultValue]
-    const clampedValue = Math.min(value, max ? max : defaultValue[1])
+    const clampedValue = Math.min(newValue, max ? max : defaultValue[1])
 
     if (side === 'left') {
       temp[0] = clampedValue
-    } else {
+    } else if (side === 'right') {
       temp[1] = clampedValue
     }
-    setSliderValue(temp)
-  }
-
-  const onBlurValidate = () => {
-    const temp = [...defaultValue]
 
     if (temp[0] > temp[1]) {
       setSliderValue([temp[1], temp[0]])
+    } else {
+      setSliderValue(temp)
     }
+  }
+
+  const onBlurHandler = () => {
+    onValueCommit?.(sliderValue)
   }
 
   return (
@@ -42,8 +42,8 @@ export const DoubleSlider = (props: DoubleSliderProps) => {
       <input
         className={s.value}
         disabled={disabled}
-        onBlur={onBlurValidate}
-        onChange={e => onChangeInput(+e.currentTarget.value, 'left')}
+        onBlur={onBlurHandler}
+        onChange={e => handleChangeValidator(+e.currentTarget.value, 'left')}
         pattern={'[0-100]'}
         type={'number'}
         value={sliderValue[0]}
@@ -51,10 +51,10 @@ export const DoubleSlider = (props: DoubleSliderProps) => {
 
       <Slider.Root
         className={s.slider}
-        defaultValue={sliderValue}
         disabled={disabled}
         max={max}
-        onValueChange={onValueChange}
+        onValueChange={onChangeValueHandler}
+        onValueCommit={onValueCommit}
         value={sliderValue}
         {...rest}
       >
@@ -68,7 +68,8 @@ export const DoubleSlider = (props: DoubleSliderProps) => {
       <input
         className={s.value}
         disabled={disabled}
-        onChange={e => onChangeInput(+e.currentTarget.value, 'right')}
+        onBlur={onBlurHandler}
+        onChange={e => handleChangeValidator(+e.currentTarget.value, 'right')}
         pattern={'[0-100]'}
         type={'number'}
         value={sliderValue[1]}
