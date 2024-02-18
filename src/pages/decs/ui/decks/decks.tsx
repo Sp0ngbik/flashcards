@@ -1,5 +1,4 @@
-import { useEffect } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { deckColumns } from '@/common/const'
 import { Loader } from '@/common/ui/loader'
@@ -14,14 +13,6 @@ import DeckRow from '@/pages/decs/ui/deckRow/deckRow'
 import s from './decks.module.scss'
 
 const Decks = () => {
-  const location = useLocation()
-
-  useEffect(() => {
-    return () => {
-      sessionStorage.setItem('lastLocation', location.pathname + location.search)
-    }
-  }, [location])
-
   const {
     currentPage,
     deckData,

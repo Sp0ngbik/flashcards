@@ -1,7 +1,8 @@
 import { FC } from 'react'
-import { NavLink } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { ArrowBack } from '@/assets/icons/arrow-back-outline'
+import { Button } from '@/common/ui/button'
 import { Card } from '@/common/ui/card'
 import { Typography } from '@/common/ui/typography'
 import ProfileAvatar from '@/pages/auth/profile/ui/profileAvatar/profileAvatar'
@@ -16,13 +17,20 @@ export type ProfileProps = {
 
 export const Profile: FC<ProfileProps> = ({ editStatus = false }) => {
   const { data: me } = useMeQuery()
+  const navigate = useNavigate()
 
   return (
     <div className={s.profileWrapper}>
-      <NavLink className={s.backToDeck} to={'/'}>
+      <Button
+        className={s.backToDeck}
+        onClick={() => {
+          navigate(-1)
+        }}
+        variant={'link'}
+      >
         <ArrowBack className={s.arrowBack} />
         Back to Decks List
-      </NavLink>
+      </Button>
       <Card>
         <Typography className={s.profileLabel} variant={'h1'}>
           Personal Information

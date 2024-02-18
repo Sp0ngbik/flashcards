@@ -3,6 +3,7 @@
   gap: 5px;
   color: var(--color-light-100);
   text-decoration: none;
+  padding-left: 0;
 
   &:hover {
     color: var(--color-accent-300);
@@ -11,7 +12,7 @@
 
 .arrowBack {
   margin-top: 2px;
-  fill: currentcolor;
+  fill: currentcolor;;
 }
 
 .cardsHeader {
