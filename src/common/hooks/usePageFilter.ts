@@ -17,7 +17,7 @@ export const usePageFilter = () => {
       search.set(field, params)
     }
     search.set('page', '1')
-    setSearch(search)
+    setSearch(search, { replace: true })
   }
 
   const setItemsPerPage = (value: number) => {

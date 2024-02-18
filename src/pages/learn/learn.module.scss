@@ -1,21 +1,3 @@
-.backToDeck {
-  --font-family-primary: 'Roboto';
-
-  display: flex;
-  gap: 5px;
-  color: var(--color-light-100);
-  text-decoration: none;
-
-  &:hover {
-    color: var(--color-accent-300);
-  }
-}
-
-.arrowBack {
-  margin-top: 2px;
-  fill: currentcolor;
-}
-
 .learnCard {
   display: flex;
   flex-direction: column;

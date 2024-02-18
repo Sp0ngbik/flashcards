@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { NavLink, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import { ArrowBack } from '@/assets/icons/arrow-back-outline'
 import noImageCover from '@/assets/image/noImage.png'
 import { Button } from '@/common/ui/button'
 import { DropdownMenu } from '@/common/ui/dropDownMenu'
+import GoBackButton from '@/common/ui/goBackButton/goBackButton'
 import TextField from '@/common/ui/textField/textField'
 import { Typography } from '@/common/ui/typography'
 import { CreateNewCard } from '@/features/cards/createNewCard/createNewCard'
@@ -22,7 +22,6 @@ const CardHeader = () => {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const [isDeleteForm, setDeleteForm] = useState(false)
-  const backDeck = sessionStorage.getItem('lastLocation')
   const {
     getDeckById,
     isEmpty,
@@ -40,6 +39,9 @@ const CardHeader = () => {
   const learnDeckHandler = () => {
     navigate(`/cards/${id}/learn`)
   }
+  const goBackHandler = () => {
+    navigate(-1)
+  }
   const onEditClickHandler = () => {
     setIsOpenEdit(true)
   }
@@ -53,7 +55,7 @@ const CardHeader = () => {
     try {
       if (id) {
         await toast.promise(deleteDeck(id).unwrap(), { pending: 'In progress', success: 'Success' })
-        navigate(`${backDeck}`)
+        goBackHandler()
       }
     } catch (e: unknown) {
       const err = e as ErrorResponse
@@ -81,10 +83,7 @@ const CardHeader = () => {
         onOpenChange={setDeleteForm}
         title={'Delete Pack'}
       />
-      <NavLink className={s.backToDeck} to={`${backDeck}`}>
-        <ArrowBack className={s.arrowBack} />
-        Back to Decks List
-      </NavLink>
+      <GoBackButton />
       <div className={s.cardsHeader}>
         <div>
           <div className={s.dropDownDiv}>

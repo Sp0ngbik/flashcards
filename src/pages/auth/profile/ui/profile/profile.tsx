@@ -1,8 +1,7 @@
 import { FC } from 'react'
-import { NavLink } from 'react-router-dom'
 
-import { ArrowBack } from '@/assets/icons/arrow-back-outline'
 import { Card } from '@/common/ui/card'
+import GoBackButton from '@/common/ui/goBackButton/goBackButton'
 import { Typography } from '@/common/ui/typography'
 import ProfileAvatar from '@/pages/auth/profile/ui/profileAvatar/profileAvatar'
 import { ProfileEditBody } from '@/pages/auth/profile/ui/profileEditBody/profileEditBody'
@@ -19,10 +18,7 @@ export const Profile: FC<ProfileProps> = ({ editStatus = false }) => {
 
   return (
     <div className={s.profileWrapper}>
-      <NavLink className={s.backToDeck} to={'/'}>
-        <ArrowBack className={s.arrowBack} />
-        Back to Decks List
-      </NavLink>
+      <GoBackButton />
       <Card>
         <Typography className={s.profileLabel} variant={'h1'}>
           Personal Information

@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { NavLink, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
-import { ArrowBack } from '@/assets/icons/arrow-back-outline'
 import { Button } from '@/common/ui/button'
 import { Card } from '@/common/ui/card'
+import GoBackButton from '@/common/ui/goBackButton/goBackButton'
 import { Loader } from '@/common/ui/loader'
 import { RadioGroup } from '@/common/ui/radioGroup'
 import { RadioItem } from '@/common/ui/radioGroup/radioItem'
@@ -40,10 +40,7 @@ const Learn = () => {
 
   return (
     <div className={s.cardWrapper}>
-      <NavLink className={s.backToDeck} to={`/cards/${id}`}>
-        <ArrowBack className={s.arrowBack} />
-        Back to Cards
-      </NavLink>
+      <GoBackButton />
       <Card className={s.learnCard}>
         <Typography as={'header'} variant={'h1'}>{`Learn ${getDeckById?.name}`}</Typography>
         <Typography className={s.text}>{`Question:  ${data?.question}`}</Typography>
