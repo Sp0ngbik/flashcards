@@ -39,7 +39,7 @@ const DeckHeader = () => {
         <Button onClick={onCreateDeck}>Add New Deck</Button>
       </div>
       <div className={s.deckFilter}>
-        <div>
+        <div className={s.searchFieldWrapper}>
           <TextField
             className={s.searchInput}
             label={'Search'}
@@ -50,7 +50,6 @@ const DeckHeader = () => {
           />
         </div>
         <div className={s.deckFilterGroup}>
-          {' '}
           <TabSwitcher
             label={'Show decks cards'}
             onValueChange={onTabValueChange}
@@ -65,7 +64,6 @@ const DeckHeader = () => {
               defaultValue={[minCards, maxCards]}
               max={minMaxValues?.max}
               min={minMaxValues?.min}
-              // onValueChange={onChangeSliderValues}
               onValueCommit={onCommitSliderValues}
             />
           </div>
