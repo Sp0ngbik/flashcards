@@ -9,7 +9,6 @@ import { Typography } from '@/common/ui/typography'
 import { useDeckFilter } from '@/pages/decs/hooks/useDeckFIlter'
 import DeckHeader from '@/pages/decs/ui/deckHeader/deckHeader'
 import DeckRow from '@/pages/decs/ui/deckRow/deckRow'
-import { useWindowSize } from '@uidotdev/usehooks'
 
 import s from './decks.module.scss'
 
@@ -41,49 +40,38 @@ const Decks = () => {
     return userId === me?.id
   }
 
-  const size = useWindowSize()
-  const width = size?.width
-
   return (
     <div className={s.deckWrapper}>
       <DeckHeader />
-      {width && width > 700 ? (
-        deckData?.items?.length ? (
-          <Table>
-            <TableHeader columns={deckColumns} onSort={setSortedBy} sort={orderBy} />
-            <TableBody>
-              {deckIsFetching && (
-                <TableRow className={s.loaderRow}>
-                  <TableDataCell className={s.loaderCell}>
-                    <Loader adaptiveVersion transparentBackground />
-                  </TableDataCell>
-                </TableRow>
-              )}
-              {deckData?.items?.map(deck => {
-                return (
-                  <DeckRow
-                    deck={deck}
-                    isOwner={isOwner(deck.userId)}
-                    key={deck.id}
-                    learnDeck={learnDeckHandler}
-                    openDeck={openDeckHandler}
-                  />
-                )
-              })}
-            </TableBody>
-          </Table>
-        ) : (
-          <>
-            <Typography className={s.deckText} variant={'subtitle1'}>
-              No content with these terms...
-            </Typography>
-          </>
-        )
+      {deckData?.items?.length ? (
+        <Table>
+          <TableHeader columns={deckColumns} onSort={setSortedBy} sort={orderBy} />
+          <TableBody>
+            {deckIsFetching && (
+              <TableRow className={s.loaderRow}>
+                <TableDataCell className={s.loaderCell}>
+                  <Loader adaptiveVersion transparentBackground />
+                </TableDataCell>
+              </TableRow>
+            )}
+            {deckData?.items?.map(deck => {
+              return (
+                <DeckRow
+                  deck={deck}
+                  isOwner={isOwner(deck.userId)}
+                  key={deck.id}
+                  learnDeck={learnDeckHandler}
+                  openDeck={openDeckHandler}
+                />
+              )
+            })}
+          </TableBody>
+        </Table>
       ) : (
         <>
-          <Table>
-            <TableHeader columns={deckColumns} onSort={setSortedBy} sort={orderBy} />
-          </Table>
+          <Typography className={s.deckText} variant={'subtitle1'}>
+            No content with these terms...
+          </Typography>
         </>
       )}
       <Pagination
