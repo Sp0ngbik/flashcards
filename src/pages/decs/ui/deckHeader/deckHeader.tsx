@@ -32,7 +32,7 @@ const DeckHeader = () => {
   }
 
   return (
-    <div>
+    <>
       <CreateNewDeck isOpen={isCreateOpen} onOpenChange={setIsCreateOpen} title={'Add New Deck'} />
       <div className={s.deckHead}>
         <Typography variant={'h1'}>Decks List</Typography>
@@ -49,33 +49,36 @@ const DeckHeader = () => {
             variant={'search'}
           />
         </div>
-        <TabSwitcher
-          label={'Show decks cards'}
-          onValueChange={onTabValueChange}
-          tabs={tabs}
-          value={getCurrentTab || tabs[0].value}
-        />
-        <div>
-          <Typography className={s.sliderLabel} variant={'body2'}>
-            Number of cards
-          </Typography>
-          <DoubleSlider
-            defaultValue={[minCards, maxCards]}
-            max={minMaxValues?.max}
-            min={minMaxValues?.min}
-            // onValueChange={onChangeSliderValues}
-            onValueCommit={onCommitSliderValues}
+        <div className={s.deckFilterGroup}>
+          {' '}
+          <TabSwitcher
+            label={'Show decks cards'}
+            onValueChange={onTabValueChange}
+            tabs={tabs}
+            value={getCurrentTab || tabs[0].value}
           />
+          <div>
+            <Typography className={s.sliderLabel} variant={'body2'}>
+              Number of cards
+            </Typography>
+            <DoubleSlider
+              defaultValue={[minCards, maxCards]}
+              max={minMaxValues?.max}
+              min={minMaxValues?.min}
+              // onValueChange={onChangeSliderValues}
+              onValueCommit={onCommitSliderValues}
+            />
+          </div>
+          <Button
+            icon={<Delete className={s.deleteIcon} />}
+            onClick={clearFilter}
+            variant={'secondary'}
+          >
+            Clear Filter
+          </Button>
         </div>
-        <Button
-          icon={<Delete className={s.deleteIcon} />}
-          onClick={clearFilter}
-          variant={'secondary'}
-        >
-          Clear Filter
-        </Button>
       </div>
-    </div>
+    </>
   )
 }
 

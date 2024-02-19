@@ -28,6 +28,7 @@
     "@radix-ui/react-tabs": "^1.0.4",
     "@reduxjs/toolkit": "^2.0.1",
     "@types/storybook__addon-actions": "^5.2.1",
+    "@uidotdev/usehooks": "^2.4.1",
     "async-mutex": "^0.4.1",
     "clsx": "^2.1.0",
     "react": "^18.2.0",

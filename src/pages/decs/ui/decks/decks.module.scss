@@ -2,9 +2,11 @@
   display: flex;
   flex-direction: column;
 
-  max-width: 1280px;
+  //max-width: 1280px;
   margin: 0 auto;
-  padding: 24px 137px;
+  padding: 24px 16px;
+  max-width: 1006px;
+  width: 100%;
 }
 
 .paginationBlock {

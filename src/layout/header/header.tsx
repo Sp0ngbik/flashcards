@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 
 import { Logo } from '@/assets'
+import { MobileLogo } from '@/assets/icons/mobileLogo'
 import { Button } from '@/common/ui/button'
 import { DropdownMenu } from '@/common/ui/dropDownMenu'
 import { Loader } from '@/common/ui/loader'
@@ -68,6 +69,7 @@ export const Header = ({ isAuth }: HeaderProps) => {
         <div className={s.headerContent}>
           <div className={s.headerLogo} onClick={logoRedirect}>
             <Logo className={s.logoIcon} />
+            <MobileLogo className={s.mobileLogoIcon} />
           </div>
           <div className={s.headerRightSection}>
             {isAuth ?? isShowHeaderInfo ? (

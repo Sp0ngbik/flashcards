@@ -1,25 +1,64 @@
-.deckHead {
-  display: flex;
-  justify-content: space-between;
-}
+  .deckHead {
+    display: flex;
+    justify-content: space-between;
+  }
 
-.deckFilter {
-  display: flex;
-  place-content: center space-between;
-  place-items: flex-end center;
-  margin: 7px 0 36px;
-}
+  .deckFilter {
+    display: flex;
+    place-content: center space-between;
+    place-items: flex-end center;
+    margin: 7px 0 36px;
+    gap: 10px;
+  }
 
-.deleteIcon {
-  align-items: center;
-  margin-left: 50px;
-  fill: var(--color-light-100);
-}
+  .deckFilterGroup {
+    display: flex;
+    place-content: center space-between;
+    place-items: flex-end center;
+    gap: 10px;
+  }
 
-.sliderLabel {
-  margin-bottom: 5px;
-}
+  .deleteIcon {
+    align-items: center;
+    margin-left: 50px;
+    fill: var(--color-light-100);
+  }
 
-.searchInput {
-  width: 300px;
-}
+  .sliderLabel {
+    margin-bottom: 5px;
+  }
+
+  .searchInput {
+    width: 300px;
+  }
+
+  @media screen and (max-width: 990px) {
+    .deckFilter {
+      flex-direction: column;
+      place-items: center center;
+      width: 100%;
+      gap: 20px;
+    }
+
+    .searchInput {
+
+    }
+
+    .deckFilterGroup {
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+
+  @media screen and (max-width: 700px) {
+      .deckFilterGroup {
+        flex-direction: column;
+        place-items: center center;
+        gap: 24px;
+        width: 328px;
+      }
+
+    .deleteIcon {
+
+    }
+  }
