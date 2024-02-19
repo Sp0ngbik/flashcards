@@ -35,7 +35,7 @@
   @media screen and (max-width: 990px) {
     .deckFilter {
       flex-direction: column;
-      place-items: center center;
+      place-items: flex-start center;
       width: 100%;
       gap: 20px;
     }
@@ -53,7 +53,7 @@
   @media screen and (max-width: 764px) {
       .deckFilterGroup {
         flex-direction: column;
-        place-items: center center;
+        place-items: flex-start center;
         gap: 24px;
         width: 328px;
       }
