@@ -1,64 +1,67 @@
-  .deckHead {
-    display: flex;
-    justify-content: space-between;
-  }
+.deckHead {
+  display: flex;
+  justify-content: space-between;
+}
 
+.deckFilter {
+  display: flex;
+  gap: 10px;
+  place-content: center space-between;
+  place-items: flex-end center;
+
+  margin: 7px 0 36px;
+}
+
+.deckFilterGroup {
+  display: flex;
+  gap: 10px;
+  place-content: center space-between;
+  place-items: flex-end center;
+}
+
+.deleteIcon {
+  align-items: center;
+  margin-left: 50px;
+  fill: var(--color-light-100);
+}
+
+.sliderLabel {
+  margin-bottom: 5px;
+}
+
+.searchInput {
+  width: 300px;
+}
+
+@media screen and (width <= 990px) {
   .deckFilter {
-    display: flex;
-    place-content: center space-between;
-    place-items: flex-end center;
-    margin: 7px 0 36px;
-    gap: 10px;
+    flex-direction: column;
+    gap: 20px;
+    place-items: flex-start center;
+    width: 100%;
   }
 
-  .deckFilterGroup {
-    display: flex;
-    place-content: center space-between;
-    place-items: flex-end center;
-    gap: 10px;
-  }
-
-  .deleteIcon {
-    align-items: center;
-    margin-left: 50px;
-    fill: var(--color-light-100);
-  }
-
-  .sliderLabel {
-    margin-bottom: 5px;
+  .searchFieldWrapper {
+    width: 100%;
+    margin: 20px 0 23px;
   }
 
   .searchInput {
-    width: 300px;
+    display: block;
+    width: 100%;
   }
 
-  @media screen and (max-width: 990px) {
-    .deckFilter {
-      flex-direction: column;
-      place-items: flex-start center;
-      width: 100%;
-      gap: 20px;
-    }
-
-    .searchInput {
-
-    }
-
-    .deckFilterGroup {
-      justify-content: space-between;
-      width: 100%;
-    }
+  .deckFilterGroup {
+    justify-content: space-between;
+    width: 100%;
   }
+}
 
-  @media screen and (max-width: 764px) {
-      .deckFilterGroup {
-        flex-direction: column;
-        place-items: flex-start center;
-        gap: 24px;
-        width: 328px;
-      }
-
-    .deleteIcon {
-
-    }
+@media screen and (width <= 764px) {
+  .deckFilterGroup {
+    flex-direction: column;
+    gap: 24px;
+    place-items: flex-start center;
+    width: 328px;
   }
+}
