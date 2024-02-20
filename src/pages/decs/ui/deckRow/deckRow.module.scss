@@ -5,8 +5,10 @@
   flex-direction: row;
   gap: 20px;
   align-items: center;
-
-  max-width: 280px;
+  width: 100px;
+  &:first-child{
+    max-width: 250px;
+  }
 }
 
 .tableImage {
