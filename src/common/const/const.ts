@@ -1,27 +1,29 @@
 import { TabType } from '@/common/ui/tabSwitcher'
 
 export const deckColumns = [
-  { key: 'name', sortable: true, title: 'Name' },
+  { key: 'name', ownerValidate: false, sortable: true, title: 'Name' },
   {
     key: 'cardsCount',
+    ownerValidate: false,
     sortable: true,
     title: 'Cards',
   },
-  { key: 'updated', sortable: true, title: 'Last Updated' },
-  { key: 'author.name', sortable: true, title: 'Created by' },
+  { key: 'updated', ownerValidate: false, sortable: true, title: 'Last Updated' },
+  { key: 'author.name', ownerValidate: false, sortable: true, title: 'Created by' },
   {
     key: '',
-    sortable: true,
+    ownerValidate: false,
+    sortable: false,
     title: '',
   },
 ]
 
 export const cardColumns = [
-  { key: 'question', title: 'Question' },
-  { key: 'answer', title: 'Answer' },
-  { key: 'updated', title: 'Last Updated' },
-  { key: 'grade', title: 'Grade' },
-  { key: 'icons', title: '' },
+  { key: 'question', ownerValidate: false, sortable: true, title: 'Question' },
+  { key: 'answer', ownerValidate: false, sortable: true, title: 'Answer' },
+  { key: 'updated', ownerValidate: false, sortable: true, title: 'Last Updated' },
+  { key: 'grade', ownerValidate: false, sortable: true, title: 'Grade' },
+  { key: 'icons', ownerValidate: true, sortable: false, title: '' },
 ]
 
 export const tabs: TabType[] = [

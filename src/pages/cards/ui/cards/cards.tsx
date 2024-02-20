@@ -37,7 +37,12 @@ export const Cards = () => {
       {!isEmpty && (
         <>
           <Table>
-            <TableHeader columns={cardColumns} onSort={setSortedBy} sort={orderBy} />
+            <TableHeader
+              columns={cardColumns}
+              isOwner={isOwner}
+              onSort={setSortedBy}
+              sort={orderBy}
+            />
             <TableBody>
               {getCardsData?.items?.map(card => {
                 return <CardRow card={card} isOwner={isOwner} key={card.id} />
