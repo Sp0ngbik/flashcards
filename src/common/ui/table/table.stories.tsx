@@ -24,22 +24,27 @@ export const TableStory: Story = {
     const columns: Array<Column> = [
       {
         key: 'title',
+        ownerValidate: false,
         title: 'Name',
       },
       {
         key: 'cardsCount',
+        ownerValidate: false,
         title: 'Cards',
       },
       {
         key: 'updated',
+        ownerValidate: false,
         title: 'Last Updated',
       },
       {
         key: 'createdBy',
+        ownerValidate: false,
         title: 'Created by',
       },
       {
         key: 'icons',
+        ownerValidate: false,
         title: '',
       },
     ]
@@ -121,6 +126,7 @@ export type Sort = {
 
 export type Column = {
   key: string
+  ownerValidate: boolean
   sortable?: boolean
   title: string
 }

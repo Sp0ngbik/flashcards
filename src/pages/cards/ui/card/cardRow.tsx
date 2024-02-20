@@ -95,14 +95,14 @@ export const CardRow = ({ card, isOwner }: CardRowProps) => {
       <TableDataCell>
         <Grade count={card.grade} />
       </TableDataCell>
-      <TableDataCell>
-        {isOwner && (
+      {isOwner && (
+        <TableDataCell>
           <>
             <Edit className={s.icon} onClick={openEditModeHandler} />
             <Delete className={s.icon} onClick={onOpenDeleteCardForm} />
           </>
-        )}
-      </TableDataCell>
+        </TableDataCell>
+      )}
     </TableRow>
   )
 }

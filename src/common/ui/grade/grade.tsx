@@ -5,14 +5,5 @@ type GradeProps = {
   count: number
 }
 export const Grade = ({ count }: GradeProps) => {
-  return (
-    <ReactStars
-      classNames={s.stars}
-      isEdit={false}
-      isHalf={false}
-      onChange={() => {}}
-      size={16}
-      value={count}
-    />
-  )
+  return <ReactStars classNames={s.stars} isEdit={false} isHalf={false} size={15} value={count} />
 }

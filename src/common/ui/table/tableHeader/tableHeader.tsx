@@ -12,12 +12,13 @@ export const TableHeader: FC<
   Omit<
     ComponentPropsWithoutRef<'thead'> & {
       columns: Column[]
+      isOwner?: boolean
       onSort?: (sort: Sort) => void
       sort?: Sort
     },
     'children'
   >
-> = ({ columns, onSort, sort, ...rest }) => {
+> = ({ columns, isOwner = false, onSort, sort, ...rest }) => {
   const handleSort = (key: string, sortable?: boolean) => () => {
     if (!onSort || !sortable) {
       return
@@ -43,13 +44,16 @@ export const TableHeader: FC<
   return (
     <TableHead {...rest}>
       <TableRow>
-        {columns.map(({ key, sortable = true, title }) => (
-          <TableHeadCell key={key} onClick={handleSort(key, sortable)}>
-            <Typography className={s.tableHeadTitle} variant={'subtitle2'}>
-              {title} {sort && sort.key === key && <ArrowDown className={classNames.arrow} />}
-            </Typography>
-          </TableHeadCell>
-        ))}
+        {columns.map(
+          ({ key, ownerValidate, sortable = true, title }) =>
+            (isOwner || !ownerValidate) && (
+              <TableHeadCell key={key} onClick={handleSort(key, sortable)}>
+                <Typography className={s.tableHeadTitle} variant={'subtitle2'}>
+                  {title} {sort && sort.key === key && <ArrowDown className={classNames.arrow} />}
+                </Typography>
+              </TableHeadCell>
+            )
+        )}
       </TableRow>
     </TableHead>
   )

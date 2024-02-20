@@ -5,8 +5,10 @@
   flex-direction: row;
   gap: 20px;
   align-items: center;
+
   width: 100px;
-  &:first-child{
+
+  &:first-child {
     max-width: 250px;
   }
 }

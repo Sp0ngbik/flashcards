@@ -66,6 +66,6 @@ export const TableDataCell = forwardRef<ElementRef<'td'>, ComponentPropsWithoutR
       tableBody: clsx(s.tableDataCell, className),
     }
 
-    return <td ref={ref} {...rest} className={classNames.tableBody} />
+    return <td className={classNames.tableBody} ref={ref} {...rest} />
   }
 )
