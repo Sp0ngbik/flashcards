@@ -13,3 +13,9 @@
     cursor: pointer;
   }
 }
+
+@media screen and (width <= 452px) {
+  .learnImage {
+    margin-left: 60px;
+  }
+}

@@ -20,11 +20,21 @@ header {
   flex-direction: column;
   gap: 15px;
 
-  max-width: 1280px;
+  max-width: 1006px;
+  //max-width: 1280px;
+
   margin: 0 auto;
-  padding: 24px 137px;
+
+  padding: 12px 16px;
+  //padding: 24px 137px;
 }
 
 .text {
   word-wrap: break-word;
+}
+
+@media screen and (width <= 452px) {
+  .learnCard {
+    margin-top: 0;
+  }
 }

@@ -15,3 +15,11 @@
     width: 100%;
   }
 }
+
+@media screen and (width <= 452px) {
+  .card {
+    padding: 15px 15px 10px;
+    max-width: 420px;
+    width: 100%;
+  }
+}
