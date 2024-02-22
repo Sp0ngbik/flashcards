@@ -10,6 +10,7 @@ import { UpdateDeck } from '@/features/deck/updateDeck'
 import { ErrorResponse } from '@/services/auth/auth.types'
 import { useDeleteDeckMutation } from '@/services/decks/decks.service'
 import { Deck } from '@/services/decks/decks.types'
+import { useWindowSize } from '@uidotdev/usehooks'
 import { clsx } from 'clsx'
 
 import s from './deckRow.module.scss'
@@ -66,50 +67,59 @@ const DeckRow = ({ deck, isOwner, learnDeck, openDeck }: DeckRowProps) => {
     }
   }
 
+  const size = useWindowSize()
+  const width = size?.width
+
   return (
-    <TableRow key={deck.id}>
-      <UpdateDeck
-        deck={deck}
-        isOpen={isOpenEdit}
-        onOpenChange={setIsOpenEdit}
-        title={'Update Deck'}
-      />
-      <DeleteForm
-        cancel={onCloseDeleteForm}
-        deleteCB={onDeleteDeck}
-        id={deck.id}
-        isDeck
-        isOpen={isDeleteForm}
-        key={deck.id}
-        name={deck.name}
-        onOpenChange={setDeleteForm}
-        title={'Delete Pack'}
-      />
-      <TableDataCell>
-        <span className={s.tableDataContent} onClick={openDeckHandler}>
-          {deck.cover ? (
-            <img alt={'image'} className={s.tableImage} src={deck.cover} />
+    <>
+      <TableRow key={deck.id}>
+        <UpdateDeck
+          deck={deck}
+          isOpen={isOpenEdit}
+          onOpenChange={setIsOpenEdit}
+          title={'Update Deck'}
+        />
+        <DeleteForm
+          cancel={onCloseDeleteForm}
+          deleteCB={onDeleteDeck}
+          id={deck.id}
+          isDeck
+          isOpen={isDeleteForm}
+          key={deck.id}
+          name={deck.name}
+          onOpenChange={setDeleteForm}
+          title={'Delete Pack'}
+        />
+        <TableDataCell>
+          <span className={s.tableDataContent} onClick={openDeckHandler}>
+            {width >= 765 ? (
+              deck.cover ? (
+                <img alt={'image'} className={s.tableImage} src={deck.cover} />
+              ) : (
+                <img alt={'image'} className={s.tableImage} src={noImageCover} />
+              )
+            ) : null}
+            <Typography variant={'subtitle2'}>{deck.name}</Typography>
+          </span>
+        </TableDataCell>
+        <TableDataCell>{deck.cardsCount}</TableDataCell>
+        <TableDataCell>{new Date(deck.updated).toLocaleDateString('ru-RU')}</TableDataCell>
+        <TableDataCell>{deck.author.name}</TableDataCell>
+        <TableDataCell>
+          {isOwner ? (
+            <div className={s.btnsArea}>
+              <Edit className={s.icon} onClick={onOpenEditMode} />
+              <Play className={classNames.iconPlay} onClick={learnDeckHandler} />
+              <Delete className={classNames.icon} onClick={deleteDeckHandler} />
+            </div>
           ) : (
-            <img alt={'image'} className={s.tableImage} src={noImageCover} />
+            <div className={s.btnsArea}>
+              <Play className={classNames.iconPlay} onClick={learnDeckHandler} />
+            </div>
           )}
-          <Typography variant={'subtitle2'}>{deck.name}</Typography>
-        </span>
-      </TableDataCell>
-      <TableDataCell>{deck.cardsCount}</TableDataCell>
-      <TableDataCell>{new Date(deck.updated).toLocaleDateString('ru-RU')}</TableDataCell>
-      <TableDataCell>{deck.author.name}</TableDataCell>
-      <TableDataCell>
-        {isOwner ? (
-          <>
-            <Edit className={s.icon} onClick={onOpenEditMode} />
-            <Play className={classNames.iconPlay} onClick={learnDeckHandler} />
-            <Delete className={classNames.icon} onClick={deleteDeckHandler} />
-          </>
-        ) : (
-          <Play className={classNames.iconPlay} onClick={learnDeckHandler} />
-        )}
-      </TableDataCell>
-    </TableRow>
+        </TableDataCell>
+      </TableRow>
+    </>
   )
 }
 

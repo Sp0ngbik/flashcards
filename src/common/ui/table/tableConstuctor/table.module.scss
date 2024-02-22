@@ -51,7 +51,8 @@
 
   &:not(:last-child) {
     overflow: hidden;
-    width: 1000px;
+    max-width: 1000px;
+    width: 100%;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
@@ -81,4 +82,46 @@
 .tableImage {
   width: 150px;
   height: 50px;
+}
+
+@media screen and (width <= 764px) {
+  .root {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: relative;
+    padding-bottom: 18px;
+  }
+
+  .tableHead {
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .tableRow {
+    display: flex;
+    flex-direction: column;
+    border-bottom: none;
+  }
+
+  .tableBody {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tableDataCell {
+    width: 100%;
+  }
+
+  .tableHeadCell {
+
+    &:first-child {
+      width: 0;
+    }
+
+    &:nth-child(2) {
+      width: 0;
+    }
+  }
 }
