@@ -51,6 +51,7 @@ export const CardRow = ({ card, isOwner }: CardRowProps) => {
 
   const size = useWindowSize()
   const width = size?.width
+  const mobileWidth = width && width >= 765
 
   return (
     <TableRow key={card.id}>
@@ -73,13 +74,12 @@ export const CardRow = ({ card, isOwner }: CardRowProps) => {
       />
       <TableDataCell>
         <span className={s.tableDataContent}>
-          {width >= 765 ? (
-            card.questionImg ? (
+          {mobileWidth &&
+            (card.questionImg ? (
               <img alt={'image'} className={s.rowImage} src={card.questionImg} />
             ) : (
               <img alt={'image'} className={s.rowImage} src={noImageCover} />
-            )
-          ) : null}
+            ))}
           <Typography className={s.cardTypography} variant={'subtitle2'}>
             {card.question}
           </Typography>
@@ -87,13 +87,12 @@ export const CardRow = ({ card, isOwner }: CardRowProps) => {
       </TableDataCell>
       <TableDataCell>
         <span className={s.tableDataContent}>
-          {width >= 765 ? (
-            card.answerImg ? (
+          {mobileWidth &&
+            (card.answerImg ? (
               <img alt={'image'} className={s.rowImage} src={card.answerImg} />
             ) : (
               <img alt={'image'} className={s.rowImage} src={noImageCover} />
-            )
-          ) : null}
+            ))}
           <Typography className={s.cardTypography} variant={'subtitle2'}>
             {card.answer}
           </Typography>

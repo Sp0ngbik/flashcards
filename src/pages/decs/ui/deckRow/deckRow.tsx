@@ -69,6 +69,7 @@ const DeckRow = ({ deck, isOwner, learnDeck, openDeck }: DeckRowProps) => {
 
   const size = useWindowSize()
   const width = size?.width
+  const mobileWidth = width && width >= 765
 
   return (
     <>
@@ -92,13 +93,12 @@ const DeckRow = ({ deck, isOwner, learnDeck, openDeck }: DeckRowProps) => {
         />
         <TableDataCell>
           <span className={s.tableDataContent} onClick={openDeckHandler}>
-            {width >= 765 ? (
-              deck.cover ? (
+            {mobileWidth &&
+              (deck.cover ? (
                 <img alt={'image'} className={s.tableImage} src={deck.cover} />
               ) : (
                 <img alt={'image'} className={s.tableImage} src={noImageCover} />
-              )
-            ) : null}
+              ))}
             <Typography variant={'subtitle2'}>{deck.name}</Typography>
           </span>
         </TableDataCell>
