@@ -28,3 +28,17 @@
   width: 20px;
   border: 2px solid red;
 }
+
+@media screen and (width <= 764px) {
+  .btnsArea {
+    position: absolute;
+    border: 1px solid var(--color-dark-500);
+    border-bottom: none;
+    width: 331px;
+    right: 0;
+    bottom: -18px;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+  }
+}

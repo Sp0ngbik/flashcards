@@ -11,6 +11,7 @@ import { DeleteForm } from '@/features/deck/deleteForm'
 import { ErrorResponse } from '@/services/auth/auth.types'
 import { useDeleteCardMutation, useGetCardByIdQuery } from '@/services/cards/cards.service'
 import { RootObjectItems } from '@/services/decks/decks.types'
+import { useWindowSize } from '@uidotdev/usehooks'
 
 import s from './cardRow.module.scss'
 type CardRowProps = {
@@ -48,6 +49,9 @@ export const CardRow = ({ card, isOwner }: CardRowProps) => {
     setIsDeleteForm(true)
   }
 
+  const size = useWindowSize()
+  const width = size?.width
+
   return (
     <TableRow key={card.id}>
       <UpdateCard
@@ -69,11 +73,13 @@ export const CardRow = ({ card, isOwner }: CardRowProps) => {
       />
       <TableDataCell>
         <span className={s.tableDataContent}>
-          {card.questionImg ? (
-            <img alt={'image'} className={s.rowImage} src={card.questionImg} />
-          ) : (
-            <img alt={'image'} className={s.rowImage} src={noImageCover} />
-          )}
+          {width >= 765 ? (
+            card.questionImg ? (
+              <img alt={'image'} className={s.rowImage} src={card.questionImg} />
+            ) : (
+              <img alt={'image'} className={s.rowImage} src={noImageCover} />
+            )
+          ) : null}
           <Typography className={s.cardTypography} variant={'subtitle2'}>
             {card.question}
           </Typography>
@@ -81,11 +87,13 @@ export const CardRow = ({ card, isOwner }: CardRowProps) => {
       </TableDataCell>
       <TableDataCell>
         <span className={s.tableDataContent}>
-          {card.answerImg ? (
-            <img alt={'image'} className={s.rowImage} src={card.answerImg} />
-          ) : (
-            <img alt={'image'} className={s.rowImage} src={noImageCover} />
-          )}
+          {width >= 765 ? (
+            card.answerImg ? (
+              <img alt={'image'} className={s.rowImage} src={card.answerImg} />
+            ) : (
+              <img alt={'image'} className={s.rowImage} src={noImageCover} />
+            )
+          ) : null}
           <Typography className={s.cardTypography} variant={'subtitle2'}>
             {card.answer}
           </Typography>
@@ -97,10 +105,10 @@ export const CardRow = ({ card, isOwner }: CardRowProps) => {
       </TableDataCell>
       {isOwner && (
         <TableDataCell>
-          <>
+          <div className={s.btnsArea}>
             <Edit className={s.icon} onClick={openEditModeHandler} />
             <Delete className={s.icon} onClick={onOpenDeleteCardForm} />
-          </>
+          </div>
         </TableDataCell>
       )}
     </TableRow>
