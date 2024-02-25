@@ -10,14 +10,16 @@ const GoBackButton = () => {
   const goBackHandler = () => navigate(-1)
 
   return (
-    <Button
-      className={s.backTo}
-      icon={<ArrowBack className={s.arrowBack} />}
-      onClick={goBackHandler}
-      variant={'link'}
-    >
-      Return to Previous Page
-    </Button>
+    <div className={s.backButtonWrapper}>
+      <Button
+        className={s.backTo}
+        icon={<ArrowBack className={s.arrowBack} />}
+        onClick={goBackHandler}
+        variant={'link'}
+      >
+        Return to Previous Page
+      </Button>
+    </div>
   )
 }
 
