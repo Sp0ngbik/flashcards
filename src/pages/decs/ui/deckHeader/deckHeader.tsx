@@ -15,6 +15,7 @@ import s from './deckHeader.module.scss'
 const DeckHeader = () => {
   const {
     clearFilter,
+    deckIsFetching,
     getCurrentTab,
     maxCards,
     minCards,
@@ -51,6 +52,7 @@ const DeckHeader = () => {
         </div>
         <div className={s.deckFilterGroup}>
           <TabSwitcher
+            disabled={deckIsFetching}
             label={'Show decks cards'}
             onValueChange={onTabValueChange}
             tabs={tabs}

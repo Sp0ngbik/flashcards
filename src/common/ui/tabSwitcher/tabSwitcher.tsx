@@ -7,18 +7,18 @@ import s from './tabSwitcher.module.scss'
 
 export type TabType = {
   className?: string
-  disabled?: boolean
   title?: string
   value?: string
 }
 
 type TabsProps = {
+  disabled?: boolean
   label?: string
   tabs: TabType[]
 } & ComponentPropsWithoutRef<typeof TabsRadix.Root>
 
 export const TabSwitcher = (props: TabsProps) => {
-  const { label, tabs } = props
+  const { disabled, label, tabs } = props
 
   return (
     <div>
@@ -31,7 +31,7 @@ export const TabSwitcher = (props: TabsProps) => {
             return (
               <TabsRadix.Trigger
                 className={s.TabsTrigger}
-                disabled={tab.disabled}
+                disabled={disabled}
                 key={index}
                 value={`${tab.value}`}
               >
