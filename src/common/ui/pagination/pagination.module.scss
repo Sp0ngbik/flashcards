@@ -1,7 +1,11 @@
 .pagination_container {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
+
+  width: 100%;
   padding-bottom: 100px;
+
   color: var(--color-light-100);
 
   .pagination_item {
@@ -73,5 +77,12 @@
 
   & button {
     margin: 0 10px;
+  }
+}
+
+@media screen and (width <= 550px) {
+  .selectWrapper {
+    flex-wrap: wrap;
+    margin: 20px 0;
   }
 }

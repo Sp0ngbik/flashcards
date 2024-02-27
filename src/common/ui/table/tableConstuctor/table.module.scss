@@ -51,8 +51,10 @@
 
   &:not(:last-child) {
     overflow: hidden;
-    max-width: 1000px;
+
     width: 100%;
+    max-width: 1000px;
+
     text-overflow: ellipsis;
     white-space: nowrap;
   }
@@ -86,17 +88,13 @@
 
 @media screen and (width <= 764px) {
   .root {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     position: relative;
     padding-bottom: 18px;
+    border: none;
   }
 
   .tableHead {
-    background-color: transparent;
-    display: flex;
-    flex-direction: row;
+    display: none;
   }
 
   .tableRow {
@@ -108,6 +106,11 @@
   .tableBody {
     display: flex;
     flex-direction: column;
+
+    & > tr {
+      gap: 10px;
+      margin-bottom: 10px;
+    }
   }
 
   .tableDataCell {
@@ -115,7 +118,6 @@
   }
 
   .tableHeadCell {
-
     &:first-child {
       width: 0;
     }

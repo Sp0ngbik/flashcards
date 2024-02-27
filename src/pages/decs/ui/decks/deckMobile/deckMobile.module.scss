@@ -1,0 +1,27 @@
+.tableRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  place-content: space-between space-between;
+  place-items: center center;
+
+  border: 1px solid var(--color-dark-500);
+  border-radius: 4px;
+}
+
+.deckCellMobile {
+  margin: 12px 0;
+
+  &:first-child {
+    padding-left: 32px;
+  }
+
+  & div {
+    margin: 18px 0;
+  }
+}
+
+.deckContent {
+  align-items: flex-end;
+  padding-right: 32px;
+  text-align: end;
+}
