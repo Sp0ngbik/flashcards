@@ -1,6 +1,7 @@
 import { TabType } from '@/common/ui/tabSwitcher'
+import { Column } from '@/common/ui/table/table.stories'
 
-export const deckColumns = [
+export const deckColumns: Column[] = [
   { key: 'name', ownerValidate: false, sortable: true, title: 'Name' },
   {
     key: 'cardsCount',
@@ -30,3 +31,6 @@ export const tabs: TabType[] = [
   { title: 'My Cards', value: 'userCards' },
   { title: 'All Cards', value: 'allCards' },
 ]
+
+export const mobileWidth: number = 765
+export const smallMobileWidth: number = 385

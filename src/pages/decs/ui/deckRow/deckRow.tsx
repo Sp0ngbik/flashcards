@@ -3,10 +3,12 @@ import { toast } from 'react-toastify'
 
 import { Delete, Edit, Play } from '@/assets'
 import noImageCover from '@/assets/image/noImage.png'
+import { mobileWidth } from '@/common/const'
 import { TableDataCell, TableRow } from '@/common/ui/table/tableConstuctor'
 import { Typography } from '@/common/ui/typography'
 import { DeleteForm } from '@/features/deck/deleteForm'
 import { UpdateDeck } from '@/features/deck/updateDeck'
+import DeckMobile from '@/pages/decs/ui/decks/deckMobile/deckMobile'
 import { ErrorResponse } from '@/services/auth/auth.types'
 import { useDeleteDeckMutation } from '@/services/decks/decks.service'
 import { Deck } from '@/services/decks/decks.types'
@@ -69,11 +71,11 @@ const DeckRow = ({ deck, isOwner, learnDeck, openDeck }: DeckRowProps) => {
 
   const size = useWindowSize()
   const width = size?.width
-  const mobileWidth = width && width >= 765
+  const mobileVersion = width && width >= mobileWidth
 
   return (
     <>
-      <TableRow key={deck.id}>
+      <TableRow className={s.tableRow} key={deck.id}>
         <UpdateDeck
           deck={deck}
           isOpen={isOpenEdit}
@@ -91,29 +93,35 @@ const DeckRow = ({ deck, isOwner, learnDeck, openDeck }: DeckRowProps) => {
           onOpenChange={setDeleteForm}
           title={'Delete Pack'}
         />
-        <TableDataCell>
-          <span className={s.tableDataContent} onClick={openDeckHandler}>
-            {mobileWidth &&
-              (deck.cover ? (
-                <img alt={'image'} className={s.tableImage} src={deck.cover} />
-              ) : (
-                <img alt={'image'} className={s.tableImage} src={noImageCover} />
-              ))}
-            <Typography variant={'subtitle2'}>{deck.name}</Typography>
-          </span>
-        </TableDataCell>
-        <TableDataCell>{deck.cardsCount}</TableDataCell>
-        <TableDataCell>{new Date(deck.updated).toLocaleDateString('ru-RU')}</TableDataCell>
-        <TableDataCell>{deck.author.name}</TableDataCell>
-        <TableDataCell>
+        {!mobileVersion ? (
+          <DeckMobile deck={deck} />
+        ) : (
+          <>
+            <TableDataCell>
+              <span className={s.tableDataContent} onClick={openDeckHandler}>
+                {deck.cover ? (
+                  <img alt={'image'} className={s.tableImage} src={deck.cover} />
+                ) : (
+                  <img alt={'image'} className={s.tableImage} src={noImageCover} />
+                )}
+                <Typography variant={'subtitle2'}>{deck.name}</Typography>
+              </span>
+            </TableDataCell>
+
+            <TableDataCell>{deck.cardsCount}</TableDataCell>
+            <TableDataCell>{new Date(deck.updated).toLocaleDateString('ru-RU')}</TableDataCell>
+            <TableDataCell>{deck.author.name}</TableDataCell>
+          </>
+        )}
+        <TableDataCell className={s.buttonsBlock}>
           {isOwner ? (
-            <div className={s.btnsArea}>
+            <div className={s.buttonContent}>
               <Edit className={s.icon} onClick={onOpenEditMode} />
               <Play className={classNames.iconPlay} onClick={learnDeckHandler} />
               <Delete className={classNames.icon} onClick={deleteDeckHandler} />
             </div>
           ) : (
-            <div className={s.btnsArea}>
+            <div className={s.buttonContent}>
               <Play className={classNames.iconPlay} onClick={learnDeckHandler} />
             </div>
           )}

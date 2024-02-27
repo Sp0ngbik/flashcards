@@ -38,15 +38,3 @@ export const TabSwitcherDemo: Story = {
     ],
   },
 }
-
-export const TabSwitcherDisable: Story = {
-  args: {
-    tabs: [
-      { disabled: true, title: 'Active', value: 'Active' },
-      { title: 'Hello', value: 'Hello' },
-      { title: 'Login', value: 'Login' },
-      { disabled: true, title: 'Value', value: 'Value' },
-      { title: 'Password', value: 'Password' },
-    ],
-  },
-}

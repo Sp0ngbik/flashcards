@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import { ArrowBackward, Dots } from '@/assets'
 import { Select } from '@/common/ui/select'
 import { SelectTextItem } from '@/common/ui/select/selectItem'
@@ -32,7 +34,14 @@ export const Pagination = (props: Props) => {
     changeItemsPerPage(Number(value))
   }
   const paginationRange = usePagination({ currentPage, pageSize, siblingCount, totalCount })
+  const lastPage = paginationRange?.[paginationRange.length - 1]
+  const firstPage = 1
 
+  useEffect(() => {
+    if (lastPage && currentPage > Number(lastPage)) {
+      changeCurrentPage(Number(lastPage))
+    }
+  }, [changeCurrentPage, lastPage, currentPage])
   if (currentPage === 0 || (paginationRange && paginationRange.length < 1)) {
     return null
   }
@@ -42,13 +51,6 @@ export const Pagination = (props: Props) => {
 
   const onPrevious = () => {
     changeCurrentPage(currentPage - 1)
-  }
-
-  const lastPage = paginationRange?.[paginationRange.length - 1]
-  const firstPage = 1
-
-  if (lastPage && currentPage > Number(lastPage)) {
-    changeCurrentPage(Number(lastPage))
   }
 
   const classNames = {
