@@ -22,20 +22,20 @@ export const TabSwitcher = (props: TabsProps) => {
 
   return (
     <div>
-      <TabsRadix.Root className={s.TabsRoot} {...props}>
+      <TabsRadix.Root className={s.tabsRoot} {...props}>
         <Typography className={s.tabsLabel} variant={'body2'}>
           {label}
         </Typography>
-        <TabsRadix.List aria-label={'Manage your account'} className={s.TabsList}>
+        <TabsRadix.List aria-label={'Manage your account'} className={s.tabsList}>
           {tabs.map((tab, index) => {
             return (
               <TabsRadix.Trigger
-                className={s.TabsTrigger}
+                className={s.tabsTrigger}
                 disabled={disabled}
                 key={index}
                 value={`${tab.value}`}
               >
-                <Typography className={s.TabsTitle} variant={'body1'}>
+                <Typography className={s.tabsTitle} variant={'body1'}>
                   {tab.title}
                 </Typography>
               </TabsRadix.Trigger>
