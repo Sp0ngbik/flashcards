@@ -69,13 +69,16 @@ const DeckHeader = () => {
               onValueCommit={onCommitSliderValues}
             />
           </div>
-          <Button
-            icon={<Delete className={s.deleteIcon} />}
-            onClick={clearFilter}
-            variant={'secondary'}
-          >
-            Clear Filter
-          </Button>
+          <div className={s.buttonClear}>
+            <Button
+              fullWidth
+              icon={<Delete className={s.deleteIcon} />}
+              onClick={clearFilter}
+              variant={'secondary'}
+            >
+              Clear Filter
+            </Button>
+          </div>
         </div>
       </div>
     </>
