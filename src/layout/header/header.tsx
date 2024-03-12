@@ -46,10 +46,6 @@ export const Header = ({ isAuth }: HeaderProps) => {
     return navigate('/sign-in')
   }
 
-  if (isLoading) {
-    return <Loader />
-  }
-
   const changeThemeHandler = (value: boolean) => {
     const themeAttribute = 'dark'
 
@@ -65,6 +61,7 @@ export const Header = ({ isAuth }: HeaderProps) => {
 
   return (
     <div>
+      {isLoading && <Loader transparentBackground />}
       <header className={s.headerBlock}>
         <div className={s.headerContent}>
           <div className={s.headerLogo} onClick={logoRedirect}>
