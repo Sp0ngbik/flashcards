@@ -4,11 +4,8 @@
   gap: 15px;
 
   max-width: 1006px;
-  //max-width: 1280px;
   margin: 0 auto;
-
   padding: 12px 16px;
-  //padding: 24px 137px;
 }
 
 .icon {
@@ -26,3 +23,8 @@
   border-radius: 50%;
 }
 
+.tryHard {
+  &:nth-child(2) {
+    width: 290px;
+  }
+}

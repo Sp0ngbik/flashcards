@@ -11,6 +11,7 @@ import s from '../tableConstuctor/table.module.scss'
 export const TableHeader: FC<
   Omit<
     ComponentPropsWithoutRef<'thead'> & {
+      className?: string
       columns: Column[]
       isOwner?: boolean
       onSort?: (sort: Sort) => void
@@ -18,7 +19,7 @@ export const TableHeader: FC<
     },
     'children'
   >
-> = ({ columns, isOwner = false, onSort, sort, ...rest }) => {
+> = ({ className, columns, isOwner = false, onSort, sort, ...rest }) => {
   const handleSort = (key: string, sortable?: boolean) => () => {
     if (!onSort || !sortable) {
       return
@@ -47,7 +48,7 @@ export const TableHeader: FC<
         {columns.map(
           ({ key, ownerValidate, sortable = true, title }) =>
             (isOwner || !ownerValidate) && (
-              <TableHeadCell key={key} onClick={handleSort(key, sortable)}>
+              <TableHeadCell className={className} key={key} onClick={handleSort(key, sortable)}>
                 <Typography className={s.tableHeadTitle} variant={'subtitle2'}>
                   {title} {sort && sort.key === key && <ArrowDown className={classNames.arrow} />}
                 </Typography>
