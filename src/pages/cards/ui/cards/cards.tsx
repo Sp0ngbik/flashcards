@@ -38,6 +38,7 @@ export const Cards = () => {
         <>
           <Table>
             <TableHeader
+              className={s.tryHard}
               columns={cardColumns}
               isOwner={isOwner}
               onSort={setSortedBy}
